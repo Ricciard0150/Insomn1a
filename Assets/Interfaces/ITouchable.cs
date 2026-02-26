@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface ITouchabale
+public interface ITouchable
 {
 
     public void Active();
