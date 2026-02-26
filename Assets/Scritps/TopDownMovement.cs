@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TopDownMovement : MonoBehaviour, ITouchabale
+public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer 
 {
     [SerializeField] float speed = 10f;
     private Vector2 _movement;
@@ -27,7 +27,7 @@ public class TopDownMovement : MonoBehaviour, ITouchabale
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.TryGetComponent(out ITouchabale target))
+        if (!collision.TryGetComponent(out ITouchable target))
             return;
         //tryget situa??es q qremos pegar o component mas nao queremos q de erro (tipo bool) e retorna + de um valor (out possibilita criar um novo objeto) 
         target.Active();
