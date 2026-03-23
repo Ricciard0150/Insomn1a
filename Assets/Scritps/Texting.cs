@@ -1,42 +1,31 @@
 ﻿using UnityEngine;
 
-
-public class DialogueManager : MonoBehaviour
+public class NPCDialogue : MonoBehaviour
 {
-    [Header("Di�logo deste NPC")]
-    [TextArea(3, 6)]
-    public string[] falas;
+    public string[] dialogue;
+    private bool playerNear;
 
-    [Header("Configura��o de Intera��o")]
-    public KeyCode teclaInteracao = KeyCode.E;
-
-    private bool playerInRange = false;
-    private bool dialogueStarted = false;
-
-    private void Update()
+    void Update()
     {
-        if (playerInRange && !dialogueStarted && Input.GetKeyDown(teclaInteracao))
+        if (playerNear && Input.GetKeyDown(KeyCode.E))
         {
-            IniciarDialogo();
+            TextManager.Instance.StartDialogue(dialogue);
         }
     }
 
-    private void IniciarDialogo()
+    void OnTriggerEnter(Collider other)
     {
-        if (TextManager.Instance != null)
+        if (other.CompareTag("Player"))
         {
-            dialogueStarted = true;
-            TextManager.Instance.StartDialogue(falas);
+            playerNear = true;
         }
-
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerExit(Collider other)
     {
-        if (!collision.TryGetComponent(out IStatusPlayer statuys))
-            return;
-        playerInRange = true;
-
+        if (other.CompareTag("Player"))
+        {
+            playerNear = false;
+        }
     }
-   
 }
