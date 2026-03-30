@@ -10,6 +10,7 @@ public class BattleRPG : MonoBehaviour
     public TMP_Text opcao1Text;
     public TMP_Text opcao2Text;
     public TMP_Text feedbackText;
+    public GameObject door; 
 
     [Header("Config")]
     public float velocidadeTexto = 0.03f;
@@ -33,7 +34,6 @@ public class BattleRPG : MonoBehaviour
     };
 
     private int[] respostasCorretas = { 1, 0, 1 };
-
     void Update()
     {
         if (!estaAtivo) return;
@@ -119,6 +119,7 @@ public class BattleRPG : MonoBehaviour
 
         panel.SetActive(false);
         estaAtivo = false;
+        Destroy(door);
     }
 
     IEnumerator EscreverTexto(TMP_Text textoUI, string frase)
