@@ -1,91 +1,87 @@
-using TMPro;
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class TextManager : MonoBehaviour
 {
-    public static TextManager Instance;
+    [Header("UI")]
+    public GameObject dialoguePanel;
+    public TMP_Text dialogueText;
 
-    public GameObject dialogueBox;
-    public TextMeshProUGUI dialogueText;
-    public float typingSpeed = 0.04f;
+    [Header("Config")]
+    public string[] falas;
+    public float velocidadeTexto = 0.05f;
+    public KeyCode teclaInteragir = KeyCode.E;
 
-    private string[] lines;
-    private int currentLine;
-    private bool isTyping;
-    private bool dialogueActive;
-
-    void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-
-        dialogueBox.SetActive(false);
-    }
+    private bool playerPerto = false;
+    private bool dialogoAtivo = false;
+    private int index = 0;
+    private Coroutine typingCoroutine;
 
     void Update()
     {
-        if (!dialogueActive) return;
-
-        if (Input.GetKeyDown(KeyCode.E))
+        if (playerPerto && Input.GetKeyDown(teclaInteragir))
         {
-            if (isTyping)
+            if (!dialogoAtivo)
             {
-                StopAllCoroutines();
-                dialogueText.text = lines[currentLine];
-                isTyping = false;
+                dialogoAtivo = true;
+                dialoguePanel.SetActive(true);
+                index = 0;
+                typingCoroutine = StartCoroutine(EscreverTexto());
             }
             else
             {
-                currentLine++;
-
-                if (currentLine < lines.Length)
+                if (dialogueText.text != falas[index])
                 {
-                    StartCoroutine(TypeLine(lines[currentLine]));
+                    StopCoroutine(typingCoroutine);
+                    dialogueText.text = falas[index];
                 }
                 else
                 {
-                    EndDialogue();
+                    index++;
+
+                    if (index < falas.Length)
+                    {
+                        typingCoroutine = StartCoroutine(EscreverTexto());
+                    }
+                    else
+                    {
+                        dialoguePanel.SetActive(false);
+                        dialogoAtivo = false;
+                    }
                 }
             }
         }
     }
 
-    public void StartDialogue(string[] dialogueLines)
-    {
-        StopAllCoroutines();
-
-        lines = dialogueLines;
-        currentLine = 0;
-        isTyping = false;
-        dialogueActive = true;
-
-        dialogueBox.SetActive(false); // força reset
-        dialogueText.text = "";
-        dialogueBox.SetActive(true);
-
-        StartCoroutine(TypeLine(lines[currentLine]));
-    }
-
-    void EndDialogue()
-    {
-        StopAllCoroutines();
-        isTyping = false;
-        dialogueActive = false;
-        dialogueBox.SetActive(false);
-    }
-
-    IEnumerator TypeLine(string line)
+    IEnumerator EscreverTexto()
     {
         dialogueText.text = "";
-        isTyping = true;
 
-        foreach (char c in line)
+        foreach (char letra in falas[index])
         {
-            dialogueText.text += c;
-            yield return new WaitForSeconds(typingSpeed);
+            dialogueText.text += letra;
+            yield return new WaitForSeconds(velocidadeTexto);
         }
+    }
 
-        isTyping = false;
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+      
+        if (other.GetComponent<IStatusPlayer>() != null)
+        {
+            playerPerto = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.GetComponent<IStatusPlayer>() != null)
+        {
+            playerPerto = false;
+            dialoguePanel.SetActive(false);
+            dialogoAtivo = false;
+        }
     }
 }
