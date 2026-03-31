@@ -8,14 +8,14 @@ public class PlayerTeleport : MonoBehaviour
 
     [Header("UI")]
 
+    public Transform target;
     public Transform teleportUI;
 
     void Update()
     {
         if (isColliding)
         {
-            transform.SetParent(teleportUI);
-            transform.localPosition = Vector3.zero;
+            target.position = teleportUI.position;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
