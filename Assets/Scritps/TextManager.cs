@@ -2,11 +2,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Runtime.CompilerServices;
 
 public class TextManager : MonoBehaviour
 {
     [Header("UI")]
-    public GameObject dialoguePanel;
+    [SerializeField] public GameObject dialoguePanel;
+    [SerializeField] GameObject pressingE;
     public TMP_Text dialogueText;
 
     [Header("Config")]
@@ -19,6 +21,10 @@ public class TextManager : MonoBehaviour
     private int index = 0;
     private Coroutine typingCoroutine;
 
+    private void Start()
+    {
+        
+    }
     void Update()
     {
         if (playerPerto && Input.GetKeyDown(teclaInteragir))
@@ -29,6 +35,7 @@ public class TextManager : MonoBehaviour
                 dialoguePanel.SetActive(true);
                 index = 0;
                 typingCoroutine = StartCoroutine(EscreverTexto());
+                pressingE.SetActive(false);
             }
             else
             {
@@ -49,6 +56,7 @@ public class TextManager : MonoBehaviour
                     {
                         dialoguePanel.SetActive(false);
                         dialogoAtivo = false;
+                        pressingE.SetActive(true);
                     }
                 }
             }
@@ -68,9 +76,9 @@ public class TextManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-      
         if (other.GetComponent<IStatusPlayer>() != null)
         {
+            pressingE.SetActive(true);
             playerPerto = true;
         }
     }
@@ -79,6 +87,7 @@ public class TextManager : MonoBehaviour
     {
         if (other.GetComponent<IStatusPlayer>() != null)
         {
+            pressingE.SetActive(false);
             playerPerto = false;
             dialoguePanel.SetActive(false);
             dialogoAtivo = false;

@@ -8,7 +8,7 @@ public class PlayerTeleport : MonoBehaviour
     public Transform teleportUI;
     public PlayableDirector director;
 
-    public float delay = 0.5f; 
+    public float delay = 2.5f; 
 
     bool isTeleporting = false;
 
@@ -26,7 +26,7 @@ public class PlayerTeleport : MonoBehaviour
                 StartCoroutine(TeleportWithDelay());
             }
         }
-    }
+    }   
 
     IEnumerator TeleportWithDelay()
     {
