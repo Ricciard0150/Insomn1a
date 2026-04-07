@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class KeyItem : MonoBehaviour
+public class Door : MonoBehaviour
 {
-    public bool playerHasKey = false;
+    public KeyItem key;
     public KeyCode tecla = KeyCode.E;
 
     private bool playerNear = false;
@@ -11,9 +11,20 @@ public class KeyItem : MonoBehaviour
     {
         if (playerNear && Input.GetKeyDown(tecla))
         {
-            playerHasKey = true;
-            gameObject.SetActive(false); // pega a chave
+            if (key.playerHasKey)
+            {
+                AbrirPorta();
+            }
+            else
+            {
+                Debug.Log("Precisa de uma chave!");
+            }
         }
+    }
+
+    void AbrirPorta()
+    {
+        gameObject.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
