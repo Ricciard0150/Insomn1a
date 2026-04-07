@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer 
+public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
 {
     [SerializeField] float speed = 10f;
     private Vector2 _movement;
     private Rigidbody2D rb;
+
+    public bool canMove = false; // controla se pode se mover
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -12,27 +15,26 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
 
     void Update()
     {
-        //botao 
+        if (!canMove)
+        {
+            _movement = Vector2.zero;
+            return;
+        }
+
         _movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
     }
+
     private void FixedUpdate()
     {
-        //fisica
         rb.linearVelocity = _movement * speed;
     }
-    private void LateUpdate()
-    {
-        //mover a camera 
-        //objetos que seguem
-    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.TryGetComponent(out ITouchable target))
             return;
-        //tryget situa??es q qremos pegar o component mas nao queremos q de erro (tipo bool) e retorna + de um valor (out possibilita criar um novo objeto) 
-        target.Active();
-        // target.
 
+        target.Active();
     }
 
     public void Active()
