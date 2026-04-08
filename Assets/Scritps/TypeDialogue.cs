@@ -86,6 +86,7 @@ public class TypeDialogue : MonoBehaviour
         {
             Fechar();
             window.SetActive(true);
+           
         }
     }
 
