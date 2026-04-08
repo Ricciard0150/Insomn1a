@@ -1,44 +1,158 @@
-using Unity.VisualScripting;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+using TMPro;
 
 public class WindowJumpscare : MonoBehaviour
 {
     public GameObject panel;
+    public GameObject dialogueBox;
     public GameObject pressE;
+
+    public TMP_Text texto;
+    public Image fadePreto;
+
     public KeyCode tecla = KeyCode.E;
     public KeyCode lanterna = KeyCode.Space;
 
-    bool isOpen = false; 
+    public float velocidade = 0.03f;
+
+    public string[] lines;
 
     bool isColliding = false;
+    bool dialogoAtivo = false;
+    bool escrevendo = false;
 
-    public TopDownMovement tdm; 
+    int index = 0;
+
+    public TopDownMovement tdm;
     public BlurController bc;
 
     private void Start()
     {
         pressE.SetActive(false);
+        dialogueBox.SetActive(false);
+        texto.text = "";
+        fadePreto.color = new Color(0, 0, 0, 0);
     }
 
     private void Update()
     {
-       if(Input.GetKeyDown(tecla) && isColliding)
+        // interação inicial
+        if (Input.GetKeyDown(tecla) && isColliding && !dialogoAtivo)
         {
             panel.SetActive(true);
-            isOpen = true;
             bc.AtivarBlur();
             pressE.SetActive(false);
             tdm.canMove = false;
         }
-       if(Input.GetKeyDown(lanterna))
+
+        // inicia sequência
+        if (Input.GetKeyDown(lanterna) && !dialogoAtivo)
         {
             bc.DesativarBlur();
+            StartCoroutine(Sequencia());
+        }
+
+        // 🔥 controle do diálogo
+        if (dialogoAtivo && Input.GetKeyDown(KeyCode.E))
+        {
+            if (escrevendo)
+            {
+                StopAllCoroutines();
+                texto.text = lines[index];
+                escrevendo = false;
+            }
+            else
+            {
+                ProximaLinha();
+            }
         }
     }
+
+    IEnumerator Sequencia()
+    {
+        dialogoAtivo = true;
+
+        yield return new WaitForSeconds(7f);
+
+        dialogueBox.SetActive(true);
+
+        index = 0;
+        StartCoroutine(EscreverLinha());
+    }
+
+    void ProximaLinha()
+    {
+        if (index < lines.Length - 1)
+        {
+            index++;
+            StartCoroutine(EscreverLinha());
+        }
+        else
+        {
+            StartCoroutine(FinalJumpscare());
+        }
+    }
+
+    IEnumerator EscreverLinha()
+    {
+        texto.text = "";
+        escrevendo = true;
+
+        foreach (char letra in lines[index])
+        {
+            texto.text += letra;
+            yield return new WaitForSeconds(velocidade);
+        }
+
+        escrevendo = false;
+    }
+
+    // 💀 PISCAR TELA
+    IEnumerator PiscarTela()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            fadePreto.color = new Color(0, 0, 0, 1);
+            yield return new WaitForSeconds(0.1f);
+
+            fadePreto.color = new Color(0, 0, 0, 0);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    // 💀 FADE FINAL
+    IEnumerator FadeFinal()
+    {
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime;
+            fadePreto.color = new Color(0, 0, 0, t);
+            yield return null;
+        }
+    }
+
+    IEnumerator FinalJumpscare()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        // 🔥 começa o caos
+        yield return StartCoroutine(PiscarTela());
+        yield return StartCoroutine(FadeFinal());
+
+        dialogueBox.SetActive(false);
+        panel.SetActive(false);
+
+        dialogoAtivo = false;
+        tdm.canMove = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent(out IStatusPlayer player))
+        if (collision.TryGetComponent(out IStatusPlayer player))
         {
             isColliding = true;
             pressE.SetActive(true);

@@ -1309,7 +1309,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 1146789417
+  m_SortingLayerID: 779558477
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &564279368
@@ -2087,7 +2087,7 @@ Transform:
   m_GameObject: {fileID: 1019783231}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.1215, y: 0.86198, z: 0}
+  m_LocalPosition: {x: -11.07, y: 0.86198, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2844,7 +2844,7 @@ MonoBehaviour:
   m_Intensity: 1.5
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000310184e537382f60299e5a44
+  m_ApplyToSortingLayers: 00000000310184e537382f60299e5a444d1e772e
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -3468,10 +3468,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WindowJumpscare
   panel: {fileID: 1507609570}
+  dialogueBox: {fileID: 626055950}
   pressE: {fileID: 459130347}
+  texto: {fileID: 1402966181}
+  fadePreto: {fileID: 1517518733}
   tecla: 101
   lanterna: 32
-  tdm: {fileID: 0}
+  velocidade: 0.03
+  lines:
+  - "esse sou... eu|? n\xE3o..."
+  tdm: {fileID: 304347291}
   bc: {fileID: 1810767827}
 --- !u!1 &1507609570
 GameObject:
@@ -3820,7 +3826,7 @@ MonoBehaviour:
   m_Intensity: 0.1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000310184e537382f60299e5a44
+  m_ApplyToSortingLayers: 00000000310184e537382f60299e5a444d1e772e
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0

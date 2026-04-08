@@ -10,7 +10,7 @@ public class BattleRPG : MonoBehaviour
     public TMP_Text opcao1Text;
     public TMP_Text opcao2Text;
     public TMP_Text feedbackText;
-    public GameObject door; 
+    public GameObject door;
 
     [Header("Config")]
     public float velocidadeTexto = 0.03f;
@@ -20,6 +20,11 @@ public class BattleRPG : MonoBehaviour
     private int rodada = 0;
     private int pontos = 0;
     private bool podeEscolher = false;
+
+    // 🔥 controle do texto
+    private bool estaEscrevendo = false;
+    private string fraseAtual;
+    private TMP_Text textoAtual;
 
     private string[] perguntas = {
         "Quais são seus defeitos no ambiente de trabalho?",
@@ -34,9 +39,19 @@ public class BattleRPG : MonoBehaviour
     };
 
     private int[] respostasCorretas = { 1, 0, 1 };
+
     void Update()
     {
         if (!estaAtivo) return;
+
+        // 🔥 apertar E pra completar texto
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (estaEscrevendo)
+            {
+                estaEscrevendo = false;
+            }
+        }
 
         if (podeEscolher)
         {
@@ -69,7 +84,7 @@ public class BattleRPG : MonoBehaviour
         opcao2Text.text = "";
         feedbackText.text = "";
 
-        yield return StartCoroutine(EscreverTexto(perguntaText, perguntas[rodada]));
+        yield return StartCoroutine(Escrever(perguntaText, perguntas[rodada]));
 
         opcao1Text.text = "1 - " + opcoes[rodada, 0];
         opcao2Text.text = "2 - " + opcoes[rodada, 1];
@@ -84,19 +99,19 @@ public class BattleRPG : MonoBehaviour
         if (escolha == respostasCorretas[rodada])
         {
             pontos++;
-            yield return StartCoroutine(EscreverTexto(feedbackText, "Parece convincente!"));
+            yield return StartCoroutine(Escrever(feedbackText, "Parece convincente!"));
         }
         else
         {
             pontos--;
-            yield return StartCoroutine(EscreverTexto(feedbackText, "Eh, interessante..."));
+            yield return StartCoroutine(Escrever(feedbackText, "Eh, interessante..."));
         }
 
         yield return new WaitForSeconds(1f);
 
         rodada++;
 
-        if (rodada < 3)
+        if (rodada < perguntas.Length)
         {
             StartCoroutine(MostrarRodada());
         }
@@ -112,8 +127,11 @@ public class BattleRPG : MonoBehaviour
         opcao1Text.text = "";
         opcao2Text.text = "";
 
-        string resultado = pontos > 1 ?   "Enviaremos um email mais tarde comunicando seu resultado.": "Obrigado, mas há outros candidatos à frente.";
-        yield return StartCoroutine(EscreverTexto(feedbackText, resultado));
+        string resultado = pontos > 1
+            ? "Enviaremos um email mais tarde comunicando seu resultado."
+            : "Obrigado, mas há outros candidatos à frente.";
+
+        yield return StartCoroutine(Escrever(feedbackText, resultado));
 
         yield return new WaitForSeconds(2f);
 
@@ -122,14 +140,27 @@ public class BattleRPG : MonoBehaviour
         Destroy(door);
     }
 
-    IEnumerator EscreverTexto(TMP_Text textoUI, string frase)
+    // 🔥 sistema de texto com skip
+    IEnumerator Escrever(TMP_Text textoUI, string frase)
     {
+        estaEscrevendo = true;
+        fraseAtual = frase;
+        textoAtual = textoUI;
+
         textoUI.text = "";
 
         foreach (char letra in frase)
         {
+            if (!estaEscrevendo)
+            {
+                textoUI.text = frase;
+                yield break;
+            }
+
             textoUI.text += letra;
             yield return new WaitForSeconds(velocidadeTexto);
         }
+
+        estaEscrevendo = false;
     }
 }

@@ -51,5 +51,8 @@ TagManager:
   - name: Int.Objects
     uniqueID: 1146789417
     locked: 0
+  - name: hud
+    uniqueID: 779558477
+    locked: 0
   m_RenderingLayers:
   - Default
