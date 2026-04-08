@@ -38,7 +38,6 @@ public class WindowJumpscare : MonoBehaviour
 
     private void Update()
     {
-        // interação inicial
         if (Input.GetKeyDown(tecla) && isColliding && !dialogoAtivo)
         {
             panel.SetActive(true);
@@ -47,14 +46,12 @@ public class WindowJumpscare : MonoBehaviour
             tdm.canMove = false;
         }
 
-        // inicia sequência
         if (Input.GetKeyDown(lanterna) && !dialogoAtivo)
         {
-            bc.DesativarBlur();
-            StartCoroutine(Sequencia());
+                bc.DesativarBlur();
+                StartCoroutine(Sequencia());
         }
 
-        // 🔥 controle do diálogo
         if (dialogoAtivo && Input.GetKeyDown(KeyCode.E))
         {
             if (escrevendo)
@@ -112,7 +109,7 @@ public class WindowJumpscare : MonoBehaviour
     // 💀 PISCAR TELA
     IEnumerator PiscarTela()
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 3; i++)
         {
             fadePreto.color = new Color(0, 0, 0, 1);
             yield return new WaitForSeconds(0.1f);
@@ -122,7 +119,6 @@ public class WindowJumpscare : MonoBehaviour
         }
     }
 
-    // 💀 FADE FINAL
     IEnumerator FadeFinal()
     {
         float t = 0;
@@ -139,7 +135,6 @@ public class WindowJumpscare : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        // 🔥 começa o caos
         yield return StartCoroutine(PiscarTela());
         yield return StartCoroutine(FadeFinal());
 
