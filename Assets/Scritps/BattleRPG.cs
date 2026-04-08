@@ -5,6 +5,7 @@ using TMPro;
 public class BattleRPG : MonoBehaviour
 {
     [Header("UI")]
+    public GameObject door;
     public GameObject panel;
     public TMP_Text perguntaText;
     public TMP_Text opcao1Text;
@@ -15,6 +16,8 @@ public class BattleRPG : MonoBehaviour
     public float velocidadeTexto = 0.03f;
 
     [HideInInspector] public bool estaAtivo = false;
+    
+
 
     private int rodada = 0;
     private int pontos = 0;
@@ -134,6 +137,7 @@ public class BattleRPG : MonoBehaviour
 
         panel.SetActive(false);
         estaAtivo = false;
+        Destroy(door);
     }
 
     // 🔥 sistema de texto com skip

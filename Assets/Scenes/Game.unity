@@ -1827,6 +1827,73 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &479851623
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 479851625}
+  - component: {fileID: 479851624}
+  m_Layer: 0
+  m_Name: RPGcontroller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &479851624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479851623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd88718e72c264f4a9e3b99cfff25ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SystemRPGnormal
+  panel: {fileID: 684994836}
+  perguntaText: {fileID: 1007355977}
+  opcoesText:
+  - {fileID: 1779001712}
+  - {fileID: 132068668}
+  feedbackText: {fileID: 48416039}
+  velocidadeTexto: 0.03
+  estaAtivo: 0
+  perguntas:
+  - pergunta: kakaka
+    opcoes:
+    - asdasda
+    - pe 2a
+    respostaCorreta: 0
+    feedbackCorreto: asdkisjaf
+    feedbackErrado: cu
+  - pergunta: lalalallaa
+    opcoes:
+    - aaaaaa
+    - ga
+    respostaCorreta: 1
+    feedbackCorreto: oioi
+    feedbackErrado: akakaka
+--- !u!4 &479851625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479851623}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.55483, y: -5.65564, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &513977021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1857,11 +1924,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2336477933653160998, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.79
+      value: 3.58
       objectReference: {fileID: 0}
     - target: {fileID: 2336477933653160998, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.95
+      value: -9.94
       objectReference: {fileID: 0}
     - target: {fileID: 2336477933653160998, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3733,12 +3800,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d472ca013b62b64aa65832061ac7b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleRPG
+  door: {fileID: 0}
   panel: {fileID: 684994836}
   perguntaText: {fileID: 1007355977}
   opcao1Text: {fileID: 1779001712}
   opcao2Text: {fileID: 132068668}
   feedbackText: {fileID: 48416039}
-  door: {fileID: 2136594062}
   velocidadeTexto: 0.03
   estaAtivo: 0
 --- !u!4 &1125300420
@@ -3873,7 +3940,7 @@ GameObject:
   - component: {fileID: 1356329577}
   - component: {fileID: 1356329576}
   - component: {fileID: 1356329575}
-  - component: {fileID: 1356329574}
+  - component: {fileID: 1356329578}
   m_Layer: 0
   m_Name: Atendente (1)
   m_TagString: Untagged
@@ -3881,25 +3948,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1356329574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356329573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  falas:
-  - "Desculpe, senhor Kafka, mas temos candidatos \xE0 frente. Volte sempre."
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
 --- !u!61 &1356329575
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4019,6 +4067,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1356329578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356329573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7627deb7205f0e54ea898dd6a0c68f59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteragirRPGnormal
+  sistemaRPG: {fileID: 479851624}
+  pressE: {fileID: 150873144}
 --- !u!1 &1457307594
 GameObject:
   m_ObjectHideFlags: 0
@@ -5542,3 +5604,4 @@ SceneRoots:
   - {fileID: 411485141}
   - {fileID: 513977021}
   - {fileID: 105501825}
+  - {fileID: 479851625}
