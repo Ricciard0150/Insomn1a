@@ -3897,7 +3897,7 @@ MonoBehaviour:
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
   falas:
-  - Obrigado senhor, espero quw consiga a vaga aqui!
+  - "Desculpe, senhor Kafka, mas temos candidatos \xE0 frente. Volte sempre."
   velocidadeTexto: 0.05
   teclaInteragir: 101
 --- !u!61 &1356329575

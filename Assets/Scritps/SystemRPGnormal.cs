@@ -2,7 +2,15 @@
 using UnityEngine;
 using TMPro;
 
-public class BattleRPG : MonoBehaviour
+[System.Serializable]
+public class PerguntaRPG
+{
+    public string pergunta;        // Pergunta que aparece na tela
+    public string[] opcoes;        // Array de opções (mínimo 2)
+    public int respostaCorreta;    // Índice da opção correta (0 ou 1)
+}
+
+public class SystemRPGnormal : MonoBehaviour
 {
     [Header("UI")]
     public GameObject panel;
@@ -10,11 +18,15 @@ public class BattleRPG : MonoBehaviour
     public TMP_Text opcao1Text;
     public TMP_Text opcao2Text;
     public TMP_Text feedbackText;
+    public GameObject door;
 
     [Header("Config")]
     public float velocidadeTexto = 0.03f;
 
     [HideInInspector] public bool estaAtivo = false;
+
+    [Header("Perguntas")]
+    public PerguntaRPG[] perguntas;
 
     private int rodada = 0;
     private int pontos = 0;
@@ -24,24 +36,11 @@ public class BattleRPG : MonoBehaviour
     private string fraseAtual;
     private TMP_Text textoAtual;
 
-    private string[] perguntas = {
-        "Quais são seus defeitos no ambiente de trabalho?",
-        "Qual as suas experiências no mercado?",
-        "Qual o salário que você pretende ganhar?"
-    };
-
-    private string[,] opcoes = {
-        { "Ah, sou perfeccionista demais", "Dificuldade de adaptação inicial" },
-        { "Já trabalhei como escritor e roteirista", "Não muitas..." },
-        { "O máximo que a empresa oferecer", "Um salário que caiba no orçamento da empresa para alguém que está começando" }
-    };
-
-    private int[] respostasCorretas = { 1, 0, 1 };
-
     void Update()
     {
         if (!estaAtivo) return;
 
+        // Skip do texto
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (estaEscrevendo)
@@ -54,7 +53,6 @@ public class BattleRPG : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
                 StartCoroutine(ProcessarEscolha(0));
-
             else if (Input.GetKeyDown(KeyCode.Alpha2))
                 StartCoroutine(ProcessarEscolha(1));
         }
@@ -81,10 +79,17 @@ public class BattleRPG : MonoBehaviour
         opcao2Text.text = "";
         feedbackText.text = "";
 
-        yield return StartCoroutine(Escrever(perguntaText, perguntas[rodada]));
+        // Valida se tem pelo menos 2 opções
+        if (perguntas[rodada].opcoes.Length < 2)
+        {
+            Debug.LogError("Cada pergunta precisa ter pelo menos 2 opções!");
+            yield break;
+        }
 
-        opcao1Text.text = "1 - " + opcoes[rodada, 0];
-        opcao2Text.text = "2 - " + opcoes[rodada, 1];
+        yield return StartCoroutine(Escrever(perguntaText, perguntas[rodada].pergunta));
+
+        opcao1Text.text = "1 - " + perguntas[rodada].opcoes[0];
+        opcao2Text.text = "2 - " + perguntas[rodada].opcoes[1];
 
         podeEscolher = true;
     }
@@ -93,7 +98,7 @@ public class BattleRPG : MonoBehaviour
     {
         podeEscolher = false;
 
-        if (escolha == respostasCorretas[rodada])
+        if (escolha == perguntas[rodada].respostaCorreta)
         {
             pontos++;
             yield return StartCoroutine(Escrever(feedbackText, "Parece convincente!"));
@@ -134,9 +139,10 @@ public class BattleRPG : MonoBehaviour
 
         panel.SetActive(false);
         estaAtivo = false;
+        Destroy(door);
     }
 
-    // 🔥 sistema de texto com skip
+    // 🔥 Sistema de texto com skip
     IEnumerator Escrever(TMP_Text textoUI, string frase)
     {
         estaEscrevendo = true;

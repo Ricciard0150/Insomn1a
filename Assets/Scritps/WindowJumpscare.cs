@@ -71,7 +71,7 @@ public class WindowJumpscare : MonoBehaviour
     {
         dialogoAtivo = true;
 
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(3f);
 
         dialogueBox.SetActive(true);
 
@@ -109,7 +109,7 @@ public class WindowJumpscare : MonoBehaviour
     // 💀 PISCAR TELA
     IEnumerator PiscarTela()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 6; i++)
         {
             fadePreto.color = new Color(0, 0, 0, 1);
             yield return new WaitForSeconds(0.1f);
