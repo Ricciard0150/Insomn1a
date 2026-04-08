@@ -6,7 +6,12 @@ public class KeyItem : MonoBehaviour
     public KeyCode tecla = KeyCode.E;
 
     private bool playerNear = false;
+    public GameObject pressE;
 
+    private void Start()
+    {
+        pressE.SetActive(false);
+    }
     void Update()
     {
         if (playerNear && Input.GetKeyDown(tecla))
@@ -21,6 +26,7 @@ public class KeyItem : MonoBehaviour
         if (collision.TryGetComponent(out IStatusPlayer player))
         {
             playerNear = true;
+            pressE.SetActive(true);
         }
     }
 
@@ -29,6 +35,7 @@ public class KeyItem : MonoBehaviour
         if (collision.TryGetComponent(out IStatusPlayer player))
         {
             playerNear = false;
+            pressE.SetActive(false);
         }
     }
 }
