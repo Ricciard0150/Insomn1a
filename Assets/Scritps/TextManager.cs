@@ -1,8 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using System.Runtime.CompilerServices;
 
 public class TextManager : MonoBehaviour
 {
@@ -21,10 +19,12 @@ public class TextManager : MonoBehaviour
     private int index = 0;
     private Coroutine typingCoroutine;
 
-    private void Start()
+    void Start()
     {
-        
+        dialoguePanel.SetActive(false);
+        pressingE.SetActive(false);
     }
+
     void Update()
     {
         if (playerPerto && Input.GetKeyDown(teclaInteragir))
@@ -34,14 +34,17 @@ public class TextManager : MonoBehaviour
                 dialogoAtivo = true;
                 dialoguePanel.SetActive(true);
                 index = 0;
-                typingCoroutine = StartCoroutine(EscreverTexto());
+
+                StartTyping();
+
                 pressingE.SetActive(false);
             }
             else
             {
                 if (dialogueText.text != falas[index])
                 {
-                    StopCoroutine(typingCoroutine);
+                    // COMPLETA TEXTO
+                    StopTyping();
                     dialogueText.text = falas[index];
                 }
                 else
@@ -50,16 +53,28 @@ public class TextManager : MonoBehaviour
 
                     if (index < falas.Length)
                     {
-                        typingCoroutine = StartCoroutine(EscreverTexto());
+                        StartTyping();
                     }
                     else
                     {
-                        dialoguePanel.SetActive(false);
-                        dialogoAtivo = false;
-                        pressingE.SetActive(true);
+                        FecharDialogo();
                     }
                 }
             }
+        }
+    }
+
+    void StartTyping()
+    {
+        StopTyping(); // 🔥 garante que não duplica
+        typingCoroutine = StartCoroutine(EscreverTexto());
+    }
+
+    void StopTyping()
+    {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
         }
     }
 
@@ -72,6 +87,15 @@ public class TextManager : MonoBehaviour
             dialogueText.text += letra;
             yield return new WaitForSeconds(velocidadeTexto);
         }
+    }
+
+    void FecharDialogo()
+    {
+        StopTyping();
+
+        dialoguePanel.SetActive(false);
+        dialogoAtivo = false;
+        pressingE.SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -87,10 +111,10 @@ public class TextManager : MonoBehaviour
     {
         if (other.GetComponent<IStatusPlayer>() != null)
         {
-            pressingE.SetActive(false);
             playerPerto = false;
-            dialoguePanel.SetActive(false);
-            dialogoAtivo = false;
+            pressingE.SetActive(false);
+
+            FecharDialogo(); // 🔥 fecha limpo
         }
     }
 }

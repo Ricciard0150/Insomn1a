@@ -17,6 +17,7 @@ public class DialogueStart : MonoBehaviour
     private bool terminouFrase = false;
     private Coroutine typingCoroutine;
 
+    public TopDownMovement tdm;
     void Start()
     {
         dialoguePanel.SetActive(true);
@@ -49,6 +50,7 @@ public class DialogueStart : MonoBehaviour
                 {
                     // 👉 acabou tudo
                     dialoguePanel.SetActive(false);
+                    tdm.canMove = true;
                 }
             }
         }

@@ -15,15 +15,7 @@ public class PlayerTeleport : MonoBehaviour
 
     bool isTeleporting = false;
 
-    void Start()
-    {
-        // começa transparente
-        if (fadePanel != null)
-        {
-            Color c = fadePanel.color;
-            fadePanel.color = new Color(c.r, c.g, c.b, 0f);
-        }
-    }
+    
 
     void OnTriggerEnter2D(Collider2D collision)
     {
