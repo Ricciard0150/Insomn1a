@@ -51,6 +51,9 @@ TagManager:
   - name: Int.Objects
     uniqueID: 1146789417
     locked: 0
+  - name: Player2
+    uniqueID: 1131675919
+    locked: 0
   - name: hud
     uniqueID: 779558477
     locked: 0
