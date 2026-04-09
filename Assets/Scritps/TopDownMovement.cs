@@ -6,7 +6,10 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
     private Vector2 _movement;
     private Rigidbody2D rb;
 
-    public bool canMove = false; // controla se pode se mover
+    public bool canMove = false;
+
+    [Header("Áudio de Passo")]
+    [SerializeField] private AudioSource footstepAudio;
 
     void Start()
     {
@@ -18,10 +21,21 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
         if (!canMove)
         {
             _movement = Vector2.zero;
+            StopFootstep();
             return;
         }
 
         _movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        // Verifica se está andando
+        if (_movement != Vector2.zero)
+        {
+            PlayFootstep();
+        }
+        else
+        {
+            StopFootstep();
+        }
     }
 
     private void FixedUpdate()
@@ -35,6 +49,22 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
             return;
 
         target.Active();
+    }
+
+    void PlayFootstep()
+    {
+        if (!footstepAudio.isPlaying)
+        {
+            footstepAudio.Play();
+        }
+    }
+
+    void StopFootstep()
+    {
+        if (footstepAudio.isPlaying)
+        {
+            footstepAudio.Stop();
+        }
     }
 
     public void Active()
