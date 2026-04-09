@@ -13,11 +13,13 @@ public class TextManager : MonoBehaviour
     public string[] falas;
     public float velocidadeTexto = 0.05f;
     public KeyCode teclaInteragir = KeyCode.E;
+    public KeyCode closeKey = KeyCode.Q;
 
     private bool playerPerto = false;
     private bool dialogoAtivo = false;
     private int index = 0;
     private Coroutine typingCoroutine;
+    public TopDownMovement tdm;
 
     void Start()
     {
@@ -31,6 +33,7 @@ public class TextManager : MonoBehaviour
         {
             if (!dialogoAtivo)
             {
+                tdm.canMove = false;
                 dialogoAtivo = true;
                 dialoguePanel.SetActive(true);
                 index = 0;
@@ -42,7 +45,6 @@ public class TextManager : MonoBehaviour
             {
                 if (dialogueText.text != falas[index])
                 {
-                    // COMPLETA TEXTO
                     StopTyping();
                     dialogueText.text = falas[index];
                 }
@@ -54,18 +56,20 @@ public class TextManager : MonoBehaviour
                     {
                         StartTyping();
                     }
-                    else
+                    else 
                     {
                         FecharDialogo();
+                        tdm.canMove = true;
                     }
                 }
             }
         }
+        
     }
 
     void StartTyping()
     {
-        StopTyping(); // 🔥 garante que não duplica
+        StopTyping(); 
         typingCoroutine = StartCoroutine(EscreverTexto());
     }
 
