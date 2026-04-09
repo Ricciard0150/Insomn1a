@@ -19,33 +19,42 @@ public class SystemRPGnormal : MonoBehaviour
     [Header("UI")]
     public GameObject panel;
     public TMP_Text perguntaText;
-    public TMP_Text[] opcoesText; 
+    public TMP_Text[] opcoesText;
     public TMP_Text feedbackText;
 
     [Header("Config")]
     public float velocidadeTexto = 0.03f;
 
-    [HideInInspector] public bool estaAtivo = false;
+    [Header("Sistema")]
+    public int vidaMaxima = 3;
+    public int acertosMinimos = 2;
+
+    private int vidaAtual;
+    private int pontos;
+    private int rodada;
+
+    private bool podeEscolher = false;
+    private bool estaEscrevendo = false;
+    public bool estaAtivo = false;
+
+    [Header("Dialogo Final")]
+    public DialogueRPG dialogueSystem;
+    public string[] falasVitoria;
+    public string[] falasDerrota;
+
+    [Header("Respawn")]
+    public GameObject player;
+    public Transform pontoRespawn;
 
     [Header("Perguntas")]
     public PerguntaRPG[] perguntas;
 
-    private int rodada = 0;
-    private int pontos = 0;
-    private bool podeEscolher = false;
-
-    private bool estaEscrevendo = false;
-
+    [Header("Objetos Pós-RPG")]
+    public GameObject objetoAtivar;   
+    public GameObject objetoDesativar; 
     void Update()
     {
         if (!estaAtivo) return;
-
-        // Skip do texto
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (estaEscrevendo)
-                estaEscrevendo = false;
-        }
 
         if (podeEscolher)
         {
@@ -53,7 +62,9 @@ public class SystemRPGnormal : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1 + i))
                 {
+                    podeEscolher = false;
                     StartCoroutine(ProcessarEscolha(i));
+                    break;
                 }
             }
         }
@@ -66,6 +77,7 @@ public class SystemRPGnormal : MonoBehaviour
         estaAtivo = true;
         rodada = 0;
         pontos = 0;
+        vidaAtual = vidaMaxima;
 
         panel.SetActive(true);
         StartCoroutine(MostrarRodada());
@@ -78,21 +90,13 @@ public class SystemRPGnormal : MonoBehaviour
         perguntaText.text = "";
         feedbackText.text = "";
 
-        // Limpa todas opções
         foreach (var txt in opcoesText)
             txt.text = "";
 
         var perguntaAtual = perguntas[rodada];
 
-        if (perguntaAtual.opcoes.Length == 0)
-        {
-            Debug.LogError("A pergunta precisa ter opções!");
-            yield break;
-        }
-
         yield return StartCoroutine(Escrever(perguntaText, perguntaAtual.pergunta));
 
-        // Preenche dinamicamente
         for (int i = 0; i < opcoesText.Length; i++)
         {
             if (i < perguntaAtual.opcoes.Length)
@@ -111,19 +115,31 @@ public class SystemRPGnormal : MonoBehaviour
 
     IEnumerator ProcessarEscolha(int escolha)
     {
-        podeEscolher = false;
-
         var perguntaAtual = perguntas[rodada];
 
         if (escolha == perguntaAtual.respostaCorreta)
         {
             pontos++;
-            yield return StartCoroutine(Escrever(feedbackText, perguntaAtual.feedbackCorreto));
+
+            yield return StartCoroutine(
+                Escrever(feedbackText, perguntaAtual.feedbackCorreto)
+            );
         }
         else
         {
-            pontos--;
-            yield return StartCoroutine(Escrever(feedbackText, perguntaAtual.feedbackErrado));
+            vidaAtual--;
+
+            yield return StartCoroutine(
+                Escrever(feedbackText,
+                perguntaAtual.feedbackErrado + "\nVida: " + vidaAtual)
+            );
+
+            if (vidaAtual <= 0)
+            {
+                yield return new WaitForSeconds(1f);
+                yield return StartCoroutine(Finalizar());
+                yield break;
+            }
         }
 
         yield return new WaitForSeconds(1f);
@@ -138,20 +154,48 @@ public class SystemRPGnormal : MonoBehaviour
 
     IEnumerator Finalizar()
     {
-        perguntaText.text = "";
-        foreach (var txt in opcoesText)
-            txt.text = "";
-
-        string resultado = pontos > 1
-            ? "Muito obrigado por comparecer. Seu resultado será comunicado com a atendente na saída"
-            : "Obrigado, mas há outros candidatos à frente.";
-
-        yield return StartCoroutine(Escrever(feedbackText, resultado));
-
-        yield return new WaitForSeconds(2f);
-
         panel.SetActive(false);
         estaAtivo = false;
+
+        // 👇 AQUI ACONTECE A TROCA
+        if (objetoAtivar != null)
+            objetoAtivar.SetActive(true);
+
+        if (objetoDesativar != null)
+            objetoDesativar.SetActive(false);
+
+        if (pontos >= acertosMinimos && vidaAtual > 0)
+        {
+            yield return StartCoroutine(Vitoria());
+        }
+        else
+        {
+            yield return StartCoroutine(Derrota());
+        }
+    }
+
+    IEnumerator Vitoria()
+    {
+        if (dialogueSystem != null)
+        {
+            dialogueSystem.IniciarDialogo(falasVitoria);
+            yield return new WaitWhile(() => dialogueSystem.EstaRodando());
+        }
+    }
+
+    IEnumerator Derrota()
+    {
+        if (dialogueSystem != null)
+        {
+            dialogueSystem.IniciarDialogo(falasDerrota);
+            yield return new WaitWhile(() => dialogueSystem.EstaRodando());
+        }
+
+        // Respawn depois do diálogo
+        if (player != null && pontoRespawn != null)
+        {
+            player.transform.position = pontoRespawn.position;
+        }
     }
 
     IEnumerator Escrever(TMP_Text textoUI, string frase)
@@ -161,12 +205,6 @@ public class SystemRPGnormal : MonoBehaviour
 
         foreach (char letra in frase)
         {
-            if (!estaEscrevendo)
-            {
-                textoUI.text = frase;
-                yield break;
-            }
-
             textoUI.text += letra;
             yield return new WaitForSeconds(velocidadeTexto);
         }
