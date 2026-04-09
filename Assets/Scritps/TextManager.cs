@@ -37,7 +37,6 @@ public class TextManager : MonoBehaviour
 
                 StartTyping();
 
-                pressingE.SetActive(false);
             }
             else
             {
@@ -98,23 +97,21 @@ public class TextManager : MonoBehaviour
         pressingE.SetActive(true);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.GetComponent<IStatusPlayer>() != null)
+        if (collision.GetComponent<IStatusPlayer>() != null)
         {
             pressingE.SetActive(true);
             playerPerto = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (other.GetComponent<IStatusPlayer>() != null)
+        if (collision.GetComponent<IStatusPlayer>() != null)
         {
             playerPerto = false;
             pressingE.SetActive(false);
-
-            FecharDialogo(); // 🔥 fecha limpo
         }
     }
 }
