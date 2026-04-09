@@ -28,9 +28,6 @@ public class WindowJumpscare : MonoBehaviour
     public TopDownMovement tdm;
     public BlurController bc;
 
-    [Header("Áudio Jumpscare")]
-    [SerializeField] private AudioSource jumpscareAudio;
-
     private void Start()
     {
         pressE.SetActive(false);
@@ -51,8 +48,8 @@ public class WindowJumpscare : MonoBehaviour
 
         if (Input.GetKeyDown(lanterna) && !dialogoAtivo)
         {
-            bc.DesativarBlur();
-            StartCoroutine(Sequencia());
+                bc.DesativarBlur();
+                StartCoroutine(Sequencia());
         }
 
         if (dialogoAtivo && Input.GetKeyDown(KeyCode.E))
@@ -109,15 +106,9 @@ public class WindowJumpscare : MonoBehaviour
         escrevendo = false;
     }
 
-    // 💀 PISCAR TELA + SOM
+    // 💀 PISCAR TELA
     IEnumerator PiscarTela()
     {
-        // 🔊 toca o som aqui (junto com o efeito)
-        if (jumpscareAudio != null)
-        {
-            jumpscareAudio.Play();
-        }
-
         for (int i = 0; i < 6; i++)
         {
             fadePreto.color = new Color(0, 0, 0, 1);
@@ -125,12 +116,6 @@ public class WindowJumpscare : MonoBehaviour
 
             fadePreto.color = new Color(0, 0, 0, 0);
             yield return new WaitForSeconds(0.1f);
-        }
-
-        // 🔇 para o som quando acabar o efeito
-        if (jumpscareAudio != null && jumpscareAudio.isPlaying)
-        {
-            jumpscareAudio.Stop();
         }
     }
 
