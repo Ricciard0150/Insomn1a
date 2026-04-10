@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InteragirRPGnormal : MonoBehaviour
+public class InteractionRPGnormal : MonoBehaviour
 {
     public SystemRPGnormal sistemaRPG; // arrasta no Inspector
     private bool playerPerto = false;

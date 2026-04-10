@@ -17,8 +17,13 @@ public class DialogueRPG : MonoBehaviour
     private bool dialogoAtivo;
     private Coroutine coroutine;
 
+    
+   [SerializeField] public GameObject target;
+
     void Update()
+
     {
+ 
         if (!dialogoAtivo) return;
 
         // 🔥 FECHAR DIRETO COM SPACE
@@ -50,6 +55,7 @@ public class DialogueRPG : MonoBehaviour
                 else
                 {
                     Encerrar();
+                   
                 }
             }
         }
@@ -73,6 +79,17 @@ public class DialogueRPG : MonoBehaviour
             StopCoroutine(coroutine);
 
         coroutine = StartCoroutine(Escrever());
+
+
+        InteractionRPGnormal rpg = target.GetComponent<InteractionRPGnormal>();
+        if (rpg == null)
+        {
+            Debug.Log("oebs");
+        }
+        else
+        {
+            Destroy(rpg);
+        }
     }
 
     IEnumerator Escrever()
@@ -96,6 +113,7 @@ public class DialogueRPG : MonoBehaviour
 
         dialoguePanel.SetActive(false);
         dialogoAtivo = false;
+        
     }
 
     public bool EstaRodando()

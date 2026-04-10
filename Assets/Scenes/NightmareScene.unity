@@ -413,6 +413,8 @@ MonoBehaviour:
   - "Ah... os curr\xEDculos que meu pai rasgou..."
   velocidadeTexto: 0.05
   teclaInteragir: 101
+  closeKey: 113
+  tdm: {fileID: 0}
 --- !u!61 &187032043
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2709,8 +2711,8 @@ PolygonCollider2D:
       - {x: -9.350387, y: -1.5438778}
       - {x: -8.977707, y: -1.6367235}
       - {x: -8.833399, y: 6.2092056}
-      - {x: -8.878029, y: 28.907898}
-      - {x: -34.484894, y: 28.9453}
+      - {x: -8.929058, y: 32.990185}
+      - {x: -33.97461, y: 33.027588}
       - {x: -34.32474, y: 42.156178}
       - {x: -28.411245, y: 42.127426}
       - {x: -28.39265, y: 43.786705}
@@ -2728,8 +2730,8 @@ PolygonCollider2D:
       - {x: 10.359392, y: 44.22536}
       - {x: 10.44816, y: 41.80081}
       - {x: 19.993427, y: 42.42597}
-      - {x: 20.003738, y: 29.00961}
-      - {x: -4.9882064, y: 28.91533}
+      - {x: 19.646538, y: 32.98984}
+      - {x: -4.8861494, y: 33.25276}
       - {x: -5.106303, y: -1.7724876}
       - {x: -4.699328, y: -1.6399758}
       - {x: -4.6470094, y: 6.18221}
@@ -2985,8 +2987,8 @@ Transform:
   m_GameObject: {fileID: 1216586057}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -34.7412, y: 41.8258, z: 0}
-  m_LocalScale: {x: -1.1489753, y: -27.556932, z: 1}
+  m_LocalPosition: {x: -34.7412, y: 44.222, z: 0}
+  m_LocalScale: {x: -1.1489753, y: -22.764782, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1062910202}
@@ -3391,7 +3393,7 @@ Transform:
   m_GameObject: {fileID: 1340310345}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.8356, y: 28.6252, z: 0}
+  m_LocalPosition: {x: -22.05, y: 32.78, z: 0}
   m_LocalScale: {x: 26.331034, y: -0.88685054, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3558,8 +3560,8 @@ Transform:
   m_GameObject: {fileID: 1393743388}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.9609, y: 35.0852, z: 0}
-  m_LocalScale: {x: -1.0195615, y: 14.324636, z: 1}
+  m_LocalPosition: {x: 19.9609, y: 37.407, z: 0}
+  m_LocalScale: {x: -1.0195615, y: 9.68059, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1062910202}
@@ -3863,8 +3865,8 @@ Transform:
   m_GameObject: {fileID: 1415197565}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.5544, y: 28.2545, z: 0}
-  m_LocalScale: {x: 25.813246, y: -1.5627905, z: 1}
+  m_LocalPosition: {x: 7.5544, y: 32.95, z: 0}
+  m_LocalScale: {x: 25.813246, y: -0.9505447, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1062910202}
@@ -3953,8 +3955,8 @@ Transform:
   m_GameObject: {fileID: 1424782635}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.9417, y: 13.3864, z: 0}
-  m_LocalScale: {x: 0.95839614, y: 30.502314, z: 1}
+  m_LocalPosition: {x: -4.9417, y: 15.4785, z: 0}
+  m_LocalScale: {x: 0.95839614, y: 34.68709, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1062910202}
@@ -4158,6 +4160,8 @@ MonoBehaviour:
   - Ah... a porta trancada dos meus pais... como sempre.
   velocidadeTexto: 0.05
   teclaInteragir: 101
+  closeKey: 113
+  tdm: {fileID: 0}
 --- !u!61 &1497457935
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4466,6 +4470,8 @@ MonoBehaviour:
   - "Apenas uma c\xF4moda normal. Hoje em dia os cupins usam mais ela do que eu."
   velocidadeTexto: 0.05
   teclaInteragir: 101
+  closeKey: 113
+  tdm: {fileID: 0}
 --- !u!61 &1551172304
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4707,6 +4713,8 @@ MonoBehaviour:
   - "\xC9 s\xF3 o balc\xE3o da cozinha."
   velocidadeTexto: 0.05
   teclaInteragir: 101
+  closeKey: 113
+  tdm: {fileID: 0}
 --- !u!61 &1714670740
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5579,8 +5587,8 @@ Transform:
   m_GameObject: {fileID: 2037097607}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.1255, y: 13.6406, z: 0}
-  m_LocalScale: {x: 0.85092765, y: 31.010893, z: 1}
+  m_LocalPosition: {x: -9.1469, y: 15.5876, z: 0}
+  m_LocalScale: {x: 0.808126, y: 34.90586, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1062910202}

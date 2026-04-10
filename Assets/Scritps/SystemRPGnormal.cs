@@ -157,7 +157,6 @@ public class SystemRPGnormal : MonoBehaviour
         panel.SetActive(false);
         estaAtivo = false;
 
-        // 👇 AQUI ACONTECE A TROCA
         if (objetoAtivar != null)
             objetoAtivar.SetActive(true);
 

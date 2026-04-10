@@ -3276,11 +3276,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2336477933653160998, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -51.81
+      value: 59.9
       objectReference: {fileID: 0}
     - target: {fileID: 2336477933653160998, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 69.69
+      value: 179.8
       objectReference: {fileID: 0}
     - target: {fileID: 2336477933653160998, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11332,6 +11332,7 @@ MonoBehaviour:
   velocidadeTexto: 0.05
   teclaAvancar: 101
   teclaFechar: 32
+  target: {fileID: 557457674}
 --- !u!4 &1824086558
 Transform:
   m_ObjectHideFlags: 0
