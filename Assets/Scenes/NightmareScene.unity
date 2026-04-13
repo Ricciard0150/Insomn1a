@@ -414,7 +414,7 @@ MonoBehaviour:
   velocidadeTexto: 0.05
   teclaInteragir: 101
   closeKey: 113
-  tdm: {fileID: 0}
+  tdm: {fileID: 304347291}
 --- !u!61 &187032043
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3411,8 +3411,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4690,7 +4690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1517518732
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5030,7 +5030,7 @@ MonoBehaviour:
   velocidadeTexto: 0.05
   teclaInteragir: 101
   closeKey: 113
-  tdm: {fileID: 0}
+  tdm: {fileID: 304347291}
 --- !u!61 &1714670740
 BoxCollider2D:
   m_ObjectHideFlags: 0

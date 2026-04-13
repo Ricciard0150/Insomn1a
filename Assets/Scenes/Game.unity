@@ -3276,11 +3276,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2336477933653160998, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 59.9
+      value: -51.6
       objectReference: {fileID: 0}
     - target: {fileID: 2336477933653160998, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 179.8
+      value: 69.1
       objectReference: {fileID: 0}
     - target: {fileID: 2336477933653160998, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3316,11 +3316,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4448400867013546583, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 49.3
+      value: 49.02
       objectReference: {fileID: 0}
     - target: {fileID: 4448400867013546583, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -55.2
+      value: -54.67
       objectReference: {fileID: 0}
     - target: {fileID: 6620107673163882216, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_Name
@@ -6228,7 +6228,7 @@ Transform:
   m_GameObject: {fileID: 923329084}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 155.63, y: 95.62, z: 0}
+  m_LocalPosition: {x: 155.63, y: 95.67, z: 0}
   m_LocalScale: {x: 0.71128315, y: 0.7389328, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6250,9 +6250,9 @@ MonoBehaviour:
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
   falas:
-  - "Senhor Kafka! que prazer v\xEA-lo! A sala de sua entrevista est\xE1 mais \xE0
-    direita!"
-  - "Voc\xEA me envergonha!"
+  - "Matheus:  \u2026T\xE1 olhando oque?? N\xE3o suporto mais ouvir a suas brigas
+    com o seu pai na casa do lado."
+  - 
   velocidadeTexto: 0.05
   teclaInteragir: 101
   closeKey: 113
