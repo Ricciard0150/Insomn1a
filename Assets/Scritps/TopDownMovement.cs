@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
 {
@@ -6,7 +6,8 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
     private Vector2 _movement;
     private Rigidbody2D rb;
 
-    public bool canMove = false; // controla se pode se mover
+    public bool canMove = false;
+    public bool isWalking { get; private set; } // 👈 público só leitura
 
     void Start()
     {
@@ -18,10 +19,14 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
         if (!canMove)
         {
             _movement = Vector2.zero;
+            isWalking = false;
             return;
         }
 
         _movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        // 🔥 AQUI É O CERTO
+        isWalking = _movement != Vector2.zero;
     }
 
     private void FixedUpdate()

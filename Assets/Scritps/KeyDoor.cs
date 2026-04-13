@@ -14,6 +14,10 @@ public class Door : MonoBehaviour
     public TopDownMovement playerMovement;
     public Camera2Dfollowing cameraFollow;
 
+    [Header("Som Batida")]
+    public AudioSource audioSource;
+    public AudioClip somBatida;
+
     [TextArea] public string lineSemChave;
     [TextArea] public string lineComChave;
 
@@ -46,7 +50,11 @@ public class Door : MonoBehaviour
         playerMovement.canMove = false;
         cameraFollow.canFollow = false;
 
-        yield return StartCoroutine(camShake.Shake(0.3f, 0.2f));
+        // 🔊 TOCA O SOM AQUI
+        audioSource.PlayOneShot(somBatida);
+
+        // 💥 SHAKE
+        yield return StartCoroutine(camShake.Shake(0.2f, 0.3f));
 
         cameraFollow.canFollow = true;
 

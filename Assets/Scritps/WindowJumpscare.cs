@@ -48,8 +48,8 @@ public class WindowJumpscare : MonoBehaviour
 
         if (Input.GetKeyDown(lanterna) && !dialogoAtivo)
         {
-                bc.DesativarBlur();
-                StartCoroutine(Sequencia());
+            bc.DesativarBlur();
+            StartCoroutine(Sequencia());
         }
 
         if (dialogoAtivo && Input.GetKeyDown(KeyCode.E))
