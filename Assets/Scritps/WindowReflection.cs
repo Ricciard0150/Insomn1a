@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class WindowReflection : MonoBehaviour
@@ -10,57 +8,79 @@ public class WindowReflection : MonoBehaviour
     public GameObject dialogueBox;
     public TMP_Text texto;
 
-    WindowJumpscare wj;
+    [SerializeField] private KeyItem ki;
 
-    public KeyCode tecla = KeyCode.E;
+    public KeyCode teclaAvancar = KeyCode.E;
+    public KeyCode teclaFechar = KeyCode.Q;
 
     public string[] lines;
     int index = 0;
     public float velocidade = 0.03f;
 
-
     private bool isColliding = false;
     private bool dialogoAtivo = false;
     private bool escrevendo = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         window.SetActive(false);
+        dialogueBox.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(tecla) && isColliding){
-            window.SetActive(true);
+        // 🔥 Se já pegou a chave, destrói tudo
+        if (ki != null && ki.playerHasKey)
+        {
+            Destroy(window);
+            Destroy(this);
+            return;
+        }
+
+        if (!isColliding) return;
+
+        // 🔥 ABRIR AUTOMÁTICO AO PRESSIONAR E
+        if (Input.GetKeyDown(teclaAvancar))
+        {
             if (!dialogoAtivo)
             {
+                window.SetActive(true);
                 StartCoroutine(Sequencia());
+                return;
             }
 
-            if (dialogoAtivo && Input.GetKeyDown(KeyCode.E))
+            // 🔥 CONTROLE DO TEXTO
+            if (escrevendo)
             {
-                if (escrevendo)
-                {
-                    StopAllCoroutines();
-                    texto.text = lines[index];
-                    escrevendo = false;
-                }
-                else
-                {
-                    ProximaLinha();
-                }
+                StopAllCoroutines();
+                texto.text = lines[index];
+                escrevendo = false;
+            }
+            else
+            {
+                ProximaLinha();
             }
         }
+
+        // 🔥 FECHAR COM Q
+        if (dialogoAtivo && Input.GetKeyDown(teclaFechar))
+        {
+            FecharDialogo();
+        }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IStatusPlayer status))
         {
             isColliding = true;
+
+            // opcional: pegar o KeyItem do player automaticamente
+            if (ki == null)
+                ki = collision.GetComponent<KeyItem>();
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IStatusPlayer status))
@@ -68,11 +88,12 @@ public class WindowReflection : MonoBehaviour
             isColliding = false;
         }
     }
+
     IEnumerator Sequencia()
     {
         dialogoAtivo = true;
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f); // menor delay pra ficar melhor
 
         dialogueBox.SetActive(true);
 
@@ -87,6 +108,22 @@ public class WindowReflection : MonoBehaviour
             index++;
             StartCoroutine(EscreverLinha());
         }
+        else
+        {
+            // acabou o diálogo
+            FecharDialogo();
+        }
+    }
+
+    void FecharDialogo()
+    {
+        StopAllCoroutines();
+
+        dialogoAtivo = false;
+        escrevendo = false;
+
+        dialogueBox.SetActive(false);
+        window.SetActive(false);
     }
 
     IEnumerator EscreverLinha()
@@ -102,5 +139,4 @@ public class WindowReflection : MonoBehaviour
 
         escrevendo = false;
     }
-
 }
