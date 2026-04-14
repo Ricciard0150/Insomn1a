@@ -8,6 +8,7 @@ public class WindowJumpscare : MonoBehaviour
     public GameObject panel;
     public GameObject dialogueBox;
     public GameObject pressE;
+    
 
     public TMP_Text texto;
     public Image fadePreto;
