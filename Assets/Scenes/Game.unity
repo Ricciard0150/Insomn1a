@@ -1697,8 +1697,8 @@ Transform:
   m_GameObject: {fileID: 242250591}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 143.5696, y: 94.1473, z: 0}
-  m_LocalScale: {x: 63.719124, y: 0.97205526, z: 1}
+  m_LocalPosition: {x: 151.397, y: 94.1473, z: 0}
+  m_LocalScale: {x: 79.37046, y: 0.97205526, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2000680574}
@@ -6252,7 +6252,6 @@ MonoBehaviour:
   falas:
   - "Matheus:  \u2026T\xE1 olhando oque?? N\xE3o suporto mais ouvir a suas brigas
     com o seu pai na casa do lado."
-  - 
   velocidadeTexto: 0.05
   teclaInteragir: 101
   closeKey: 113
@@ -11598,7 +11597,7 @@ MonoBehaviour:
   velocidadeTexto: 0.05
   teclaInteragir: 101
   closeKey: 113
-  tdm: {fileID: 0}
+  tdm: {fileID: 1571093872}
 --- !u!61 &1845765975
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12602,8 +12601,8 @@ Transform:
   m_GameObject: {fileID: 2060623913}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 157.941, y: 87.8772, z: 0}
-  m_LocalScale: {x: 35.270584, y: 0.74619734, z: 1}
+  m_LocalPosition: {x: 165.5486, y: 87.8772, z: 0}
+  m_LocalScale: {x: 50.486313, y: 0.74619734, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2000680574}
