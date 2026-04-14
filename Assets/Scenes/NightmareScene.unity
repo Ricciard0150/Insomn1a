@@ -936,7 +936,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Door
   key: {fileID: 1019783232}
   tecla: 101
-  ss: 0
+  jaUsouComChave: 0
   camShake: {fileID: 649985615}
   dialogue: {fileID: 1107903119}
   playerMovement: {fileID: 304347291}
@@ -1878,7 +1878,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -157.43}
+  m_AnchoredPosition: {x: 0, y: -157.43001}
   m_SizeDelta: {x: -243.28, y: -314.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &626055952
@@ -2332,7 +2332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -157.43}
+  m_AnchoredPosition: {x: 0, y: -157.43001}
   m_SizeDelta: {x: -243.28, y: -314.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &829879655
@@ -4571,6 +4571,8 @@ MonoBehaviour:
   - "esse sou... eu? n\xE3o..."
   tdm: {fileID: 304347291}
   bc: {fileID: 1810767827}
+  ki: {fileID: 1019783232}
+  kd: {fileID: 211695923}
 --- !u!82 &1452288627
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5908,7 +5910,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -157.43}
+  m_AnchoredPosition: {x: 0, y: -157.43001}
   m_SizeDelta: {x: -243.28, y: -314.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1968968693
@@ -6035,7 +6037,6 @@ GameObject:
   - component: {fileID: 1999211445}
   - component: {fileID: 1999211444}
   - component: {fileID: 1999211447}
-  - component: {fileID: 1999211446}
   m_Layer: 0
   m_Name: Window
   m_TagString: Untagged
@@ -6116,27 +6117,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1999211446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999211443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9021f8ec56203e4dbe2eb13c41cc973, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WindowReflection
-  window: {fileID: 155787462}
-  dialogueBox: {fileID: 1968968691}
-  texto: {fileID: 477315213}
-  ss: {fileID: 211695923}
-  teclaAvancar: 101
-  teclaFechar: 113
-  lines:
-  - Somente o seu reflexo.
-  velocidade: 0.03
 --- !u!61 &1999211447
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6167,7 +6147,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

@@ -28,6 +28,8 @@ public class WindowJumpscare : MonoBehaviour
 
     public TopDownMovement tdm;
     public BlurController bc;
+    public KeyItem ki;
+    public Door kd;
 
     private void Start()
     {
@@ -39,7 +41,7 @@ public class WindowJumpscare : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(tecla) && isColliding && !dialogoAtivo)
+        if (Input.GetKeyDown(tecla) && isColliding && !dialogoAtivo && kd.jaUsouComChave && ki.playerHasKey)
         {
             panel.SetActive(true);
             bc.AtivarBlur();

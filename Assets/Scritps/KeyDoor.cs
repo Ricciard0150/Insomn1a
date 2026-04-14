@@ -7,8 +7,8 @@ public class Door : MonoBehaviour
     public KeyCode tecla = KeyCode.E;
 
     private bool playerNear = false;
-    private bool jaUsouComChave = false;
-    public bool ss = false;
+    public bool jaUsouComChave = false;
+   
 
     public CameraShake camShake;
     public TypeDialogue dialogue;
@@ -40,7 +40,7 @@ public class Door : MonoBehaviour
                     StartCoroutine(PrimeiraVez());
                 else
                     dialogue.IniciarDialogo(lineComChave);
-                    ss = true;
+                
             }
         }
     }
