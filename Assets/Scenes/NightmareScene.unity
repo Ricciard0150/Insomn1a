@@ -936,6 +936,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Door
   key: {fileID: 1019783232}
   tecla: 101
+  ss: 0
   camShake: {fileID: 649985615}
   dialogue: {fileID: 1107903119}
   playerMovement: {fileID: 304347291}
@@ -6130,7 +6131,7 @@ MonoBehaviour:
   window: {fileID: 155787462}
   dialogueBox: {fileID: 1968968691}
   texto: {fileID: 477315213}
-  ki: {fileID: 1019783232}
+  ss: {fileID: 211695923}
   teclaAvancar: 101
   teclaFechar: 113
   lines:

@@ -8,7 +8,7 @@ public class WindowReflection : MonoBehaviour
     public GameObject dialogueBox;
     public TMP_Text texto;
 
-    [SerializeField] private KeyItem ki;
+    [SerializeField] private Door ss; // 👈 igual ao ki
 
     public KeyCode teclaAvancar = KeyCode.E;
     public KeyCode teclaFechar = KeyCode.Q;
@@ -29,8 +29,8 @@ public class WindowReflection : MonoBehaviour
 
     void Update()
     {
-        // 🔥 Se já pegou a chave, destrói tudo
-        if (ki != null && ki.playerHasKey)
+        // 🔥 MESMA LÓGICA DO KI
+        if (ss != null && ss)
         {
             Destroy(window);
             Destroy(this);
@@ -39,7 +39,6 @@ public class WindowReflection : MonoBehaviour
 
         if (!isColliding) return;
 
-        // 🔥 ABRIR AUTOMÁTICO AO PRESSIONAR E
         if (Input.GetKeyDown(teclaAvancar))
         {
             if (!dialogoAtivo)
@@ -49,7 +48,6 @@ public class WindowReflection : MonoBehaviour
                 return;
             }
 
-            // 🔥 CONTROLE DO TEXTO
             if (escrevendo)
             {
                 StopAllCoroutines();
@@ -62,7 +60,6 @@ public class WindowReflection : MonoBehaviour
             }
         }
 
-        // 🔥 FECHAR COM Q
         if (dialogoAtivo && Input.GetKeyDown(teclaFechar))
         {
             FecharDialogo();
@@ -75,9 +72,9 @@ public class WindowReflection : MonoBehaviour
         {
             isColliding = true;
 
-            // opcional: pegar o KeyItem do player automaticamente
-            if (ki == null)
-                ki = collision.GetComponent<KeyItem>();
+            // 👇 IGUAL AO KI (pegando do player)
+            if (ss == null)
+                ss = collision.GetComponent<Door>();
         }
     }
 
@@ -93,7 +90,7 @@ public class WindowReflection : MonoBehaviour
     {
         dialogoAtivo = true;
 
-        yield return new WaitForSeconds(1f); // menor delay pra ficar melhor
+        yield return new WaitForSeconds(1f);
 
         dialogueBox.SetActive(true);
 
@@ -110,7 +107,6 @@ public class WindowReflection : MonoBehaviour
         }
         else
         {
-            // acabou o diálogo
             FecharDialogo();
         }
     }
