@@ -8,7 +8,6 @@ public class Door : MonoBehaviour
 
     private bool playerNear = false;
     private bool jaUsouComChave = false;
-    public bool ss = false;
 
     public CameraShake camShake;
     public TypeDialogue dialogue;
@@ -40,7 +39,6 @@ public class Door : MonoBehaviour
                     StartCoroutine(PrimeiraVez());
                 else
                     dialogue.IniciarDialogo(lineComChave);
-                    ss = true;
             }
         }
     }
