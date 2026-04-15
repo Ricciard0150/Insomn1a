@@ -8,7 +8,6 @@ public class WindowJumpscare : MonoBehaviour
     public GameObject panel;
     public GameObject dialogueBox;
     public GameObject pressE;
-    
 
     public TMP_Text texto;
     public Image fadePreto;
@@ -23,11 +22,14 @@ public class WindowJumpscare : MonoBehaviour
     bool isColliding = false;
     bool dialogoAtivo = false;
     bool escrevendo = false;
+   
 
     int index = 0;
 
+    public KeyItem ki;
     public TopDownMovement tdm;
     public BlurController bc;
+    public Door door;
 
     private void Start()
     {
@@ -35,17 +37,21 @@ public class WindowJumpscare : MonoBehaviour
         dialogueBox.SetActive(false);
         texto.text = "";
         fadePreto.color = new Color(0, 0, 0, 0);
+      
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(tecla) && isColliding && !dialogoAtivo)
-        {
-            panel.SetActive(true);
-            bc.AtivarBlur();
-            pressE.SetActive(false);
-            tdm.canMove = false;
-        }
+        
+            if (Input.GetKeyDown(tecla) && isColliding && !dialogoAtivo && door.jaUsouComChave && ki.playerHasKey)
+            {
+                panel.SetActive(true);
+                bc.AtivarBlur();
+                pressE.SetActive(false);
+                tdm.canMove = false;
+
+            }
+        
 
         if (Input.GetKeyDown(lanterna) && !dialogoAtivo)
         {

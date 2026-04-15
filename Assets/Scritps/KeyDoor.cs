@@ -7,7 +7,10 @@ public class Door : MonoBehaviour
     public KeyCode tecla = KeyCode.E;
 
     private bool playerNear = false;
-    private bool jaUsouComChave = false;
+    public bool jaUsouComChave = false;
+    public bool test = false;
+
+    public GameObject wind;
 
     public CameraShake camShake;
     public TypeDialogue dialogue;
@@ -21,6 +24,10 @@ public class Door : MonoBehaviour
     [TextArea] public string lineSemChave;
     [TextArea] public string lineComChave;
 
+    private void Start()
+    {
+        wind.SetActive(true);
+    }
     void Update()
     {
         if (!playerNear) return;
@@ -39,6 +46,8 @@ public class Door : MonoBehaviour
                     StartCoroutine(PrimeiraVez());
                 else
                     dialogue.IniciarDialogo(lineComChave);
+                Debug.Log("true");
+                test = true;    
             }
         }
     }
@@ -62,6 +71,7 @@ public class Door : MonoBehaviour
 
         yield return new WaitUntil(() => !dialogue.IsAtivo());
 
+        wind.SetActive(false);
         playerMovement.canMove = true;
     }
 
