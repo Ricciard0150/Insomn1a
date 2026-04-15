@@ -21,6 +21,8 @@ public class ThoughtsDialogue : MonoBehaviour
 
     private Coroutine typingCoroutine;
 
+    public TopDownMovement tdm;
+
     void Start()
     {
         dialoguePanel.SetActive(false);
@@ -58,6 +60,9 @@ public class ThoughtsDialogue : MonoBehaviour
                 else
                 {
                     EncerrarDialogo();
+                    Debug.Log("aaa");
+        
+
                 }
             }
         }
@@ -76,6 +81,7 @@ public class ThoughtsDialogue : MonoBehaviour
 
     void IniciarDialogo()
     {
+        tdm.canMove = false;
         dialogoAtivo = true;
         dialoguePanel.SetActive(true);
 
@@ -97,6 +103,8 @@ public class ThoughtsDialogue : MonoBehaviour
 
         // 💥 DESTRÓI O OBJETO DEPOIS DE USAR
         Destroy(gameObject);
+        tdm.canMove = true;
+
     }
 
     IEnumerator EscreverTexto()

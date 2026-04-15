@@ -936,11 +936,6 @@ RectTransform:
   m_AnchoredPosition: {x: -124.28, y: 17.12}
   m_SizeDelta: {x: 206.57, y: 34.24}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &88905716 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4448400867013546583, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
-  m_PrefabInstance: {fileID: 513977021}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &105501823
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,6 +972,7 @@ MonoBehaviour:
   - "Franz kafka: Ah, ok\u2026 Muito obrigada pela oportunidade."
   velocidadeTexto: 0.05
   teclaInteragir: 101
+  tdm: {fileID: 1571093872}
 --- !u!4 &105501825
 Transform:
   m_ObjectHideFlags: 0
@@ -3316,11 +3312,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4448400867013546583, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -68
+      value: 65.4
       objectReference: {fileID: 0}
     - target: {fileID: 4448400867013546583, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 72
+      value: -57.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698549085345636748, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 65.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698549085345636748, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -57.3
       objectReference: {fileID: 0}
     - target: {fileID: 6620107673163882216, guid: 85c86153ee76c28499ff2487d730eb90, type: 3}
       propertyPath: m_Name
@@ -3481,7 +3485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c6b366bc0de3d40a093fd7a70b7984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Camera2Dfollowing
-  target: {fileID: 88905716}
+  target: {fileID: 0}
   smoothTime: -2.3
   canFollow: 1
 --- !u!1 &557457674
@@ -3563,6 +3567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteragirRPGnormal
   sistemaRPG: {fileID: 479851624}
   pressE: {fileID: 150873144}
+  tdm: {fileID: 1571093872}
 --- !u!212 &557457677
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7978,6 +7983,7 @@ MonoBehaviour:
   velocidadeTexto: 0.05
   teclaInteragir: 101
   teclaFechar: 113
+  tdm: {fileID: 0}
 --- !u!61 &1254072418
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9963,7 +9969,7 @@ GameObject:
   - component: {fileID: 1635674402}
   - component: {fileID: 1635674401}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10143,6 +10149,7 @@ MonoBehaviour:
   velocidadeTexto: 0.05
   teclaInteragir: 101
   teclaFechar: 113
+  tdm: {fileID: 0}
 --- !u!61 &1663467459
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11378,6 +11385,7 @@ MonoBehaviour:
   velocidadeTexto: 0.05
   teclaAvancar: 101
   teclaFechar: 32
+  tdm: {fileID: 1571093872}
   target: {fileID: 557457674}
 --- !u!4 &1824086558
 Transform:
@@ -11866,6 +11874,7 @@ MonoBehaviour:
   velocidadeTexto: 0.05
   teclaInteragir: 101
   teclaFechar: 113
+  tdm: {fileID: 1571093872}
 --- !u!4 &1871381207
 Transform:
   m_ObjectHideFlags: 0
