@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class KeyItem : MonoBehaviour
+public class CollectableItem : MonoBehaviour
 {
     public bool playerHasKey = false;
     public KeyCode tecla = KeyCode.E;
