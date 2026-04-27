@@ -51,7 +51,8 @@ public class SystemRPGnormal : MonoBehaviour
 
     [Header("Objetos Pós-RPG")]
     public GameObject objetoAtivar;   
-    public GameObject objetoDesativar; 
+    public GameObject objetoDesativar;
+
     void Update()
     {
         if (!estaAtivo) return;

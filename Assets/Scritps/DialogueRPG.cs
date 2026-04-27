@@ -17,15 +17,14 @@ public class DialogueRPG : MonoBehaviour
     private bool dialogoAtivo;
     private Coroutine coroutine;
 
-    
+    public TopDownMovement tdm;
    [SerializeField] public GameObject target;
 
     void Update()
 
     {
- 
         if (!dialogoAtivo) return;
-
+        tdm.canMove = false;
         // 🔥 FECHAR DIRETO COM SPACE
         if (Input.GetKeyDown(teclaFechar))
         {
@@ -113,6 +112,7 @@ public class DialogueRPG : MonoBehaviour
 
         dialoguePanel.SetActive(false);
         dialogoAtivo = false;
+        tdm.canMove = true;
         
     }
 

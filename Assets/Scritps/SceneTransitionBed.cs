@@ -39,7 +39,7 @@ public class SceneTransitionBed : MonoBehaviour
         if (collision.TryGetComponent(out IStatusPlayer status))
         {
             playerPerto = false;
-            pressE.SetActive(false);
+            Destroy(pressE);
         }
     }
 

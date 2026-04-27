@@ -6,10 +6,13 @@ public class InteractionRPGnormal : MonoBehaviour
     private bool playerPerto = false;
     public GameObject pressE;
 
+    public TopDownMovement tdm;
+
     void Update()
     {
         if (playerPerto && Input.GetKeyDown(KeyCode.E))
         {
+            tdm.canMove = false;
             sistemaRPG.IniciarSistema();
             pressE.SetActive(false);
         }

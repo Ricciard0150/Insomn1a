@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
+using System.Collections;
 
-public class ThoughtsDialogue : MonoBehaviour
+public class DIalogueRPGs : MonoBehaviour
 {
     [Header("UI")]
     public GameObject dialoguePanel;
@@ -17,22 +17,16 @@ public class ThoughtsDialogue : MonoBehaviour
     private int index = 0;
     private bool terminouFrase = false;
     private bool dialogoAtivo = false;
-    private bool jaAtivado = false; // 👈 NOVO
+    private bool jaAtivado = false; 
 
     private Coroutine typingCoroutine;
 
     public TopDownMovement tdm;
 
-    void Start()
-    {
-        dialoguePanel.SetActive(false);
-    }
-
     void Update()
     {
         if (!dialogoAtivo) return;
 
-        // 🔥 FECHAR COM Q
         if (Input.GetKeyDown(teclaFechar))
         {
             EncerrarDialogo();
@@ -61,7 +55,7 @@ public class ThoughtsDialogue : MonoBehaviour
                 {
                     EncerrarDialogo();
                     Debug.Log("aaa");
-        
+
 
                 }
             }
@@ -70,7 +64,7 @@ public class ThoughtsDialogue : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (jaAtivado) return; // 👈 impede repetir
+        if (jaAtivado) return; 
 
         if (collision.TryGetComponent(out IStatusPlayer status))
         {
@@ -101,7 +95,6 @@ public class ThoughtsDialogue : MonoBehaviour
         dialoguePanel.SetActive(false);
         dialogoAtivo = false;
 
-        // 💥 DESTRÓI O OBJETO DEPOIS DE USAR
         Destroy(gameObject);
         tdm.canMove = true;
 
