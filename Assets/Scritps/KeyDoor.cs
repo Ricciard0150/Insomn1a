@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Door : MonoBehaviour
 {
-    public KeyItem key;
+    public CollectableItem key;
     public KeyCode tecla = KeyCode.E;
 
     private bool playerNear = false;

@@ -26,7 +26,7 @@ public class WindowJumpscare : MonoBehaviour
 
     int index = 0;
 
-    public KeyItem ki;
+    public CollectableItem ki;
     public TopDownMovement tdm;
     public BlurController bc;
     public Door door;
