@@ -1797,7 +1797,7 @@ MonoBehaviour:
   velocidadeTexto: 0.05
   teclaInteragir: 101
   closeKey: 113
-  tdm: {fileID: 0}
+  tdm: {fileID: 1947302620}
 --- !u!61 &298744445
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3474,7 +3474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InteragirRPGnormal
   sistemaRPG: {fileID: 479851624}
   pressE: {fileID: 150873144}
-  tdm: {fileID: 0}
+  tdm: {fileID: 1947302620}
 --- !u!212 &557457677
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -47424,12 +47424,36 @@ PrefabInstance:
       value: Player 1 1
       objectReference: {fileID: 0}
     - target: {fileID: 2492466593591199784, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2492466593591199784, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2492466593591199784, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2492466593591199784, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587305698275234383, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.b
+      value: 0.042452812
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587305698275234383, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.g
+      value: 0.042452812
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587305698275234383, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7224886345533779034, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9105895952844656056, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
       propertyPath: m_LocalPosition.x
