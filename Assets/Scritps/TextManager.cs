@@ -1,24 +1,36 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class TextManager : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] public GameObject dialoguePanel;
-    [SerializeField] GameObject pressingE;
-    public TMP_Text dialogueText;
+    [SerializeField] private GameObject dialoguePanel;
+    [SerializeField] private GameObject pressingE;
+
+    [SerializeField] private TMP_Text dialogueText;
+
+    [Header("Imagem do Personagem")]
+    [SerializeField] private Image personagemImage;
+    [SerializeField] private Sprite[] spritesDialogo;
 
     [Header("Config")]
+    [TextArea]
     public string[] falas;
+
     public float velocidadeTexto = 0.05f;
+
     public KeyCode teclaInteragir = KeyCode.E;
-    public KeyCode closeKey = KeyCode.Q;
 
     private bool playerPerto = false;
     private bool dialogoAtivo = false;
+
     private int index = 0;
+
     private Coroutine typingCoroutine;
+
+    [Header("Player")]
     public TopDownMovement tdm;
 
     void Start()
@@ -33,19 +45,27 @@ public class TextManager : MonoBehaviour
         {
             if (!dialogoAtivo)
             {
-                tdm.canMove = false;
                 dialogoAtivo = true;
+
+                tdm.canMove = false;
+
                 dialoguePanel.SetActive(true);
+
+                pressingE.SetActive(false);
+
                 index = 0;
 
-                StartTyping();
+                AtualizarSprite();
 
+                StartTyping();
             }
+
             else
             {
                 if (dialogueText.text != falas[index])
                 {
                     StopTyping();
+
                     dialogueText.text = falas[index];
                 }
                 else
@@ -54,22 +74,31 @@ public class TextManager : MonoBehaviour
 
                     if (index < falas.Length)
                     {
+                        AtualizarSprite();
+
                         StartTyping();
                     }
-                    else 
+                    else
                     {
                         FecharDialogo();
-                        tdm.canMove = true;
                     }
                 }
             }
         }
-        
+    }
+
+    void AtualizarSprite()
+    {
+        if (index < spritesDialogo.Length)
+        {
+            personagemImage.sprite = spritesDialogo[index];
+        }
     }
 
     void StartTyping()
     {
-        StopTyping(); 
+        StopTyping();
+
         typingCoroutine = StartCoroutine(EscreverTexto());
     }
 
@@ -88,6 +117,7 @@ public class TextManager : MonoBehaviour
         foreach (char letra in falas[index])
         {
             dialogueText.text += letra;
+
             yield return new WaitForSeconds(velocidadeTexto);
         }
     }
@@ -97,16 +127,21 @@ public class TextManager : MonoBehaviour
         StopTyping();
 
         dialoguePanel.SetActive(false);
+
         dialogoAtivo = false;
+
         pressingE.SetActive(true);
+
+        tdm.canMove = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<IStatusPlayer>() != null)
         {
-            pressingE.SetActive(true);
             playerPerto = true;
+
+            pressingE.SetActive(true);
         }
     }
 
@@ -115,7 +150,10 @@ public class TextManager : MonoBehaviour
         if (collision.GetComponent<IStatusPlayer>() != null)
         {
             playerPerto = false;
+
             pressingE.SetActive(false);
+
+            FecharDialogo();
         }
     }
 }

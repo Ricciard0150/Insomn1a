@@ -1791,12 +1791,13 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "Balconista: Senhor Kafka! que prazer v\xEA-lo! A sala de sua entrevista est\xE1
     mais \xE0 direita!"
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 0}
 --- !u!61 &298744445
 BoxCollider2D:
@@ -3703,6 +3704,8 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "H\xE9lio:  De buenas? "
   - "Franz: \u2026 "
@@ -3710,7 +3713,6 @@ MonoBehaviour:
   - "Franz: \u2026 "
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 0}
 --- !u!61 &612132699
 BoxCollider2D:
@@ -5589,11 +5591,12 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 1007626623}
+  spritesDialogo: []
   falas:
   - '???: HAHAHA FRACASSADO!'
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 0}
 --- !u!61 &856089494
 BoxCollider2D:
@@ -6161,12 +6164,13 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "Matheus:  \u2026T\xE1 olhando oque?? N\xE3o suporto mais ouvir a suas brigas
     com o seu pai na casa do lado."
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 0}
 --- !u!61 &923329087
 BoxCollider2D:
@@ -6713,6 +6717,81 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1007626621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1007626622}
+  - component: {fileID: 1007626624}
+  - component: {fileID: 1007626623}
+  m_Layer: 5
+  m_Name: ImageCharacter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1007626622
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007626621}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1653279358}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1185.8, y: 381.23}
+  m_SizeDelta: {x: 374.4, y: 228.45}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1007626623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007626621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1007626624
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007626621}
+  m_CullTransparentMesh: 1
 --- !u!1 &1030034631
 GameObject:
   m_ObjectHideFlags: 0
@@ -43150,11 +43229,12 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - '? : Menos um para concorrer, hein?!'
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 0}
 --- !u!61 &1276927450
 BoxCollider2D:
@@ -43399,11 +43479,12 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "???: T\xE1 perdido, colega? Tem nada pra c\xE1 n\xE3o!"
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 0}
 --- !u!61 &1288718223
 BoxCollider2D:
@@ -44463,11 +44544,14 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 1007626623}
+  spritesDialogo:
+  - {fileID: -3059123146487272169, guid: fad4fa921cc53d940848b1c7c001b8a6, type: 3}
+  - {fileID: 3024919905496512547, guid: f5c24d2c45dffb84f94715b3c6501a0f, type: 3}
   falas:
   - "N\xE3o tenho mais nada a dizer, senhor. Tenha um bom dia."
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 1947302620}
 --- !u!1 &1458566252
 GameObject:
@@ -44608,12 +44692,13 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "??? = O senhor n\xE3o vai querer vir para esse lado da cidade... vai por mim."
   - 'Franz Kafka: Ah, oo-okay.'
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 0}
 --- !u!61 &1533526122
 BoxCollider2D:
@@ -44872,7 +44957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &1635674401
 Grid:
   m_ObjectHideFlags: 0
@@ -44964,6 +45049,7 @@ RectTransform:
   m_Children:
   - {fileID: 1777450457}
   - {fileID: 1030034632}
+  - {fileID: 1007626622}
   m_Father: {fileID: 1104689037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -45280,6 +45366,8 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "Franz Kafka:  \u2026 "
   - 'Italo: Que foi? Foi recusado em outra entrevista de emprego? '
@@ -45287,7 +45375,6 @@ MonoBehaviour:
   - "Italo: Tenho certeza que a pr\xF3xima vai ser melhor\u2026 "
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 0}
 --- !u!61 &1704621418
 BoxCollider2D:
@@ -46135,6 +46222,8 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "Jos\xE9 Gustavo: Oi oi oi "
   - "Franz: \u2026Oi? "
@@ -46143,7 +46232,6 @@ MonoBehaviour:
   - "Jos\xE9 Gustavo: \u2026 (ele parece chateado) "
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 0}
 --- !u!61 &1822335185
 BoxCollider2D:
@@ -46544,12 +46632,13 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "Franz Kafka: Amanh\xE3 dou uma olhada nessa c\xF4moda. Acho que deixei um dos
     mues livros a\xED..."
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 0}
 --- !u!61 &1845765975
 BoxCollider2D:
@@ -47078,7 +47167,7 @@ GameObject:
   - component: {fileID: 2000680574}
   - component: {fileID: 2000680575}
   m_Layer: 0
-  m_Name: CenarioProvisorio
+  m_Name: ---------PLACEHOLDERCOLLIDER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47424,12 +47513,44 @@ PrefabInstance:
       value: Player 1 1
       objectReference: {fileID: 0}
     - target: {fileID: 2492466593591199784, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2492466593591199784, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2492466593591199784, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2492466593591199784, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587305698275234383, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5235849
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587305698275234383, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5235849
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587305698275234383, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587305698275234383, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587305698275234383, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 779558477
       objectReference: {fileID: 0}
     - target: {fileID: 7224886345533779034, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9105895952844656056, guid: f1c773427f1c59c4eae14d59185ffdf5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -47752,13 +47873,16 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1653279357}
   pressingE: {fileID: 150873144}
   dialogueText: {fileID: 1777450455}
+  personagemImage: {fileID: 1007626623}
+  spritesDialogo:
+  - {fileID: 3024919905496512547, guid: f5c24d2c45dffb84f94715b3c6501a0f, type: 3}
+  - {fileID: -3059123146487272169, guid: fad4fa921cc53d940848b1c7c001b8a6, type: 3}
   falas:
   - 'Atendente: Tenha um bom dia, Sr. Espero que tenha sucesso na carreira...'
   - 'Franz Kafka: Ah, sim, obrigado acho.'
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 0}
+  tdm: {fileID: 1947302620}
 --- !u!61 &2074532168
 BoxCollider2D:
   m_ObjectHideFlags: 0
