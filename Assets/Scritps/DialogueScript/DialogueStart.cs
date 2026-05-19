@@ -34,7 +34,6 @@ public class DialogueStart : MonoBehaviour
         {
             if (!terminouFrase)
             {
-                // 👉 completa a frase instantaneamente
                 StopCoroutine(typingCoroutine);
                 dialogueText.text = falas[index];
                 terminouFrase = true;

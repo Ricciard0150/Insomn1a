@@ -440,11 +440,12 @@ MonoBehaviour:
   dialoguePanel: {fileID: 626055950}
   pressingE: {fileID: 459130347}
   dialogueText: {fileID: 1402966181}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "Ah... os curr\xEDculos que meu pai rasgou..."
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 3085604050957103121}
 --- !u!61 &187032043
 BoxCollider2D:
@@ -3869,11 +3870,12 @@ MonoBehaviour:
   dialoguePanel: {fileID: 626055950}
   pressingE: {fileID: 459130347}
   dialogueText: {fileID: 1402966181}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - Ah... a porta trancada dos meus pais... como sempre.
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 3085604050957103121}
 --- !u!61 &1497457935
 BoxCollider2D:
@@ -4179,11 +4181,12 @@ MonoBehaviour:
   dialoguePanel: {fileID: 626055950}
   pressingE: {fileID: 459130347}
   dialogueText: {fileID: 1402966181}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "Apenas uma c\xF4moda normal. Hoje em dia os cupins usam mais ela do que eu."
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 3085604050957103121}
 --- !u!61 &1551172304
 BoxCollider2D:
@@ -4428,7 +4431,7 @@ TilemapRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708203733}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -4483,7 +4486,7 @@ Tilemap:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708203733}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Tiles:
   - first: {x: -2, y: -2, z: 0}
     second:
@@ -5530,6 +5533,56 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 3
       m_TileSpriteIndex: 3
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -26, y: 40, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -25, y: 40, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -24, y: 40, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -23, y: 40, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -22, y: 40, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -6785,6 +6838,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 34b7f794b4d018d4f8b9eaf7804b47bb, type: 2}
   - m_RefCount: 56
     m_Data: {fileID: 11400000, guid: 2fef40447229adb4591513516392612c, type: 2}
+  - m_RefCount: 5
+    m_Data: {fileID: 11400000, guid: 80eab1721e8be234ea8b0ef3d9d5b8f4, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 55
     m_Data: {fileID: -574426933, guid: f85dde8cd1b328145bbafcd76951f938, type: 3}
@@ -6794,8 +6849,10 @@ Tilemap:
     m_Data: {fileID: 867715224, guid: f85dde8cd1b328145bbafcd76951f938, type: 3}
   - m_RefCount: 56
     m_Data: {fileID: 131617394, guid: f85dde8cd1b328145bbafcd76951f938, type: 3}
+  - m_RefCount: 5
+    m_Data: {fileID: -1594662112, guid: f85dde8cd1b328145bbafcd76951f938, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 229
+  - m_RefCount: 234
     m_Data:
       e00: 1
       e01: 0
@@ -6814,13 +6871,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 229
+  - m_RefCount: 234
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -21, y: -2, z: 0}
-  m_Size: {x: 37, y: 56, z: 1}
+  m_Origin: {x: -26, y: -2, z: 0}
+  m_Size: {x: 42, y: 56, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -6874,11 +6931,12 @@ MonoBehaviour:
   dialoguePanel: {fileID: 626055950}
   pressingE: {fileID: 459130347}
   dialogueText: {fileID: 1402966181}
+  personagemImage: {fileID: 0}
+  spritesDialogo: []
   falas:
   - "\xC9 s\xF3 o balc\xE3o da cozinha."
   velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
   tdm: {fileID: 3085604050957103121}
 --- !u!61 &1714670740
 BoxCollider2D:
