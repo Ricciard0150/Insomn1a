@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class TextManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class TextManager : MonoBehaviour
     [SerializeField] public GameObject dialoguePanel;
     [SerializeField] GameObject pressingE;
     public TMP_Text dialogueText;
+    [SerializeField] private Image images;
+    [SerializeField] private Sprite[] sprites;
 
     [Header("Config")]
     public string[] falas;
@@ -38,8 +41,9 @@ public class TextManager : MonoBehaviour
                 dialoguePanel.SetActive(true);
                 index = 0;
 
+                
+                ChangeSprite();
                 StartTyping();
-
             }
             else
             {
@@ -54,6 +58,7 @@ public class TextManager : MonoBehaviour
 
                     if (index < falas.Length)
                     {
+                        ChangeSprite();
                         StartTyping();
                     }
                     else 
@@ -65,6 +70,14 @@ public class TextManager : MonoBehaviour
             }
         }
         
+    }
+
+    void ChangeSprite()
+    {
+        if (index < sprites.Length)
+        {
+            images.sprite = sprites[index];
+        }
     }
 
     void StartTyping()
@@ -100,7 +113,7 @@ public class TextManager : MonoBehaviour
         dialogoAtivo = false;
         pressingE.SetActive(true);
     }
-
+        
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<IStatusPlayer>() != null)
@@ -112,7 +125,9 @@ public class TextManager : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.GetComponent<IStatusPlayer>() != null)
+        if (collision.GetComponent<IStatusPlayer>() == null)
+            return;
+        else
         {
             playerPerto = false;
             pressingE.SetActive(false);
