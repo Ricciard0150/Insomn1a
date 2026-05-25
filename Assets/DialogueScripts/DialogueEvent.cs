@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using System.Collections;
+
 public class DialogueEvent : MonoBehaviour
 {
     [Header("UI")]
@@ -60,12 +61,6 @@ public class DialogueEvent : MonoBehaviour
 
     }
 
-    void OnStartDialogue()
-    {
-        {
-           
-        }
-    }
     void StartTyping()
     {
         StopTyping();

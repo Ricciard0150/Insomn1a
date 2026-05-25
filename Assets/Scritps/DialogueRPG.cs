@@ -24,15 +24,15 @@ public class DialogueRPG : MonoBehaviour
 
     {
         if (!dialogoAtivo) return;
+
         tdm.canMove = false;
-        // 🔥 FECHAR DIRETO COM SPACE
         if (Input.GetKeyDown(teclaFechar))
         {
             Encerrar();
             return;
         }
 
-        // Avançar diálogo
+
         if (Input.GetKeyDown(teclaAvancar))
         {
             if (!terminouFrase)
