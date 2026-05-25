@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class DialogueStart : MonoBehaviour
 {
     [Header("UI")]
     public GameObject dialoguePanel;
     public TMP_Text dialogueText;
+    [SerializeField] private Image imageSprite;
+    [SerializeField] private Sprite[] sprites;
+
 
     [Header("Config")]
     public string[] falas;
@@ -26,6 +30,8 @@ public class DialogueStart : MonoBehaviour
         tdm.canMove = false;
 
         typingCoroutine = StartCoroutine(EscreverTexto());
+        ChangeSprite();
+
     }
 
     void Update()
@@ -47,6 +53,7 @@ public class DialogueStart : MonoBehaviour
                 if (index < falas.Length)
                 {
                     typingCoroutine = StartCoroutine(EscreverTexto());
+                    ChangeSprite();
                 }
                 else
                 {
@@ -58,6 +65,13 @@ public class DialogueStart : MonoBehaviour
         }
     }
 
+    private void ChangeSprite()
+    {
+        if (index < sprites.Length)
+        {
+            imageSprite.sprite = sprites[index];
+        }
+    }
     IEnumerator EscreverTexto()
     {
         terminouFrase = false;
