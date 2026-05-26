@@ -32,6 +32,7 @@ public class SystemRPGnormal : MonoBehaviour
     private int vidaAtual;
     private int pontos;
     private int rodada;
+    private int index;
 
     private bool podeEscolher = false;
     private bool estaEscrevendo = false;
@@ -57,6 +58,7 @@ public class SystemRPGnormal : MonoBehaviour
     {
         if (!estaAtivo) return;
 
+        
         if (podeEscolher)
         {
             for (int i = 0; i < opcoesText.Length; i++)
@@ -205,10 +207,10 @@ public class SystemRPGnormal : MonoBehaviour
 
         foreach (char letra in frase)
         {
+            index = 0;
             textoUI.text += letra;
             yield return new WaitForSeconds(velocidadeTexto);
         }
-
         estaEscrevendo = false;
     }
 }
