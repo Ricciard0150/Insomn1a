@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class WindowJumpscare : MonoBehaviour
 {
@@ -113,7 +114,6 @@ public class WindowJumpscare : MonoBehaviour
         escrevendo = false;
     }
 
-    // 💀 PISCAR TELA
     IEnumerator PiscarTela()
     {
         for (int i = 0; i < 6; i++)
@@ -136,6 +136,9 @@ public class WindowJumpscare : MonoBehaviour
             fadePreto.color = new Color(0, 0, 0, t);
             yield return null;
         }
+
+        SceneManager.LoadScene("Game");
+
     }
 
     IEnumerator FinalJumpscare()
