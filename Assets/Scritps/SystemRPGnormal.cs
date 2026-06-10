@@ -51,14 +51,14 @@ public class SystemRPGnormal : MonoBehaviour
     public PerguntaRPG[] perguntas;
 
     [Header("Objetos Pós-RPG")]
-    public GameObject objetoAtivar;   
+    public GameObject objetoAtivar;
     public GameObject objetoDesativar;
 
     void Update()
     {
         if (!estaAtivo) return;
 
-        
+
         if (podeEscolher)
         {
             for (int i = 0; i < opcoesText.Length; i++)
@@ -211,6 +211,16 @@ public class SystemRPGnormal : MonoBehaviour
             textoUI.text += letra;
             yield return new WaitForSeconds(velocidadeTexto);
         }
-        estaEscrevendo = false;
+        //if (Input.GetAxisRaw("Interact") > 0)
+        //{
     }
 }
+//        if ()
+//    {
+//            StopAllCoroutines();
+//            textoUI.text = frase;
+//            yield break;
+//        }
+//    estaEscrevendo = false;
+//}
+//}
