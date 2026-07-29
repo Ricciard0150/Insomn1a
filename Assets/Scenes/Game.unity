@@ -5738,7 +5738,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1, y: -282}
+  m_AnchoredPosition: {x: 1, y: -282.00003}
   m_SizeDelta: {x: 1727.59, y: -17.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &746844590
@@ -5831,13 +5831,19 @@ MonoBehaviour:
       wrongFeedback: bad
       optionDialogues:
       - dialogue:
-        - TA
+        - characterSprite: {fileID: 4584681769223179126, guid: ad5875058d613a643acda07d7b95a6f9, type: 3}
+          text: acertou
+        - characterSprite: {fileID: -5144542264298086051, guid: c7707fa669e833140844da9b6fa94a72, type: 3}
+          text: ' mizeravi'
       - dialogue:
-        - q
+        - characterSprite: {fileID: 0}
+          text: 
       - dialogue:
-        - aaaaa
+        - characterSprite: {fileID: 0}
+          text: 
       - dialogue:
-        - BELEZA mano BELEZA
+        - characterSprite: {fileID: 0}
+          text: 
     - question: Qual o seu nome
       options:
       - alemanha
@@ -5849,13 +5855,17 @@ MonoBehaviour:
       wrongFeedback: bad
       optionDialogues:
       - dialogue:
-        - po beleza
+        - characterSprite: {fileID: 0}
+          text: 
       - dialogue:
-        - aham
+        - characterSprite: {fileID: 0}
+          text: 
       - dialogue:
-        - well?
+        - characterSprite: {fileID: 0}
+          text: 
       - dialogue:
-        - QUE
+        - characterSprite: {fileID: 0}
+          text: 
     maxLives: 3
     minCorrect: 1
     objectToActivate: 
@@ -5910,7 +5920,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3, y: -267.00006}
+  m_AnchoredPosition: {x: -3, y: -267.00003}
   m_SizeDelta: {x: 1727.59, y: -17.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &765943190
@@ -17591,6 +17601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InterviewQuests
   dialogueText: {fileID: 1777450455}
   dialoguePanel: {fileID: 1653279357}
+  characterImage: {fileID: 2107602943}
   textSpeed: 0.03
   skipKey: 32
   continueKey: 101
@@ -19643,7 +19654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3, y: -281}
+  m_AnchoredPosition: {x: 3, y: -281.00003}
   m_SizeDelta: {x: 1727.5898, y: -17.590027}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1653279359
