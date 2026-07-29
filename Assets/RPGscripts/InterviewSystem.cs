@@ -1,15 +1,44 @@
 using System;
+using UnityEngine;
+
+
+[Serializable]
+public class DialogueLine
+{
+    public Sprite characterSprite;
+
+    [TextArea(1, 3)]
+    public string text;
+}
+
+
+
+[Serializable]
+public class AnswerDialogue
+{
+    public DialogueLine[] dialogue;
+}
+
+
 
 [Serializable]
 public class QuestionRPG
 {
     public string question;
+
     public string[] options;
+
     public int correctAnswer;
+
+
+    [Header("Feedback")]
     public string correctFeedback;
     public string wrongFeedback;
-}
 
+
+    [Header("Dialogo por resposta")]
+    public AnswerDialogue[] optionDialogues;
+}
 public class InterviewSystem
 {
     public event Action<QuestionRPG, int> OnRoundChanged;
@@ -17,12 +46,14 @@ public class InterviewSystem
     public event Action<string> OnFeedback;
 
     private QuestionRPG[] questions;
+
     private int maxLives;
     private int minCorrect;
 
     private int currentLives;
     private int points;
     private int round;
+
     private bool isActive;
 
     public bool IsActive => isActive;
@@ -37,6 +68,7 @@ public class InterviewSystem
     public void Start()
     {
         isActive = true;
+
         round = 0;
         points = 0;
         currentLives = maxLives;
@@ -52,7 +84,8 @@ public class InterviewSystem
             return;
         }
 
-        var question = questions[round];
+        QuestionRPG question = questions[round];
+
         OnRoundChanged?.Invoke(question, question.options.Length);
     }
 
@@ -63,19 +96,22 @@ public class InterviewSystem
 
     public void ProcessChoice(int choice)
     {
-        if (!isActive) return;
+        if (!isActive)
+            return;
 
-        var question = questions[round];
-        bool isCorrect = choice == question.correctAnswer;
+        QuestionRPG question = questions[round];
 
-        if (isCorrect)
+        bool correct = choice == question.correctAnswer;
+
+        if (correct)
             points++;
         else
             currentLives--;
 
- 
-        string feedback = isCorrect ? question.correctFeedback :
-                         question.wrongFeedback + $"\n❤️ Lives: {currentLives}";
+        string feedback = correct
+            ? question.correctFeedback
+            : question.wrongFeedback + $"\n Vidas: {currentLives}";
+
         OnFeedback?.Invoke(feedback);
 
         if (currentLives <= 0)
@@ -85,13 +121,16 @@ public class InterviewSystem
         }
 
         round++;
+
         NextRound();
     }
 
     void Finish()
     {
         isActive = false;
+
         bool victory = points >= minCorrect && currentLives > 0;
+
         OnFinished?.Invoke(victory, points, currentLives);
     }
 }

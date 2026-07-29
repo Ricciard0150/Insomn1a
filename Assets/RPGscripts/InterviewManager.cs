@@ -19,22 +19,20 @@ public class InterviewManager : MonoBehaviour
     public GameObject player;
     public Transform respawnPoint;
 
-    [Header("Feedback Dialogue")]
-    public string[] correctDialogue;
-    public string[] wrongDialogue;   
-
     private QuestData currentQuest;
     private InterviewSystem system;
+
     private bool isFinishing;
-    private bool waitingForDialogue;
 
     void Awake()
     {
-        var database = FindAnyObjectByType<QuestDatabase>();
+        QuestDatabase database = FindAnyObjectByType<QuestDatabase>();
+
         if (database != null)
         {
             currentQuest = database.GetQuest(questId);
         }
+
 
         if (currentQuest == null)
         {
@@ -42,11 +40,15 @@ public class InterviewManager : MonoBehaviour
             return;
         }
 
+
+
         system = new InterviewSystem(
             currentQuest.questions,
             currentQuest.maxLives,
             currentQuest.minCorrect
         );
+
+
 
         system.OnRoundChanged += ShowRound;
         system.OnFinished += OnSystemFinished;
@@ -55,50 +57,89 @@ public class InterviewManager : MonoBehaviour
 
     void OnDestroy()
     {
-        if (system != null)
-        {
-            system.OnRoundChanged -= ShowRound;
-            system.OnFinished -= OnSystemFinished;
-            system.OnFeedback -= ShowFeedback;
-        }
+        if (system == null)
+            return;
+
+
+        system.OnRoundChanged -= ShowRound;
+        system.OnFinished -= OnSystemFinished;
+        system.OnFeedback -= ShowFeedback;
     }
 
     public void StartSystem()
     {
-        if (system == null || system.IsActive) return;
+        if (system == null || system.IsActive)
+            return;
+
+
         isFinishing = false;
+
 
         if (panel != null)
             panel.SetActive(true);
 
+
         system.Start();
     }
-
     void ShowRound(QuestionRPG question, int totalOptions)
     {
-        uiManager.ShowQuestion(question, totalOptions, (choice) => {
-            StartCoroutine(ProcessChoiceWithDialogue(choice));
-        });
+        uiManager.ShowQuestion(
+            question,
+            totalOptions,
+            (choice) =>
+            {
+                StartCoroutine(ProcessChoiceWithDialogue(choice));
+            }
+        );
     }
 
     IEnumerator ProcessChoiceWithDialogue(int choice)
     {
-        var question = currentQuest.questions[system.GetCurrentRound()];
-        bool isCorrect = choice == question.correctAnswer;
+        QuestionRPG question =
+            currentQuest.questions[system.GetCurrentRound()];
 
-        string[] dialogueLines = isCorrect ? correctDialogue : wrongDialogue;
+        bool isCorrect =
+            choice == question.correctAnswer;
 
-        if (dialogueSystem != null && dialogueLines.Length > 0)
+        DialogueLine[] dialogueLines = null;
+
+        if (question.optionDialogues != null &&
+            choice < question.optionDialogues.Length)
         {
-            string answerText = question.options[choice];
+            dialogueLines =
+                question.optionDialogues[choice].dialogue;
+        }
+
+        if (dialogueSystem != null &&
+            dialogueLines != null &&
+            dialogueLines.Length > 0)
+        {
+
+            DialogueLine[] lines =
+                new DialogueLine[dialogueLines.Length];
+
+
             for (int i = 0; i < dialogueLines.Length; i++)
             {
-                dialogueLines[i] = dialogueLines[i].Replace("{answer}", answerText);
+                lines[i] = new DialogueLine();
+
+                lines[i].characterSprite =
+                    dialogueLines[i].characterSprite;
+
+
+                lines[i].text =
+                    dialogueLines[i].text
+                    .Replace(
+                        "{answer}",
+                        question.options[choice]
+                    );
             }
 
-            dialogueSystem.StartDialogue(dialogueLines);
+            dialogueSystem.StartDialogue(lines);
 
-            yield return new WaitWhile(() => dialogueSystem.IsRunning);
+            yield return new WaitWhile(
+                () => dialogueSystem.IsRunning
+            );
         }
 
         system.ProcessChoice(choice);
@@ -109,9 +150,14 @@ public class InterviewManager : MonoBehaviour
         uiManager.ShowFeedback(message);
     }
 
-    void OnSystemFinished(bool victory, int points, int lives)
+    void OnSystemFinished(
+        bool victory,
+        int points,
+        int lives)
     {
-        if (isFinishing) return;
+        if (isFinishing)
+            return;
+
         isFinishing = true;
 
         if (panel != null)
@@ -123,25 +169,50 @@ public class InterviewManager : MonoBehaviour
         if (objectToDeactivate != null)
             objectToDeactivate.SetActive(!victory);
 
-        string[] lines = victory ? currentQuest.victoryLines : currentQuest.defeatLines;
-        StartCoroutine(DelayThenDialogue(lines, 1f, victory));
+        string[] lines =
+            victory
+            ? currentQuest.victoryLines
+            : currentQuest.defeatLines;
+        StartCoroutine(
+            DelayThenDialogue(lines, 1f, victory)
+        );
     }
 
-    IEnumerator DelayThenDialogue(string[] lines, float delay, bool victory)
+    IEnumerator DelayThenDialogue(
+        string[] lines,
+        float delay,
+        bool victory)
     {
         yield return new WaitForSeconds(delay);
 
-        if (dialogueSystem != null && lines != null && lines.Length > 0)
+        if (dialogueSystem != null &&
+            lines != null &&
+            lines.Length > 0)
         {
-            dialogueSystem.StartDialogue(lines);
-            yield return new WaitWhile(() => dialogueSystem.IsRunning);
+            DialogueLine[] dialogue =
+                new DialogueLine[lines.Length];
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                dialogue[i] = new DialogueLine();
+                dialogue[i].text = lines[i];
+                dialogue[i].characterSprite = null;
+            }
+
+            dialogueSystem.StartDialogue(dialogue);
+
+            yield return new WaitWhile(
+                () => dialogueSystem.IsRunning
+            );
         }
 
-        if (!victory && player != null && respawnPoint != null)
+        if (!victory &&
+            player != null &&
+            respawnPoint != null)
         {
-            player.transform.position = respawnPoint.position;
+            player.transform.position =
+                respawnPoint.position;
         }
-
         OnQuizFinished?.Invoke();
     }
 }

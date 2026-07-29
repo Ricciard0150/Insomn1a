@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class InterviewQuests : MonoBehaviour
@@ -8,22 +9,44 @@ public class InterviewQuests : MonoBehaviour
     public TMP_Text dialogueText;
     public GameObject dialoguePanel;
 
+    [Header("Character")]
+    public Image characterImage;
+
     [Header("Config")]
     public float textSpeed = 0.03f;
+
     public KeyCode skipKey = KeyCode.Space;
     public KeyCode continueKey = KeyCode.E;
 
-    [Header("Dialogue Lines")]
+    [Header("Final Dialogues (opcional)")]
     public string[] victoryLines;
     public string[] defeatLines;
 
     private bool isRunning;
     private Coroutine currentDialogue;
-    private bool isSkipping;
 
     public bool IsRunning => isRunning;
-
     public void StartDialogue(string[] lines)
+    {
+        if (lines == null)
+            return;
+
+        DialogueLine[] converted =
+            new DialogueLine[lines.Length];
+
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            converted[i] = new DialogueLine();
+
+            converted[i].text = lines[i];
+            converted[i].characterSprite = null;
+        }
+
+        StartDialogue(converted);
+    }
+
+    public void StartDialogue(DialogueLine[] lines)
     {
         if (lines == null || lines.Length == 0)
         {
@@ -34,39 +57,58 @@ public class InterviewQuests : MonoBehaviour
         if (currentDialogue != null)
             StopCoroutine(currentDialogue);
 
-        currentDialogue = StartCoroutine(DisplayDialogue(lines));
+        currentDialogue =
+            StartCoroutine(DisplayDialogue(lines));
     }
-
-    IEnumerator DisplayDialogue(string[] lines)
+    IEnumerator DisplayDialogue(DialogueLine[] lines)
     {
         isRunning = true;
-        isSkipping = false;
-        dialoguePanel.SetActive(true);
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(true);
 
-        foreach (string line in lines)
+        foreach (DialogueLine line in lines)
         {
-            dialogueText.text = "";
+            if (characterImage != null)
+            {
+                characterImage.sprite =
+                    line.characterSprite;
 
-            foreach (char letter in line)
+
+                characterImage.gameObject.SetActive(
+                    line.characterSprite != null
+                );
+            }
+            dialogueText.text = "";
+            bool skipped = false;
+            foreach (char letter in line.text)
             {
                 if (Input.GetKeyDown(skipKey))
                 {
-                    isSkipping = true;
-                    dialogueText.text = line;
+                    dialogueText.text = line.text;
+
+                    skipped = true;
+
                     break;
                 }
-
                 dialogueText.text += letter;
                 yield return new WaitForSeconds(textSpeed);
             }
 
-            isSkipping = false;
-            yield return new WaitUntil(() => Input.GetKeyDown(continueKey));
+            if (!skipped)
+            {
+                yield return new WaitUntil(
+                    () => Input.GetKeyDown(continueKey)
+                );
+            }
+
             yield return null;
         }
 
-        dialoguePanel.SetActive(false);
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
         isRunning = false;
+
         currentDialogue = null;
     }
 
@@ -75,10 +117,12 @@ public class InterviewQuests : MonoBehaviour
         if (currentDialogue != null)
         {
             StopCoroutine(currentDialogue);
+
             currentDialogue = null;
         }
 
-        dialoguePanel.SetActive(false);
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
         isRunning = false;
     }
 }

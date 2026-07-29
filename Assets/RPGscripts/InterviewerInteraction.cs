@@ -6,7 +6,7 @@ public class InterviewerInteraction : MonoBehaviour
     public GameObject pressEIndicator;
     public InterviewManager interviewManager;
     public InterviewQuests dialogueSystem;
-    public GameObject player; // ← AGORA É GameObject, não TopDownMovement
+    public GameObject player; 
 
     [Header("Settings")]
     public KeyCode interactKey = KeyCode.E;
@@ -36,7 +36,6 @@ public class InterviewerInteraction : MonoBehaviour
         if (pressEIndicator != null)
             pressEIndicator.SetActive(false);
 
-        // Se tem intro, mostra diálogo primeiro
         if (startWithIntro && dialogueSystem != null)
         {
             var quest = GetQuestFromManager();
@@ -47,22 +46,18 @@ public class InterviewerInteraction : MonoBehaviour
                 return;
             }
         }
-
-        // Se não tem intro, começa direto
         StartQuiz();
     }
 
     System.Collections.IEnumerator WaitForDialogueThenStartQuiz()
     {
-        // Espera o diálogo terminar
         yield return new WaitWhile(() => dialogueSystem.IsRunning);
 
-        // 🔥 COMEÇA O QUIZ E DESATIVA O PLAYER
         StartQuiz();
         if (player != null)
         {
             player.SetActive(false);
-            Debug.Log("🚫 Player desativado!");
+            Debug.Log("player off");
         }
     }
 
@@ -78,11 +73,10 @@ public class InterviewerInteraction : MonoBehaviour
 
     void OnQuizFinished()
     {
-        // 🔓 ATIVA O PLAYER DE VOLTA
         if (player != null)
         {
             player.SetActive(true);
-            Debug.Log("✅ Player ativado!");
+            Debug.Log("player on ");
         }
 
         isInteracting = false;
