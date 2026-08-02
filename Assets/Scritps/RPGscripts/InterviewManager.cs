@@ -21,7 +21,6 @@ public class InterviewManager : MonoBehaviour
 
     private QuestData currentQuest;
     private InterviewSystem system;
-
     private bool isFinishing;
 
     void Awake()
@@ -33,22 +32,17 @@ public class InterviewManager : MonoBehaviour
             currentQuest = database.GetQuest(questId);
         }
 
-
         if (currentQuest == null)
         {
-            Debug.LogError($"Quest '{questId}' não encontrada!");
+            Debug.LogError($"Quest '{questId}' not found!");
             return;
         }
-
-
 
         system = new InterviewSystem(
             currentQuest.questions,
             currentQuest.maxLives,
             currentQuest.minCorrect
         );
-
-
 
         system.OnRoundChanged += ShowRound;
         system.OnFinished += OnSystemFinished;
@@ -60,7 +54,6 @@ public class InterviewManager : MonoBehaviour
         if (system == null)
             return;
 
-
         system.OnRoundChanged -= ShowRound;
         system.OnFinished -= OnSystemFinished;
         system.OnFeedback -= ShowFeedback;
@@ -71,16 +64,14 @@ public class InterviewManager : MonoBehaviour
         if (system == null || system.IsActive)
             return;
 
-
         isFinishing = false;
-
 
         if (panel != null)
             panel.SetActive(true);
 
-
         system.Start();
     }
+
     void ShowRound(QuestionRPG question, int totalOptions)
     {
         uiManager.ShowQuestion(
@@ -95,51 +86,28 @@ public class InterviewManager : MonoBehaviour
 
     IEnumerator ProcessChoiceWithDialogue(int choice)
     {
-        QuestionRPG question =
-            currentQuest.questions[system.GetCurrentRound()];
-
-        bool isCorrect =
-            choice == question.correctAnswer;
-
+        QuestionRPG question = currentQuest.questions[system.GetCurrentRound()];
+        bool isCorrect = choice == question.correctAnswer;
         DialogueLine[] dialogueLines = null;
 
-        if (question.optionDialogues != null &&
-            choice < question.optionDialogues.Length)
+        if (question.optionDialogues != null && choice < question.optionDialogues.Length)
         {
-            dialogueLines =
-                question.optionDialogues[choice].dialogue;
+            dialogueLines = question.optionDialogues[choice].dialogue;
         }
 
-        if (dialogueSystem != null &&
-            dialogueLines != null &&
-            dialogueLines.Length > 0)
+        if (dialogueSystem != null && dialogueLines != null && dialogueLines.Length > 0)
         {
-
-            DialogueLine[] lines =
-                new DialogueLine[dialogueLines.Length];
-
+            DialogueLine[] lines = new DialogueLine[dialogueLines.Length];
 
             for (int i = 0; i < dialogueLines.Length; i++)
             {
                 lines[i] = new DialogueLine();
-
-                lines[i].characterSprite =
-                    dialogueLines[i].characterSprite;
-
-
-                lines[i].text =
-                    dialogueLines[i].text
-                    .Replace(
-                        "{answer}",
-                        question.options[choice]
-                    );
+                lines[i].characterSprite = dialogueLines[i].characterSprite;
+                lines[i].text = dialogueLines[i].text.Replace("{answer}", question.options[choice]);
             }
 
             dialogueSystem.StartDialogue(lines);
-
-            yield return new WaitWhile(
-                () => dialogueSystem.IsRunning
-            );
+            yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
         system.ProcessChoice(choice);
@@ -150,15 +118,17 @@ public class InterviewManager : MonoBehaviour
         uiManager.ShowFeedback(message);
     }
 
-    void OnSystemFinished(
-        bool victory,
-        int points,
-        int lives)
+    void OnSystemFinished(bool victory, int points, int lives)
     {
         if (isFinishing)
             return;
 
         isFinishing = true;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SaveQuestResult(questId, victory, points);
+        }
 
         if (panel != null)
             panel.SetActive(false);
@@ -169,28 +139,17 @@ public class InterviewManager : MonoBehaviour
         if (objectToDeactivate != null)
             objectToDeactivate.SetActive(!victory);
 
-        string[] lines =
-            victory
-            ? currentQuest.victoryLines
-            : currentQuest.defeatLines;
-        StartCoroutine(
-            DelayThenDialogue(lines, 1f, victory)
-        );
+        string[] lines = victory ? currentQuest.victoryLines : currentQuest.defeatLines;
+        StartCoroutine(DelayThenDialogue(lines, 1f, victory));
     }
 
-    IEnumerator DelayThenDialogue(
-        string[] lines,
-        float delay,
-        bool victory)
+    IEnumerator DelayThenDialogue(string[] lines, float delay, bool victory)
     {
         yield return new WaitForSeconds(delay);
 
-        if (dialogueSystem != null &&
-            lines != null &&
-            lines.Length > 0)
+        if (dialogueSystem != null && lines != null && lines.Length > 0)
         {
-            DialogueLine[] dialogue =
-                new DialogueLine[lines.Length];
+            DialogueLine[] dialogue = new DialogueLine[lines.Length];
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -200,19 +159,28 @@ public class InterviewManager : MonoBehaviour
             }
 
             dialogueSystem.StartDialogue(dialogue);
-
-            yield return new WaitWhile(
-                () => dialogueSystem.IsRunning
-            );
+            yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
-        if (!victory &&
-            player != null &&
-            respawnPoint != null)
+        if (!victory && player != null && respawnPoint != null)
         {
-            player.transform.position =
-                respawnPoint.position;
+            player.transform.position = respawnPoint.position;
         }
+
         OnQuizFinished?.Invoke();
+    }
+
+    public bool IsQuestCompleted()
+    {
+        if (GameManager.Instance != null)
+            return GameManager.Instance.IsQuestCompleted(questId);
+        return false;
+    }
+
+    public bool GetQuestResult()
+    {
+        if (GameManager.Instance != null)
+            return GameManager.Instance.GetQuestResult(questId);
+        return false;
     }
 }

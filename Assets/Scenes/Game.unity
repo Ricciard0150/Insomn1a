@@ -509,8 +509,8 @@ Transform:
   m_GameObject: {fileID: 41439962}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.8673, y: -33.0099, z: 0}
-  m_LocalScale: {x: 85.39, y: -1.8898641, z: 1}
+  m_LocalPosition: {x: 26.4332, y: -32.4769, z: 0}
+  m_LocalScale: {x: 80.517746, y: -0.82379174, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2000680574}
@@ -3364,104 +3364,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &479851623
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 479851625}
-  - component: {fileID: 479851624}
-  m_Layer: 0
-  m_Name: RPGcontroller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &479851624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479851623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd88718e72c264f4a9e3b99cfff25ca2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SystemRPGnormal
-  panel: {fileID: 684994836}
-  perguntaText: {fileID: 1007355977}
-  opcoesText:
-  - {fileID: 1779001712}
-  - {fileID: 132068668}
-  feedbackText: {fileID: 48416039}
-  velocidadeTexto: 0.03
-  vidaMaxima: 3
-  acertosMinimos: 2
-  estaAtivo: 0
-  dialogueSystem: {fileID: 1824086557}
-  falasVitoria:
-  - "Chefe: Bom, sr. Franz. O emprego \xE9 seu. "
-  - 'Kafka: Certo! Obrigado, chefe!'
-  falasDerrota:
-  - 'Chefe: Hm, temos candidatos melhores.'
-  player: {fileID: 1865952460842338405}
-  pontoRespawn: {fileID: 1643286954}
-  perguntas:
-  - pergunta: "Chefe: Primeiramente, dando uma olhada aqui no seu curr\xEDculo percebi
-      que voc\xEA disse que sabe ingl\xEAs, certo? \u2606 Gostaria que voc\xEA me
-      falasse uma pequena frase como uma prova \u2606 "
-    opcoes:
-    - 'Franz: Hi sir, im ready to work in this company. '
-    - "Franz: Hola se\xF1or, estoy listo para empezar a trabajar en esta empresa."
-    respostaCorreta: 0
-    feedbackCorreto: "Chefe: Voc\xEA o satisfez; "
-    feedbackErrado: "Chefe:  ele n\xE3o parece satisfeito; "
-  - pergunta: "Chefe: Ok, aqui voc\xEA tamb\xE9m diz ser r\xE1pido em c\xE1lculos 
-      matem\xE1ticos \u2606 Vou te dar uma pequena equa\xE7\xE3o e quero que me responda:
-      246+34. "
-    opcoes:
-    - 'Franz: 302.'
-    - 'Franz: 280. '
-    respostaCorreta: 1
-    feedbackCorreto: 'Chefe:  Ele parece feliz; '
-    feedbackErrado: "Chefe: Voc\xEA irritou ele, n\xE3o era t\xE3o dif\xEDcil; "
-  - pergunta: "Chefe: Apenas uma d\xFAvida, com qual animal voc\xEA se identifica? "
-    opcoes:
-    - "Franz: Com certeza um le\xE3o, senhor. "
-    - 'Franz: Talvez uma galinha..? '
-    respostaCorreta: 0
-    feedbackCorreto: "Chefe: Ele est\xE1 orgulhoso; "
-    feedbackErrado: 'Chefe: Ele parece enojado..?; '
-  - pergunta: "Chefe: Ok, apenas mais uma pergunta. \u2606 Voc\xEA tem algum problema
-      de sa\xFAde que ir\xE1 interferir na qualidade do seu trabalho? "
-    opcoes:
-    - "Franz: N\xE3o, senhor. "
-    - 'Franz: Sim, senhor. '
-    respostaCorreta: 0
-    feedbackCorreto: 'Chefe: Ele parece satisfeito'
-    feedbackErrado: "Chefe: Acho que ele n\xE3o gostou muito disso..."
-  objetoAtivar: {fileID: 1254072416}
-  objetoDesativar: {fileID: 2093832542}
---- !u!4 &479851625
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479851623}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.42337, y: -7.93088, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &488273992
 GameObject:
   m_ObjectHideFlags: 0
@@ -3770,7 +3672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &557457675
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3829,9 +3731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7627deb7205f0e54ea898dd6a0c68f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteragirRPGnormal
-  sistemaRPG: {fileID: 479851624}
-  pressE: {fileID: 150873144}
-  tdm: {fileID: 5055718417195591049}
 --- !u!212 &557457677
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4935,7 +4834,7 @@ Transform:
   m_GameObject: {fileID: 651116832}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.46, y: 3.75, z: 0}
+  m_LocalPosition: {x: 94.4, y: 74.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5789,6 +5688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 749839219}
   - component: {fileID: 749839218}
+  - component: {fileID: 749839220}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -5885,6 +5785,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &749839220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749839217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32961a1170738c4a9d18475b91006dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  spawnPosition: {x: 466.1, y: 114.1, z: 0}
+  spawnSceneName: Game
 --- !u!1 &765943188
 GameObject:
   m_ObjectHideFlags: 0
@@ -7629,11 +7543,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf0f387d47d6d1e4196d1eea6669de81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionBed
-  nomeDaCena: NightmareScene
-  teclaInteragir: 101
+  sceneName: NightmareScene
+  interactKey: 101
   pressE: {fileID: 150873144}
   fadeImage: {fileID: 873768055}
-  duracaoFade: 2
+  fadeDuration: 2
 --- !u!61 &1051169693
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -18878,7 +18792,7 @@ Transform:
   m_GameObject: {fileID: 1497053602}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.22332, y: 16.68, z: 0}
+  m_LocalPosition: {x: 94.63, y: 80.32, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19566,8 +19480,8 @@ MonoBehaviour:
   uiManager: {fileID: 1649544998}
   dialogueSystem: {fileID: 1312730299}
   questId: interview
-  objectToActivate: {fileID: 2093832542}
-  objectToDeactivate: {fileID: 1458566252}
+  objectToActivate: {fileID: 923329084}
+  objectToDeactivate: {fileID: 2093832542}
   player: {fileID: 1865952460842338405}
   respawnPoint: {fileID: 651116833}
 --- !u!114 &1649544998
@@ -20757,7 +20671,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.5, y: -37.5}
+  m_AnchoredPosition: {x: 239.5, y: -37.49997}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1779001709
@@ -21151,57 +21065,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1824086556
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1824086558}
-  - component: {fileID: 1824086557}
-  m_Layer: 0
-  m_Name: RPGDIALOGUEcontroller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1824086557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824086556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 573ca955f5762574ab4b66896d9455a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueRPG
-  dialoguePanel: {fileID: 746844588}
-  dialogueText: {fileID: 622770720}
-  velocidadeTexto: 0.05
-  teclaAvancar: 101
-  teclaFechar: 32
-  tdm: {fileID: 5055718417195591049}
-  target: {fileID: 557457674}
---- !u!4 &1824086558
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824086556}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 26.96255, y: 175.97006, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1841343547
 GameObject:
   m_ObjectHideFlags: 0
@@ -22835,7 +22698,7 @@ Transform:
   m_GameObject: {fileID: 2093832542}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 155.7238, y: 100.86466, z: 0}
+  m_LocalPosition: {x: 152.7, y: 55.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22867,8 +22730,8 @@ Transform:
   m_GameObject: {fileID: 2095855004}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.9162, y: -40.3507, z: 0}
-  m_LocalScale: {x: 87.65, y: -1.951261, z: 1}
+  m_LocalPosition: {x: 25.6736, y: -39.8792, z: 0}
+  m_LocalScale: {x: 81.16897, y: -1.0083297, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2000680574}
@@ -23017,7 +22880,7 @@ GameObject:
   - component: {fileID: 2120489243}
   - component: {fileID: 2120489242}
   m_Layer: 0
-  m_Name: TeleportBedroom
+  m_Name: BTeleportPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23244,6 +23107,7 @@ GameObject:
   - component: {fileID: 1054758991267507819}
   - component: {fileID: 2662064930293892131}
   - component: {fileID: 5055718417195591049}
+  - component: {fileID: 9105895952993720708}
   m_Layer: 0
   m_Name: KitPlayer
   m_TagString: Untagged
@@ -23391,13 +23255,25 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9314601, y: 12.82476, z: 0}
+  m_LocalPosition: {x: 92.9, y: 77.232, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8052390590229368376}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9105895952993720708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865952460842338405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d6340ed3ee199049a04d43b8d3d36b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerReturn
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -23417,8 +23293,6 @@ SceneRoots:
   - {fileID: 902253561}
   - {fileID: 2120489243}
   - {fileID: 1930592046}
-  - {fileID: 479851625}
-  - {fileID: 1824086558}
   - {fileID: 1401780848}
   - {fileID: 749839219}
   - {fileID: 1635674402}

@@ -440,6 +440,8 @@ MonoBehaviour:
   dialoguePanel: {fileID: 626055950}
   pressingE: {fileID: 459130347}
   dialogueText: {fileID: 1402966181}
+  images: {fileID: 0}
+  sprites: []
   falas:
   - "Ah... os curr\xEDculos que meu pai rasgou..."
   velocidadeTexto: 0.05
@@ -3647,9 +3649,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452288623}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 15.3791, y: 9.78, z: 0}
-  m_LocalScale: {x: 2.7582, y: 1, z: 1}
+  m_LocalScale: {x: 2.7582002, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3869,6 +3871,8 @@ MonoBehaviour:
   dialoguePanel: {fileID: 626055950}
   pressingE: {fileID: 459130347}
   dialogueText: {fileID: 1402966181}
+  images: {fileID: 0}
+  sprites: []
   falas:
   - Ah... a porta trancada dos meus pais... como sempre.
   velocidadeTexto: 0.05
@@ -4179,6 +4183,8 @@ MonoBehaviour:
   dialoguePanel: {fileID: 626055950}
   pressingE: {fileID: 459130347}
   dialogueText: {fileID: 1402966181}
+  images: {fileID: 0}
+  sprites: []
   falas:
   - "Apenas uma c\xF4moda normal. Hoje em dia os cupins usam mais ela do que eu."
   velocidadeTexto: 0.05
@@ -6874,6 +6880,8 @@ MonoBehaviour:
   dialoguePanel: {fileID: 626055950}
   pressingE: {fileID: 459130347}
   dialogueText: {fileID: 1402966181}
+  images: {fileID: 0}
+  sprites: []
   falas:
   - "\xC9 s\xF3 o balc\xE3o da cozinha."
   velocidadeTexto: 0.05
@@ -7048,7 +7056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!60 &1731421981
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -7640,7 +7648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1999211444
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8286,8 +8294,8 @@ SceneRoots:
   - {fileID: 1909049211}
   - {fileID: 163131891}
   - {fileID: 1019783235}
-  - {fileID: 1999211445}
   - {fileID: 1452288625}
+  - {fileID: 1999211445}
   - {fileID: 1810767828}
   - {fileID: 211695921}
   - {fileID: 1731421984}

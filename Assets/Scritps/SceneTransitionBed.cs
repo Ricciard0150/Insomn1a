@@ -6,22 +6,24 @@ using UnityEngine.SceneManagement;
 public class SceneTransitionBed : MonoBehaviour
 {
     [Header("Config")]
-    public string nomeDaCena;
-    public KeyCode teclaInteragir = KeyCode.E;
-    public GameObject pressE; 
+    public string sceneName;
+    public KeyCode interactKey = KeyCode.E;
+    public GameObject pressE;
 
     [Header("Fade")]
-    public Image fadeImage; // imagem preta na tela
-    public float duracaoFade = 2f;
+    public Image fadeImage;
+    public float fadeDuration = 2f;
 
-    private bool playerPerto = false;
-    private bool transicaoAtiva = false;
+    private Vector3 playerPositionOnExit;
+    private string lastSceneName;
+    private bool playerNear = false;
+    private bool transitionActive = false;
 
     void Update()
     {
-        if (playerPerto && Input.GetKeyDown(teclaInteragir) && !transicaoAtiva)
+        if (playerNear && Input.GetKeyDown(interactKey) && !transitionActive)
         {
-            StartCoroutine(Transicao());
+            StartCoroutine(Transition());
         }
     }
 
@@ -29,8 +31,12 @@ public class SceneTransitionBed : MonoBehaviour
     {
         if (collision.TryGetComponent(out IStatusPlayer status))
         {
-            playerPerto = true;
-            pressE.SetActive(true);
+            playerNear = true;
+            if (pressE != null) 
+                pressE.SetActive(true);
+
+            playerPositionOnExit = collision.transform.position;
+            lastSceneName = SceneManager.GetActiveScene().name;
         }
     }
 
@@ -38,32 +44,34 @@ public class SceneTransitionBed : MonoBehaviour
     {
         if (collision.TryGetComponent(out IStatusPlayer status))
         {
-            playerPerto = false;
-            Destroy(pressE);
+            playerNear = false;
+            if (pressE != null) 
+                pressE.SetActive(false);
         }
     }
 
-    IEnumerator Transicao()
+    IEnumerator Transition()
     {
-        transicaoAtiva = true;
+        transitionActive = true;
 
-        // Fade para preto
-        float tempo = 0f;
-        Color cor = fadeImage.color;
+        PlayerPrefs.SetFloat("ReturnPosX", playerPositionOnExit.x);
+        PlayerPrefs.SetFloat("ReturnPosY", playerPositionOnExit.y);
+        PlayerPrefs.SetFloat("ReturnPosZ", playerPositionOnExit.z);
+        PlayerPrefs.SetString("ReturnScene", lastSceneName);
+        PlayerPrefs.Save();
 
-        while (tempo < duracaoFade)
+        float time = 0f;
+        Color color = fadeImage.color;
+
+        while (time < fadeDuration)
         {
-            tempo += Time.deltaTime;
-            float alpha = tempo / duracaoFade;
-
-            fadeImage.color = new Color(cor.r, cor.g, cor.b, alpha);
+            time += Time.deltaTime;
+            float alpha = time / fadeDuration;
+            fadeImage.color = new Color(color.r, color.g, color.b, alpha);
             yield return null;
         }
 
-        // Garante que ficou totalmente preto
-        fadeImage.color = new Color(cor.r, cor.g, cor.b, 1f);
-
-        // Carrega cena
-        SceneManager.LoadScene(nomeDaCena);
+        fadeImage.color = new Color(color.r, color.g, color.b, 1f);
+        SceneManager.LoadScene(sceneName);
     }
 }

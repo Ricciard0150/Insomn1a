@@ -23,7 +23,6 @@ public class WindowJumpscare : MonoBehaviour
     bool isColliding = false;
     bool dialogoAtivo = false;
     bool escrevendo = false;
-   
 
     int index = 0;
 
@@ -32,27 +31,38 @@ public class WindowJumpscare : MonoBehaviour
     public BlurController bc;
     public Door door;
 
+    [Header("Respawn Position")]
+    public Vector3 respawnPosition;
+
     private void Start()
     {
-        pressE.SetActive(false);
-        dialogueBox.SetActive(false);
-        texto.text = "";
-        fadePreto.color = new Color(0, 0, 0, 0);
-      
+        if (pressE != null)
+            pressE.SetActive(false);
+
+        if (dialogueBox != null)
+            dialogueBox.SetActive(false);
+
+        if (texto != null)
+            texto.text = "";
+
+        if (fadePreto != null)
+            fadePreto.color = new Color(0, 0, 0, 0);
     }
 
     private void Update()
     {
-        
-            if (Input.GetKeyDown(tecla) && isColliding && !dialogoAtivo && door.jaUsouComChave && ki.playerHasKey)
-            {
+        if (Input.GetKeyDown(tecla) && isColliding && !dialogoAtivo && door.jaUsouComChave && ki.playerHasKey)
+        {
+            if (panel != null)
                 panel.SetActive(true);
-                bc.AtivarBlur();
-                pressE.SetActive(false);
-                tdm.canMove = false;
 
-            }
-        
+            bc.AtivarBlur();
+
+            if (pressE != null)
+                pressE.SetActive(false);
+
+            tdm.canMove = false;
+        }
 
         if (Input.GetKeyDown(lanterna) && !dialogoAtivo)
         {
@@ -65,7 +75,8 @@ public class WindowJumpscare : MonoBehaviour
             if (escrevendo)
             {
                 StopAllCoroutines();
-                texto.text = lines[index];
+                if (texto != null && index < lines.Length)
+                    texto.text = lines[index];
                 escrevendo = false;
             }
             else
@@ -78,10 +89,10 @@ public class WindowJumpscare : MonoBehaviour
     IEnumerator Sequencia()
     {
         dialogoAtivo = true;
-
         yield return new WaitForSeconds(3f);
 
-        dialogueBox.SetActive(true);
+        if (dialogueBox != null)
+            dialogueBox.SetActive(true);
 
         index = 0;
         StartCoroutine(EscreverLinha());
@@ -102,13 +113,18 @@ public class WindowJumpscare : MonoBehaviour
 
     IEnumerator EscreverLinha()
     {
-        texto.text = "";
+        if (texto != null)
+            texto.text = "";
+
         escrevendo = true;
 
-        foreach (char letra in lines[index])
+        if (texto != null && index < lines.Length)
         {
-            texto.text += letra;
-            yield return new WaitForSeconds(velocidade);
+            foreach (char letra in lines[index])
+            {
+                texto.text += letra;
+                yield return new WaitForSeconds(velocidade);
+            }
         }
 
         escrevendo = false;
@@ -116,11 +132,12 @@ public class WindowJumpscare : MonoBehaviour
 
     IEnumerator PiscarTela()
     {
+        if (fadePreto == null) yield break;
+
         for (int i = 0; i < 6; i++)
         {
             fadePreto.color = new Color(0, 0, 0, 1);
             yield return new WaitForSeconds(0.1f);
-
             fadePreto.color = new Color(0, 0, 0, 0);
             yield return new WaitForSeconds(0.1f);
         }
@@ -137,19 +154,27 @@ public class WindowJumpscare : MonoBehaviour
             yield return null;
         }
 
-        SceneManager.LoadScene("Game");
+        // Salva a posição de respawn
+        PlayerPrefs.SetFloat("ReturnPosX", respawnPosition.x);
+        PlayerPrefs.SetFloat("ReturnPosY", respawnPosition.y);
+        PlayerPrefs.SetFloat("ReturnPosZ", respawnPosition.z);
+        PlayerPrefs.SetString("ReturnScene", "Game");
+        PlayerPrefs.Save();
 
+        SceneManager.LoadScene("Game");
     }
 
     IEnumerator FinalJumpscare()
     {
         yield return new WaitForSeconds(0.5f);
-
         yield return StartCoroutine(PiscarTela());
         yield return StartCoroutine(FadeFinal());
 
-        dialogueBox.SetActive(false);
-        panel.SetActive(false);
+        if (dialogueBox != null)
+            dialogueBox.SetActive(false);
+
+        if (panel != null)
+            panel.SetActive(false);
 
         dialogoAtivo = false;
         tdm.canMove = true;
@@ -160,7 +185,19 @@ public class WindowJumpscare : MonoBehaviour
         if (collision.TryGetComponent(out IStatusPlayer player))
         {
             isColliding = true;
-            pressE.SetActive(true);
+            if (pressE != null)
+                pressE.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IStatusPlayer player))
+        {
+            isColliding = false;
+
+            if (pressE != null)
+                pressE.SetActive(false);
         }
     }
 }

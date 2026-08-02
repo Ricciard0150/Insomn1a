@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class InterviewerInteraction : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class InterviewerInteraction : MonoBehaviour
         StartQuiz();
     }
 
-    System.Collections.IEnumerator WaitForDialogueThenStartQuiz()
+    IEnumerator WaitForDialogueThenStartQuiz()
     {
         yield return new WaitWhile(() => dialogueSystem.IsRunning);
 
