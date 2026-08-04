@@ -7,7 +7,7 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
     private Rigidbody2D rb;
 
     public bool canMove = false;
-    public bool isWalking { get; private set; } // 👈 público só leitura
+    public bool isWalking { get; private set; } 
 
     void Start()
     {
@@ -25,7 +25,6 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
 
         _movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        // 🔥 AQUI É O CERTO
         isWalking = _movement != Vector2.zero;
     }
 

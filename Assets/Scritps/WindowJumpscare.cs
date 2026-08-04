@@ -154,7 +154,6 @@ public class WindowJumpscare : MonoBehaviour
             yield return null;
         }
 
-        // Salva a posição de respawn
         PlayerPrefs.SetFloat("ReturnPosX", respawnPosition.x);
         PlayerPrefs.SetFloat("ReturnPosY", respawnPosition.y);
         PlayerPrefs.SetFloat("ReturnPosZ", respawnPosition.z);

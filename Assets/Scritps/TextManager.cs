@@ -24,7 +24,7 @@ public class TextManager : MonoBehaviour
     private Coroutine typingCoroutine;
     public TopDownMovement tdm;
 
-    void Start()
+    void Awake()
     {
         dialoguePanel.SetActive(false);
         pressingE.SetActive(false);

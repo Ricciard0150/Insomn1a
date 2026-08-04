@@ -59,10 +59,8 @@ public class Door : MonoBehaviour
         playerMovement.canMove = false;
         cameraFollow.canFollow = false;
 
-        // 🔊 TOCA O SOM AQUI
         audioSource.PlayOneShot(somBatida);
 
-        // 💥 SHAKE
         yield return StartCoroutine(camShake.Shake(0.2f, 0.3f));
 
         cameraFollow.canFollow = true;

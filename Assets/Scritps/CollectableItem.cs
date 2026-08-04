@@ -17,7 +17,7 @@ public class CollectableItem : MonoBehaviour
         if (playerNear && Input.GetKeyDown(tecla))
         {
             playerHasKey = true;
-            gameObject.SetActive(false); // pega a chave
+            gameObject.SetActive(false); 
         }
     }
 
