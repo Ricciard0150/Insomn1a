@@ -10,11 +10,11 @@ public class InterviewerInteraction : MonoBehaviour
     public GameObject player; 
 
     [Header("Settings")]
-    public KeyCode interactKey = KeyCode.E;
     public bool startWithIntro = true;
-
     private bool playerIsNear = false;
     private bool isInteracting = false;
+    private int index = 0;
+
 
     void Start()
     {
@@ -24,9 +24,13 @@ public class InterviewerInteraction : MonoBehaviour
 
     void Update()
     {
-        if (playerIsNear && Input.GetKeyDown(interactKey) && !isInteracting)
+        if (playerIsNear && Input.GetButtonDown("Interact") && !isInteracting)
         {
             StartInteraction();
+        }
+        if(Input.GetButtonDown("Interact"))
+        {
+            print("interact");
         }
     }
 
@@ -44,8 +48,10 @@ public class InterviewerInteraction : MonoBehaviour
             {
                 dialogueSystem.StartDialogue(quest.introLines);
                 StartCoroutine(WaitForDialogueThenStartQuiz());
+                index = 0;
                 return;
             }
+            
         }
         StartQuiz();
     }

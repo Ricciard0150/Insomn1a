@@ -16,7 +16,6 @@ public class InterviewQuests : MonoBehaviour
     public float textSpeed = 0.03f;
 
     public KeyCode skipKey = KeyCode.Space;
-    public KeyCode continueKey = KeyCode.E;
 
     [Header("Final Dialogues (opcional)")]
     public string[] victoryLines;
@@ -53,6 +52,7 @@ public class InterviewQuests : MonoBehaviour
             Debug.LogWarning("Diálogo vazio!");
             return;
         }
+        
 
         if (currentDialogue != null)
             StopCoroutine(currentDialogue);
@@ -97,7 +97,7 @@ public class InterviewQuests : MonoBehaviour
             if (!skipped)
             {
                 yield return new WaitUntil(
-                    () => Input.GetKeyDown(continueKey)
+                    () => Input.GetButtonDown("Interact")
                 );
             }
 

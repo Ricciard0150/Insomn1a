@@ -32,7 +32,7 @@ public class TextManager : MonoBehaviour
 
     void Update()
     {
-        if (playerPerto && Input.GetKeyDown(teclaInteragir))
+        if (playerPerto && Input.GetButtonDown("Interact"))
         {
             if (!dialogoAtivo)
             {
