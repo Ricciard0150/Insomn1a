@@ -4072,7 +4072,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.5, y: -37.500015}
+  m_AnchoredPosition: {x: 239.5, y: -37.500008}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &622770720
@@ -16930,7 +16930,6 @@ MonoBehaviour:
   characterImage: {fileID: 2107602943}
   textSpeed: 0.03
   skipKey: 32
-  continueKey: 101
   victoryLines:
   - "Bom, sr. Franz. O emprego \xE9 seu."
   - Obrigado, senhor!
@@ -18089,7 +18088,6 @@ MonoBehaviour:
   interviewManager: {fileID: 1649544997}
   dialogueSystem: {fileID: 1312730299}
   player: {fileID: 1865952460842338405}
-  interactKey: 101
   startWithIntro: 1
 --- !u!61 &1497053604
 BoxCollider2D:
@@ -19412,7 +19410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1704621417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19848,7 +19846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.5, y: -37.500015}
+  m_AnchoredPosition: {x: 239.5, y: -37.500008}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1770067081
@@ -20083,7 +20081,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.5, y: -37.499954}
+  m_AnchoredPosition: {x: 239.5, y: -37.499947}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1794539257
