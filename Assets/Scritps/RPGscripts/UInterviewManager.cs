@@ -41,14 +41,7 @@ public class UInterviewManager : MonoBehaviour
 
     void Update()
     {
-        if (isTyping && Input.GetKeyDown(KeyCode.Space))
-        {
-            SkipTyping();
-            return;
-        }
-
         if (!canChoose) return;
-
         HandleNavigation();
     }
 
@@ -56,29 +49,18 @@ public class UInterviewManager : MonoBehaviour
     {
         if (!canNavigate) return;
 
-        bool moveUp = Input.GetKeyDown(KeyCode.UpArrow);
-        bool moveDown = Input.GetKeyDown(KeyCode.DownArrow);
-        bool moveLeft = Input.GetKeyDown(KeyCode.LeftArrow);
-        bool moveRight = Input.GetKeyDown(KeyCode.RightArrow);
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             Select();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SkipTyping();
-            return;
-        }
-
-        if (moveUp || moveLeft)
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Navigate(-1);
             StartCoroutine(NavigationCooldown());
         }
-        else if (moveDown || moveRight)
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             Navigate(1);
             StartCoroutine(NavigationCooldown());
@@ -111,10 +93,8 @@ public class UInterviewManager : MonoBehaviour
 
     IEnumerator DisplayQuestion(QuestionRPG question)
     {
-
         questionText.gameObject.SetActive(true);
         questionText.text = "";
-
 
         foreach (var txt in optionsText)
         {
@@ -124,9 +104,7 @@ public class UInterviewManager : MonoBehaviour
             txt.color = normalColor;
         }
 
-
         yield return TypeWriter(questionText, question.question);
-
 
         for (int i = 0; i < totalOptions; i++)
         {
@@ -143,7 +121,6 @@ public class UInterviewManager : MonoBehaviour
 
     void Navigate(int direction)
     {
-
         optionsText[selectedOption].transform.localScale = Vector3.one;
         optionsText[selectedOption].color = normalColor;
 
@@ -175,11 +152,10 @@ public class UInterviewManager : MonoBehaviour
     void Select()
     {
         if (!canChoose) return;
-
         canChoose = false;
 
         if (hideQuestionOnAnswer)
-            StartCoroutine(FadeOutQuestion());
+            StartCoroutine(FadeOut(questionText));
 
         if (hideOptionsOnAnswer)
             StartCoroutine(FadeOutOptions());
@@ -193,41 +169,26 @@ public class UInterviewManager : MonoBehaviour
         {
             if (txt.gameObject.activeSelf)
             {
-                float elapsed = 0;
-                Color originalColor = txt.color;
-
-                while (elapsed < fadeSpeed)
-                {
-                    elapsed += Time.deltaTime;
-                    float alpha = Mathf.Lerp(1, 0, elapsed / fadeSpeed);
-                    txt.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
-                    yield return null;
-                }
-
-                txt.gameObject.SetActive(false);
-                txt.color = originalColor;
+                yield return StartCoroutine(FadeOut(txt));
             }
         }
     }
 
-    IEnumerator FadeOutQuestion()
+    IEnumerator FadeOut(TMP_Text text)
     {
-        if (questionText.gameObject.activeSelf)
+        float elapsed = 0;
+        Color originalColor = text.color;
+
+        while (elapsed < fadeSpeed)
         {
-            float elapsed = 0;
-            Color originalColor = questionText.color;
-
-            while (elapsed < fadeSpeed)
-            {
-                elapsed += Time.deltaTime;
-                float alpha = Mathf.Lerp(1, 0, elapsed / fadeSpeed);
-                questionText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
-                yield return null;
-            }
-
-            questionText.gameObject.SetActive(false);
-            questionText.color = originalColor;
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1, 0, elapsed / fadeSpeed);
+            text.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
         }
+
+        text.gameObject.SetActive(false);
+        text.color = originalColor;
     }
 
     IEnumerator TypeWriter(TMP_Text text, string phrase)
@@ -241,12 +202,6 @@ public class UInterviewManager : MonoBehaviour
             yield return new WaitForSeconds(textSpeed);
         }
 
-        isTyping = false;
-    }
-
-    void SkipTyping()
-    {
-        StopAllCoroutines();
         isTyping = false;
     }
 
