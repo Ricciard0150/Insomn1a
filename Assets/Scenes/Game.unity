@@ -1871,18 +1871,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - "Balconista: Senhor Kafka! que prazer v\xEA-lo! A sala de sua entrevista est\xE1
-    mais \xE0 direita!"
-  velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 5055718417195591049}
+  npcs: []
 --- !u!61 &298744445
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3534,20 +3524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - "H\xE9lio:  De buenas? "
-  - "Franz: \u2026 "
-  - "H\xE9lio: \u2026"
-  - "Franz: \u2026 "
-  velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 5055718417195591049}
+  npcs: []
 --- !u!61 &612132699
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3922,7 +3900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.5, y: -37.500008}
+  m_AnchoredPosition: {x: 239.5, y: -37.500015}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &622770720
@@ -5687,7 +5665,7 @@ GameObject:
   - component: {fileID: 856089496}
   - component: {fileID: 856089495}
   - component: {fileID: 856089494}
-  - component: {fileID: 856089493}
+  - component: {fileID: 856089497}
   m_Layer: 0
   m_Name: Atendente (2)
   m_TagString: Untagged
@@ -5695,29 +5673,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &856089493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 856089492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - '???: HAHAHA FRACASSADO!'
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 5055718417195591049}
 --- !u!61 &856089494
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5837,6 +5792,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1330988862}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.119}
+--- !u!114 &856089497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856089492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ea56ea40574d04aa599c17f9d61b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionNPC
+  npcData: {fileID: 0}
+  dialogueSystem: {fileID: 0}
+  pressingE: {fileID: 1030034631}
 --- !u!1 &860248662
 GameObject:
   m_ObjectHideFlags: 0
@@ -6281,18 +6251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - "Matheus:  \u2026T\xE1 olhando oque?? N\xE3o suporto mais ouvir a suas brigas
-    com o seu pai na casa do lado."
-  velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 0}
+  npcs: []
 --- !u!61 &923329087
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6857,6 +6817,74 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1059095173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1059095174}
+  - component: {fileID: 1059095176}
+  - component: {fileID: 1059095175}
+  m_Layer: 5
+  m_Name: DialogueSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1059095174
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059095173}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.20000002, y: 0.35, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1653279358}
+  m_Father: {fileID: 1104689037}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 3, y: -281.00003}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1059095175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059095173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4acd308b87e380940a43bd7431baf058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueTyping
+--- !u!114 &1059095176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059095173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36533e65c00dfba4996e7f31d6032cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
+  dialoguePanel: {fileID: 0}
+  dialogueText: {fileID: 0}
+  characterImage: {fileID: 0}
+  pressingE: {fileID: 0}
+  velocidadeTexto: 0.05
+  playerMovement: {fileID: 0}
 --- !u!1 &1075212403
 GameObject:
   m_ObjectHideFlags: 0
@@ -7167,7 +7195,7 @@ RectTransform:
   - {fileID: 150873145}
   - {fileID: 873768054}
   - {fileID: 84656326}
-  - {fileID: 1653279358}
+  - {fileID: 1059095174}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -16290,17 +16318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - '? : Menos um para concorrer, hein?!'
-  velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 5055718417195591049}
+  npcs: []
 --- !u!61 &1276927450
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16541,17 +16560,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - "???: T\xE1 perdido, colega? Tem nada pra c\xE1 n\xE3o!"
-  velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 5055718417195591049}
+  npcs: []
 --- !u!61 &1288718223
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17811,18 +17821,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 2107602943}
-  sprites:
-  - {fileID: -3059123146487272169, guid: fad4fa921cc53d940848b1c7c001b8a6, type: 3}
-  falas:
-  - "N\xE3o tenho mais nada a dizer, senhor. Tenha um bom dia."
-  velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 5055718417195591049}
+  npcs: []
 --- !u!1 &1458566252
 GameObject:
   m_ObjectHideFlags: 0
@@ -18115,18 +18115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - "??? = O senhor n\xE3o vai querer vir para esse lado da cidade... vai por mim."
-  - 'Franz Kafka: Ah, oo-okay.'
-  velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 0}
+  npcs: []
 --- !u!61 &1533526122
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -18828,18 +18818,18 @@ RectTransform:
   m_GameObject: {fileID: 1653279357}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.35, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1777450457}
   - {fileID: 1030034632}
   - {fileID: 2107602942}
-  m_Father: {fileID: 1104689037}
+  m_Father: {fileID: 1059095174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3, y: -281}
-  m_SizeDelta: {x: 1727.5898, y: -17.590027}
+  m_AnchoredPosition: {x: 0, y: 0.000091552734}
+  m_SizeDelta: {x: 2375.5898, y: 303.40997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1653279359
 MonoBehaviour:
@@ -19283,21 +19273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 2107602943}
-  sprites:
-  - {fileID: -3337038689812066966, guid: 4ba2b930d1948a54e913aa239dd36f5b, type: 3}
-  falas:
-  - "Franz Kafka:  \u2026 "
-  - 'Italo: Que foi? Foi recusado em outra entrevista de emprego? '
-  - "Franz Kafka: T\xE1 t\xE3o na cara? "
-  - "Italo: Tenho certeza que a pr\xF3xima vai ser melhor\u2026 "
-  velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 5055718417195591049}
+  npcs: []
 --- !u!61 &1704621418
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19706,7 +19683,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.5, y: -37.500008}
+  m_AnchoredPosition: {x: 239.5, y: -37.500015}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1770067081
@@ -19941,7 +19918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.5, y: -37.499947}
+  m_AnchoredPosition: {x: 239.5, y: -37.49995}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1794539257
@@ -20045,7 +20022,8 @@ GameObject:
   - component: {fileID: 1822335183}
   - component: {fileID: 1822335186}
   - component: {fileID: 1822335185}
-  - component: {fileID: 1822335184}
+  - component: {fileID: 1822335188}
+  - component: {fileID: 1822335187}
   m_Layer: 0
   m_Name: Dad (2)
   m_TagString: Untagged
@@ -20068,33 +20046,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1330988862}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1822335184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1822335182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - "Jos\xE9 Gustavo: Oi oi oi "
-  - "Franz: \u2026Oi? "
-  - "Jos\xE9 Gustavo: Quer ser meu melhor amigo? "
-  - "Franz: \u2026 "
-  - "Jos\xE9 Gustavo: \u2026 (ele parece chateado) "
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 0}
 --- !u!61 &1822335185
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20199,6 +20150,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1822335187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822335182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ea56ea40574d04aa599c17f9d61b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionDetector
+  npcData: {fileID: 1822335188}
+  dialogueSystem: {fileID: 0}
+  pressingE: {fileID: 1030034631}
+--- !u!114 &1822335188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822335182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0f25bcf0cfa154bb342a84063271d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCData
+  npcName: "H\xE9lio"
+  falas:
+  - blablabla
+  sprites: []
 --- !u!1 &1841343547
 GameObject:
   m_ObjectHideFlags: 0
@@ -20440,18 +20422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - "Franz Kafka: Amanh\xE3 dou uma olhada nessa c\xF4moda. Acho que deixei um dos
-    mues livros a\xED..."
-  velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 0}
+  npcs: []
 --- !u!61 &1845765975
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21644,18 +21616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 1653279357}
-  pressingE: {fileID: 150873144}
-  dialogueText: {fileID: 1777450455}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - 'Atendente: Tenha um bom dia, Sr. Espero que tenha sucesso na carreira...'
-  - 'Franz Kafka: Ah, sim, obrigado acho.'
-  velocidadeTexto: 0.05
   teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 5055718417195591049}
+  npcs: []
 --- !u!61 &2074532168
 BoxCollider2D:
   m_ObjectHideFlags: 0
