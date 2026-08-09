@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
 
 public class TextManager : MonoBehaviour
-{
-    [Header("Config")]
-    [SerializeField] private KeyCode teclaInteragir = KeyCode.E;
-
-    [Header("References - Arraste no Inspector")]
+{ 
     [SerializeField] private InteractionDetector[] npcs; 
 
     void Update()
     {
-        if (Input.GetKeyDown(teclaInteragir))
+        if (Input.GetButtonDown("Interact"))
         {
             foreach (var npc in npcs)
             {

@@ -12,7 +12,7 @@ public class DialogueSystem : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private float velocidadeTexto = 0.05f;
-    [SerializeField] private TopDownMovement playerMovement; 
+    [SerializeField] public TopDownMovement playerMovement; 
 
     private string[] currentFalas;
     private Sprite[] currentSprites;

@@ -15,6 +15,7 @@ public class InteractionDetector : MonoBehaviour
     {
         if (collision.GetComponent<IStatusPlayer>() != null)
         {
+            Debug.Log("ds");
             playerPerto = true;
             if (pressingE != null)
                 pressingE.SetActive(true);

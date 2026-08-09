@@ -1015,61 +1015,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 84656325}
   m_CullTransparentMesh: 1
---- !u!1 &105501823
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 105501825}
-  - component: {fileID: 105501824}
-  m_Layer: 0
-  m_Name: TextStart
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &105501824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105501823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abfacb891e15a1446af16ca1896d32c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueStart
-  dialoguePanel: {fileID: 746844588}
-  dialogueText: {fileID: 622770720}
-  imageSprite: {fileID: 2107602943}
-  sprites:
-  - {fileID: 3024919905496512547, guid: f5c24d2c45dffb84f94715b3c6501a0f, type: 3}
-  falas:
-  - "Gerente: Em resumo, n\xE3o estamos interessados, Sr. Franz."
-  - "Franz kafka: Ah, ok\u2026 Muito obrigada pela oportunidade."
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
-  tdm: {fileID: 5055718417195591049}
---- !u!4 &105501825
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105501823}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -147.73814, y: -100.25026, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1930592046}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &109575302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1851,7 +1796,9 @@ GameObject:
   - component: {fileID: 298744447}
   - component: {fileID: 298744446}
   - component: {fileID: 298744445}
-  - component: {fileID: 298744444}
+  - component: {fileID: 298744450}
+  - component: {fileID: 298744449}
+  - component: {fileID: 298744448}
   m_Layer: 0
   m_Name: Dad
   m_TagString: Untagged
@@ -1859,20 +1806,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &298744444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298744443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  teclaInteragir: 101
-  npcs: []
 --- !u!61 &298744445
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1992,6 +1925,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1330988862}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &298744448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298744443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4acd308b87e380940a43bd7431baf058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueTyping
+--- !u!114 &298744449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298744443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0f25bcf0cfa154bb342a84063271d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCData
+  npcName: Start
+  falas:
+  - cucucuucucucuuuccucuuc
+  - aaaaaa
+  sprites: []
+--- !u!114 &298744450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298744443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36533e65c00dfba4996e7f31d6032cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
+  dialoguePanel: {fileID: 765943188}
+  dialogueText: {fileID: 1770067081}
+  characterImage: {fileID: 2052173182}
+  pressingE: {fileID: 150873144}
+  velocidadeTexto: 0.05
+  playerMovement: {fileID: 5055718417195591049}
 --- !u!1 &300078163
 GameObject:
   m_ObjectHideFlags: 0
@@ -3524,7 +3504,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  teclaInteragir: 101
   npcs: []
 --- !u!61 &612132699
 BoxCollider2D:
@@ -5113,7 +5092,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1, y: -282}
+  m_AnchoredPosition: {x: 1, y: -282.00003}
   m_SizeDelta: {x: 1727.59, y: -17.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &746844590
@@ -5165,6 +5144,8 @@ GameObject:
   - component: {fileID: 749839219}
   - component: {fileID: 749839218}
   - component: {fileID: 749839220}
+  - component: {fileID: 749839221}
+  - component: {fileID: 749839222}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -5312,6 +5293,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   spawnPosition: {x: 466.1, y: 114.1, z: 0}
   spawnSceneName: Game
+--- !u!114 &749839221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749839217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextManager
+  npcs:
+  - {fileID: 1822335187}
+--- !u!114 &749839222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749839217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c482dbbd1524d243a9e3d9e88014658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoDialogueStarter
+  dialogueSystem: {fileID: 298744450}
+  npcData: {fileID: 298744449}
+  delayToStart: 0.5
 --- !u!1 &765943188
 GameObject:
   m_ObjectHideFlags: 0
@@ -5347,7 +5357,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3, y: -267}
+  m_AnchoredPosition: {x: -3, y: -267.00003}
   m_SizeDelta: {x: 1727.59, y: -17.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &765943190
@@ -6251,7 +6261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  teclaInteragir: 101
   npcs: []
 --- !u!61 &923329087
 BoxCollider2D:
@@ -6826,7 +6835,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1059095174}
-  - component: {fileID: 1059095176}
   - component: {fileID: 1059095175}
   m_Layer: 5
   m_Name: DialogueSystem
@@ -6834,7 +6842,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1059095174
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6867,24 +6875,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4acd308b87e380940a43bd7431baf058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueTyping
---- !u!114 &1059095176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059095173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36533e65c00dfba4996e7f31d6032cc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
-  dialoguePanel: {fileID: 0}
-  dialogueText: {fileID: 0}
-  characterImage: {fileID: 0}
-  pressingE: {fileID: 0}
-  velocidadeTexto: 0.05
-  playerMovement: {fileID: 0}
 --- !u!1 &1075212403
 GameObject:
   m_ObjectHideFlags: 0
@@ -16318,7 +16308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  teclaInteragir: 101
   npcs: []
 --- !u!61 &1276927450
 BoxCollider2D:
@@ -16560,7 +16549,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  teclaInteragir: 101
   npcs: []
 --- !u!61 &1288718223
 BoxCollider2D:
@@ -17821,7 +17809,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  teclaInteragir: 101
   npcs: []
 --- !u!1 &1458566252
 GameObject:
@@ -18115,7 +18102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  teclaInteragir: 101
   npcs: []
 --- !u!61 &1533526122
 BoxCollider2D:
@@ -19273,7 +19259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  teclaInteragir: 101
   npcs: []
 --- !u!61 &1704621418
 BoxCollider2D:
@@ -20024,6 +20009,7 @@ GameObject:
   - component: {fileID: 1822335185}
   - component: {fileID: 1822335188}
   - component: {fileID: 1822335187}
+  - component: {fileID: 1822335190}
   m_Layer: 0
   m_Name: Dad (2)
   m_TagString: Untagged
@@ -20136,8 +20122,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -444333775
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -20163,7 +20149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionDetector
   npcData: {fileID: 1822335188}
-  dialogueSystem: {fileID: 0}
+  dialogueSystem: {fileID: 1822335190}
   pressingE: {fileID: 1030034631}
 --- !u!114 &1822335188
 MonoBehaviour:
@@ -20179,8 +20165,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCData
   npcName: "H\xE9lio"
   falas:
+  - shes so perfect
   - blablabla
   sprites: []
+--- !u!114 &1822335190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822335182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36533e65c00dfba4996e7f31d6032cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
+  dialoguePanel: {fileID: 765943188}
+  dialogueText: {fileID: 1770067081}
+  characterImage: {fileID: 2052173182}
+  pressingE: {fileID: 150873144}
+  velocidadeTexto: 0.05
+  playerMovement: {fileID: 5055718417195591049}
 --- !u!1 &1841343547
 GameObject:
   m_ObjectHideFlags: 0
@@ -20422,7 +20427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  teclaInteragir: 101
   npcs: []
 --- !u!61 &1845765975
 BoxCollider2D:
@@ -20827,7 +20831,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 105501825}
   - {fileID: 1871381207}
   - {fileID: 1663467460}
   m_Father: {fileID: 0}
@@ -21616,7 +21619,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  teclaInteragir: 101
   npcs: []
 --- !u!61 &2074532168
 BoxCollider2D:
