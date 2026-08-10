@@ -5291,8 +5291,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32961a1170738c4a9d18475b91006dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  playerMovement: {fileID: 0}
+  cameraFollow: {fileID: 0}
+  blurController: {fileID: 0}
   spawnPosition: {x: 466.1, y: 114.1, z: 0}
   spawnSceneName: Game
+  isGameLocked: 0
 --- !u!114 &749839221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6671,6 +6675,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030034631}
   m_CullTransparentMesh: 1
+--- !u!1 &1030613186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1030613187}
+  - component: {fileID: 1030613190}
+  - component: {fileID: 1030613189}
+  - component: {fileID: 1030613188}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1030613187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030613186}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1330988862}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1030613188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030613186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0f25bcf0cfa154bb342a84063271d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCData
+  npcName: Thoughts (First Interview)
+  falas:
+  - AAAA
+  - BBBB
+  sprites: []
+--- !u!114 &1030613189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030613186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4acd308b87e380940a43bd7431baf058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueTyping
+--- !u!114 &1030613190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030613186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36533e65c00dfba4996e7f31d6032cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
+  dialoguePanel: {fileID: 765943188}
+  dialogueText: {fileID: 1770067081}
+  characterImage: {fileID: 2052173182}
+  pressingE: {fileID: 150873144}
+  velocidadeTexto: 0.05
+  playerMovement: {fileID: 5055718417195591049}
 --- !u!1 &1051169689
 GameObject:
   m_ObjectHideFlags: 0
@@ -16851,6 +16936,7 @@ Transform:
   - {fileID: 1533526120}
   - {fileID: 1822335183}
   - {fileID: 923329085}
+  - {fileID: 1030613187}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1331341325
@@ -19634,6 +19720,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724668803}
   m_CullTransparentMesh: 1
+--- !u!1 &1743174223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1743174224}
+  m_Layer: 0
+  m_Name: ----TRIGGER-DIALOGUES
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1743174224
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743174223}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 143.33815, y: 104.25026, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1930592046}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1770067079
 GameObject:
   m_ObjectHideFlags: 0
@@ -20573,8 +20691,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1871381207}
-  - component: {fileID: 1871381206}
   - component: {fileID: 1871381205}
+  - component: {fileID: 1871381208}
   m_Layer: 0
   m_Name: TriggerThoughts
   m_TagString: Untagged
@@ -20628,28 +20746,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 6.068486, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1871381206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1871381204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 818827dee0572264b84fd17e392b828a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ThoughtsDialogue
-  dialoguePanel: {fileID: 1653279357}
-  dialogueText: {fileID: 1777450455}
-  falas:
-  - "-Franz: Bom, vou passar no outro lugar que eu tinha mostrado meu curr\xEDculo
-    para ver se consegui algo. \u2606 Preciso ir hoje porque amanh\xE3 j\xE1 \xE9
-    s\xE1bado\u2026"
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
-  teclaFechar: 113
-  tdm: {fileID: 5055718417195591049}
 --- !u!4 &1871381207
 Transform:
   m_ObjectHideFlags: 0
@@ -20665,6 +20761,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1930592046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1871381208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871381204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fb3341ec53d7c46bb58927b83c3f50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ThoughtsD
+  dialogueSystem: {fileID: 1030613190}
+  npcData: {fileID: 1030613188}
+  triggerOnce: 1
+  delayToStart: 0.2
 --- !u!1 &1899497743
 GameObject:
   m_ObjectHideFlags: 0
@@ -20826,14 +20938,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930592045}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 143.33815, y: 104.25026, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1871381207}
   - {fileID: 1663467460}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1743174224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1942958112
 GameObject:
@@ -22353,7 +22465,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 92.9, y: 77.232, z: 0}
+  m_LocalPosition: {x: 0.6, y: 10.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22386,11 +22498,10 @@ SceneRoots:
   - {fileID: 2093832544}
   - {fileID: 1254072419}
   - {fileID: 1330988862}
-  - {fileID: 569812870}
   - {fileID: 411485141}
   - {fileID: 902253561}
   - {fileID: 2120489243}
-  - {fileID: 1930592046}
+  - {fileID: 1743174224}
   - {fileID: 1401780848}
   - {fileID: 1635674402}
   - {fileID: 9105895952993720707}
@@ -22398,3 +22509,4 @@ SceneRoots:
   - {fileID: 1497053606}
   - {fileID: 1312730300}
   - {fileID: 651116833}
+  - {fileID: 569812870}

@@ -437,17 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 626055950}
-  pressingE: {fileID: 459130347}
-  dialogueText: {fileID: 1402966181}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - "Ah... os curr\xEDculos que meu pai rasgou..."
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 3085604050957103121}
+  npcs: []
 --- !u!61 &187032043
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3669,19 +3659,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WindowJumpscare
   panel: {fileID: 1507609570}
-  dialogueBox: {fileID: 829879653}
+  dialogueBox: {fileID: 626055950}
   pressE: {fileID: 459130347}
-  texto: {fileID: 1293949307}
+  texto: {fileID: 1402966181}
   fadePreto: {fileID: 1517518733}
   tecla: 101
   lanterna: 32
   velocidade: 0.03
   lines:
-  - "esse sou... eu? n\xE3o..."
+  - s0sss
+  - shes
   ki: {fileID: 1019783232}
   tdm: {fileID: 3085604050957103121}
   bc: {fileID: 1810767827}
   door: {fileID: 211695923}
+  respawnPosition: {x: 0, y: 0, z: 0}
 --- !u!82 &1452288627
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3868,17 +3860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 626055950}
-  pressingE: {fileID: 459130347}
-  dialogueText: {fileID: 1402966181}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - Ah... a porta trancada dos meus pais... como sempre.
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 3085604050957103121}
+  npcs: []
 --- !u!61 &1497457935
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4180,17 +4162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 626055950}
-  pressingE: {fileID: 459130347}
-  dialogueText: {fileID: 1402966181}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - "Apenas uma c\xF4moda normal. Hoje em dia os cupins usam mais ela do que eu."
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 3085604050957103121}
+  npcs: []
 --- !u!61 &1551172304
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6877,17 +6849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  dialoguePanel: {fileID: 626055950}
-  pressingE: {fileID: 459130347}
-  dialogueText: {fileID: 1402966181}
-  images: {fileID: 0}
-  sprites: []
-  falas:
-  - "\xC9 s\xF3 o balc\xE3o da cozinha."
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
-  closeKey: 113
-  tdm: {fileID: 3085604050957103121}
+  npcs: []
 --- !u!61 &1714670740
 BoxCollider2D:
   m_ObjectHideFlags: 0
