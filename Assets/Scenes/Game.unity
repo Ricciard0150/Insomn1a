@@ -6927,7 +6927,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1059095174
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16140,15 +16140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 818827dee0572264b84fd17e392b828a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThoughtsDialogue
-  dialoguePanel: {fileID: 1653279357}
-  dialogueText: {fileID: 1777450455}
-  falas:
-  - "Franz - \xD3timo! Finalmente consegui! Agora \xE9 ir para casa e dormir... se
-    n\xE3o me engano a rua \xE9 mais \xE0 direita."
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
-  teclaFechar: 113
-  tdm: {fileID: 5055718417195591049}
 --- !u!61 &1254072418
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -18971,15 +18962,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 818827dee0572264b84fd17e392b828a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThoughtsDialogue
-  dialoguePanel: {fileID: 1653279357}
-  dialogueText: {fileID: 1777450455}
-  falas:
-  - "Franz - Finalmente, DESCANSO! Que pena que meus pais sa\xEDram de casa, queria
-    que eles estivessem aqui para comemorar a vaga comigo..."
-  velocidadeTexto: 0.05
-  teclaInteragir: 101
-  teclaFechar: 113
-  tdm: {fileID: 5055718417195591049}
 --- !u!61 &1663467459
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22465,7 +22447,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 10.1, z: 0}
+  m_LocalPosition: {x: 98.2, y: 78.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

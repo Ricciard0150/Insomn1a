@@ -856,7 +856,6 @@ MonoBehaviour:
   dialogue: {fileID: 860523653}
   cameraShake: {fileID: 649985615}
   objetoNaFrente: {fileID: 1999211443}
-  windowObject: {fileID: 1999211443}
   jumpscareManager: {fileID: 2022346318}
   noKeyDialogue:
   - Preciso de uma chave...
@@ -4483,7 +4482,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1517518732
 RectTransform:
   m_ObjectHideFlags: 0
