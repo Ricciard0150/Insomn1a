@@ -7,7 +7,7 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
     private Rigidbody2D rb;
 
     public bool canMove = false;
-    public bool isWalking { get; private set; } 
+    public bool isWalking { get; private set; }
 
     void Start()
     {
@@ -45,4 +45,6 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
     {
         throw new System.NotImplementedException();
     }
+
+    public void SetCanMove(bool value) => canMove = value;
 }
