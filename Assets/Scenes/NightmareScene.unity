@@ -855,7 +855,8 @@ MonoBehaviour:
   pressEIndicator: {fileID: 826857118}
   dialogue: {fileID: 860523653}
   cameraShake: {fileID: 649985615}
-  windowObject: {fileID: 1452288623}
+  objetoNaFrente: {fileID: 1999211443}
+  windowObject: {fileID: 1999211443}
   jumpscareManager: {fileID: 2022346318}
   noKeyDialogue:
   - Preciso de uma chave...
@@ -1898,7 +1899,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 25.46997, y: -306.00003}
+  m_AnchoredPosition: {x: 25.46997, y: -305.99997}
   m_SizeDelta: {x: -243.28, y: -314.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &829879656
@@ -3972,6 +3973,7 @@ GameObject:
   - component: {fileID: 1452288627}
   - component: {fileID: 1452288628}
   - component: {fileID: 1452288629}
+  - component: {fileID: 1452288630}
   m_Layer: 0
   m_Name: WindowInteractable
   m_TagString: Untagged
@@ -4219,9 +4221,23 @@ MonoBehaviour:
   - {fileID: 2979194778711039414, guid: 5c7e20fc1f8263448a869956321d7973, type: 3}
   - {fileID: 2979194778711039414, guid: 5c7e20fc1f8263448a869956321d7973, type: 3}
   - {fileID: 2979194778711039414, guid: 5c7e20fc1f8263448a869956321d7973, type: 3}
-  punchButton: Blink
   punchDuration: 0.2
   jumpscareManager: {fileID: 2022346318}
+--- !u!114 &1452288630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452288623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67fc5227a8235d498ea0c055bc1720d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProtectedObject
+  isProtected: 1
+  logWarning: 1
+  destroyWhenActivated: 1
 --- !u!1 &1497457933
 GameObject:
   m_ObjectHideFlags: 0
@@ -8031,7 +8047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1999211444
 SpriteRenderer:
   m_ObjectHideFlags: 0

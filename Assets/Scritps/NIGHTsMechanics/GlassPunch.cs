@@ -12,11 +12,10 @@ public class GlassPunch : MonoBehaviour
     [SerializeField] private Sprite[] handSprites;
 
     [Header("Settings")]
-    [SerializeField] private string punchButton = "Punch";
     [SerializeField] private float punchDuration = 0.2f;
 
     [Header("References")]
-    [SerializeField] private JumpscareManager jumpscareManager; // ← ADICIONAR!
+    [SerializeField] private JumpscareManager jumpscareManager;
 
     private int stage = 0;
     private bool canPunch = false;
@@ -32,15 +31,21 @@ public class GlassPunch : MonoBehaviour
             handObject.SetActive(false);
 
         gameObject.SetActive(false);
+        Debug.Log($"🔍 GlassPunch Start - isActive:{isActive}");
     }
 
     void Update()
     {
+        if (Input.GetButtonDown("Blink"))
+        {
+            Debug.Log($"⚠️ Blink pressionado! isActive:{isActive}, canPunch:{canPunch}, isPunching:{isPunching}");
+        }
+
         if (!isActive || !canPunch || isPunching) return;
 
-        if (Input.GetButtonDown(punchButton))
+        if (Input.GetButtonDown("Blink"))
         {
-            Debug.Log($"✊ SOCO DETECTADO! Estágio: {stage}");
+            Debug.Log($"✊ SOCO! Estágio: {stage}");
             StartCoroutine(DoPunch());
         }
     }
@@ -56,62 +61,66 @@ public class GlassPunch : MonoBehaviour
         if (handRenderer != null && handSprites.Length > stage)
         {
             handRenderer.sprite = handSprites[stage];
-            Debug.Log($"✊ Mão sprite: {handSprites[stage].name}");
         }
 
         yield return new WaitForSeconds(punchDuration);
 
         stage++;
-        Debug.Log($"✊ Estágio agora: {stage}");
 
         if (stage < glassStages.Length && glassRenderer != null)
         {
             glassRenderer.sprite = glassStages[stage];
-            Debug.Log($"✊ Vidro sprite: {glassStages[stage].name}");
+            Debug.Log($"✊ Vidro estágio: {stage}");
         }
 
         handObject.SetActive(false);
         isPunching = false;
 
-        // ⚠️ QUANDO QUEBRA → CHAMA DIRETAMENTE O JUMPScare MANAGER
         if (stage >= glassStages.Length - 1)
         {
-            Debug.Log("💥 VIDRO QUEBROU! Chamando JumpscareManager...");
+            Debug.Log("💥 VIDRO QUEBROU!");
             canPunch = false;
 
-            // ✅ CHAMA DIRETAMENTE
             if (jumpscareManager != null)
             {
                 jumpscareManager.OnGlassBroken();
-                Debug.Log("✅ JumpscareManager.OnGlassBroken() CHAMADO!");
             }
             else
             {
-                Debug.LogError("❌ jumpscareManager é NULL! Arraste no Inspector.");
+                Debug.LogError("❌ jumpscareManager é NULL!");
             }
         }
         else
         {
-            Debug.Log($"✊ Aguardando próximo soco (estágio {stage}/{glassStages.Length - 1})");
+            Debug.Log($"✊ Aguardando próximo soco ({stage}/{glassStages.Length - 1})");
         }
     }
 
     public void ActivateWindow()
     {
+        Debug.Log($"🔍 ActivateWindow() CHAMADO!");
         isActive = true;
         gameObject.SetActive(true);
-        Debug.Log("✅ GlassPunch ATIVADO!");
+        Debug.Log($"✅ Window ATIVADA! isActive={isActive}");
+
+        ProtectedObject protectedObj = GetComponent<ProtectedObject>();
+        if (protectedObj != null)
+        {
+            protectedObj.DestruirProtecao();
+            Debug.Log("🔥 Proteção DESTRUÍDA!");
+        }
     }
 
     public void EnablePunch()
     {
+        Debug.Log($"🔍 EnablePunch() CHAMADO! canPunch antes: {canPunch}");
         canPunch = true;
         stage = 0;
 
         if (glassRenderer != null && glassStages.Length > 0)
             glassRenderer.sprite = glassStages[0];
 
-        Debug.Log("✅ GlassPunch.EnablePunch() CHAMADO! canPunch=true, stage=0");
+        Debug.Log($"✅ Punch ENABLED! canPunch={canPunch}");
     }
 
     public void ResetPunch()
@@ -126,4 +135,7 @@ public class GlassPunch : MonoBehaviour
         if (glassRenderer != null && glassStages.Length > 0)
             glassRenderer.sprite = glassStages[0];
     }
+
+    public bool IsActive() => isActive;
+    public bool CanPunch() => canPunch;
 }

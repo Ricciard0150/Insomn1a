@@ -9,7 +9,7 @@ public class Door : MonoBehaviour
     [SerializeField] private PressEIndicator pressEIndicator;
     [SerializeField] private DM dialogue;
     [SerializeField] private CameraShake cameraShake;
-    [SerializeField] private GameObject windowObject;
+    [SerializeField] private GameObject objetoNaFrente; // OBJETO NA FRENTE DA WINDOW
     [SerializeField] private JumpscareManager jumpscareManager;
 
     [Header("Dialogues")]
@@ -60,29 +60,15 @@ public class Door : MonoBehaviour
         dialogue.StartDialogue(hasKeyDialogue);
         yield return new WaitUntil(() => dialogue.IsFinished());
 
-        // ✅ ATIVA A JANELA FÍSICA
-        if (windowObject != null)
+        // ✅ DESATIVA O OBJETO NA FRENTE DA WINDOW
+        if (objetoNaFrente != null)
         {
-            Debug.Log("🎬 Ativando Window GameObject...");
-            windowObject.SetActive(true);
-
-            GlassPunch glassPunch = windowObject.GetComponent<GlassPunch>();
-            if (glassPunch != null)
-            {
-                glassPunch.ActivateWindow(); // ← ISSO SETA isActive = true!
-                Debug.Log("✅ GlassPunch.ActivateWindow() CHAMADO! isActive deve ser true agora.");
-            }
-            else
-            {
-                Debug.Log("❌ GlassPunch é NULL na Window!");
-            }
-        }
-        else
-        {
-            Debug.Log("❌ windowObject é NULL! Verifique a referência na Door.");
+            Debug.Log($"🎬 Desativando objeto na frente: {objetoNaFrente.name}");
+            objetoNaFrente.SetActive(false);
+            Debug.Log($"✅ Objeto na frente desativado!");
         }
 
-        // ✅ ATIVA O JUMPScare MANAGER
+        // ✅ ATIVA O JUMPScare MANAGER (ELE VAI ATIVAR A WINDOW E O SOCO NO MOMENTO CERTO)
         if (jumpscareManager != null)
         {
             jumpscareManager.ActivateJumpscare();
@@ -90,7 +76,7 @@ public class Door : MonoBehaviour
         }
         else
         {
-            Debug.Log("❌ jumpscareManager é NULL! Verifique a referência na Door.");
+            Debug.LogError("❌ jumpscareManager é NULL! Verifique a referência na Door.");
         }
 
         if (pressEIndicator != null)

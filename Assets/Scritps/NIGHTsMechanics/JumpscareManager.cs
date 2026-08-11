@@ -13,7 +13,7 @@ public class JumpscareManager : MonoBehaviour
     [SerializeField] private Door door;
     [SerializeField] private CollectableItem keyItem;
     [SerializeField] private PressEIndicator pressEIndicator;
-    [SerializeField] private FadeController fadeController; // ← FADE!
+    [SerializeField] private FadeController fadeController;
 
     [Header("Input Settings")]
     [SerializeField] private string interactButton = "Interact";
@@ -22,8 +22,8 @@ public class JumpscareManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float delayAfterBlink = 2f;
     [SerializeField] private float delayAfterDialogue = 0.5f;
-    [SerializeField] private float fadeDuration = 1.5f; // ← DURAÇÃO DO FADE
-    [SerializeField] private string sceneToLoad = "GameOver"; // ← CENA PARA CARREGAR
+    [SerializeField] private float fadeDuration = 1.5f;
+    [SerializeField] private string sceneToLoad = "GameOver";
 
     private bool isRunning = false;
     private bool waitingBlink = false;
@@ -74,9 +74,14 @@ public class JumpscareManager : MonoBehaviour
 
     public void ActivateJumpscare()
     {
+        Debug.Log("🎬 ActivateJumpscare() CHAMADO!");
         isActive = true;
+
+        // ✅ NÃO ATIVA O PUNCH AQUI! SÓ ATIVA O JUMPScare
         if (pressEIndicator != null && sequence.IsColliding())
             pressEIndicator.Show();
+
+        Debug.Log("✅ JumpscareManager PRONTO! Aguardando interação com E...");
     }
 
     private void StartSequence()
@@ -124,20 +129,36 @@ public class JumpscareManager : MonoBehaviour
         dialogue.StartDialogue(sequence.GetDialogueLines());
         waitingDialogue = true;
 
+        // ⏳ ESPERA O DIÁLOGO TERMINAR
         yield return new WaitUntil(() => dialogue.IsFinished());
         waitingDialogue = false;
         Debug.Log("👁️ [PASSO 2] Diálogo FINALIZADO!");
 
         yield return new WaitForSeconds(delayAfterDialogue);
 
-        Debug.Log("👁️ [PASSO 3] Ativando soco...");
-        punch.EnablePunch();
-        punchActivated = true;
+        // ✅ SÓ AGORA ATIVA O SOCO! (DEPOIS DO DIÁLOGO)
+        Debug.Log("👁️ [PASSO 3] Diálogo terminou! ATIVANDO O SOCO...");
+        if (punch != null)
+        {
+            // ATIVA A WINDOW SE NÃO ESTIVER ATIVA
+            if (!punch.IsActive())
+            {
+                punch.ActivateWindow();
+                Debug.Log("✅ Window ATIVADA!");
+            }
 
-        Debug.Log("👁️ [PASSO 3] Jogador pode socar a janela! Aperte ESPAÇO 2x.");
+            // HABILITA O SOCO
+            punch.EnablePunch();
+            Debug.Log("✅ Punch ENABLED! O jogador pode socar a janela agora!");
+            punchActivated = true;
+        }
+        else
+        {
+            Debug.LogError("❌ punch é NULL no JumpscareManager!");
+        }
     }
 
-    // ⚠️ CHAMADO PELO GLASSPUNCH QUANDO O VIDRO QUEBRA
+    // CHAMADO PELO GLASSPUNCH QUANDO O VIDRO QUEBRA
     public void OnGlassBroken()
     {
         Debug.Log("💥 Vidro quebrado! Iniciando FADE e LOAD CENA...");
@@ -146,7 +167,6 @@ public class JumpscareManager : MonoBehaviour
 
     private IEnumerator FadeAndLoadScene()
     {
-        // ⚠️ 1. FAZ O FADE IN (tela preta)
         if (fadeController != null)
         {
             Debug.Log($"🌑 Iniciando FadeToBlack com duração de {fadeDuration} segundos...");
@@ -156,21 +176,17 @@ public class JumpscareManager : MonoBehaviour
         else
         {
             Debug.LogError("❌ fadeController é NULL! Verifique a referência no Inspector.");
-            yield return new WaitForSeconds(1f); // Fallback se não tiver fade
+            yield return new WaitForSeconds(1f);
         }
 
-        // ⚠️ 2. CARREGA A NOVA CENA
         Debug.Log($"📂 Carregando cena: {sceneToLoad}");
 
-        // RESETA O PLAYER (opcional)
         playerMovement.SetCanMove(true);
         isRunning = false;
         panelAberto = false;
         punchActivated = false;
 
-        // CARREGA A CENA
         SceneManager.LoadScene(sceneToLoad);
-
         Debug.Log("📂 Cena carregada!");
     }
 
