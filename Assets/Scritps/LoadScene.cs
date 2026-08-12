@@ -11,4 +11,10 @@ public class LoadScene : MonoBehaviour
         Debug.Log("Saindo do jogo...");
         Application.Quit();
     }
+    public void BackToMenu()
+    {
+        {
+            SceneManager.LoadScene("Menu");
+        }
+    }
 }
