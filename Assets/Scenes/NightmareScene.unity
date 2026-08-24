@@ -2246,7 +2246,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -157.42998}
+  m_AnchoredPosition: {x: 0, y: -157.42996}
   m_SizeDelta: {x: -243.28, y: -314.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &626055952
@@ -3084,7 +3084,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 25.46997, y: -363}
+  m_AnchoredPosition: {x: 25.46997, y: -363.00003}
   m_SizeDelta: {x: -243.28, y: -314.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &829879656
@@ -3842,8 +3842,8 @@ MonoBehaviour:
   panel: {fileID: 1507609570}
   jumpscareImage: {fileID: 1836724642}
   dialogueLines:
-  - aaaaaaaaaaaaaaaaa
-  - sssaaaaaaaaaaaaaaaaaaaaaaaaaass
+  - Este sou eu??
+  - "N\xC3O!"
   fadeController: {fileID: 1195767711}
   respawnPosition: {x: 0, y: 0, z: 0}
   sceneToLoad: Game
@@ -5272,8 +5272,8 @@ Transform:
   m_GameObject: {fileID: 1195767709}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -232.94, y: -52.44, z: -3904.2002}
-  m_LocalScale: {x: -3784.6785, y: 2267.9617, z: 43.38}
+  m_LocalPosition: {x: 3948.87, y: 3022.18, z: -3904.2002}
+  m_LocalScale: {x: -12148.818, y: 8414.138, z: 43.38}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 564279368}
@@ -5341,7 +5341,7 @@ SpriteRenderer:
   m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -7267,7 +7267,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1517518732
 RectTransform:
   m_ObjectHideFlags: 0
