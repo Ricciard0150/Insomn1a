@@ -18178,8 +18178,7 @@ MonoBehaviour:
     questName: 
     npcName: 
     introLines: []
-    victoryLines:
-    - 'muito bommmm '
+    victoryLines: []
     defeatLines:
     - pessimo
     questions: []
@@ -18243,6 +18242,7 @@ Transform:
   - {fileID: 923329085}
   - {fileID: 1030613187}
   - {fileID: 1568412084}
+  - {fileID: 1592144252}
   - {fileID: 1831278105}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19812,6 +19812,86 @@ MonoBehaviour:
   pressingE: {fileID: 150873144}
   velocidadeTexto: 0.05
   playerMovement: {fileID: 5055718417195591049}
+--- !u!1 &1592144251
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1592144252}
+  - component: {fileID: 1592144255}
+  - component: {fileID: 1592144254}
+  - component: {fileID: 1592144253}
+  m_Layer: 0
+  m_Name: Trigger (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1592144252
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592144251}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1330988862}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1592144253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592144251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0f25bcf0cfa154bb342a84063271d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCData
+  npcName: Thoughts(Should stay)
+  falas:
+  - Eu devo ir para a entrevista antes de ir para casa...
+  sprites: []
+--- !u!114 &1592144254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592144251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4acd308b87e380940a43bd7431baf058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueTyping
+--- !u!114 &1592144255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592144251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36533e65c00dfba4996e7f31d6032cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
+  dialoguePanel: {fileID: 765943188}
+  dialogueText: {fileID: 1770067081}
+  characterImage: {fileID: 2052173182}
+  pressingE: {fileID: 150873144}
+  velocidadeTexto: 0.05
+  playerMovement: {fileID: 5055718417195591049}
 --- !u!1 &1604638508
 GameObject:
   m_ObjectHideFlags: 0
@@ -20198,6 +20278,7 @@ GameObject:
   - component: {fileID: 1663467460}
   - component: {fileID: 1663467459}
   - component: {fileID: 1663467458}
+  - component: {fileID: 1663467461}
   m_Layer: 0
   m_Name: TriggerDialogue3
   m_TagString: Untagged
@@ -20251,7 +20332,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 2.6488647, y: 0}
+  m_Offset: {x: 1.8277473, y: 0.68135166}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -20261,7 +20342,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 14.39, y: 7.16}
+  m_Size: {x: 16.032234, y: 8.522703}
   m_EdgeRadius: 0
 --- !u!4 &1663467460
 Transform:
@@ -20272,12 +20353,28 @@ Transform:
   m_GameObject: {fileID: 1663467457}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 301.43042, y: 21.704498, z: 0}
+  m_LocalPosition: {x: -0.1, y: -94.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1930592046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1663467461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663467457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fb3341ec53d7c46bb58927b83c3f50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ThoughtsD
+  dialogueSystem: {fileID: 1592144255}
+  npcData: {fileID: 1592144253}
+  triggerOnce: 1
+  delayToStart: 0.2
 --- !u!1 &1680599260
 GameObject:
   m_ObjectHideFlags: 0
@@ -22570,212 +22667,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1226785034}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1944908103
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1944908108}
-  - component: {fileID: 1944908107}
-  - component: {fileID: 1944908106}
-  - component: {fileID: 1944908105}
-  - component: {fileID: 1944908104}
-  m_Layer: 0
-  m_Name: GameController (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1944908104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944908103}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c482dbbd1524d243a9e3d9e88014658, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AutoDialogueStarter
-  dialogueSystem: {fileID: 1030613190}
-  npcData: {fileID: 1030613188}
-  delayToStart: 0.5
-  dialogueID: UniqueDialogue
---- !u!114 &1944908105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944908103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TextManager
-  npcs:
-  - {fileID: 1457307599}
-  - {fileID: 0}
-  - {fileID: 1276927453}
-  - {fileID: 1288718226}
-  - {fileID: 2056157393}
-  - {fileID: 2056157393}
-  - {fileID: 1068109101}
-  - {fileID: 923329089}
-  - {fileID: 1165141767}
-  - {fileID: 1533526124}
-  - {fileID: 923329089}
---- !u!114 &1944908106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944908103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32961a1170738c4a9d18475b91006dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  playerMovement: {fileID: 5055718417195591049}
-  cameraFollow: {fileID: 519420033}
-  blurController: {fileID: 0}
-  spawnPosition: {x: 569.38, y: 89.7, z: 0}
-  spawnSceneName: Game
-  isGameLocked: 0
---- !u!114 &1944908107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944908103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7f4de7e9aa35b544b1b49f98cf3057f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::QuestDatabase
-  quests:
-  - questId: interview
-    questName: Inicial interview
-    npcName: Interviewer
-    introLines:
-    - "Ol\xE1, Senhor, eu tinha aplicado meu curr\xEDculo aqui semana passada\u2026"
-    - "Ol\xE1, sr. Franz. Bom, a princ\xEDpio o senhor est\xE1 aprovado mas antes
-      preciso fazer algumas perguntas para checar se voc\xEA \xE9 realmente qualificado"
-    - "Certo\u2026 "
-    victoryLines:
-    - "Parab\xE9ns, senhor, o emprego \xE9 seu!"
-    - Obrigado, senhor!
-    defeatLines:
-    - "Bem, revisaremos seu curr\xEDculo baseado no desempenho de hoje..."
-    - Hm, okay...
-    questions:
-    - question: "Primeiramente, dando uma olhada aqui no seu curr\xEDculo percebi
-        que voc\xEA disse que sabe ingl\xEAs, certo? \u2606 Gostaria que voc\xEA
-        me falasse uma pequena frase como uma prova \u2606 "
-      options:
-      - 'Hi... I... uh...ready? '
-      - 'Hi sir, im ready to work in this company. '
-      - "Hola se\xF1or, estoy listo para empezar a trabajar en esta empresa. "
-      - "I... N\xC3O SEI"
-      correctAnswer: 1
-      correctFeedback: "Ele n\xE3o parece satisfeito..."
-      wrongFeedback: "Voc\xEA o satisfez..."
-      optionDialogues:
-      - dialogue:
-        - characterSprite: {fileID: 4584681769223179126, guid: ad5875058d613a643acda07d7b95a6f9, type: 3}
-          text: "Tsc... tenha mais certeza do que voc\xEA p\xF5e no curr\xEDculo..."
-        - characterSprite: {fileID: -5144542264298086051, guid: c7707fa669e833140844da9b6fa94a72, type: 3}
-          text: ...
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: Hm, interessante
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: "Bem falado, mas receio que isso n\xE3o seja ingl\xEAs..."
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: Que falta de classe...
-    - question: "Ok, aqui voc\xEA tamb\xE9m diz ser r\xE1pido em c\xE1lculos  matem\xE1ticos
-        \u2606 Vou te dar uma pequena equa\xE7\xE3o e quero que me responda: 246+34. "
-      options:
-      - 280.
-      - 290
-      - 300
-      - '302. '
-      correctAnswer: 3
-      correctFeedback: Ele parece feliz
-      wrongFeedback: "Voc\xEA irritou ele, n\xE3o era t\xE3o dif\xEDcil!"
-      optionDialogues:
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: "Bom para o n\xEDvel de uma crian\xE7a na creche..."
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: Bem longe...
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: Se fosse com um pouco mais de calma...
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: Correto, muito bom!
-        - characterSprite: {fileID: 0}
-          text: "Agrade\xE7o, senhor!"
-    - question: "Apenas uma d\xFAvida, com qual animal voc\xEA se identifica? "
-      options:
-      - "Com certeza um le\xE3o, senhor."
-      - Talvez uma galinha...?
-      - Me identifico bastante com um rato!
-      - "N\xE3o sei, sou \xFAnico demais para ser comparado."
-      correctAnswer: 0
-      correctFeedback: "Ele est\xE1 orgulhoso"
-      wrongFeedback: Ele parece enojado...?
-      optionDialogues:
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: "Esse \xE9 o esp\xEDrito!"
-        - characterSprite: {fileID: 0}
-          text: (Estufa o peito com orgulho de si)
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: Eh... okay...
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: Rapaz?
-      - dialogue:
-        - characterSprite: {fileID: 0}
-          text: "Ah, como ele \xE9 \xFAnico."
-        - characterSprite: {fileID: 0}
-          text: "Isso \xE9 um elogio?"
-        - characterSprite: {fileID: 0}
-          text: Interprete como quiser.
-        - characterSprite: {fileID: 0}
-          text: "Ent\xE3o \xE9 bom!"
-    maxLives: 3
-    minCorrect: 1
-    objectToActivate: 
-    objectToDeactivate: 
---- !u!4 &1944908108
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944908103}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 521.3, y: 116.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1972831108
 GameObject:
   m_ObjectHideFlags: 0
@@ -24671,7 +24562,6 @@ SceneRoots:
   - {fileID: 1635674402}
   - {fileID: 9105895952993720707}
   - {fileID: 749839219}
-  - {fileID: 1944908108}
   - {fileID: 1497053606}
   - {fileID: 1312730300}
   - {fileID: 651116833}
