@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/NightmareScene.unity
     guid: 24499734ae64ca34c8b4fbd07cf5b7c8
   - enabled: 1
-    path: Assets/TOBEcontinued.unity
+    path: Assets/Scenes/TOBEcontinued.unity
     guid: b371a566e15fd2e49bc7f12e29120191
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

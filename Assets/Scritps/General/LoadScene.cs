@@ -1,8 +1,10 @@
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class LoadScene : MonoBehaviour
 {
-   public void LoadScene1()
+
+    public void LoadScene1()
     {
         SceneManager.LoadScene("Game");
     }
@@ -17,4 +19,5 @@ public class LoadScene : MonoBehaviour
             SceneManager.LoadScene("Menu");
         }
     }
+
 }

@@ -10,19 +10,24 @@ public class MenuController : MonoBehaviour
 
     void Start()
     {
-        // Show only the main menu
-        if (startPanel != null) startPanel.SetActive(true);
+        if (startPanel != null) startPanel.SetActive(false);
         if (optionsPanel != null) optionsPanel.SetActive(false);
         if (creditsPanel != null) creditsPanel.SetActive(false);
     }
 
-    // ===== BUTTON METHODS =====
 
     public void Play()
     {
         Debug.Log("▶️ Starting game...");
-        // Load the game scene
-        // SceneManager.LoadScene("GameScene");
+    
+    }
+
+    public void OpenControls()
+    {
+        Debug.Log("⚙️ Opening options...");
+        if (startPanel != null) startPanel.SetActive(true);
+        if (optionsPanel != null) optionsPanel.SetActive(false);
+        if (creditsPanel != null) creditsPanel.SetActive(false);
     }
 
     public void OpenOptions()

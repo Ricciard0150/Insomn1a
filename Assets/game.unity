@@ -542,6 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Camera2Dfollowing
   target: {fileID: 2026060910}
   smoothTime: -2.3
+  canFollow: 1
 --- !u!1 &2026060909
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,6 +664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopDownMovement
   speed: 10
+  canMove: 0
 --- !u!1 &2147232869
 GameObject:
   m_ObjectHideFlags: 0
