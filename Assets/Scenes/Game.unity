@@ -20139,7 +20139,7 @@ MonoBehaviour:
   dialogueSystem: {fileID: 1312730299}
   questId: interview
   objectToActivate: {fileID: 902253559}
-  objectToDeactivate: {fileID: 0}
+  objectToDeactivate: {fileID: 1663467457}
   player: {fileID: 1865952460842338405}
   respawnPoint: {fileID: 651116833}
 --- !u!114 &1649544998
@@ -20277,7 +20277,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1663467460}
   - component: {fileID: 1663467459}
-  - component: {fileID: 1663467458}
   - component: {fileID: 1663467461}
   m_Layer: 0
   m_Name: TriggerDialogue3
@@ -20286,18 +20285,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1663467458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1663467457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 818827dee0572264b84fd17e392b828a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ThoughtsDialogue
 --- !u!61 &1663467459
 BoxCollider2D:
   m_ObjectHideFlags: 0
