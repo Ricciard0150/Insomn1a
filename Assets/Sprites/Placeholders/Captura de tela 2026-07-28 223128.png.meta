@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ad5875058d613a643acda07d7b95a6f9
+guid: c7707fa669e833140844da9b6fa94a72
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4584681769223179126
-    second: Captura de tela 2026-07-28 223107_0
+      213: -5144542264298086051
+    second: Captura de tela 2026-07-28 223128_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,56 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Captura de tela 2026-07-28 223107_0
+      name: Captura de tela 2026-07-28 223128_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 872
-        height: 485
+        width: 892
+        height: 487
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 67bc1c647cf00af30800000000000000
-      internalID: 4584681769223179126
+      spriteID: d51678c411aea98b0800000000000000
+      internalID: -5144542264298086051
       vertices: []
       indices: 
       edges: []
@@ -135,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Captura de tela 2026-07-28 223107_0: 4584681769223179126
+      Captura de tela 2026-07-28 223128_0: -5144542264298086051
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -8,7 +8,7 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] public TMP_Text dialogueText;
     [SerializeField] private Image characterImage;
-    [SerializeField] private GameObject pressingE;
+    [SerializeField] private GameObject pressingEIndicator; 
 
     [Header("Config")]
     [SerializeField] private float velocidadeTexto = 0.05f;
@@ -21,15 +21,23 @@ public class DialogueSystem : MonoBehaviour
     private DialogueTyping typingSystem;
     private DialogueAnim panelAnimator;
     private bool waitingForAnimation = false;
+    private PulseEffect pressingEPulse;
 
     public bool DialogoAtivo => dialogoAtivo;
 
     void Awake()
     {
         dialoguePanel.SetActive(false);
-        pressingE.SetActive(false);
 
-        // Pega o animator do painel
+        if (pressingEIndicator != null)
+        {
+            pressingEIndicator.SetActive(false);
+
+            pressingEPulse = pressingEIndicator.GetComponent<PulseEffect>();
+            if (pressingEPulse == null)
+                pressingEPulse = pressingEIndicator.AddComponent<PulseEffect>();
+        }
+
         panelAnimator = dialoguePanel.GetComponent<DialogueAnim>();
         if (panelAnimator == null)
             panelAnimator = dialoguePanel.AddComponent<DialogueAnim>();
@@ -60,10 +68,14 @@ public class DialogueSystem : MonoBehaviour
         index = 0;
         ChangeSprite();
 
+        if (pressingEIndicator != null)
+            pressingEIndicator.SetActive(false);
+
         waitingForAnimation = true;
         panelAnimator.ShowPanel(() => {
             waitingForAnimation = false;
             typingSystem.StartTyping(index);
+            ShowPressingEIfNeeded();
         });
     }
 
@@ -83,11 +95,26 @@ public class DialogueSystem : MonoBehaviour
             {
                 ChangeSprite();
                 typingSystem.StartTyping(index);
+                ShowPressingEIfNeeded();
             }
             else
             {
                 CloseDialogue();
             }
+        }
+    }
+
+    private void ShowPressingEIfNeeded()
+    {
+        if (pressingEIndicator != null && index == currentFalas.Length - 1)
+        {
+            pressingEIndicator.SetActive(true);
+            if (pressingEPulse != null)
+                pressingEPulse.StartPulse();
+        }
+        else if (pressingEIndicator != null)
+        {
+            pressingEIndicator.SetActive(false);
         }
     }
 
@@ -100,6 +127,13 @@ public class DialogueSystem : MonoBehaviour
     public void CloseDialogue()
     {
         typingSystem.StopTyping();
+
+        if (pressingEIndicator != null)
+        {
+            if (pressingEPulse != null)
+                pressingEPulse.StopPulse();
+            pressingEIndicator.SetActive(false);
+        }
 
         panelAnimator.HidePanel(() => {
             dialogoAtivo = false;
