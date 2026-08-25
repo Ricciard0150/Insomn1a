@@ -9,7 +9,7 @@ public class Door : MonoBehaviour
     [SerializeField] private PressEIndicator pressEIndicator;
     [SerializeField] private DM dialogue;
     [SerializeField] private CameraShake cameraShake;
-    [SerializeField] private GameObject objetoNaFrente; // OBJETO NA FRENTE DA WINDOW
+    [SerializeField] private GameObject objetoNaFrente; 
     [SerializeField] private JumpscareManager jumpscareManager;
 
     [Header("Dialogues")]
