@@ -1,96 +1,107 @@
-    using UnityEngine;
-    using TMPro;
-    using UnityEngine.UI;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
-    public class DialogueSystem : MonoBehaviour
+public class DialogueSystem : MonoBehaviour
+{
+    [Header("UI")]
+    [SerializeField] private GameObject dialoguePanel;
+    [SerializeField] public TMP_Text dialogueText;
+    [SerializeField] private Image characterImage;
+    [SerializeField] private GameObject pressingE;
+
+    [Header("Config")]
+    [SerializeField] private float velocidadeTexto = 0.05f;
+    [SerializeField] public TopDownMovement playerMovement;
+
+    private string[] currentFalas;
+    private Sprite[] currentSprites;
+    private bool dialogoAtivo = false;
+    private int index = 0;
+    private DialogueTyping typingSystem;
+    private DialogueAnim panelAnimator;
+    private bool waitingForAnimation = false;
+
+    public bool DialogoAtivo => dialogoAtivo;
+
+    void Awake()
     {
-        [Header("UI")]
-        [SerializeField] private GameObject dialoguePanel;
-        [SerializeField] public TMP_Text dialogueText;
-        [SerializeField] private Image characterImage;
-        [SerializeField] private GameObject pressingE;
+        dialoguePanel.SetActive(false);
+        pressingE.SetActive(false);
 
-        [Header("Config")]
-        [SerializeField] private float velocidadeTexto = 0.05f;
-        [SerializeField] public TopDownMovement playerMovement; 
+        // Pega o animator do painel
+        panelAnimator = dialoguePanel.GetComponent<DialogueAnim>();
+        if (panelAnimator == null)
+            panelAnimator = dialoguePanel.AddComponent<DialogueAnim>();
 
-        private string[] currentFalas;
-        private Sprite[] currentSprites;
-        private bool dialogoAtivo = false;
-        private int index = 0;
-        private DialogueTyping typingSystem;
+        typingSystem = GetComponent<DialogueTyping>();
+        if (typingSystem == null)
+            typingSystem = gameObject.AddComponent<DialogueTyping>();
 
-        public bool DialogoAtivo => dialogoAtivo;
+        typingSystem.Initialize(dialogueText, velocidadeTexto);
+    }
 
-        void Awake()
-        {
-            dialoguePanel.SetActive(false);
-            pressingE.SetActive(false);
+    public void SetNPCDialogue(string[] falas, Sprite[] sprites)
+    {
+        currentFalas = falas;
+        currentSprites = sprites;
+        typingSystem.UpdateDialogue(falas);
+    }
 
-            typingSystem = GetComponent<DialogueTyping>();
-            if (typingSystem == null)
-                typingSystem = gameObject.AddComponent<DialogueTyping>();
+    public void StartDialogue()
+    {
+        if (dialogoAtivo || currentFalas == null || currentFalas.Length == 0)
+            return;
 
-            typingSystem.Initialize(dialogueText, velocidadeTexto);
-        }
+        if (playerMovement != null)
+            playerMovement.canMove = false;
 
-        public void SetNPCDialogue(string[] falas, Sprite[] sprites)
-        {
-            currentFalas = falas;
-            currentSprites = sprites;
-            typingSystem.UpdateDialogue(falas);
-        }
+        dialogoAtivo = true;
+        index = 0;
+        ChangeSprite();
 
-        public void StartDialogue()
-        {
-            if (dialogoAtivo || currentFalas == null || currentFalas.Length == 0)
-                return;
-
-            if (playerMovement != null)
-                playerMovement.canMove = false;
-
-            dialogoAtivo = true;
-            dialoguePanel.SetActive(true);
-            index = 0;
-
-            ChangeSprite();
+        waitingForAnimation = true;
+        panelAnimator.ShowPanel(() => {
+            waitingForAnimation = false;
             typingSystem.StartTyping(index);
-        }
+        });
+    }
 
-        public void AdvanceDialogue()
+    public void AdvanceDialogue()
+    {
+        if (!dialogoAtivo || waitingForAnimation) return;
+
+        if (typingSystem.IsTyping)
         {
-            if (!dialogoAtivo) return;
+            typingSystem.CompleteTyping(index);
+        }
+        else
+        {
+            index++;
 
-            if (typingSystem.IsTyping)
+            if (index < currentFalas.Length)
             {
-                typingSystem.CompleteTyping(index);
+                ChangeSprite();
+                typingSystem.StartTyping(index);
             }
             else
             {
-                index++;
-
-                if (index < currentFalas.Length)
-                {
-                    ChangeSprite();
-                    typingSystem.StartTyping(index);
-                }
-                else
-                {
-                    CloseDialogue();
-                }
+                CloseDialogue();
             }
         }
+    }
 
-        private void ChangeSprite()
-        {
-            if (currentSprites != null && index < currentSprites.Length)
-                characterImage.sprite = currentSprites[index];
-        }
+    private void ChangeSprite()
+    {
+        if (currentSprites != null && index < currentSprites.Length)
+            characterImage.sprite = currentSprites[index];
+    }
 
-        public void CloseDialogue()
-        {
-            typingSystem.StopTyping();
-            dialoguePanel.SetActive(false);
+    public void CloseDialogue()
+    {
+        typingSystem.StopTyping();
+
+        panelAnimator.HidePanel(() => {
             dialogoAtivo = false;
 
             if (playerMovement != null)
@@ -98,5 +109,6 @@
 
             currentFalas = null;
             currentSprites = null;
-        }
+        });
     }
+}

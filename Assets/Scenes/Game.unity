@@ -2921,7 +2921,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 12
+  orthographic size: 11
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3664,7 +3664,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -288.28, y: -19.00003}
+  m_AnchoredPosition: {x: -288.28, y: -19.000038}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &622770720
@@ -4355,6 +4355,7 @@ GameObject:
   - component: {fileID: 746844589}
   - component: {fileID: 746844591}
   - component: {fileID: 746844590}
+  - component: {fileID: 746844592}
   m_Layer: 5
   m_Name: DialogueBox (1)
   m_TagString: Untagged
@@ -4380,7 +4381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.659973, y: -204.00003}
+  m_AnchoredPosition: {x: -4.659973, y: -290}
   m_SizeDelta: {x: 2770.58, y: -17.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &746844590
@@ -4421,6 +4422,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 746844588}
   m_CullTransparentMesh: 1
+--- !u!114 &746844592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746844588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004a95a0d6c434242869b409ef84c865, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueAnim
+  animationDuration: 0.1
+  slideOffset: 200
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &749839217
 GameObject:
   m_ObjectHideFlags: 0
@@ -4775,6 +4814,7 @@ GameObject:
   - component: {fileID: 765943189}
   - component: {fileID: 765943191}
   - component: {fileID: 765943190}
+  - component: {fileID: 765943192}
   m_Layer: 5
   m_Name: DialogueBox (2)
   m_TagString: Untagged
@@ -4799,7 +4839,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3, y: -267.00003}
+  m_AnchoredPosition: {x: -3, y: -267}
   m_SizeDelta: {x: 1727.59, y: -17.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &765943190
@@ -4840,6 +4880,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765943188}
   m_CullTransparentMesh: 1
+--- !u!114 &765943192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765943188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004a95a0d6c434242869b409ef84c865, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueAnim
+  animationDuration: 0.1
+  slideOffset: 200
+  animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &767148988
 GameObject:
   m_ObjectHideFlags: 0
@@ -21086,7 +21164,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.5, y: -37.5}
+  m_AnchoredPosition: {x: 239.5, y: -37.499977}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1770067081
