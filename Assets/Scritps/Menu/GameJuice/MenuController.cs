@@ -49,7 +49,7 @@ public class MenuController : MonoBehaviour
     public void BackToMenu()
     {
         Debug.Log("🔙 Back to menu...");
-        if (startPanel != null) startPanel.SetActive(true);
+        if (startPanel != null) startPanel.SetActive(false);
         if (optionsPanel != null) optionsPanel.SetActive(false);
         if (creditsPanel != null) creditsPanel.SetActive(false);
     }
