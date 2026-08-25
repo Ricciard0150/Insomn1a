@@ -1,17 +1,34 @@
 using UnityEngine;
-using System.Collections;
 
 public class PressEIndicator : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private GameObject indicatorObject;
-    [SerializeField] private float blinkSpeed = 0.5f;
 
-    private bool isShowing = false;
+    [Header("Pulse Settings")]
+    [SerializeField] private float minScale = 0.8f;
+    [SerializeField] private float maxScale = 1.2f;
+    [SerializeField] private float pulseSpeed = 2f;
+
+    private PulseEffect pulseEffect;
 
     void Start()
     {
         if (indicatorObject != null)
             indicatorObject.SetActive(false);
+
+        // Pega o PulseEffect do mesmo GameObject
+        pulseEffect = GetComponent<PulseEffect>();
+
+        // Se não tiver PulseEffect, adiciona
+        if (pulseEffect == null)
+        {
+            pulseEffect = gameObject.AddComponent<PulseEffect>();
+        }
+
+        // Configura o PulseEffect
+        pulseEffect.SetPulseRange(minScale, maxScale);
+        pulseEffect.SetPulseSpeed(pulseSpeed);
     }
 
     public void Show()
@@ -19,8 +36,10 @@ public class PressEIndicator : MonoBehaviour
         if (indicatorObject != null)
         {
             indicatorObject.SetActive(true);
-            isShowing = true;
-            StartCoroutine(BlinkRoutine());
+
+            if (pulseEffect != null)
+                pulseEffect.StartPulse();
+
             Debug.Log("✅ PressEIndicator MOSTRADO!");
         }
     }
@@ -30,18 +49,11 @@ public class PressEIndicator : MonoBehaviour
         if (indicatorObject != null)
         {
             indicatorObject.SetActive(false);
-            isShowing = false;
-            StopAllCoroutines();
-            Debug.Log("❌ PressEIndicator ESCONDIDO!");
-        }
-    }
 
-    private IEnumerator BlinkRoutine()
-    {
-        while (isShowing)
-        {
-            indicatorObject.SetActive(!indicatorObject.activeSelf);
-            yield return new WaitForSeconds(blinkSpeed);
+            if (pulseEffect != null)
+                pulseEffect.StopPulse();
+
+            Debug.Log("❌ PressEIndicator ESCONDIDO!");
         }
     }
 }
