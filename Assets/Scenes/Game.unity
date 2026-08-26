@@ -2764,7 +2764,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 16f13903d82c57e44a9d3b26736890c7, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4622,7 +4622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextManager
   npcs:
   - {fileID: 1457307599}
-  - {fileID: 0}
+  - {fileID: 2056157393}
   - {fileID: 1276927453}
   - {fileID: 1288718226}
   - {fileID: 0}
@@ -4641,16 +4641,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 749839217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c482dbbd1524d243a9e3d9e88014658, type: 3}
+  m_Script: {fileID: 11500000, guid: 7275bc39de09c6c4a927715e5fada81a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AutoDialogueStarter
-  dialogueSystem: {fileID: 1030613190}
-  npcData: {fileID: 1030613188}
+  m_EditorClassIdentifier: Assembly-CSharp::InitialDialogueStarter
+  dialogueSystem: {fileID: 1704621422}
+  npcData: {fileID: 1704621421}
+  NPC: {fileID: 1704621416}
   delayToStart: 0.5
-  dialogueID: UniqueDialogue
-  started: 0
-  dialogueFinished: 0
-  playerPrefKey: 
+  dialogueID: InitialDialogue
+  resetOnStart: 0
 --- !u!1 &750822762
 GameObject:
   m_ObjectHideFlags: 0
@@ -20652,7 +20651,7 @@ GameObject:
   - component: {fileID: 1704621421}
   - component: {fileID: 1704621422}
   m_Layer: 0
-  m_Name: Atendente (3)
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
