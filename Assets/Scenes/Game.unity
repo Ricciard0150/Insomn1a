@@ -2763,15 +2763,15 @@ SpriteRenderer:
   m_SortingLayerID: 779558477
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 7482667652216324306, guid: 16f13903d82c57e44a9d3b26736890c7, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &507442583
@@ -2782,7 +2782,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507442580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4102a687391d51245a54429978e135ab, type: 2}
   m_CullingMode: 0
@@ -4455,7 +4455,6 @@ GameObject:
   - component: {fileID: 749839220}
   - component: {fileID: 749839221}
   - component: {fileID: 749839222}
-  - component: {fileID: 749839223}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -4649,19 +4648,9 @@ MonoBehaviour:
   npcData: {fileID: 1030613188}
   delayToStart: 0.5
   dialogueID: UniqueDialogue
---- !u!114 &749839223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 749839217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b316346a630a7ff4599dbbc724fbb447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ResetDialoguePrefs
-  dialogueID: UniqueDialogue
+  started: 0
+  dialogueFinished: 0
+  playerPrefKey: 
 --- !u!1 &750822762
 GameObject:
   m_ObjectHideFlags: 0
@@ -20966,7 +20955,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 239.5, y: -37.499977}
+  m_AnchoredPosition: {x: 239.5, y: -37.499985}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1770067081
@@ -21389,6 +21378,9 @@ MonoBehaviour:
   npcData: {fileID: 1704621421}
   delayToStart: 0.5
   dialogueID: UniqueDialogue
+  started: 0
+  dialogueFinished: 0
+  playerPrefKey: 
 --- !u!1 &1831403439
 GameObject:
   m_ObjectHideFlags: 0
@@ -24341,7 +24333,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.72433853, y: 0.04337269}
+  m_Offset: {x: -0.7071784, y: 0.08852115}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -24351,7 +24343,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.9219258, y: 2.058319}
+  m_Size: {x: 1.1106201, y: 1.6369293}
   m_EdgeRadius: 0
 --- !u!1 &1865952460842338405
 GameObject:
@@ -24424,7 +24416,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 133.93, y: -73.7, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 507442581}
@@ -24442,17 +24434,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507bac36ed96a294bac0d1b53d479659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWalkAnimation
-  upSprites: []
-  downSprites: []
+  upSprites:
+  - {fileID: 3137999783737459942, guid: 74e5b88fb9fff8341a791312f89d6caf, type: 3}
+  - {fileID: 9180992568611171329, guid: 74e5b88fb9fff8341a791312f89d6caf, type: 3}
+  - {fileID: -6918187660383671063, guid: 74e5b88fb9fff8341a791312f89d6caf, type: 3}
+  - {fileID: 107235026728344695, guid: 74e5b88fb9fff8341a791312f89d6caf, type: 3}
+  downSprites:
+  - {fileID: -8452499422686497924, guid: ef43ea435f28f5242a1901a1a71185b0, type: 3}
+  - {fileID: -8452499422686497924, guid: a9ded4248a41920458dc63b77c53e17d, type: 3}
+  - {fileID: 1249803628486568459, guid: a9ded4248a41920458dc63b77c53e17d, type: 3}
+  - {fileID: 1249803628486568459, guid: ef43ea435f28f5242a1901a1a71185b0, type: 3}
   leftSprites:
   - {fileID: -8318018818827918211, guid: 6fa0e635c236b3e4a9a477c2ade24a79, type: 3}
   - {fileID: -4864188499293430937, guid: 6fa0e635c236b3e4a9a477c2ade24a79, type: 3}
   - {fileID: -8629526938019061653, guid: 6fa0e635c236b3e4a9a477c2ade24a79, type: 3}
   - {fileID: 7495633230137937187, guid: 6fa0e635c236b3e4a9a477c2ade24a79, type: 3}
-  rightSprites: []
+  rightSprites:
+  - {fileID: 5104699651360367097, guid: 242d1f81f8b049443b98d1dfaf1e3ed3, type: 3}
+  - {fileID: -5491167636408423091, guid: 242d1f81f8b049443b98d1dfaf1e3ed3, type: 3}
+  - {fileID: 4109710155247610941, guid: 242d1f81f8b049443b98d1dfaf1e3ed3, type: 3}
+  - {fileID: -4170612486314133786, guid: 242d1f81f8b049443b98d1dfaf1e3ed3, type: 3}
   frameRate: 0.15
-  idleSprite: {fileID: 0}
-  moveDuration: 0.1
+  idleSprite: {fileID: 3137999783737459942, guid: 74e5b88fb9fff8341a791312f89d6caf, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

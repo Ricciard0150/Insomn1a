@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using DG.Tweening;
 
 public class PlayerWalkAnimation : MonoBehaviour
 {
@@ -12,7 +11,6 @@ public class PlayerWalkAnimation : MonoBehaviour
     [Header("Settings")]
     public float frameRate = 0.15f;
     public Sprite idleSprite;
-    public float moveDuration = 0.1f;
 
     private SpriteRenderer spriteRenderer;
     private int frameIndex = 0;
@@ -20,7 +18,6 @@ public class PlayerWalkAnimation : MonoBehaviour
     private Sprite[] currentSprites;
     private bool wasWalking = false;
     private TopDownMovement movementScript;
-    private Tweener moveTweener;
 
     void Start()
     {
@@ -35,13 +32,10 @@ public class PlayerWalkAnimation : MonoBehaviour
         movementScript = GetComponent<TopDownMovement>();
         currentSprites = downSprites;
 
-        if (currentSprites == null || currentSprites.Length == 0)
-        {
-            currentSprites = new Sprite[] { null };
-        }
-
         if (idleSprite != null)
             spriteRenderer.sprite = idleSprite;
+
+        Debug.Log("PlayerWalkAnimation started!"); // Debug
     }
 
     void Update()
@@ -59,14 +53,6 @@ public class PlayerWalkAnimation : MonoBehaviour
 
             if (movement != Vector2.zero)
             {
-                Vector3 targetPos = transform.position + (Vector3)movement * 0.1f;
-
-                if (moveTweener != null)
-                    moveTweener.Kill();
-
-                moveTweener = transform.DOMove(targetPos, moveDuration)
-                    .SetEase(Ease.Linear);
-
                 UpdateAnimation(movement);
             }
         }
@@ -98,7 +84,8 @@ public class PlayerWalkAnimation : MonoBehaviour
 
         if (newSprites == null || newSprites.Length == 0)
         {
-            newSprites = new Sprite[] { null };
+            Debug.LogWarning("No sprites for this direction!");
+            return;
         }
 
         if (newSprites != currentSprites)
@@ -106,12 +93,6 @@ public class PlayerWalkAnimation : MonoBehaviour
             currentSprites = newSprites;
             frameIndex = 0;
             timer = 0;
-        }
-
-        if (currentSprites == null || currentSprites.Length == 0)
-        {
-            currentSprites = new Sprite[] { null };
-            return;
         }
 
         timer += Time.deltaTime;
@@ -125,11 +106,5 @@ public class PlayerWalkAnimation : MonoBehaviour
                 spriteRenderer.sprite = currentSprites[frameIndex];
             }
         }
-    }
-
-    void OnDestroy()
-    {
-        if (moveTweener != null)
-            moveTweener.Kill();
     }
 }
