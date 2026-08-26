@@ -2763,7 +2763,7 @@ SpriteRenderer:
   m_SortingLayerID: 779558477
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6685637119153373027, guid: a9ded4248a41920458dc63b77c53e17d, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2771,7 +2771,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &507442583
@@ -3646,7 +3646,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.46772334, y: 0.23400001}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -288.28, y: -19.000038}
+  m_AnchoredPosition: {x: -288.28, y: -19.00003}
   m_SizeDelta: {x: 2603.92, y: 412.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &622770720
@@ -18805,8 +18805,8 @@ Transform:
   m_GameObject: {fileID: 1450171721}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 92.39, y: 49.17, z: 0}
-  m_LocalScale: {x: -29.05085, y: 11.218742, z: 1}
+  m_LocalPosition: {x: 92.39, y: 47.7632, z: 0}
+  m_LocalScale: {x: -28.4, y: 8.405082, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2000680574}
@@ -22225,7 +22225,7 @@ Transform:
   m_GameObject: {fileID: 1926134264}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 97.3187, y: 53.51, z: 0}
+  m_LocalPosition: {x: 97.3187, y: 49.2, z: 0}
   m_LocalScale: {x: 3.0981905, y: 3.6714127, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24422,9 +24422,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1865952460842338405}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d6340ed3ee199049a04d43b8d3d36b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 507bac36ed96a294bac0d1b53d479659, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerReturn
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWalkAnimation
+  upSprites: []
+  downSprites: []
+  leftSprites:
+  - {fileID: -8318018818827918211, guid: 6fa0e635c236b3e4a9a477c2ade24a79, type: 3}
+  - {fileID: -4864188499293430937, guid: 6fa0e635c236b3e4a9a477c2ade24a79, type: 3}
+  - {fileID: -8629526938019061653, guid: 6fa0e635c236b3e4a9a477c2ade24a79, type: 3}
+  - {fileID: 7495633230137937187, guid: 6fa0e635c236b3e4a9a477c2ade24a79, type: 3}
+  rightSprites: []
+  frameRate: 0.15
+  idleSprite: {fileID: 0}
+  moveDuration: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
