@@ -11,6 +11,9 @@ public class InterviewManager : MonoBehaviour
     [SerializeField] private UInterviewManager uiManager;
     [SerializeField] private InterviewQuests dialogueSystem;
 
+    [Header("Intro Panel")]
+    [SerializeField] private IntroPanelController introPanel;
+
     [Header("Quest")]
     [SerializeField] public string questId;
 
@@ -30,7 +33,7 @@ public class InterviewManager : MonoBehaviour
     private QuestData currentQuest;
     private InterviewSystem system;
     private bool isFinishing;
-    private bool isCompleted = false; // ← NOVO: Controla se a quest foi completada
+    private bool isCompleted = false;
 
     void Awake()
     {
@@ -68,10 +71,9 @@ public class InterviewManager : MonoBehaviour
 
     public void StartSystem()
     {
-        // ← NOVO: Impede de iniciar se já foi completada
         if (isCompleted)
         {
-            Debug.Log("Esta quest já foi completada! Não pode ser reiniciada.");
+            Debug.Log("Esta quest já foi completada!");
             return;
         }
 
@@ -80,16 +82,53 @@ public class InterviewManager : MonoBehaviour
 
         isFinishing = false;
 
-        if (panel != null)
-            panel.SetActive(true);
-
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
-        system.Start();
+        if (dialogueSystem != null && currentQuest != null && currentQuest.introLines.Length > 0)
+        {
+            dialogueSystem.StartDialogue(currentQuest.introLines);
+            StartCoroutine(WaitForDialogueThenIntroPanel());
+        }
+        else
+        {
+            StartCoroutine(ShowIntroPanelThenQuiz());
+        }
     }
 
-    void ShowRound(QuestionRPG question, int totalOptions)
+    private IEnumerator WaitForDialogueThenIntroPanel()
+    {
+        yield return new WaitWhile(() => dialogueSystem.IsRunning);
+
+        StartCoroutine(ShowIntroPanelThenQuiz());
+    }
+
+    private IEnumerator ShowIntroPanelThenQuiz()
+    {
+        if (introPanel != null)
+        {
+            introPanel.ShowPanel();
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        if (panel != null)
+            panel.SetActive(true);
+
+        yield return null;
+
+        if (introPanel != null)
+        {
+            introPanel.HidePanel();
+        }
+
+        if (system != null && !system.IsActive)
+        {
+            system.Start();
+        }
+    }
+
+    private void ShowRound(QuestionRPG question, int totalOptions)
     {
         uiManager.ShowQuestion(
             question,
@@ -101,7 +140,7 @@ public class InterviewManager : MonoBehaviour
         );
     }
 
-    IEnumerator ProcessChoiceWithDialogue(int choice)
+    private IEnumerator ProcessChoiceWithDialogue(int choice)
     {
         QuestionRPG question = currentQuest.questions[system.GetCurrentRound()];
         DialogueLine[] dialogueLines = null;
@@ -129,12 +168,12 @@ public class InterviewManager : MonoBehaviour
         system.ProcessChoice(choice);
     }
 
-    void ShowFeedback(string message)
+    private void ShowFeedback(string message)
     {
         uiManager.ShowFeedback(message);
     }
 
-    void OnSystemFinished(bool victory, int points, int lives)
+    private void OnSystemFinished(bool victory, int points, int lives)
     {
         if (isFinishing)
             return;
@@ -155,18 +194,14 @@ public class InterviewManager : MonoBehaviour
             return;
         }
 
-        // ========== VITÓRIA ==========
-        // ← NOVO: Marca como completada
         isCompleted = true;
 
-        // Ativa/desativa objetos
         if (objectToActivate != null)
             objectToActivate.SetActive(true);
 
         if (objectToDeactivate != null)
             objectToDeactivate.SetActive(false);
 
-        // Mostra diálogo de vitória
         if (dialogueSystem != null)
         {
             dialogueSystem.ShowVictoryDialogue();
@@ -175,32 +210,23 @@ public class InterviewManager : MonoBehaviour
         OnQuizFinished?.Invoke();
     }
 
-    IEnumerator ShowDefeatSequence(int points)
+    private IEnumerator ShowDefeatSequence(int points)
     {
-        Debug.Log("=== SEQUÊNCIA DE DERROTA ===");
-
         if (dialogueSystem != null)
         {
-            Debug.Log("Mostrando diálogo de derrota...");
             dialogueSystem.ShowDefeatDialogue();
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
-            Debug.Log("Diálogo de derrota terminou!");
         }
 
         if (gameOverPanel != null)
         {
-            Debug.Log("Ativando GameOverPanel...");
             gameOverPanel.SetActive(true);
 
             GameOverUI panelScript = gameOverPanel.GetComponent<GameOverUI>();
-            if (panelScript != null)
+            if (panelScript != null)    
             {
                 panelScript.ShowDefeat(points, currentQuest.questions.Length);
             }
-        }
-        else
-        {
-            Debug.LogError("GameOverPanel é NULL!");
         }
 
         Time.timeScale = 0f;
@@ -209,7 +235,6 @@ public class InterviewManager : MonoBehaviour
 
     public void RestartQuiz()
     {
-        // ← NOVO: Impede restart se já foi completada
         if (isCompleted)
         {
             Debug.Log("Quest já completada! Não pode reiniciar.");
@@ -241,13 +266,11 @@ public class InterviewManager : MonoBehaviour
         SceneManager.LoadScene(menuSceneName);
     }
 
-    // ← NOVO: Método para verificar se a quest já foi completada
     public bool IsQuestCompleted()
     {
         return isCompleted;
     }
 
-    // ← NOVO: Método para resetar o estado (se necessário)
     public void ResetQuestState()
     {
         isCompleted = false;

@@ -24,10 +24,8 @@ public class InterviewerInteraction : MonoBehaviour
 
     void Update()
     {
-        // ← NOVO: Verifica se a quest já foi completada
         if (interviewManager != null && interviewManager.IsQuestCompleted())
         {
-            // Se já completou, desativa o indicador e não permite interagir
             if (pressEIndicator != null && pressEIndicator.activeSelf)
                 pressEIndicator.SetActive(false);
             return;
@@ -44,9 +42,8 @@ public class InterviewerInteraction : MonoBehaviour
         }
     }
 
-    void StartInteraction()
+    private void StartInteraction()
     {
-        // ← NOVO: Verificação extra antes de interagir
         if (interviewManager != null && interviewManager.IsQuestCompleted())
         {
             Debug.Log("Quest já completada! Não pode interagir.");
@@ -57,6 +54,12 @@ public class InterviewerInteraction : MonoBehaviour
 
         if (pressEIndicator != null)
             pressEIndicator.SetActive(false);
+
+        if (interviewManager != null)
+        {
+            interviewManager.StartSystem();
+            return;
+        }
 
         if (startWithIntro && dialogueSystem != null)
         {
@@ -72,7 +75,7 @@ public class InterviewerInteraction : MonoBehaviour
         StartQuiz();
     }
 
-    IEnumerator WaitForDialogueThenStartQuiz()
+    private IEnumerator WaitForDialogueThenStartQuiz()
     {
         yield return new WaitWhile(() => dialogueSystem.IsRunning);
 
@@ -84,7 +87,7 @@ public class InterviewerInteraction : MonoBehaviour
         }
     }
 
-    void StartQuiz()
+    private void StartQuiz()
     {
         if (interviewManager != null)
         {
@@ -93,7 +96,7 @@ public class InterviewerInteraction : MonoBehaviour
         }
     }
 
-    void OnQuizFinished()
+    private void OnQuizFinished()
     {
         if (player != null)
         {
@@ -107,7 +110,7 @@ public class InterviewerInteraction : MonoBehaviour
             interviewManager.OnQuizFinished -= OnQuizFinished;
     }
 
-    QuestData GetQuestFromManager()
+    private QuestData GetQuestFromManager()
     {
         if (interviewManager == null) return null;
 
@@ -117,13 +120,12 @@ public class InterviewerInteraction : MonoBehaviour
         return database.GetQuest(interviewManager.questId);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IStatusPlayer status))
         {
             playerIsNear = true;
 
-            // ← NOVO: Só mostra indicador se a quest NÃO foi completada
             if (!isInteracting && pressEIndicator != null)
             {
                 if (interviewManager != null && !interviewManager.IsQuestCompleted())
@@ -138,7 +140,7 @@ public class InterviewerInteraction : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IStatusPlayer status))
         {
