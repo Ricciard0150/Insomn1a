@@ -4,17 +4,17 @@ using System.Collections;
 public class InterviewerInteraction : MonoBehaviour
 {
     [Header("References")]
-    public GameObject pressEIndicator;
-    public InterviewManager interviewManager;
-    public InterviewQuests dialogueSystem;
-    public GameObject player; 
+    [SerializeField] private GameObject pressEIndicator;
+    [SerializeField] private InterviewManager interviewManager;
+    [SerializeField] private InterviewQuests dialogueSystem;
+    [SerializeField] private GameObject player;
 
     [Header("Settings")]
-    public bool startWithIntro = true;
+    [SerializeField] private bool startWithIntro = true;
+
     private bool playerIsNear = false;
     private bool isInteracting = false;
     private int index = 0;
-
 
     void Start()
     {
@@ -24,11 +24,21 @@ public class InterviewerInteraction : MonoBehaviour
 
     void Update()
     {
+        // ← NOVO: Verifica se a quest já foi completada
+        if (interviewManager != null && interviewManager.IsQuestCompleted())
+        {
+            // Se já completou, desativa o indicador e não permite interagir
+            if (pressEIndicator != null && pressEIndicator.activeSelf)
+                pressEIndicator.SetActive(false);
+            return;
+        }
+
         if (playerIsNear && Input.GetButtonDown("Interact") && !isInteracting)
         {
             StartInteraction();
         }
-        if(Input.GetButtonDown("Interact"))
+
+        if (Input.GetButtonDown("Interact"))
         {
             print("interact");
         }
@@ -36,6 +46,13 @@ public class InterviewerInteraction : MonoBehaviour
 
     void StartInteraction()
     {
+        // ← NOVO: Verificação extra antes de interagir
+        if (interviewManager != null && interviewManager.IsQuestCompleted())
+        {
+            Debug.Log("Quest já completada! Não pode interagir.");
+            return;
+        }
+
         isInteracting = true;
 
         if (pressEIndicator != null)
@@ -51,7 +68,6 @@ public class InterviewerInteraction : MonoBehaviour
                 index = 0;
                 return;
             }
-            
         }
         StartQuiz();
     }
@@ -70,7 +86,6 @@ public class InterviewerInteraction : MonoBehaviour
 
     void StartQuiz()
     {
-
         if (interviewManager != null)
         {
             interviewManager.OnQuizFinished += OnQuizFinished;
@@ -83,7 +98,7 @@ public class InterviewerInteraction : MonoBehaviour
         if (player != null)
         {
             player.SetActive(true);
-            Debug.Log("player on ");
+            Debug.Log("player on");
         }
 
         isInteracting = false;
@@ -107,8 +122,19 @@ public class InterviewerInteraction : MonoBehaviour
         if (collision.TryGetComponent(out IStatusPlayer status))
         {
             playerIsNear = true;
+
+            // ← NOVO: Só mostra indicador se a quest NÃO foi completada
             if (!isInteracting && pressEIndicator != null)
-                pressEIndicator.SetActive(true);
+            {
+                if (interviewManager != null && !interviewManager.IsQuestCompleted())
+                {
+                    pressEIndicator.SetActive(true);
+                }
+                else
+                {
+                    pressEIndicator.SetActive(false);
+                }
+            }
         }
     }
 

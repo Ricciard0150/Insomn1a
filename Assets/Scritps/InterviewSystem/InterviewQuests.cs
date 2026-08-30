@@ -1,180 +1,194 @@
-    using System.Collections;
-    using UnityEngine;
-    using UnityEngine.UI;
-    using TMPro;
+using System.Collections;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
-    public class InterviewQuests : MonoBehaviour
+public class InterviewQuests : MonoBehaviour
+{
+    [Header("UI")]
+    [SerializeField] private TMP_Text dialogueText;
+    [SerializeField] private GameObject dialoguePanel;
+
+    [Header("Character")]
+    [SerializeField] private Image characterImage;
+
+    [Header("Config")]
+    [SerializeField] private float textSpeed = 0.03f;
+
+    [Header("Final Dialogues")]
+    [TextArea(2, 5)]
+    [SerializeField] private string[] victoryLines;
+
+    [TextArea(2, 5)]
+    [SerializeField] private string[] defeatLines;
+
+    [Header("References")]
+    [SerializeField] private QuestData currentQuestData;
+
+    private bool isRunning;
+    private Coroutine currentDialogue;
+    private int currentDialogueIndex;
+    private bool isTextComplete = false;
+    private bool waitingForNext = false;
+
+    public bool IsRunning => isRunning;
+
+    void Update()
     {
-        [Header("UI")]
-        public TMP_Text dialogueText;
-        public GameObject dialoguePanel;
+        if (!isRunning) return;
 
-        [Header("Character")]
-        public Image characterImage;
-
-        [Header("Config")]
-        public float textSpeed = 0.03f;
-
-        [Header("Final Dialogues (opcional)")]
-        public string[] victoryLines;
-        public string[] defeatLines;
-
-        [Header("References")]
-        public QuestData currentQuestData;
-
-        private bool isRunning;
-        private Coroutine currentDialogue;
-        private int currentDialogueIndex;
-        private bool isTextComplete = false;
-        private bool waitingForNext = false;
-
-        public bool IsRunning => isRunning;
-        public int CurrentDialogueIndex => currentDialogueIndex;
-
-        void Update()
+        if (Input.GetButtonDown("Interact"))
         {
-            if (!isRunning) return;
-
-            if (Input.GetButtonDown("Interact"))
+            if (!isTextComplete && !waitingForNext)
             {
-                if (!isTextComplete && !waitingForNext)
-                {
-                    isTextComplete = true;
-                }
-                else if (isTextComplete && !waitingForNext)
-                {
-                    waitingForNext = true;
-                }
+                isTextComplete = true;
+            }
+            else if (isTextComplete && !waitingForNext)
+            {
+                waitingForNext = true;
             }
         }
+    }
 
-        public void StartDialogue(string[] lines)
+    public void StartDialogue(string[] lines)
+    {
+        if (lines == null || lines.Length == 0)
         {
-            if (lines == null || lines.Length == 0)
-            {
-                Debug.LogWarning("Diálogo vazio!");
-                return;
-            }
-
-            DialogueLine[] converted = new DialogueLine[lines.Length];
-            for (int i = 0; i < lines.Length; i++)
-            {
-                converted[i] = new DialogueLine();
-                converted[i].text = lines[i];
-                converted[i].characterSprite = null;
-            }
-
-            StartDialogue(converted);
+            Debug.LogWarning("Diálogo vazio!");
+            return;
         }
 
-        public void StartDialogue(DialogueLine[] lines)
+        DialogueLine[] converted = new DialogueLine[lines.Length];
+        for (int i = 0; i < lines.Length; i++)
         {
-            if (lines == null || lines.Length == 0)
-            {
-                Debug.LogWarning("Diálogo vazio!");
-                return;
-            }
-
-            if (currentDialogue != null)
-            {
-                StopCoroutine(currentDialogue);
-                currentDialogue = null;
-            }
-
-            currentDialogue = StartCoroutine(DisplayDialogue(lines));
+            converted[i] = new DialogueLine();
+            converted[i].text = lines[i];
+            converted[i].characterSprite = null;
         }
 
-        IEnumerator DisplayDialogue(DialogueLine[] lines)
+        StartDialogue(converted);
+    }
+
+    public void StartDialogue(DialogueLine[] lines)
+    {
+        if (lines == null || lines.Length == 0)
         {
-            isRunning = true;
-            currentDialogueIndex = 0;
+            Debug.LogWarning("Diálogo vazio!");
+            return;
+        }
+
+        if (currentDialogue != null)
+        {
+            StopCoroutine(currentDialogue);
+            currentDialogue = null;
+        }
+
+        currentDialogue = StartCoroutine(DisplayDialogue(lines));
+    }
+
+    private IEnumerator DisplayDialogue(DialogueLine[] lines)
+    {
+        isRunning = true;
+        currentDialogueIndex = 0;
+        isTextComplete = false;
+        waitingForNext = false;
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(true);
+
+        foreach (DialogueLine line in lines)
+        {
+            if (characterImage != null)
+            {
+                characterImage.sprite = line.characterSprite;
+                characterImage.gameObject.SetActive(line.characterSprite != null);
+            }
+
+            dialogueText.text = "";
             isTextComplete = false;
             waitingForNext = false;
 
-            if (dialoguePanel != null)
-                dialoguePanel.SetActive(true);
-
-            foreach (DialogueLine line in lines)
+            for (int i = 0; i < line.text.Length; i++)
             {
-                if (characterImage != null)
-                {
-                    characterImage.sprite = line.characterSprite;
-                    characterImage.gameObject.SetActive(line.characterSprite != null);
-                }
-
-                dialogueText.text = "";
-                isTextComplete = false;
-                waitingForNext = false;
-
-                for (int i = 0; i < line.text.Length; i++)
-                {
-                    if (isTextComplete)
-                    {
-                        dialogueText.text = line.text;
-                        break;
-                    }
-
-                    dialogueText.text += line.text[i];
-                    yield return new WaitForSeconds(textSpeed);
-                }
-
-                if (!isTextComplete)
+                if (isTextComplete)
                 {
                     dialogueText.text = line.text;
-                    isTextComplete = true;
+                    break;
                 }
 
-                while (!waitingForNext)
-                {
-                    yield return null;
-                }
+                dialogueText.text += line.text[i];
+                yield return new WaitForSeconds(textSpeed);
+            }
 
-                currentDialogueIndex++;
-                waitingForNext = false;
-                isTextComplete = false;
+            if (!isTextComplete)
+            {
+                dialogueText.text = line.text;
+                isTextComplete = true;
+            }
+
+            while (!waitingForNext)
+            {
                 yield return null;
             }
 
-            if (dialoguePanel != null)
-                dialoguePanel.SetActive(false);
+            currentDialogueIndex++;
+            waitingForNext = false;
+            isTextComplete = false;
+            yield return null;
+        }
 
-            isRunning = false;
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
+        isRunning = false;
+        currentDialogue = null;
+        currentDialogueIndex = 0;
+        isTextComplete = false;
+        waitingForNext = false;
+
+        Debug.Log("Diálogo terminou! isRunning = false");
+    }
+
+    public void SkipAllDialogue()
+    {
+        if (currentDialogue != null)
+        {
+            StopCoroutine(currentDialogue);
             currentDialogue = null;
-            currentDialogueIndex = 0;
-            isTextComplete = false;
-            waitingForNext = false;
         }
 
-        public void SkipAllDialogue()
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
+        isRunning = false;
+        currentDialogueIndex = 0;
+        isTextComplete = false;
+        waitingForNext = false;
+    }
+
+    public void ShowVictoryDialogue()
+    {
+        if (victoryLines != null && victoryLines.Length > 0)
+            StartDialogue(victoryLines);
+        else if (currentQuestData != null && currentQuestData.victoryLines != null && currentQuestData.victoryLines.Length > 0)
+            StartDialogue(currentQuestData.victoryLines);
+    }
+
+    public void ShowDefeatDialogue()
+    {
+        if (defeatLines != null && defeatLines.Length > 0)
         {
-            if (currentDialogue != null)
-            {
-                StopCoroutine(currentDialogue);
-                currentDialogue = null;
-            }
-
-            if (dialoguePanel != null)
-                dialoguePanel.SetActive(false);
-
-            isRunning = false;
-            currentDialogueIndex = 0;
-            isTextComplete = false;
-            waitingForNext = false;
+            Debug.Log($"Mostrando diálogo de derrota: {defeatLines.Length} linhas");
+            StartDialogue(defeatLines);
         }
-
-        public void ShowVictoryDialogue()
+        else if (currentQuestData != null && currentQuestData.defeatLines != null && currentQuestData.defeatLines.Length > 0)
         {
-            if (victoryLines != null && victoryLines.Length > 0)
-                StartDialogue(victoryLines);
-            else if (currentQuestData != null && currentQuestData.victoryLines.Length > 0)
-                StartDialogue(currentQuestData.victoryLines);
+            Debug.Log($"Mostrando diálogo de derrota do QuestData: {currentQuestData.defeatLines.Length} linhas");
+            StartDialogue(currentQuestData.defeatLines);
         }
-
-        public void ShowDefeatDialogue()
+        else
         {
-            if (defeatLines != null && defeatLines.Length > 0)
-                StartDialogue(defeatLines);
-            else if (currentQuestData != null && currentQuestData.defeatLines.Length > 0)
-                StartDialogue(currentQuestData.defeatLines);
+            Debug.LogWarning("Nenhum diálogo de derrota definido!");
         }
     }
+}

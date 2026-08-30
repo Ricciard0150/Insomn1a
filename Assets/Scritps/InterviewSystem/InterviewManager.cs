@@ -1,35 +1,42 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InterviewManager : MonoBehaviour
 {
     public event System.Action OnQuizFinished;
 
     [Header("UI")]
-    public GameObject panel;
-    public UInterviewManager uiManager;
-    public InterviewQuests dialogueSystem;
+    [SerializeField] private GameObject panel;
+    [SerializeField] private UInterviewManager uiManager;
+    [SerializeField] private InterviewQuests dialogueSystem;
 
     [Header("Quest")]
-    public string questId;
+    [SerializeField] public string questId;
 
     [Header("Consequences")]
-    public GameObject objectToActivate;
-    public GameObject objectToDeactivate;
-    public GameObject player;
-    public Transform respawnPoint;
+    [SerializeField] private GameObject objectToActivate;
+    [SerializeField] private GameObject objectToDeactivate;
+    [SerializeField] private GameObject player;
+    [SerializeField] private Transform respawnPoint;
+
+    [Header("Game Over Panel")]
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private string menuSceneName = "MainMenu";
+
+    [Header("Quest Database")]
+    [SerializeField] private QuestDatabase questDatabase;
 
     private QuestData currentQuest;
     private InterviewSystem system;
     private bool isFinishing;
+    private bool isCompleted = false; // ← NOVO: Controla se a quest foi completada
 
     void Awake()
     {
-        QuestDatabase database = FindAnyObjectByType<QuestDatabase>();
-
-        if (database != null)
+        if (questDatabase != null)
         {
-            currentQuest = database.GetQuest(questId);
+            currentQuest = questDatabase.GetQuest(questId);
         }
 
         if (currentQuest == null)
@@ -61,6 +68,13 @@ public class InterviewManager : MonoBehaviour
 
     public void StartSystem()
     {
+        // ← NOVO: Impede de iniciar se já foi completada
+        if (isCompleted)
+        {
+            Debug.Log("Esta quest já foi completada! Não pode ser reiniciada.");
+            return;
+        }
+
         if (system == null || system.IsActive)
             return;
 
@@ -68,6 +82,9 @@ public class InterviewManager : MonoBehaviour
 
         if (panel != null)
             panel.SetActive(true);
+
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
 
         system.Start();
     }
@@ -87,7 +104,6 @@ public class InterviewManager : MonoBehaviour
     IEnumerator ProcessChoiceWithDialogue(int choice)
     {
         QuestionRPG question = currentQuest.questions[system.GetCurrentRound()];
-        bool isCorrect = choice == question.correctAnswer;
         DialogueLine[] dialogueLines = null;
 
         if (question.optionDialogues != null && choice < question.optionDialogues.Length)
@@ -133,54 +149,108 @@ public class InterviewManager : MonoBehaviour
         if (panel != null)
             panel.SetActive(false);
 
-        if (objectToActivate != null)
-            objectToActivate.SetActive(victory);
-
-        if (objectToDeactivate != null)
-            objectToDeactivate.SetActive(!victory);
-
-        string[] lines = victory ? currentQuest.victoryLines : currentQuest.defeatLines;
-        StartCoroutine(DelayThenDialogue(lines, 1f, victory));
-    }
-
-    IEnumerator DelayThenDialogue(string[] lines, float delay, bool victory)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (dialogueSystem != null && lines != null && lines.Length > 0)
+        if (!victory)
         {
-            DialogueLine[] dialogue = new DialogueLine[lines.Length];
-
-            for (int i = 0; i < lines.Length; i++)
-            {
-                dialogue[i] = new DialogueLine();
-                dialogue[i].text = lines[i];
-                dialogue[i].characterSprite = null;
-            }
-
-            dialogueSystem.StartDialogue(dialogue);
-            yield return new WaitWhile(() => dialogueSystem.IsRunning);
+            StartCoroutine(ShowDefeatSequence(points));
+            return;
         }
 
-        if (!victory && player != null && respawnPoint != null)
+        // ========== VITÓRIA ==========
+        // ← NOVO: Marca como completada
+        isCompleted = true;
+
+        // Ativa/desativa objetos
+        if (objectToActivate != null)
+            objectToActivate.SetActive(true);
+
+        if (objectToDeactivate != null)
+            objectToDeactivate.SetActive(false);
+
+        // Mostra diálogo de vitória
+        if (dialogueSystem != null)
         {
-            player.transform.position = respawnPoint.position;
+            dialogueSystem.ShowVictoryDialogue();
         }
 
         OnQuizFinished?.Invoke();
     }
 
-    public bool IsQuestCompleted()
+    IEnumerator ShowDefeatSequence(int points)
     {
-        if (GameManager.Instance != null)
-            return GameManager.Instance.IsQuestCompleted(questId);
-        return false;
+        Debug.Log("=== SEQUÊNCIA DE DERROTA ===");
+
+        if (dialogueSystem != null)
+        {
+            Debug.Log("Mostrando diálogo de derrota...");
+            dialogueSystem.ShowDefeatDialogue();
+            yield return new WaitWhile(() => dialogueSystem.IsRunning);
+            Debug.Log("Diálogo de derrota terminou!");
+        }
+
+        if (gameOverPanel != null)
+        {
+            Debug.Log("Ativando GameOverPanel...");
+            gameOverPanel.SetActive(true);
+
+            GameOverUI panelScript = gameOverPanel.GetComponent<GameOverUI>();
+            if (panelScript != null)
+            {
+                panelScript.ShowDefeat(points, currentQuest.questions.Length);
+            }
+        }
+        else
+        {
+            Debug.LogError("GameOverPanel é NULL!");
+        }
+
+        Time.timeScale = 0f;
+        OnQuizFinished?.Invoke();
     }
 
-    public bool GetQuestResult()
+    public void RestartQuiz()
     {
-        if (GameManager.Instance != null)
-            return GameManager.Instance.GetQuestResult(questId);
-        return false;
+        // ← NOVO: Impede restart se já foi completada
+        if (isCompleted)
+        {
+            Debug.Log("Quest já completada! Não pode reiniciar.");
+            return;
+        }
+
+        Time.timeScale = 1f;
+
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
+
+        system = new InterviewSystem(
+            currentQuest.questions,
+            currentQuest.maxLives,
+            currentQuest.minCorrect
+        );
+
+        system.OnRoundChanged += ShowRound;
+        system.OnFinished += OnSystemFinished;
+        system.OnFeedback += ShowFeedback;
+
+        isFinishing = false;
+        StartSystem();
+    }
+
+    public void GoToMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(menuSceneName);
+    }
+
+    // ← NOVO: Método para verificar se a quest já foi completada
+    public bool IsQuestCompleted()
+    {
+        return isCompleted;
+    }
+
+    // ← NOVO: Método para resetar o estado (se necessário)
+    public void ResetQuestState()
+    {
+        isCompleted = false;
+        isFinishing = false;
     }
 }
