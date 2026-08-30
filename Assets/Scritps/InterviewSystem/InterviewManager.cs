@@ -17,9 +17,11 @@ public class InterviewManager : MonoBehaviour
     [Header("Quest")]
     [SerializeField] public string questId;
 
-    [Header("Consequences")]
-    [SerializeField] private GameObject objectToActivate;
-    [SerializeField] private GameObject objectToDeactivate;
+    [Header("Consequences - Victory")]
+    [SerializeField] private GameObject[] objectsToActivate;
+    [SerializeField] private GameObject[] objectsToDeactivate;
+
+    [Header("Consequences - Player")]
     [SerializeField] private GameObject player;
     [SerializeField] private Transform respawnPoint;
 
@@ -196,11 +198,7 @@ public class InterviewManager : MonoBehaviour
 
         isCompleted = true;
 
-        if (objectToActivate != null)
-            objectToActivate.SetActive(true);
-
-        if (objectToDeactivate != null)
-            objectToDeactivate.SetActive(false);
+        ActivateVictoryObjects();
 
         if (dialogueSystem != null)
         {
@@ -208,6 +206,27 @@ public class InterviewManager : MonoBehaviour
         }
 
         OnQuizFinished?.Invoke();
+    }
+
+    private void ActivateVictoryObjects()
+    {
+        if (objectsToActivate != null)
+        {
+            foreach (GameObject obj in objectsToActivate)
+            {
+                if (obj != null)
+                    obj.SetActive(true);
+            }
+        }
+
+        if (objectsToDeactivate != null)
+        {
+            foreach (GameObject obj in objectsToDeactivate)
+            {
+                if (obj != null)
+                    obj.SetActive(false);
+            }
+        }
     }
 
     private IEnumerator ShowDefeatSequence(int points)
@@ -223,7 +242,7 @@ public class InterviewManager : MonoBehaviour
             gameOverPanel.SetActive(true);
 
             GameOverUI panelScript = gameOverPanel.GetComponent<GameOverUI>();
-            if (panelScript != null)    
+            if (panelScript != null)
             {
                 panelScript.ShowDefeat(points, currentQuest.questions.Length);
             }
