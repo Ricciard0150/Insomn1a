@@ -10,34 +10,23 @@ public class InitialDialogueStarter : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float delayToStart = 0.5f;
     [SerializeField] private string dialogueID = "InitialDialogue";
-    [SerializeField] private bool resetOnStart = false; 
 
     private bool started = false;
     private bool dialogueFinished = false;
-    private string playerPrefKey;
 
     void Start()
     {
-        playerPrefKey = $"GlobalDialogue_{dialogueID}";
-
-        // Para testes - reseta o PlayerPrefs
-        if (resetOnStart)
+        // âœ… Verificar se o diÃ¡logo jÃ¡ foi mostrado (usando o sistema de save)
+        if (SaveSystem.Instance != null && SaveSystem.Instance.IsInitialDialogueShown())
         {
-            PlayerPrefs.DeleteKey(playerPrefKey);
-            PlayerPrefs.Save();
-            Debug.Log($"Resetando diálogo '{dialogueID}' para teste.");
+            Debug.Log($"DiÃ¡logo inicial '{dialogueID}' jÃ¡ foi mostrado (save). Destruindo NPC.");
+            Destroy(NPC);
+            return;
         }
-
-        //if (PlayerPrefs.GetInt(playerPrefKey, 0) == 1)
-        //{
-        //    Debug.Log($"Diálogo inicial '{dialogueID}' já foi mostrado. Destruindo script.");
-        //    Destroy(NPC); 
-        //    return;
-        //}
 
         if (dialogueSystem == null || npcData == null)
         {
-            Debug.LogError($"InitialDialogueStarter: Referências faltando em {gameObject.name}!");
+            Debug.LogError($"InitialDialogueStarter: ReferÃªncias faltando em {gameObject.name}!");
             Destroy(NPC);
             return;
         }
@@ -70,12 +59,11 @@ public class InitialDialogueStarter : MonoBehaviour
             return;
         }
 
-        // Configura e inicia o diálogo
         dialogueSystem.SetNPCDialogue(npcData.falas, npcData.sprites);
         dialogueSystem.StartDialogue();
         started = true;
 
-        // Marca como mostrado
+        // âœ… Marcar como mostrado no sistema de save
         MarkDialogueAsShown();
     }
 
@@ -84,21 +72,25 @@ public class InitialDialogueStarter : MonoBehaviour
         if (dialogueFinished) return;
 
         dialogueFinished = true;
-        Debug.Log($"Diálogo inicial '{dialogueID}' finalizado! Destruindo script.");
-
-        // Destroi APENAS este script, mantendo o GameObject
+        Debug.Log($"DiÃ¡logo inicial '{dialogueID}' finalizado! Destruindo NPC.");
         Destroy(NPC);
     }
 
     void MarkDialogueAsShown()
     {
-        PlayerPrefs.SetInt(playerPrefKey, 1);
-        PlayerPrefs.Save();
+        if (SaveSystem.Instance != null)
+        {
+            SaveSystem.Instance.SetInitialDialogueShown(true);
+        }
+        else
+        {
+            PlayerPrefs.SetInt($"GlobalDialogue_{dialogueID}", 1);
+            PlayerPrefs.Save();
+        }
     }
 
     void OnDestroy()
     {
-        // Se o diálogo ainda estiver ativo quando o script for destruído, fecha
         if (dialogueSystem != null && dialogueSystem.DialogoAtivo)
         {
             dialogueSystem.CloseDialogue();
