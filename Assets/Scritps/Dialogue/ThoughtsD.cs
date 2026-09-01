@@ -16,6 +16,7 @@ public class ThoughtsD : MonoBehaviour
         if (dialogueSystem == null || npcData == null) return;
         if (dialogueSystem.DialogoAtivo) return;
 
+        print("alalala");
         triggered = true;
         Invoke(nameof(StartDialogue), delayToStart);
     }
