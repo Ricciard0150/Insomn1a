@@ -15,6 +15,9 @@ public class MenuLoads : MonoBehaviour
 
     void Start()
     {
+        var tm = TextManager.Instance;
+
+        Debug.Log("✅ Todos os sistemas inicializados!");
         if (newGameButton != null)
         {
             newGameButton.onClick.RemoveAllListeners();

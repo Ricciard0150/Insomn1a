@@ -12,12 +12,13 @@ public class SaveNotificationManager : MonoBehaviour
                 GameObject go = new GameObject("SaveNotificationManager");
                 _instance = go.AddComponent<SaveNotificationManager>();
                 DontDestroyOnLoad(go);
+                Debug.Log("🆕 SaveNotificationManager criado!");
             }
             return _instance;
         }
     }
 
-    [SerializeField] private SaveNotification notification; // ✅ REFERÊNCIA DIRETA
+    private SaveNotification notification;
 
     void Awake()
     {
@@ -29,18 +30,27 @@ public class SaveNotificationManager : MonoBehaviour
 
         _instance = this;
         DontDestroyOnLoad(gameObject);
+        Debug.Log("✅ SaveNotificationManager inicializado!");
     }
 
-    public void Show(string msg = null)
-    {
-        if (notification != null)
-            notification.ShowNotification(msg ?? "💾 Jogo Salvo!");
-        else
-            Debug.LogError("❌ SaveNotification não referenciado! Arraste no Inspector.");
-    }
     public void RegisterNotification(SaveNotification notif)
     {
-        notification = notif;
-        Debug.Log("✅ SaveNotification registrada!");
+        if (notification == null)
+        {
+            notification = notif;
+            Debug.Log("✅ SaveNotification registrada no Manager!");
+        }
     }
+
+    //public void Show(string msg = null)
+    //{
+    //    if (notification != null)
+    //    {
+    //        notification.ShowNotification(msg ?? "💾 Jogo Salvo!");
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("❌ SaveNotification não registrado!");
+    //    }
+    //}
 }

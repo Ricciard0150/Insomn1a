@@ -4,50 +4,34 @@ using System.Collections;
 
 public class SaveNotification : MonoBehaviour
 {
-    [Header("Configurações")]
-    [SerializeField] private TextMeshProUGUI notificationText;
-    [SerializeField] private float fadeInDuration = 0.5f;
-    [SerializeField] private float displayDuration = 1.5f;
-    [SerializeField] private float fadeOutDuration = 0.5f;
-    [SerializeField] private string saveMessage = "💾 Jogo Salvo!";
+    public TextMeshProUGUI notificationText;
+    public float fadeInDuration = 0.5f;
+    public float displayDuration = 1.5f;
+    public float fadeOutDuration = 0.5f;
 
     private CanvasGroup canvasGroup;
     private Coroutine currentCoroutine;
 
-    void Awake()
+    void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
         canvasGroup.alpha = 0f;
-        gameObject.SetActive(false);
     }
 
-    void Start()
-    {
-        if (SaveNotificationManager.Instance != null)
-        {
-            SaveNotificationManager.Instance.RegisterNotification(this);
-            Debug.Log("✅ SaveNotification registrada!");
-        }
-    }
-
-    public void ShowNotification(string message = null)
+    public void Show(string message)
     {
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
 
-        if (!string.IsNullOrEmpty(message))
-            notificationText.text = message;
-        else
-            notificationText.text = saveMessage;
-
+        notificationText.text = message;
         gameObject.SetActive(true);
-        currentCoroutine = StartCoroutine(AnimateNotification());
+        currentCoroutine = StartCoroutine(Animate());
     }
 
-    IEnumerator AnimateNotification()
+    IEnumerator Animate()
     {
         float elapsedTime = 0f;
         while (elapsedTime < fadeInDuration)

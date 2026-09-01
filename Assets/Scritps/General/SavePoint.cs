@@ -4,6 +4,7 @@ public class SavePoint : MonoBehaviour
 {
     [SerializeField] private string pointName = "Save";
     [SerializeField] private GameObject feedback;
+    [SerializeField] private SaveNotification saveNotification; // ← ARRASTA AQUI!
 
     private bool canSave = true;
     private GameObject player;
@@ -43,11 +44,16 @@ public class SavePoint : MonoBehaviour
             return;
         }
 
-        // ✅ Salvar IMEDIATAMENTE
         SaveSystem.Instance.SaveGame(
             player.transform.position,
             UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
         );
+
+        // ✅ MOSTRA NOTIFICAÇÃO
+        if (saveNotification != null)
+        {
+            saveNotification.Show("💾 Jogo Salvo!");
+        }
 
         canSave = false;
         if (feedback != null) feedback.SetActive(false);
