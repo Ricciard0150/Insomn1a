@@ -1,5 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+
 public class InteractionDetector : MonoBehaviour
 {
     [Header("References")]
@@ -14,12 +15,24 @@ public class InteractionDetector : MonoBehaviour
 
     private void Awake()
     {
+        // ✅ REGISTRAR NO TEXTMANAGER (NOVO)
+        if (TextManager.Instance != null)
+        {
+            TextManager.Instance.RegisterNPC(this);
+            Debug.Log($"✅ {gameObject.name} registrado no TextManager");
+        }
+        else
+        {
+            Debug.LogWarning($"⚠️ TextManager não encontrado para {gameObject.name}");
+        }
+
+        // Seu código existente...
         if (pressingE != null)
         {
             if (pressingE.GetComponent<Image>() == null &&
                 pressingE.GetComponent<SpriteRenderer>() == null)
             {
-                Debug.LogWarning("PressingE n�o tem Image ou SpriteRenderer!");
+                Debug.LogWarning("PressingE não tem Image ou SpriteRenderer!");
             }
 
             pulseEffect = pressingE.GetComponent<PulseEffect>();
@@ -30,11 +43,21 @@ public class InteractionDetector : MonoBehaviour
         }
     }
 
+    // ✅ DESREGISTRAR QUANDO DESTRUÍDO (NOVO)
+    private void OnDestroy()
+    {
+        if (TextManager.Instance != null)
+        {
+            TextManager.Instance.UnregisterNPC(this);
+            Debug.Log($"➖ {gameObject.name} removido do TextManager");
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<IStatusPlayer>() != null)
         {
-            Debug.Log("Player entrou na �rea do NPC");
+            Debug.Log("Player entrou na área do NPC");
             playerPerto = true;
 
             if (pressingE != null && !dialogueSystem.DialogoAtivo)
@@ -51,7 +74,7 @@ public class InteractionDetector : MonoBehaviour
         if (collision.GetComponent<IStatusPlayer>() == null)
             return;
 
-        Debug.Log("Player saiu da �rea do NPC");
+        Debug.Log("Player saiu da área do NPC");
         playerPerto = false;
 
         if (pressingE != null)
@@ -67,7 +90,6 @@ public class InteractionDetector : MonoBehaviour
         if (!playerPerto || dialogueSystem == null || npcData == null)
             return;
 
-     
         if (!dialogueSystem.DialogoAtivo)
         {
             dialogueSystem.SetNPCDialogue(npcData.falas, npcData.sprites);
