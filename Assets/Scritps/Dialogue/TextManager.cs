@@ -13,7 +13,7 @@ public class TextManager : MonoBehaviour
                 GameObject go = new GameObject("TextManager");
                 _instance = go.AddComponent<TextManager>();
                 DontDestroyOnLoad(go);
-                Debug.Log("🆕 TextManager CRIADO!");
+                Debug.Log("🆕 TextManager criado!");
             }
             return _instance;
         }
@@ -31,7 +31,7 @@ public class TextManager : MonoBehaviour
 
         _instance = this;
         DontDestroyOnLoad(gameObject);
-        Debug.Log("✅ TextManager SINGLETON inicializado!");
+        Debug.Log("✅ TextManager inicializado!");
     }
 
     public void RegisterNPC(InteractionDetector npc)
@@ -60,7 +60,11 @@ public class TextManager : MonoBehaviour
     {
         npcs.RemoveAll(n => n == null);
 
-        Debug.Log($"🖱️ Interact! NPCs disponíveis: {npcs.Count}");
+        if (npcs.Count == 0)
+        {
+            Debug.Log("⚠️ Nenhum NPC disponível!");
+            return;
+        }
 
         foreach (var npc in npcs)
         {
