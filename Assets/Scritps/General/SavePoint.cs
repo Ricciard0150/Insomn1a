@@ -10,7 +10,7 @@ public class SavePoint : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent(out IStatusPlayer play))
+        if (other.TryGetComponent(out IStatusPlayer status))
         {
             player = other.gameObject;
             if (feedback != null) feedback.SetActive(true);
@@ -20,7 +20,7 @@ public class SavePoint : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.TryGetComponent(out IStatusPlayer play))
+        if (other.TryGetComponent(out IStatusPlayer status))
         {
             player = null;
             if (feedback != null) feedback.SetActive(false);
@@ -31,11 +31,11 @@ public class SavePoint : MonoBehaviour
     {
         if (player != null && canSave && Input.GetButtonDown("Interact"))
         {
-            Salvar();
+            SalvarJogo();
         }
     }
 
-    void Salvar()
+    void SalvarJogo()
     {
         if (SaveSystem.Instance == null)
         {
@@ -43,7 +43,7 @@ public class SavePoint : MonoBehaviour
             return;
         }
 
-        // ✅ Salvar - Isso vai marcar hasSavedAtLeastOnce = true
+        // ✅ Salvar IMEDIATAMENTE
         SaveSystem.Instance.SaveGame(
             player.transform.position,
             UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
@@ -52,7 +52,7 @@ public class SavePoint : MonoBehaviour
         canSave = false;
         if (feedback != null) feedback.SetActive(false);
 
-        Debug.Log($"💾 SAVE em: {pointName} - PRIMEIRO SAVE REGISTRADO!");
+        Debug.Log($"💾 SAVE em: {pointName} - POSIÇÃO: {player.transform.position}");
 
         Invoke(nameof(Reativar), 2f);
     }

@@ -29,9 +29,9 @@ public class SaveSystem : MonoBehaviour
     {
         currentSave.position = new float[] { pos.x, pos.y, pos.z };
         currentSave.scene = scene;
-        currentSave.hasSavedAtLeastOnce = true;  // ✅ MARCA QUE JÁ SALVOU
+        currentSave.hasSavedAtLeastOnce = true;
         File.WriteAllText(savePath, JsonUtility.ToJson(currentSave));
-        Debug.Log($"✅ Save: {pos} | {scene} | Primeiro save: {currentSave.hasSavedAtLeastOnce}");
+        Debug.Log($"✅ Save: {pos} | {scene}");
     }
 
     public void LoadGame()
@@ -39,14 +39,8 @@ public class SaveSystem : MonoBehaviour
         if (File.Exists(savePath))
         {
             currentSave = JsonUtility.FromJson<SaveData>(File.ReadAllText(savePath));
-
-            // ✅ SE O SAVE NÃO TIVER A FLAG, MARCA COMO FALSE (COMPATIBILIDADE)
-            if (currentSave == null)
-            {
-                currentSave = new SaveData();
-            }
-
-            Debug.Log($"📂 Load: {currentSave.scene} | Já salvou: {currentSave.hasSavedAtLeastOnce}");
+            if (currentSave == null) currentSave = new SaveData();
+            Debug.Log($"📂 Load: {currentSave.scene}");
         }
         else
         {
@@ -54,26 +48,55 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    // ✅ TELEPORTE INSTANTÂNEO - sem delays, sem animações
     public void Teleport(GameObject player)
     {
-        if (player == null || currentSave.position == null) return;
+        if (player == null)
+        {
+            Debug.LogError("❌ Player é NULL!");
+            return;
+        }
 
-        Vector3 pos = new Vector3(currentSave.position[0], currentSave.position[1], currentSave.position[2]);
+        if (currentSave.position == null || currentSave.position.Length < 3)
+        {
+            Debug.LogWarning("⚠️ Posição do save inválida!");
+            return;
+        }
+
+        // ✅ Posição imediata
+        Vector3 pos = new Vector3(
+            currentSave.position[0],
+            currentSave.position[1],
+            currentSave.position[2]
+        );
+
+        // ✅ Teleportar diretamente
         player.transform.position = pos;
 
+        // ✅ Resetar física imediatamente
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-        if (rb != null) rb.linearVelocity = Vector2.zero;
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0;
+        }
 
-        Debug.Log($"📍 Teleport: {pos}");
+        // ✅ Resetar movimento
+        TopDownMovement movement = player.GetComponent<TopDownMovement>();
+        if (movement != null)
+        {
+            movement.SetCanMove(true);
+        }
+
+        Debug.Log($"📍 TELEPORTE IMEDIATO para: {pos}");
     }
 
     public bool HasSave() => File.Exists(savePath);
 
-    // ✅ NOVO - Verifica se já salvou pelo menos uma vez
     public bool HasSavedAtLeastOnce()
     {
         if (!HasSave()) return false;
-        LoadGame(); // Recarregar para garantir dados atuais
+        LoadGame();
         return currentSave != null && currentSave.hasSavedAtLeastOnce;
     }
 
@@ -95,5 +118,5 @@ public class SaveData
 {
     public float[] position = new float[3];
     public string scene = "";
-    public bool hasSavedAtLeastOnce = false;  // ✅ FLAG DE PRIMEIRO SAVE
+    public bool hasSavedAtLeastOnce = false;
 }

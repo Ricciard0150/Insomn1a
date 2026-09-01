@@ -12,39 +12,33 @@ public class MenuLoads : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private string gameSceneName = "GameScene";
-    [SerializeField] private GameObject confirmPanel;
 
     void Start()
     {
-        // Configurar New Game
         if (newGameButton != null)
         {
             newGameButton.onClick.RemoveAllListeners();
             newGameButton.onClick.AddListener(StartNewGame);
         }
 
-        // Configurar Continue
         if (continueButton != null)
         {
             continueButton.onClick.RemoveAllListeners();
             continueButton.onClick.AddListener(ContinueGame);
         }
 
-        // Configurar Reset
         if (resetButton != null)
         {
             resetButton.onClick.RemoveAllListeners();
-            resetButton.onClick.AddListener(ShowResetConfirm);
+            resetButton.onClick.AddListener(ResetSave);
         }
 
-        // Configurar Quit
         if (quitButton != null)
         {
             quitButton.onClick.RemoveAllListeners();
             quitButton.onClick.AddListener(QuitGame);
         }
 
-        // Atualizar botões após inicialização
         Invoke(nameof(UpdateButtons), 0.1f);
     }
 
@@ -52,43 +46,33 @@ public class MenuLoads : MonoBehaviour
     {
         if (continueButton != null)
         {
-            // ✅ Continue SÓ funciona se já salvou pelo menos uma vez
             bool canContinue = SaveSystem.Instance != null && SaveSystem.Instance.HasSavedAtLeastOnce();
             continueButton.interactable = canContinue;
 
-            // Mudar texto do botão (opcional)
             Text btnText = continueButton.GetComponentInChildren<Text>();
             if (btnText != null)
             {
                 btnText.text = canContinue ? "Continue" : "Continue (Salve primeiro)";
                 btnText.color = canContinue ? Color.white : Color.gray;
             }
-
-            Debug.Log($"Continue Button: {(canContinue ? "✅ ATIVADO" : "❌ DESATIVADO - Sem save")}");
         }
 
         if (resetButton != null)
         {
-            bool hasSave = SaveSystem.Instance != null && SaveSystem.Instance.HasSave();
-            resetButton.interactable = hasSave;
+            resetButton.interactable = SaveSystem.Instance != null && SaveSystem.Instance.HasSave();
         }
     }
 
-    // ✅ NEW GAME - Começa do zero
     public void StartNewGame()
     {
-        Debug.Log("🆕 NOVO JOGO - Começando do zero!");
+        Debug.Log("🆕 NOVO JOGO");
 
         if (SaveSystem.Instance != null)
-        {
-            SaveSystem.Instance.DeleteSave();  // Deleta qualquer save existente
-        }
+            SaveSystem.Instance.DeleteSave();
 
-        // Carregar cena do jogo
         SceneManager.LoadScene(gameSceneName);
     }
 
-    // ✅ CONTINUE - Só funciona se já salvou
     public void ContinueGame()
     {
         Debug.Log("▶️ CONTINUAR JOGO");
@@ -99,44 +83,21 @@ public class MenuLoads : MonoBehaviour
             return;
         }
 
-        // ✅ Verifica se já salvou pelo menos uma vez
         if (!SaveSystem.Instance.HasSavedAtLeastOnce())
         {
-            Debug.Log("⚠️ Nenhum save encontrado. Use New Game!");
+            Debug.Log("⚠️ Nenhum save. Use New Game!");
             return;
         }
 
-        // Carregar dados
+        // ✅ Carregar dados e cena IMEDIATAMENTE
         SaveSystem.Instance.LoadGame();
         SaveData data = SaveSystem.Instance.GetData();
 
-        // Carregar cena salva
         string sceneToLoad = !string.IsNullOrEmpty(data.scene) ? data.scene : gameSceneName;
         Debug.Log($"📂 Carregando cena: {sceneToLoad}");
 
+        // ✅ Carregar cena (GameLoader vai teleportar)
         SceneManager.LoadScene(sceneToLoad);
-    }
-
-    // Resetar save
-    void ShowResetConfirm()
-    {
-        if (confirmPanel != null)
-            confirmPanel.SetActive(true);
-        else
-            ResetSave();
-    }
-
-    public void ConfirmReset()
-    {
-        if (confirmPanel != null)
-            confirmPanel.SetActive(false);
-        ResetSave();
-    }
-
-    public void CancelReset()
-    {
-        if (confirmPanel != null)
-            confirmPanel.SetActive(false);
     }
 
     void ResetSave()

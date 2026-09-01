@@ -10,7 +10,7 @@ public class GameLoader : MonoBehaviour
     {
         if (loadOnStart)
         {
-            Invoke(nameof(LoadGame), 0.3f);
+            LoadGame();
         }
     }
 
@@ -22,10 +22,9 @@ public class GameLoader : MonoBehaviour
             return;
         }
 
-        // ✅ Só carrega se já salvou pelo menos uma vez
         if (!SaveSystem.Instance.HasSavedAtLeastOnce())
         {
-            Debug.Log("ℹ️ Nenhum save para carregar (primeiro save ainda não feito)");
+            Debug.Log("ℹ️ Nenhum save para carregar");
             return;
         }
 
@@ -42,18 +41,21 @@ public class GameLoader : MonoBehaviour
             return;
         }
 
-        // Teleportar player
+        // ✅ TELEPORTE IMEDIATO (sem delay)
         TeleportPlayer();
     }
 
     void TeleportPlayer()
     {
+        // Procurar player se não foi atribuído
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player");
 
         if (player != null)
         {
+            // ✅ Teleportar instantaneamente
             SaveSystem.Instance.Teleport(player);
+            Debug.Log($"📍 Player teleportado IMEDIATAMENTE para: {player.transform.position}");
         }
         else
         {
@@ -61,10 +63,11 @@ public class GameLoader : MonoBehaviour
         }
     }
 
+    // ✅ Quando a cena carregar, teleportar IMEDIATAMENTE
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Teleportar depois que a cena carregar
-        Invoke(nameof(TeleportPlayer), 0.3f);
+        // ✅ SEM DELAY - teleporta no mesmo frame
+        TeleportPlayer();
     }
 
     void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
