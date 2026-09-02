@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class JumpscareManager : MonoBehaviour
@@ -14,6 +15,7 @@ public class JumpscareManager : MonoBehaviour
     [SerializeField] private CollectableItem keyItem;
     [SerializeField] private PressEIndicator pressEIndicator;
     [SerializeField] private FadeController fadeController;
+    [SerializeField] private AudioSource asas;
 
     [Header("Input Settings")]
     [SerializeField] private string interactButton = "Interact";
@@ -93,6 +95,7 @@ public class JumpscareManager : MonoBehaviour
         panelAberto = true;
         punchActivated = false;
 
+        asas.Stop();
         playerMovement.SetCanMove(false);
         blur.AtivarBlur();
         sequence.ShowPanel(true);
