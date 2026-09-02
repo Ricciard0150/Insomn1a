@@ -1163,7 +1163,9 @@ MonoBehaviour:
   falas:
   - Como eu queria que meu pai estivesse em casa para comemorar comigo a vaga....
   - "Melhor dormir at\xE9 ele chegar..."
-  sprites: []
+  sprites:
+  - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
+  - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
 --- !u!114 &236904184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7861,7 +7863,8 @@ MonoBehaviour:
   npcName: Thoughts post intereview
   falas:
   - "Perfeito! agora \xE9 ir para casa descansar... Amanh\xE3 ser\xE1 um novo dia"
-  sprites: []
+  sprites:
+  - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
 --- !u!114 &924545848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10048,6 +10051,7 @@ GameObject:
   - component: {fileID: 1175955779}
   - component: {fileID: 1175955778}
   - component: {fileID: 1175955777}
+  - component: {fileID: 1175955781}
   m_Layer: 0
   m_Name: PointSave
   m_TagString: Untagged
@@ -10089,7 +10093,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.3585596, y: -0.29908848}
+  m_Offset: {x: 0.21021867, y: -0.2990892}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -10099,7 +10103,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 8.094559, y: 5.628476}
+  m_Size: {x: 10.764833, y: 7.9851737}
   m_EdgeRadius: 0
 --- !u!114 &1175955778
 MonoBehaviour:
@@ -10189,6 +10193,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1175955781
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175955776}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 2.145
 --- !u!1 &1198579975
 GameObject:
   m_ObjectHideFlags: 0
@@ -19024,6 +19064,7 @@ GameObject:
   - component: {fileID: 1240861294}
   - component: {fileID: 1240861293}
   - component: {fileID: 1240861292}
+  - component: {fileID: 1240861296}
   m_Layer: 0
   m_Name: PointSave (1)
   m_TagString: Untagged
@@ -19065,7 +19106,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.09047067, y: -0.010032654}
+  m_Offset: {x: 0.6565404, y: 0.6142597}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -19075,7 +19116,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.2768145, y: 5.577608}
+  m_Size: {x: 7.770837, y: 6.826193}
   m_EdgeRadius: 0
 --- !u!114 &1240861293
 MonoBehaviour:
@@ -19165,6 +19206,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1240861296
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240861291}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 2.1449997
 --- !u!1 &1249496320
 GameObject:
   m_ObjectHideFlags: 0
@@ -22081,7 +22158,8 @@ MonoBehaviour:
   npcName: Thoughts(Should stay)
   falas:
   - Eu devo ir para a entrevista antes de ir para casa...
-  sprites: []
+  sprites:
+  - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
 --- !u!114 &1592144254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27172,7 +27250,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 133.83, y: -75.14, z: 0}
+  m_LocalPosition: {x: 502, y: 115, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
