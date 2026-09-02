@@ -9091,7 +9091,7 @@ MonoBehaviour:
   - "Ah, tudo bem\u2026"
   sprites:
   - {fileID: 397952528868842920, guid: 9b20a153becdf004f98f9280479f2549, type: 3}
-  - {fileID: 0}
+  - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
   - {fileID: 397952528868842920, guid: 9b20a153becdf004f98f9280479f2549, type: 3}
 --- !u!114 &1068109098
 MonoBehaviour:
@@ -19618,7 +19618,7 @@ MonoBehaviour:
   - "T\xE3o ruim assim?"
   sprites:
   - {fileID: -5800636680357492039, guid: 98837110c52949442b144520f9b71aea, type: 3}
-  - {fileID: 0}
+  - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
   - {fileID: -5800636680357492039, guid: 98837110c52949442b144520f9b71aea, type: 3}
 --- !u!114 &1276927453
 MonoBehaviour:
@@ -21716,7 +21716,7 @@ MonoBehaviour:
   - "\u2026. Vaza"
   sprites:
   - {fileID: 1481551995095045547, guid: 5a0f734d5fe8f0644a35fac9e51ca663, type: 3}
-  - {fileID: 0}
+  - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
   - {fileID: 1481551995095045547, guid: 5a0f734d5fe8f0644a35fac9e51ca663, type: 3}
 --- !u!1 &1559718177
 GameObject:
@@ -23196,7 +23196,7 @@ MonoBehaviour:
   - Obrigado, senhor.
   sprites:
   - {fileID: 6309406150621213132, guid: 9747edcdceffa6842a42bef21ecfc51a, type: 3}
-  - {fileID: 0}
+  - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
 --- !u!114 &1704621422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26231,7 +26231,7 @@ MonoBehaviour:
   falas:
   - Sai daqui, moleque, tenho que ensaiar pra entrevista.
   sprites:
-  - {fileID: 0}
+  - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
 --- !u!114 &2056157392
 MonoBehaviour:
   m_ObjectHideFlags: 0
