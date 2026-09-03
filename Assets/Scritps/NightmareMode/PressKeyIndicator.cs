@@ -17,16 +17,13 @@ public class PressEIndicator : MonoBehaviour
         if (indicatorObject != null)
             indicatorObject.SetActive(false);
 
-        // Pega o PulseEffect do mesmo GameObject
         pulseEffect = GetComponent<PulseEffect>();
 
-        // Se não tiver PulseEffect, adiciona
         if (pulseEffect == null)
         {
             pulseEffect = gameObject.AddComponent<PulseEffect>();
         }
 
-        // Configura o PulseEffect
         pulseEffect.SetPulseRange(minScale, maxScale);
         pulseEffect.SetPulseSpeed(pulseSpeed);
     }
@@ -40,7 +37,6 @@ public class PressEIndicator : MonoBehaviour
             if (pulseEffect != null)
                 pulseEffect.StartPulse();
 
-            Debug.Log("✅ PressEIndicator MOSTRADO!");
         }
     }
 
@@ -52,8 +48,6 @@ public class PressEIndicator : MonoBehaviour
 
             if (pulseEffect != null)
                 pulseEffect.StopPulse();
-
-            Debug.Log("❌ PressEIndicator ESCONDIDO!");
         }
     }
 }

@@ -7,9 +7,9 @@ public class Door : MonoBehaviour
     [SerializeField] private string interactButton = "Interact";
     [SerializeField] private CollectableItem keyItem;
     [SerializeField] private PressEIndicator pressEIndicator;
-    [SerializeField] private DM dialogue;
+    [SerializeField] private NightmareLines dialogue;
     [SerializeField] private CameraShake cameraShake;
-    [SerializeField] private GameObject objetoNaFrente; 
+    [SerializeField] private GameObject objectahead; 
     [SerializeField] private JumpscareManager jumpscareManager;
 
     [Header("Dialogues")]
@@ -20,7 +20,7 @@ public class Door : MonoBehaviour
     [SerializeField] private float shakeDuration = 0.5f;
     [SerializeField] private float shakeMagnitude = 0.3f;
 
-    private bool jaInteragiuComChave = false;
+    private bool interactedWithKey = false;
     private bool playerNear = false;
 
     void Update()
@@ -33,7 +33,6 @@ public class Door : MonoBehaviour
 
     private void Interagir()
     {
-        Debug.Log($"🚪 INTERAGIR! HasKey={keyItem.HasKey()}, jaInteragiu={jaInteragiuComChave}");
 
         if (!keyItem.HasKey())
         {
@@ -41,16 +40,15 @@ public class Door : MonoBehaviour
             return;
         }
 
-        if (!jaInteragiuComChave)
+        if (!interactedWithKey)
         {
-            jaInteragiuComChave = true;
+            interactedWithKey = true;
             StartCoroutine(ProcessarComChave());
         }
     }
 
     private IEnumerator ProcessarComChave()
     {
-        Debug.Log("🎬 ProcessarComChave() INICIADO!");
 
         if (cameraShake != null)
         {
@@ -60,29 +58,20 @@ public class Door : MonoBehaviour
         dialogue.StartDialogue(hasKeyDialogue);
         yield return new WaitUntil(() => dialogue.IsFinished());
 
-        // ✅ DESATIVA O OBJETO NA FRENTE DA WINDOW
-        if (objetoNaFrente != null)
+        if (objectahead != null)
         {
-            Debug.Log($"🎬 Desativando objeto na frente: {objetoNaFrente.name}");
-            objetoNaFrente.SetActive(false);
-            Debug.Log($"✅ Objeto na frente desativado!");
+            objectahead.SetActive(false);
         }
 
-        // ✅ ATIVA O JUMPScare MANAGER (ELE VAI ATIVAR A WINDOW E O SOCO NO MOMENTO CERTO)
         if (jumpscareManager != null)
         {
             jumpscareManager.ActivateJumpscare();
-            Debug.Log("✅ JumpscareManager ATIVADO!");
         }
         else
-        {
-            Debug.LogError("❌ jumpscareManager é NULL! Verifique a referência na Door.");
-        }
 
         if (pressEIndicator != null)
             pressEIndicator.Hide();
 
-        Debug.Log("🎬 ProcessarComChave() FINALIZADO!");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -90,7 +79,7 @@ public class Door : MonoBehaviour
         if (collision.TryGetComponent(out IStatusPlayer _))
         {
             playerNear = true;
-            if (pressEIndicator != null && !jaInteragiuComChave)
+            if (pressEIndicator != null && !interactedWithKey)
                 pressEIndicator.Show();
         }
     }
@@ -105,5 +94,5 @@ public class Door : MonoBehaviour
         }
     }
 
-    public bool JaInteragiuComChave() => jaInteragiuComChave;
+    public bool interactedwithKey() => interactedWithKey;
 }

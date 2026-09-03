@@ -17,13 +17,13 @@ public class BlurController : MonoBehaviour
             dof.active = false;
     }
 
-    public void AtivarBlur()
+    public void TurnOnBlur()
     {
         if (dof != null)
             dof.active = true;
     }
 
-    public void DesativarBlur()
+    public void TurnOffBlur()
     {
         if (dof != null)
             dof.active = false;
@@ -31,9 +31,9 @@ public class BlurController : MonoBehaviour
 
     public IEnumerator Piscar()
     {
-        AtivarBlur();
+        TurnOnBlur();
         yield return new WaitForSeconds(blinkDuration);
-        DesativarBlur();
+        TurnOffBlur();
     }
 
     public IEnumerator PiscarComFade()

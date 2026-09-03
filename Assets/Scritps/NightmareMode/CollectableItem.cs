@@ -18,7 +18,6 @@ public class CollectableItem : MonoBehaviour
             if (pressEIndicator != null)
                 pressEIndicator.Hide();
 
-            Debug.Log("🗝️ CHAVE PEGA! HasKey=true");
         }
     }
 
@@ -29,7 +28,6 @@ public class CollectableItem : MonoBehaviour
             playerNear = true;
             if (pressEIndicator != null)
                 pressEIndicator.Show();
-            Debug.Log("🗝️ Player perto da chave!");
         }
     }
 

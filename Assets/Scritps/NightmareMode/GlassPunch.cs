@@ -31,29 +31,21 @@ public class GlassPunch : MonoBehaviour
             handObject.SetActive(false);
 
         gameObject.SetActive(false);
-        Debug.Log($"🔍 GlassPunch Start - isActive:{isActive}");
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Blink"))
-        {
-            Debug.Log($"⚠️ Blink pressionado! isActive:{isActive}, canPunch:{canPunch}, isPunching:{isPunching}");
-        }
-
+       
         if (!isActive || !canPunch || isPunching) return;
 
         if (Input.GetButtonDown("Blink"))
         {
-            Debug.Log($"✊ SOCO! Estágio: {stage}");
             StartCoroutine(DoPunch());
         }
     }
 
     private IEnumerator DoPunch()
     {
-        Debug.Log($"✊ DoPunch() INICIADO! Estágio: {stage}");
-
         isPunching = true;
 
         handObject.SetActive(true);
@@ -70,7 +62,6 @@ public class GlassPunch : MonoBehaviour
         if (stage < glassStages.Length && glassRenderer != null)
         {
             glassRenderer.sprite = glassStages[stage];
-            Debug.Log($"✊ Vidro estágio: {stage}");
         }
 
         handObject.SetActive(false);
@@ -78,49 +69,40 @@ public class GlassPunch : MonoBehaviour
 
         if (stage >= glassStages.Length - 1)
         {
-            Debug.Log("💥 VIDRO QUEBROU!");
             canPunch = false;
 
             if (jumpscareManager != null)
             {
                 jumpscareManager.OnGlassBroken();
             }
-            else
-            {
-                Debug.LogError("❌ jumpscareManager é NULL!");
-            }
+
         }
         else
         {
-            Debug.Log($"✊ Aguardando próximo soco ({stage}/{glassStages.Length - 1})");
         }
     }
 
     public void ActivateWindow()
     {
-        Debug.Log($"🔍 ActivateWindow() CHAMADO!");
         isActive = true;
         gameObject.SetActive(true);
-        Debug.Log($"✅ Window ATIVADA! isActive={isActive}");
 
         ProtectedObject protectedObj = GetComponent<ProtectedObject>();
         if (protectedObj != null)
         {
             protectedObj.DestruirProtecao();
-            Debug.Log("🔥 Proteção DESTRUÍDA!");
         }
     }
 
     public void EnablePunch()
     {
-        Debug.Log($"🔍 EnablePunch() CHAMADO! canPunch antes: {canPunch}");
+        Debug.Log($"can punch: {canPunch}");
         canPunch = true;
         stage = 0;
 
         if (glassRenderer != null && glassStages.Length > 0)
             glassRenderer.sprite = glassStages[0];
 
-        Debug.Log($"✅ Punch ENABLED! canPunch={canPunch}");
     }
 
     public void ResetPunch()

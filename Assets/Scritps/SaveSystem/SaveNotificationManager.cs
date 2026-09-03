@@ -12,7 +12,7 @@ public class SaveNotificationManager : MonoBehaviour
                 GameObject go = new GameObject("SaveNotificationManager");
                 _instance = go.AddComponent<SaveNotificationManager>();
                 DontDestroyOnLoad(go);
-                Debug.Log("🆕 SaveNotificationManager criado!");
+                Debug.Log("savenotifimanager created ");
             }
             return _instance;
         }
@@ -30,7 +30,7 @@ public class SaveNotificationManager : MonoBehaviour
 
         _instance = this;
         DontDestroyOnLoad(gameObject);
-        Debug.Log("✅ SaveNotificationManager inicializado!");
+        Debug.Log("savenotificationamanager appeared");
     }
 
     public void RegisterNotification(SaveNotification notif)
@@ -38,19 +38,9 @@ public class SaveNotificationManager : MonoBehaviour
         if (notification == null)
         {
             notification = notif;
-            Debug.Log("✅ SaveNotification registrada no Manager!");
+            Debug.Log("save not registered in manager");
         }
     }
 
-    //public void Show(string msg = null)
-    //{
-    //    if (notification != null)
-    //    {
-    //        notification.ShowNotification(msg ?? "💾 Jogo Salvo!");
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("❌ SaveNotification não registrado!");
-    //    }
-    //}
+
 }

@@ -54,12 +54,7 @@ public class SceneTransitionBed : MonoBehaviour
     {
         transitionActive = true;
 
-        PlayerPrefs.SetFloat("ReturnPosX", playerPositionOnExit.x);
-        PlayerPrefs.SetFloat("ReturnPosY", playerPositionOnExit.y);
-        PlayerPrefs.SetFloat("ReturnPosZ", playerPositionOnExit.z);
-        PlayerPrefs.SetString("ReturnScene", lastSceneName);
-        PlayerPrefs.Save();
-
+        
         float time = 0f;
         Color color = fadeImage.color;
 

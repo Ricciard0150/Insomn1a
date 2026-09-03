@@ -4,16 +4,16 @@ using UnityEngine.UI;
 
 public class PlayerTeleport : MonoBehaviour
 {
-    public Transform target;
-    public Transform teleportUI;
+    [SerializeField] private Transform target;
+    [SerializeField] private Transform teleportUI;
 
     [Header("Fade Panel")]
-    public Image fadePanel; // panel preto
-    public float duracaoFade = 1.5f;
+    [SerializeField] private Image fadePanel; 
+    [SerializeField] private  float duracaoFade = 1.5f;
 
-    public float delay = 0.5f;
+    [SerializeField] private float delay = 0.5f;
 
-    bool isTeleporting = false;
+     private bool isTeleporting = false;
 
     
 
@@ -34,7 +34,6 @@ public class PlayerTeleport : MonoBehaviour
 
         Color cor = fadePanel.color;
 
-        // 🔥 ESCURECER
         float t = 0f;
         while (t < duracaoFade)
         {
@@ -49,10 +48,8 @@ public class PlayerTeleport : MonoBehaviour
 
         yield return new WaitForSeconds(delay);
 
-        // 📍 TELEPORTA
         target.position = teleportUI.position;
 
-        // 🌅 VOLTA AO NORMAL
         t = 0f;
         while (t < duracaoFade)
         {

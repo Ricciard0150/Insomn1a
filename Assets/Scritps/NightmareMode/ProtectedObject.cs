@@ -5,14 +5,13 @@ public class ProtectedObject : MonoBehaviour
     [Header("Proteção")]
     [SerializeField] private bool isProtected = true;
     [SerializeField] private bool logWarning = true;
-    [SerializeField] private bool destroyWhenActivated = true; // ← NOVO!
+    [SerializeField] private bool destroyWhenActivated = true;
 
     void Start()
     {
         if (isProtected && !gameObject.activeSelf)
         {
             gameObject.SetActive(true);
-            Debug.Log($"🛡️ {gameObject.name} foi FORÇADO a ativar!");
         }
     }
 
@@ -21,7 +20,6 @@ public class ProtectedObject : MonoBehaviour
         if (isProtected)
         {
             if (logWarning)
-                Debug.LogWarning($"🛡️ {gameObject.name} NÃO PODE ser desativado! REATIVANDO...");
 
             Invoke("Reativar", 0.001f);
         }
@@ -33,33 +31,27 @@ public class ProtectedObject : MonoBehaviour
         {
             gameObject.SetActive(true);
             if (logWarning)
-                Debug.Log($"✅ {gameObject.name} foi REATIVADO pela proteção!");
+                Debug.Log($"{gameObject.name} were reactived by protection!");
         }
     }
 
-    // ✅ MÉTODO PARA DESTRUIR A PROTEÇÃO QUANDO A WINDOW FOR ATIVADA
     public void DestruirProtecao()
     {
         if (logWarning)
-            Debug.Log($"🔥 Proteção de {gameObject.name} DESTRUÍDA!");
+            Debug.Log($"pprotection destroyed");
 
         isProtected = false;
-
-        // DESTROI O COMPONENTE
         Destroy(this);
     }
 
-    // ✅ MÉTODO PARA DESATIVAR A PROTEÇÃO (MAS MANTER O COMPONENTE)
-    public void DesativarProtecao()
+    public void DeactiveProtection()
     {
         if (logWarning)
-            Debug.Log($"🔓 Proteção de {gameObject.name} DESATIVADA (mas componente mantido)");
         isProtected = false;
     }
 
     public void ToggleProtection(bool protect)
     {
         isProtected = protect;
-        Debug.Log($"🛡️ Proteção de {gameObject.name}: {(protect ? "ATIVADA" : "DESATIVADA")}");
     }
 }

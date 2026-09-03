@@ -25,7 +25,6 @@ public class PlayerWalkAnimation : MonoBehaviour
 
         if (spriteRenderer == null)
         {
-            Debug.LogError("No SpriteRenderer found in children!");
             return;
         }
 
@@ -34,8 +33,6 @@ public class PlayerWalkAnimation : MonoBehaviour
 
         if (idleSprite != null)
             spriteRenderer.sprite = idleSprite;
-
-        Debug.Log("PlayerWalkAnimation started!"); // Debug
     }
 
     void Update()
@@ -84,7 +81,6 @@ public class PlayerWalkAnimation : MonoBehaviour
 
         if (newSprites == null || newSprites.Length == 0)
         {
-            Debug.LogWarning("No sprites for this direction!");
             return;
         }
 

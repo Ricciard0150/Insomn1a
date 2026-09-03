@@ -14,9 +14,9 @@ public class GameOverUI : MonoBehaviour
     [SerializeField] private Button menuButton;
 
     [Header("Defeat Settings")]
-    [SerializeField] private string defeatTitle = "❌ VOCÊ PERDEU!";
+    [SerializeField] private string defeatTitle;
     [TextArea(2, 4)]
-    [SerializeField] private string defeatMessage = "Suas respostas não foram suficientes.";
+    [SerializeField] private string defeatMessage;
 
     [Header("Animation")]
     [SerializeField] private float animationDuration = 0.5f;

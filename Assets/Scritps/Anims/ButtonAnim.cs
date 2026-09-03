@@ -21,7 +21,7 @@ public class ButtonAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public float animationDuration = 0.15f;
 
     [Header("Click Event")]
-    public UnityEvent onClick; // Appears in the Inspector
+    public UnityEvent onClick;
 
     private Image image;
     private Text text;
@@ -32,20 +32,17 @@ public class ButtonAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     void Start()
     {
-        // Get components
         image = GetComponent<Image>();
         text = GetComponentInChildren<Text>();
         rectTransform = GetComponent<RectTransform>();
         originalScale = rectTransform.localScale;
 
-        // If no image, create one
         if (image == null)
         {
             image = gameObject.AddComponent<Image>();
             image.sprite = CreateWhiteSprite();
         }
 
-        // Configure Button for Color Tint
         Button btn = GetComponent<Button>();
         if (btn != null)
         {
@@ -53,8 +50,6 @@ public class ButtonAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             btn.targetGraphic = image;
         }
     }
-
-    // ===== MOUSE EVENTS =====
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -115,11 +110,8 @@ public class ButtonAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             targetTextColor
         ));
 
-        // ===== TRIGGER CLICK EVENT =====
         onClick.Invoke();
     }
-
-    // ===== ANIMATION =====
 
     IEnumerator Animate(Vector3 startScale, Vector3 endScale,
                        Color startColor, Color endColor,
@@ -131,8 +123,7 @@ public class ButtonAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             elapsed += Time.deltaTime;
             float t = elapsed / animationDuration;
-            t = t * t * (3f - 2f * t); // SmoothStep
-
+            t = t * t * (3f - 2f * t); 
             rectTransform.localScale = Vector3.Lerp(startScale, endScale, t);
             image.color = Color.Lerp(startColor, endColor, t);
 

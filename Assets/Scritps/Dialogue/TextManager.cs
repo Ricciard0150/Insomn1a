@@ -13,7 +13,6 @@ public class TextManager : MonoBehaviour
                 GameObject go = new GameObject("TextManager");
                 _instance = go.AddComponent<TextManager>();
                 DontDestroyOnLoad(go);
-                Debug.Log("🆕 TextManager criado!");
             }
             return _instance;
         }
@@ -31,7 +30,6 @@ public class TextManager : MonoBehaviour
 
         _instance = this;
         DontDestroyOnLoad(gameObject);
-        Debug.Log("✅ TextManager inicializado!");
     }
 
     public void RegisterNPC(InteractionDetector npc)
@@ -41,7 +39,6 @@ public class TextManager : MonoBehaviour
         if (!npcs.Contains(npc))
         {
             npcs.Add(npc);
-            Debug.Log($"➕ NPC registrado: {npc.gameObject.name} (Total: {npcs.Count})");
         }
     }
 
@@ -52,7 +49,6 @@ public class TextManager : MonoBehaviour
         if (npcs.Contains(npc))
         {
             npcs.Remove(npc);
-            Debug.Log($"➖ NPC removido: {npc.gameObject.name} (Total: {npcs.Count})");
         }
     }
 
@@ -62,7 +58,6 @@ public class TextManager : MonoBehaviour
 
         if (npcs.Count == 0)
         {
-            Debug.Log("⚠️ Nenhum NPC disponível!");
             return;
         }
 
@@ -87,9 +82,7 @@ public class TextManager : MonoBehaviour
     void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
     {
         npcs.RemoveAll(n => n == null);
-        Debug.Log($"📂 Cena carregada! NPCs ativos: {npcs.Count}");
     }
-
     void OnEnable() => UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     void OnDisable() => UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
 }

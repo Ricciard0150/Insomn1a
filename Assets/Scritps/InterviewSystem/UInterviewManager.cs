@@ -49,22 +49,23 @@ public class UInterviewManager : MonoBehaviour
     {
         if (!canNavigate) return;
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetButtonDown("Interact"))
         {
             Select();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Navigate(-1);
-            StartCoroutine(NavigationCooldown());
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            Navigate(1);
-            StartCoroutine(NavigationCooldown());
-        }
+        
+    if (Input.GetButtonDown("Up"))
+    {
+        Navigate(-1);
+        StartCoroutine(NavigationCooldown());
+    }
+    else if (Input.GetButtonDown("Down"))
+    {
+        Navigate(1);
+        StartCoroutine(NavigationCooldown());
+    }
     }
 
     IEnumerator NavigationCooldown()

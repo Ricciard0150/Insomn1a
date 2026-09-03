@@ -20,7 +20,7 @@ public class JumpscareSequence : MonoBehaviour
     [Header("Scene")]
     [SerializeField] private string sceneToLoad = "Game";
 
-    private bool isColliding = false; // ✅ NOVO
+    private bool isColliding = false;
     private System.Action onComplete;
 
     public void ShowPanel(bool show)
@@ -45,22 +45,11 @@ public class JumpscareSequence : MonoBehaviour
         yield return StartCoroutine(fadeController.FlashScreen(6));
         yield return StartCoroutine(fadeController.FadeToBlack(1f));
 
-        SaveRespawnPosition();
         SceneManager.LoadScene(sceneToLoad);
 
         onComplete?.Invoke();
     }
 
-    private void SaveRespawnPosition()
-    {
-        PlayerPrefs.SetFloat("ReturnPosX", respawnPosition.x);
-        PlayerPrefs.SetFloat("ReturnPosY", respawnPosition.y);
-        PlayerPrefs.SetFloat("ReturnPosZ", respawnPosition.z);
-        PlayerPrefs.SetString("ReturnScene", sceneToLoad);
-        PlayerPrefs.Save();
-    }
-
-    // ✅ NOVOS GETTERS/SETTERS
     public bool IsColliding() => isColliding;
     public void SetColliding(bool value) => isColliding = value;
     public string[] GetDialogueLines() => dialogueLines;

@@ -4,7 +4,7 @@ using System.Collections;
 
 public class StartCutescene : MonoBehaviour
 {
-    public Image blackScreen; // imagem preta na UI
+    public Image blackScreen;
     public float fadeDuration = 3f;
 
     public TopDownMovement playerMovement;
@@ -31,7 +31,6 @@ public class StartCutescene : MonoBehaviour
         color.a = 0;
         blackScreen.color = color;
 
-        // libera movimento
         playerMovement.canMove = true;
     }
 }

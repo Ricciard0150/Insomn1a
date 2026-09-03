@@ -17,7 +17,6 @@ public class SaveSystem : MonoBehaviour
             savePath = Path.Combine(Application.persistentDataPath, "save.json");
             currentSave = new SaveData();
             LoadGame();
-            Debug.Log($"✅ SaveSystem inicializado. Save existe: {HasSave()}");
         }
         else
         {
@@ -31,7 +30,6 @@ public class SaveSystem : MonoBehaviour
         currentSave.scene = scene;
         currentSave.hasSavedAtLeastOnce = true;
         File.WriteAllText(savePath, JsonUtility.ToJson(currentSave));
-        Debug.Log($"✅ Save: {pos} | {scene}");
     }
 
     public void LoadGame()
@@ -40,40 +38,30 @@ public class SaveSystem : MonoBehaviour
         {
             currentSave = JsonUtility.FromJson<SaveData>(File.ReadAllText(savePath));
             if (currentSave == null) currentSave = new SaveData();
-            Debug.Log($"📂 Load: {currentSave.scene}");
         }
         else
         {
             currentSave = new SaveData();
         }
     }
-
-    // ✅ TELEPORTE INSTANTÂNEO - sem delays, sem animações
     public void Teleport(GameObject player)
     {
         if (player == null)
         {
-            Debug.LogError("❌ Player é NULL!");
             return;
         }
 
         if (currentSave.position == null || currentSave.position.Length < 3)
         {
-            Debug.LogWarning("⚠️ Posição do save inválida!");
             return;
         }
-
-        // ✅ Posição imediata
         Vector3 pos = new Vector3(
             currentSave.position[0],
             currentSave.position[1],
             currentSave.position[2]
         );
 
-        // ✅ Teleportar diretamente
         player.transform.position = pos;
-
-        // ✅ Resetar física imediatamente
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -81,14 +69,11 @@ public class SaveSystem : MonoBehaviour
             rb.angularVelocity = 0;
         }
 
-        // ✅ Resetar movimento
         TopDownMovement movement = player.GetComponent<TopDownMovement>();
         if (movement != null)
         {
             movement.SetCanMove(true);
         }
-
-        Debug.Log($"📍 TELEPORTE IMEDIATO para: {pos}");
     }
 
     public bool HasSave() => File.Exists(savePath);
@@ -107,7 +92,6 @@ public class SaveSystem : MonoBehaviour
         if (HasSave())
         {
             File.Delete(savePath);
-            Debug.Log("🗑️ Save DELETADO!");
         }
         currentSave = new SaveData();
     }

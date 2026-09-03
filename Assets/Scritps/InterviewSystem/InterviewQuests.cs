@@ -54,7 +54,7 @@ public class InterviewQuests : MonoBehaviour
     {
         if (lines == null || lines.Length == 0)
         {
-            Debug.LogWarning("Diálogo vazio!");
+            Debug.LogWarning("dialogue is empty");
             return;
         }
 
@@ -146,7 +146,6 @@ public class InterviewQuests : MonoBehaviour
         isTextComplete = false;
         waitingForNext = false;
 
-        Debug.Log("Diálogo terminou! isRunning = false");
     }
 
     public void SkipAllDialogue()
@@ -178,17 +177,14 @@ public class InterviewQuests : MonoBehaviour
     {
         if (defeatLines != null && defeatLines.Length > 0)
         {
-            Debug.Log($"Mostrando diálogo de derrota: {defeatLines.Length} linhas");
             StartDialogue(defeatLines);
         }
         else if (currentQuestData != null && currentQuestData.defeatLines != null && currentQuestData.defeatLines.Length > 0)
         {
-            Debug.Log($"Mostrando diálogo de derrota do QuestData: {currentQuestData.defeatLines.Length} linhas");
-            StartDialogue(currentQuestData.defeatLines);
+             StartDialogue(currentQuestData.defeatLines);
         }
         else
         {
-            Debug.LogWarning("Nenhum diálogo de derrota definido!");
         }
     }
 }

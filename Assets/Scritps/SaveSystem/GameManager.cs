@@ -50,30 +50,10 @@ public class GameManager : MonoBehaviour
             return;
 
         if (active)
-            blurController.AtivarBlur();
+            blurController.TurnOnBlur();
         else
-            blurController.DesativarBlur();
-    }
-
-    public void RespawnPlayer()
-    {
-        SetSpawnPoint(spawnPosition, spawnSceneName);
-
-        PlayerPrefs.SetFloat("ReturnPosX", spawnPosition.x);
-        PlayerPrefs.SetFloat("ReturnPosY", spawnPosition.y);
-        PlayerPrefs.SetFloat("ReturnPosZ", spawnPosition.z);
-        PlayerPrefs.SetString("ReturnScene", spawnSceneName);
-        PlayerPrefs.Save();
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(spawnSceneName);
-    }
-
-    public void SetSpawnPoint(Vector3 position, string sceneName)
-    {
-        spawnPosition = position;
-        spawnSceneName = sceneName;
-    }
-
+            blurController.TurnOffBlur();
+    } 
     public void SaveQuestResult(string questId, bool victory, int points)
     {
         if (!questResults.ContainsKey(questId))

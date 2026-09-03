@@ -4,7 +4,7 @@ public class SavePoint : MonoBehaviour
 {
     [SerializeField] private string pointName = "Save";
     [SerializeField] private GameObject feedback;
-    [SerializeField] private SaveNotification saveNotification; // ← ARRASTA AQUI!
+    [SerializeField] private SaveNotification saveNotification; 
 
     private bool canSave = true;
     private GameObject player;
@@ -15,7 +15,6 @@ public class SavePoint : MonoBehaviour
         {
             player = other.gameObject;
             if (feedback != null) feedback.SetActive(true);
-            Debug.Log($"📌 {pointName} - Player entrou");
         }
     }
 
@@ -40,7 +39,7 @@ public class SavePoint : MonoBehaviour
     {
         if (SaveSystem.Instance == null)
         {
-            Debug.LogError("❌ SaveSystem não encontrado!");
+            Debug.LogError("savesystem did not find");
             return;
         }
 
@@ -49,16 +48,15 @@ public class SavePoint : MonoBehaviour
             UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
         );
 
-        // ✅ MOSTRA NOTIFICAÇÃO
         if (saveNotification != null)
         {
-            saveNotification.Show("💾 Jogo Salvo!");
+            saveNotification.Show("saved game");
         }
 
         canSave = false;
         if (feedback != null) feedback.SetActive(false);
 
-        Debug.Log($"💾 SAVE em: {pointName} - POSIÇÃO: {player.transform.position}");
+        Debug.Log($"saving in: {pointName} - Pos: {player.transform.position}");
 
         Invoke(nameof(Reativar), 2f);
     }

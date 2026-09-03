@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
-public class DM: MonoBehaviour
+public class NightmareLines: MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private GameObject dialogueBox;

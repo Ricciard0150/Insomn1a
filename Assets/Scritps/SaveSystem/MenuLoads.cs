@@ -4,20 +4,20 @@ using UnityEngine.UI;
 
 public class MenuLoads : MonoBehaviour
 {
-    [Header("Botões")]
+    [Header("buttons")]
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button continueButton;
     [SerializeField] private Button resetButton;
     [SerializeField] private Button quitButton;
 
-    [Header("Config")]
-    [SerializeField] private string gameSceneName = "GameScene";
+    [Header("config")]
+    [SerializeField] private string gameSceneName = "Game";
 
     void Start()
     {
         var tm = TextManager.Instance;
 
-        Debug.Log("✅ Todos os sistemas inicializados!");
+        Debug.Log("todos os sistemas apareceram");
         if (newGameButton != null)
         {
             newGameButton.onClick.RemoveAllListeners();
@@ -68,7 +68,7 @@ public class MenuLoads : MonoBehaviour
 
     public void StartNewGame()
     {
-        Debug.Log("🆕 NOVO JOGO");
+        Debug.Log("new game");
 
         if (SaveSystem.Instance != null)
             SaveSystem.Instance.DeleteSave();
@@ -78,11 +78,11 @@ public class MenuLoads : MonoBehaviour
 
     public void ContinueGame()
     {
-        Debug.Log("▶️ CONTINUAR JOGO");
+        Debug.Log("continue game");
 
         if (SaveSystem.Instance == null)
         {
-            Debug.LogError("❌ SaveSystem não encontrado!");
+            Debug.LogError("savesystem nao apareceu");
             return;
         }
 
@@ -92,14 +92,12 @@ public class MenuLoads : MonoBehaviour
             return;
         }
 
-        // ✅ Carregar dados e cena IMEDIATAMENTE
         SaveSystem.Instance.LoadGame();
         SaveData data = SaveSystem.Instance.GetData();
 
         string sceneToLoad = !string.IsNullOrEmpty(data.scene) ? data.scene : gameSceneName;
-        Debug.Log($"📂 Carregando cena: {sceneToLoad}");
+        Debug.Log($"loading in : {sceneToLoad}");
 
-        // ✅ Carregar cena (GameLoader vai teleportar)
         SceneManager.LoadScene(sceneToLoad);
     }
 
@@ -108,14 +106,14 @@ public class MenuLoads : MonoBehaviour
         if (SaveSystem.Instance != null)
         {
             SaveSystem.Instance.DeleteSave();
-            Debug.Log("🗑️ SAVE RESETADO!");
+            Debug.Log("save reset");
             UpdateButtons();
         }
     }
 
     public void QuitGame()
     {
-        Debug.Log("👋 Sair");
+        Debug.Log("quit");
         Application.Quit();
 
 #if UNITY_EDITOR

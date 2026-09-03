@@ -4,18 +4,16 @@ using System.Collections;
 public class PanelFadeOut : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private float fadeDuration = 1f; // Tempo para sumir
+    [SerializeField] private float fadeDuration = 1f;
 
     private CanvasGroup canvasGroup;
 
     void Start()
     {
-        // PEGA O CanvasGroup (ou adiciona se não tiver)
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null)
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
-        // COMEÇA O FADE OUT
         StartCoroutine(FadeOut());
     }
 

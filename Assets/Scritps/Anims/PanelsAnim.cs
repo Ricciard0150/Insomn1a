@@ -24,20 +24,15 @@ public class PanelAnim : MonoBehaviour
         if (canvasGroup == null)
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
-        // COMEÇA FORA DA TELA E INVISÍVEL
         rectTransform.anchoredPosition = offScreenPosition;
         canvasGroup.alpha = 0f;
         gameObject.SetActive(true);
 
-        Debug.Log("✅ BlackOverlay INICIADO!");
     }
-
-    // 🔥 MÉTODO QUE O BOTÃO VAI CHAMAR
     public void CoverScreen()
     {
         if (isAnimating || isCovering) return;
 
-        Debug.Log("⬛ Cobrindo tela com SLIDE!");
         isAnimating = true;
 
         rectTransform.anchoredPosition = offScreenPosition;
@@ -50,7 +45,6 @@ public class PanelAnim : MonoBehaviour
     {
         if (isAnimating || !isCovering) return;
 
-        Debug.Log("⬜ Revelando tela!");
         isAnimating = true;
 
         StartCoroutine(RevealCoroutine());
@@ -86,8 +80,6 @@ public class PanelAnim : MonoBehaviour
         canvasGroup.alpha = 1f;
         isCovering = true;
         isAnimating = false;
-
-        Debug.Log("✅ TELA PRETA COBRINDO TUDO!");
     }
 
     private IEnumerator RevealCoroutine()
@@ -104,7 +96,6 @@ public class PanelAnim : MonoBehaviour
 
             rectTransform.anchoredPosition = Vector2.Lerp(startPos, endPos, curveValue);
             canvasGroup.alpha = 1f;
-
             yield return null;
         }
 
@@ -113,6 +104,5 @@ public class PanelAnim : MonoBehaviour
         isCovering = false;
         isAnimating = false;
 
-        Debug.Log("✅ Tela REVELADA!");
     }
 }

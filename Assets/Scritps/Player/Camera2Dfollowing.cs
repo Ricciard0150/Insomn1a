@@ -3,12 +3,12 @@ using UnityEngine;
 public class Camera2Dfollowing : MonoBehaviour
 {
     public Transform target;
-    public float smoothTime = 0.2f; // TEM QUE SER POSITIVO
+    public float smoothTime = 0.2f; 
 
     private float velocityX = 0f;
     private float velocityY = 0f;
 
-    public bool canFollow = true; // controle externo
+    public bool canFollow = true; 
 
     void LateUpdate()
     {
