@@ -815,7 +815,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.4037736, g: 0.21864721, b: 0.21864721, a: 1}
+  m_Color: {r: 1, g: 0.8143316, b: 0.1273585, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -834,8 +834,8 @@ Transform:
   m_GameObject: {fileID: 211695917}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 71.0507, y: -21.85, z: 0}
-  m_LocalScale: {x: 5.942964, y: 1, z: 1}
+  m_LocalPosition: {x: 71.06, y: -21.64, z: 0}
+  m_LocalScale: {x: 5.8597627, y: 1.2601, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -857,7 +857,7 @@ MonoBehaviour:
   pressEIndicator: {fileID: 826857118}
   dialogue: {fileID: 860523653}
   cameraShake: {fileID: 649985615}
-  objetoNaFrente: {fileID: 1999211443}
+  objectahead: {fileID: 0}
   jumpscareManager: {fileID: 2022346318}
   noKeyDialogue:
   - Preciso de uma chave...
@@ -3765,7 +3765,7 @@ Transform:
   m_GameObject: {fileID: 1019783231}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 73.72, y: -9.51, z: 0}
+  m_LocalPosition: {x: 87.09, y: 0.41, z: 0}
   m_LocalScale: {x: 0.952407, y: 0.6907, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5042,7 +5042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1195767710
 Transform:
   m_ObjectHideFlags: 0
@@ -6900,7 +6900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1517518732
 RectTransform:
   m_ObjectHideFlags: 0

@@ -2296,7 +2296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &383698924
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7119,7 +7119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &873768054
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9940,7 +9940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1144805588
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10384,7 +10384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1206262022
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19881,6 +19881,7 @@ GameObject:
   - component: {fileID: 1288718227}
   - component: {fileID: 1288718226}
   - component: {fileID: 1288718225}
+  - component: {fileID: 1288718228}
   m_Layer: 0
   m_Name: secretario
   m_TagString: Untagged
@@ -20059,6 +20060,19 @@ MonoBehaviour:
   pressingEIndicator: {fileID: 150873144}
   velocidadeTexto: 0.05
   playerMovement: {fileID: 5055718417195591049}
+--- !u!114 &1288718228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288718220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68dc15cd1c0341a4ea7b4feb258296f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimTest
+  spritesCharacter: []
 --- !u!1 &1309401275
 GameObject:
   m_ObjectHideFlags: 0
@@ -25786,7 +25800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2023631146
 RectTransform:
   m_ObjectHideFlags: 0
