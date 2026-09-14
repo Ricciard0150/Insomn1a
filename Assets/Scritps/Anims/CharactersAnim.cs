@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class AnimTest : MonoBehaviour
+public class CharactersAnim : MonoBehaviour
 {
     [SerializeField] private Sprite[] spritesCharacter;
     void Start()
@@ -9,7 +9,6 @@ public class AnimTest : MonoBehaviour
         StartCoroutine(AnimateCharacter());
     }
 
-    // Update is called once per frame
     private IEnumerator AnimateCharacter()
     {
         int index = 0;
