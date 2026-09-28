@@ -855,9 +855,9 @@ MonoBehaviour:
   interactButton: Interact
   keyItem: {fileID: 1019783232}
   pressEIndicator: {fileID: 826857118}
-  dialogue: {fileID: 860523653}
+  dialogue: {fileID: 860523655}
   cameraShake: {fileID: 649985615}
-  objectahead: {fileID: 0}
+  objectahead: {fileID: 1999211443}
   jumpscareManager: {fileID: 2022346318}
   noKeyDialogue:
   - Preciso de uma chave...
@@ -3117,7 +3117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 860523654}
-  - component: {fileID: 860523653}
+  - component: {fileID: 860523655}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -3125,22 +3125,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &860523653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860523652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b2bbed864a90f74a9b13916e4edccce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DM
-  dialogueBox: {fileID: 829879653}
-  textDisplay: {fileID: 1293949307}
-  typingSpeed: 0.03
-  advanceButton: Interact
 --- !u!4 &860523654
 Transform:
   m_ObjectHideFlags: 0
@@ -3156,6 +3140,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &860523655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860523652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3595b3af0f3523c4d9b4ad7778a70ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NightmareLines
+  dialogueBox: {fileID: 626055950}
+  textDisplay: {fileID: 1402966181}
+  typingSpeed: 0.03
+  advanceButton: Interact
 --- !u!1 &875931860
 GameObject:
   m_ObjectHideFlags: 0
@@ -9195,7 +9195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumpscareManager
   sequence: {fileID: 1005912814}
   blur: {fileID: 549130261}
-  dialogue: {fileID: 860523653}
+  dialogue: {fileID: 860523655}
   punch: {fileID: 1452288629}
   playerMovement: {fileID: 3085604050957103121}
   door: {fileID: 211695923}
@@ -9208,7 +9208,7 @@ MonoBehaviour:
   delayAfterBlink: 0.5
   delayAfterDialogue: 0.5
   fadeDuration: 1.5
-  sceneToLoad: TOBEcontinued
+  sceneToLoad: Game
 --- !u!61 &2022346319
 BoxCollider2D:
   m_ObjectHideFlags: 0
