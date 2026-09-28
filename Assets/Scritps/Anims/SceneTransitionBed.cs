@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneTransitionBed : MonoBehaviour
 {
     [Header("Config")]
-    public string sceneName;                 // cena de destino
-    public string idDoSpawn;                 // ID do SpawnPoint na cena de destino
+    public string sceneName;
     public KeyCode interactKey = KeyCode.E;
     public GameObject pressE;
 
@@ -15,25 +14,14 @@ public class SceneTransitionBed : MonoBehaviour
     public Image fadeImage;
     public float fadeDuration = 2f;
 
+    private Vector3 playerPositionOnExit;
+    private string lastSceneName;
     private bool playerNear = false;
     private bool transitionActive = false;
 
-    void Start()
-    {
-        // Garante que o fade começa transparente
-        if (fadeImage != null)
-        {
-            Color c = fadeImage.color;
-            fadeImage.color = new Color(c.r, c.g, c.b, 0f);
-        }
-
-        if (pressE != null)
-            pressE.SetActive(false);
-    }
-
     void Update()
     {
-        if (playerNear && !transitionActive && Input.GetKeyDown(interactKey))
+        if (playerNear && Input.GetKeyDown(interactKey) && !transitionActive)
         {
             StartCoroutine(Transition());
         }
@@ -41,44 +29,44 @@ public class SceneTransitionBed : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.TryGetComponent(out IStatusPlayer player)) return;
+        if (collision.TryGetComponent(out IStatusPlayer status))
+        {
+            playerNear = true;
+            if (pressE != null) 
+                pressE.SetActive(true);
 
-        playerNear = true;
-        if (pressE != null)
-            pressE.SetActive(true);
+            playerPositionOnExit = collision.transform.position;
+            lastSceneName = SceneManager.GetActiveScene().name;
+        }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.TryGetComponent(out IStatusPlayer player)) return;
-
-        playerNear = false;
-        if (pressE != null)
-            pressE.SetActive(false);
+        if (collision.TryGetComponent(out IStatusPlayer status))
+        {
+            playerNear = false;
+            if (pressE != null) 
+                pressE.SetActive(false);
+        }
     }
 
     IEnumerator Transition()
     {
         transitionActive = true;
 
-        SpawnManager.proximoID = idDoSpawn;
+        
+        float time = 0f;
+        Color color = fadeImage.color;
 
-        if (fadeImage != null)
+        while (time < fadeDuration)
         {
-            Color color = fadeImage.color;
-            float time = 0f;
-
-            while (time < fadeDuration)
-            {
-                time += Time.deltaTime;
-                float alpha = Mathf.Clamp01(time / fadeDuration);
-                fadeImage.color = new Color(color.r, color.g, color.b, alpha);
-                yield return null;
-            }
-
-            fadeImage.color = new Color(color.r, color.g, color.b, 1f);
+            time += Time.deltaTime;
+            float alpha = time / fadeDuration;
+            fadeImage.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
         }
 
+        fadeImage.color = new Color(color.r, color.g, color.b, 1f);
         SceneManager.LoadScene(sceneName);
     }
 }
