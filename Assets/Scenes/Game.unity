@@ -700,7 +700,6 @@ RectTransform:
   - {fileID: 630442021}
   - {fileID: 1559718178}
   - {fileID: 767148989}
-  - {fileID: 1059095174}
   m_Father: {fileID: 1104689037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2297,7 +2296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &383698924
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7120,7 +7119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &873768054
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8941,7 +8940,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionBed
   sceneName: NightmareScene
-  idDoSpawn: SpawnFirst
   interactKey: 101
   pressE: {fileID: 150873144}
   fadeImage: {fileID: 873768055}
@@ -9022,7 +9020,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1653279358}
-  m_Father: {fileID: 84656326}
+  m_Father: {fileID: 1104689037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9483,6 +9481,7 @@ RectTransform:
   - {fileID: 765943189}
   - {fileID: 150873145}
   - {fileID: 84656326}
+  - {fileID: 1059095174}
   - {fileID: 2023631146}
   - {fileID: 1206262022}
   - {fileID: 383698924}
@@ -9941,7 +9940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1144805588
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10385,7 +10384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1206262022
 RectTransform:
   m_ObjectHideFlags: 0
