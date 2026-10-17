@@ -7,7 +7,7 @@ public class Door : MonoBehaviour
     [SerializeField] private string interactButton = "Interact";
     [SerializeField] private CollectableItem keyItem;
     [SerializeField] private PressEIndicator pressEIndicator;
-    [SerializeField] private NightmareLines dialogue;
+    [SerializeField] private DialogueNightmare dialogueSystem;
     [SerializeField] private CameraShake cameraShake;
     [SerializeField] private GameObject objectahead; 
     [SerializeField] private JumpscareManager jumpscareManager;
@@ -22,21 +22,42 @@ public class Door : MonoBehaviour
 
     private bool interactedWithKey = false;
     private bool playerNear = false;
+    private InteractionDetector[] npcsNaCena;
+
+    void Start()
+    {
+        npcsNaCena = FindObjectsOfType<InteractionDetector>();
+    }
 
     void Update()
     {
-        if (playerNear && Input.GetButtonDown(interactButton))
+        if (!playerNear || interactedWithKey) return;
+        if (jumpscareManager != null && jumpscareManager.IsRunning()) return;
+        if (IsDialogueBlocking()) return;
+
+        if (Input.GetButtonDown(interactButton))
         {
             Interagir();
         }
     }
 
+    private bool IsDialogueBlocking()
+    {
+        if (dialogueSystem != null && dialogueSystem.DialogoAtivo)
+            return true;
+
+        foreach (var npc in npcsNaCena)
+            if (npc != null && npc.PlayerPerto)
+                return true;
+
+        return false;
+    }
+
     private void Interagir()
     {
-
         if (!keyItem.HasKey())
         {
-            dialogue.StartDialogue(noKeyDialogue);
+            dialogueSystem.StartDialogue(noKeyDialogue);
             return;
         }
 
@@ -49,29 +70,24 @@ public class Door : MonoBehaviour
 
     private IEnumerator ProcessarComChave()
     {
-
         if (cameraShake != null)
-        {
             yield return StartCoroutine(cameraShake.Shake(shakeDuration, shakeMagnitude));
-        }
 
-        dialogue.StartDialogue(hasKeyDialogue);
-        yield return new WaitUntil(() => dialogue.IsFinished());
+        dialogueSystem.StartDialogue(hasKeyDialogue);
+        yield return new WaitUntil(() => dialogueSystem.IsFinished());
+
+        // ✅ AQUI: Destrava o player após o diálogo da porta
+        if (dialogueSystem.playerMovement != null)
+            dialogueSystem.playerMovement.canMove = true;
 
         if (objectahead != null)
-        {
             objectahead.SetActive(false);
-        }
-
-        if (jumpscareManager != null)
-        {
-            jumpscareManager.ActivateJumpscare();
-        }
-        else
 
         if (pressEIndicator != null)
             pressEIndicator.Hide();
 
+        if (jumpscareManager != null)
+            jumpscareManager.ActivateJumpscare();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

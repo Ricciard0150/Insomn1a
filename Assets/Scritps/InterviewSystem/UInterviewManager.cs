@@ -55,17 +55,19 @@ public class UInterviewManager : MonoBehaviour
             return;
         }
 
-        
-    if (Input.GetButtonDown("Up"))
-    {
-        Navigate(-1);
-        StartCoroutine(NavigationCooldown());
-    }
-    else if (Input.GetButtonDown("Down"))
-    {
-        Navigate(1);
-        StartCoroutine(NavigationCooldown());
-    }
+        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+
+        if (vertical > 0.5f || horizontal < -0.5f)
+        {
+            Navigate(-1);
+            StartCoroutine(NavigationCooldown());
+        }
+        else if (vertical < -0.5f || horizontal > 0.5f)
+        {
+            Navigate(1);
+            StartCoroutine(NavigationCooldown());
+        }
     }
 
     IEnumerator NavigationCooldown()

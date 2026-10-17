@@ -1,88 +1,88 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿    using UnityEngine;
+    using System.Collections.Generic;
 
-public class TextManager : MonoBehaviour
-{
-    private static TextManager _instance;
-    public static TextManager Instance
+    public class TextManager : MonoBehaviour
     {
-        get
+        private static TextManager _instance;
+        public static TextManager Instance
         {
-            if (_instance == null)
+            get
             {
-                GameObject go = new GameObject("TextManager");
-                _instance = go.AddComponent<TextManager>();
-                DontDestroyOnLoad(go);
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject("TextManager");
+                    _instance = go.AddComponent<TextManager>();
+                    DontDestroyOnLoad(go);
+                }
+                return _instance;
             }
-            return _instance;
-        }
-    }
-
-    private List<InteractionDetector> npcs = new List<InteractionDetector>();
-
-    void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-            return;
         }
 
-        _instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+        private List<InteractionDetector> npcs = new List<InteractionDetector>();
 
-    public void RegisterNPC(InteractionDetector npc)
-    {
-        if (npc == null) return;
-
-        if (!npcs.Contains(npc))
+        void Awake()
         {
-            npcs.Add(npc);
-        }
-    }
-
-    public void UnregisterNPC(InteractionDetector npc)
-    {
-        if (npc == null) return;
-
-        if (npcs.Contains(npc))
-        {
-            npcs.Remove(npc);
-        }
-    }
-
-    public void InteractWithNPCs()
-    {
-        npcs.RemoveAll(n => n == null);
-
-        if (npcs.Count == 0)
-        {
-            return;
-        }
-
-        foreach (var npc in npcs)
-        {
-            if (npc != null && npc.PlayerPerto)
+            if (_instance != null && _instance != this)
             {
-                npc.Interact();
+                Destroy(gameObject);
                 return;
             }
-        }
-    }
 
-    void Update()
-    {
-        if (Input.GetButtonDown("Interact"))
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        public void RegisterNPC(InteractionDetector npc)
         {
-            InteractWithNPCs();
-        }
-    }
+            if (npc == null) return;
 
-    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
-    {
-        npcs.RemoveAll(n => n == null);
+            if (!npcs.Contains(npc))
+            {
+                npcs.Add(npc);
+            }
+        }
+
+        public void UnregisterNPC(InteractionDetector npc)
+        {
+            if (npc == null) return;
+
+            if (npcs.Contains(npc))
+            {
+                npcs.Remove(npc);
+            }
+        }
+
+        public void InteractWithNPCs()
+        {
+            npcs.RemoveAll(n => n == null);
+
+            if (npcs.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var npc in npcs)
+            {
+                if (npc != null && npc.PlayerPerto)
+                {
+                    npc.Interact();
+                    return;
+                }
+            }
+        }
+
+        void Update()
+        {
+            if (Input.GetButtonDown("Interact"))
+            {
+                InteractWithNPCs();
+            }
+        }
+
+        void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+        {
+            npcs.RemoveAll(n => n == null);
+        }
+        void OnEnable() => UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+        void OnDisable() => UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-    void OnEnable() => UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-    void OnDisable() => UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
-}

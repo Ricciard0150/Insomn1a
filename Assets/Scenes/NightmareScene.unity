@@ -855,7 +855,7 @@ MonoBehaviour:
   interactButton: Interact
   keyItem: {fileID: 1019783232}
   pressEIndicator: {fileID: 826857118}
-  dialogue: {fileID: 860523653}
+  dialogueSystem: {fileID: 860523655}
   cameraShake: {fileID: 649985615}
   objectahead: {fileID: 0}
   jumpscareManager: {fileID: 2022346318}
@@ -3117,7 +3117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 860523654}
-  - component: {fileID: 860523653}
+  - component: {fileID: 860523655}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -3125,22 +3125,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &860523653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860523652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b2bbed864a90f74a9b13916e4edccce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DM
-  dialogueBox: {fileID: 829879653}
-  textDisplay: {fileID: 1293949307}
-  typingSpeed: 0.03
-  advanceButton: Interact
 --- !u!4 &860523654
 Transform:
   m_ObjectHideFlags: 0
@@ -3156,6 +3140,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &860523655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860523652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 085051f4194e7154292c74fa95f69ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueNightmare
+  dialoguePanel: {fileID: 626055950}
+  dialogueText: {fileID: 1402966181}
+  characterImage: {fileID: 0}
+  pressingEIndicator: {fileID: 1901288111}
+  velocidadeTexto: 0.05
+  playerMovement: {fileID: 3085604050957103121}
+  interactButton: Interact
 --- !u!1 &875931860
 GameObject:
   m_ObjectHideFlags: 0
@@ -3764,7 +3767,7 @@ Transform:
   m_GameObject: {fileID: 1019783231}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 87.09, y: 0.41, z: 0}
+  m_LocalPosition: {x: 91, y: -1.16, z: 0}
   m_LocalScale: {x: 0.952407, y: 0.6907, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9195,7 +9198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumpscareManager
   sequence: {fileID: 1005912814}
   blur: {fileID: 549130261}
-  dialogue: {fileID: 860523653}
+  dialogue: {fileID: 860523655}
   punch: {fileID: 1452288629}
   playerMovement: {fileID: 3085604050957103121}
   door: {fileID: 211695923}

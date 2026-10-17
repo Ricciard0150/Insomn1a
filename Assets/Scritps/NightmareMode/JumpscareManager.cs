@@ -8,7 +8,7 @@ public class JumpscareManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private JumpscareSequence sequence;
     [SerializeField] private BlurController blur;
-    [SerializeField] private NightmareLines dialogue;
+    [SerializeField] private DialogueNightmare dialogue; // ✅ Trocado para DialogueSystem
     [SerializeField] private GlassPunch punch;
     [SerializeField] private TopDownMovement playerMovement;
     [SerializeField] private Door door;
@@ -33,9 +33,13 @@ public class JumpscareManager : MonoBehaviour
     private bool isActive = false;
     private bool panelAberto = false;
     private bool punchActivated = false;
+
+    private InteractionDetector[] npcsNaCena;
+
     void Start()
     {
         isActive = true;
+        npcsNaCena = FindObjectsOfType<InteractionDetector>();
         ResetJumpscare();
     }
 
@@ -46,65 +50,83 @@ public class JumpscareManager : MonoBehaviour
             StartCoroutine(ProcessBlink());
             return;
         }
+
         if (isRunning) return;
-        if (Input.GetButtonDown(interactButton) && CanInteract())
+
+        if (Input.GetButtonDown(interactButton) && CanInteract() && !IsDialogueBlocking())
         {
             StartSequence();
         }
     }
 
+    private bool IsDialogueBlocking()
+    {
+        if (DialogueNightmare.Instance != null && DialogueNightmare.Instance.DialogoAtivo)
+            return true;
+
+        foreach (var npc in npcsNaCena)
+            if (npc != null && npc.PlayerPerto)
+                return true;
+
+        return false;
+    }
+
     private bool CanInteract()
     {
-        return sequence.IsColliding() && !isRunning && door.interactedwithKey() && keyItem.HasKey() && isActive;
+        return sequence != null && sequence.IsColliding()
+            && !isRunning
+            && door != null && door.interactedwithKey()
+            && keyItem != null && keyItem.HasKey()
+            && isActive;
     }
 
     public void ActivateJumpscare()
     {
         isActive = true;
-
-        if (pressEIndicator != null && sequence.IsColliding())
+        if (pressEIndicator != null && sequence != null && sequence.IsColliding())
             pressEIndicator.Show();
-
     }
 
     private void StartSequence()
     {
-
         isRunning = true;
         waitingBlink = true;
         panelAberto = true;
         punchActivated = false;
 
-        asas.Stop();
-        playerMovement.SetCanMove(false);
-        blur.TurnOnBlur();
-        sequence.ShowPanel(true);
+        if (asas != null) asas.Stop();
+        if (playerMovement != null) playerMovement.SetCanMove(false);
+        if (blur != null) blur.TurnOnBlur();
+        if (sequence != null) sequence.ShowPanel(true);
 
-        if (pressEIndicator != null)
-            pressEIndicator.Hide();
+        if (pressEIndicator != null) pressEIndicator.Hide();
 
-        dialogue.ShowText("Aperte ESPAÇO para piscar...", false);
+        // ✅ Ajustado para usar o overload do DialogueSystem
+        if (dialogue != null)
+            dialogue.StartDialogue(new string[] { "Aperte ESPAÇO para piscar..." });
     }
 
     private IEnumerator ProcessBlink()
     {
         waitingBlink = false;
-        yield return StartCoroutine(blur.PiscarComFade());
-        blur.TurnOffBlur();
+        if (blur != null) yield return StartCoroutine(blur.PiscarComFade());
+        if (blur != null) blur.TurnOffBlur();
+
         yield return new WaitForSeconds(delayAfterBlink);
-        dialogue.Close();
-        dialogue.StartDialogue(sequence.GetDialogueLines());
-        waitingDialogue = true;
-        yield return new WaitUntil(() => dialogue.IsFinished());
-        waitingDialogue = false;
-        yield return new WaitForSeconds(delayAfterDialogue);
+
+        if (dialogue != null)
+        {
+            dialogue.ForceClose(); // ✅ Em vez de Close()
+            dialogue.StartDialogue(sequence.GetDialogueLines());
+            waitingDialogue = true;
+            yield return new WaitUntil(() => dialogue.IsFinished());
+            waitingDialogue = false;
+            yield return new WaitForSeconds(delayAfterDialogue);
+        }
 
         if (punch != null)
         {
-            if (!punch.IsActive())
-            {
-                punch.ActivateWindow();
-            }
+            if (!punch.IsActive()) punch.ActivateWindow();
             punch.EnablePunch();
             punchActivated = true;
         }
@@ -117,20 +139,16 @@ public class JumpscareManager : MonoBehaviour
 
     private IEnumerator FadeAndLoadScene()
     {
-        if (fadeController != null)
-        {
-            yield return StartCoroutine(fadeController.FadeToBlack(fadeDuration));
-        }
-        else
-        {
-            yield return new WaitForSeconds(1f);
-        }
-        playerMovement.SetCanMove(true);
+        if (fadeController != null) yield return StartCoroutine(fadeController.FadeToBlack(fadeDuration));
+        else yield return new WaitForSeconds(1f);
+
+        if (playerMovement != null) playerMovement.SetCanMove(true);
         isRunning = false;
         panelAberto = false;
         punchActivated = false;
         SceneManager.LoadScene(sceneToLoad);
     }
+
     public void ResetJumpscare()
     {
         isRunning = false;
@@ -138,20 +156,18 @@ public class JumpscareManager : MonoBehaviour
         waitingDialogue = false;
         panelAberto = false;
         punchActivated = false;
-        if (playerMovement != null)
-            playerMovement.SetCanMove(true);
-        if (sequence != null)
-            sequence.ShowPanel(false);
-        if (blur != null)
-            blur.TurnOffBlur();
-        if (pressEIndicator != null)
-            pressEIndicator.Hide();
+
+        if (playerMovement != null) playerMovement.SetCanMove(true);
+        if (sequence != null) sequence.ShowPanel(false);
+        if (blur != null) blur.TurnOffBlur();
+        if (pressEIndicator != null) pressEIndicator.Hide();
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IStatusPlayer _))
         {
-            sequence.SetColliding(true);
+            if (sequence != null) sequence.SetColliding(true);
             if (pressEIndicator != null && isActive && !isRunning && !panelAberto)
                 pressEIndicator.Show();
         }
@@ -161,9 +177,11 @@ public class JumpscareManager : MonoBehaviour
     {
         if (collision.TryGetComponent(out IStatusPlayer _))
         {
-            sequence.SetColliding(false);
-            if (pressEIndicator != null)
-                pressEIndicator.Hide();
+            if (sequence != null) sequence.SetColliding(false);
+            if (pressEIndicator != null) pressEIndicator.Hide();
         }
-    }    public bool IsActive() => isActive;
+    }
+
+    public bool IsActive() => isActive;
+    public bool IsRunning() => isRunning;
 }
