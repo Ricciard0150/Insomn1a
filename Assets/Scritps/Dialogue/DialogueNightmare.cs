@@ -125,7 +125,7 @@ public class DialogueNightmare : MonoBehaviour
         typingSystem.UpdateDialogue(falas);
 
         if (playerMovement != null)
-            playerMovement.canMove = false;
+            playerMovement.canMove = true;
 
         dialogoAtivo = true;
         index = 0;

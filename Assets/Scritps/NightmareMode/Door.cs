@@ -76,7 +76,6 @@ public class Door : MonoBehaviour
         dialogueSystem.StartDialogue(hasKeyDialogue);
         yield return new WaitUntil(() => dialogueSystem.IsFinished());
 
-        // ✅ AQUI: Destrava o player após o diálogo da porta
         if (dialogueSystem.playerMovement != null)
             dialogueSystem.playerMovement.canMove = true;
 
