@@ -9211,7 +9211,8 @@ MonoBehaviour:
   delayAfterBlink: 0.5
   delayAfterDialogue: 0.5
   fadeDuration: 1.5
-  sceneToLoad: TOBEcontinued
+  sceneToLoad: Game
+  spawnPositionInNextScene: {x: 537, y: 90.45, z: 0}
 --- !u!61 &2022346319
 BoxCollider2D:
   m_ObjectHideFlags: 0

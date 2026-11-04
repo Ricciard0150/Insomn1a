@@ -8,7 +8,7 @@ public class JumpscareManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private JumpscareSequence sequence;
     [SerializeField] private BlurController blur;
-    [SerializeField] private DialogueNightmare dialogue; // ✅ Trocado para DialogueSystem
+    [SerializeField] private DialogueNightmare dialogue;
     [SerializeField] private GlassPunch punch;
     [SerializeField] private TopDownMovement playerMovement;
     [SerializeField] private Door door;
@@ -26,6 +26,9 @@ public class JumpscareManager : MonoBehaviour
     [SerializeField] private float delayAfterDialogue = 0.5f;
     [SerializeField] private float fadeDuration = 1.5f;
     [SerializeField] private string sceneToLoad;
+
+    [Header("Teleport")]
+    [SerializeField] private Vector3 spawnPositionInNextScene; // ✅ NOVO
 
     private bool isRunning = false;
     private bool waitingBlink = false;
@@ -101,7 +104,6 @@ public class JumpscareManager : MonoBehaviour
 
         if (pressEIndicator != null) pressEIndicator.Hide();
 
-        // ✅ Ajustado para usar o overload do DialogueSystem
         if (dialogue != null)
             dialogue.StartDialogue(new string[] { "Aperte ESPAÇO para piscar..." });
     }
@@ -116,7 +118,7 @@ public class JumpscareManager : MonoBehaviour
 
         if (dialogue != null)
         {
-            dialogue.ForceClose(); // ✅ Em vez de Close()
+            dialogue.ForceClose();
             dialogue.StartDialogue(sequence.GetDialogueLines());
             waitingDialogue = true;
             yield return new WaitUntil(() => dialogue.IsFinished());
@@ -146,6 +148,10 @@ public class JumpscareManager : MonoBehaviour
         isRunning = false;
         panelAberto = false;
         punchActivated = false;
+
+        // ✅ Define a posição de spawn na próxima cena
+        RespawnInGame.SetSpawnPosition(spawnPositionInNextScene);
+
         SceneManager.LoadScene(sceneToLoad);
     }
 

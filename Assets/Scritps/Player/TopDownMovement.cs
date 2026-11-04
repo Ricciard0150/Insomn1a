@@ -12,6 +12,7 @@ public class TopDownMovement : MonoBehaviour, ITouchable, IStatusPlayer
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        RespawnInGame.RegisterPlayer(this); // ✅ registra no SpawnPoint da cena
     }
 
     void Update()
