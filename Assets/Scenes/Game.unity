@@ -5418,6 +5418,106 @@ MonoBehaviour:
     minCorrect: 1
     objectToActivate: 
     objectToDeactivate: 
+  - questId: diaologopapai
+    questName: dialogopapai
+    npcName: Interviewer
+    introLines:
+    - "Ol\xE1, Senhor, eu tinha aplicado meu curr\xEDculo aqui semana passada\u2026"
+    - "Ol\xE1, sr. Franz. Bom, a princ\xEDpio o senhor est\xE1 aprovado mas antes
+      preciso fazer algumas perguntas para checar se voc\xEA \xE9 realmente qualificado"
+    - "Certo\u2026 "
+    victoryLines:
+    - "Parab\xE9ns, senhor, o emprego \xE9 seu!"
+    - Obrigado, senhor!
+    defeatLines:
+    - "Bem, revisaremos seu curr\xEDculo baseado no desempenho de hoje..."
+    - Hm, okay...
+    questions:
+    - question: "Primeiramente, dando uma olhada aqui no seu curr\xEDculo percebi
+        que voc\xEA disse que sabe ingl\xEAs, certo? \u2606 Gostaria que voc\xEA
+        me falasse uma pequena frase como uma prova \u2606 "
+      options:
+      - 'Hi... I... uh...ready? '
+      - 'Hi sir, im ready to work in this company. '
+      - "Hola se\xF1or, estoy listo para empezar a trabajar en esta empresa. "
+      - "I... N\xC3O SEI"
+      correctAnswer: 1
+      correctFeedback: "Ele n\xE3o parece satisfeito..."
+      wrongFeedback: "Voc\xEA o satisfez..."
+      optionDialogues:
+      - dialogue:
+        - characterSprite: {fileID: 4584681769223179126, guid: ad5875058d613a643acda07d7b95a6f9, type: 3}
+          text: "Tsc... tenha mais certeza do que voc\xEA p\xF5e no curr\xEDculo..."
+        - characterSprite: {fileID: -5144542264298086051, guid: c7707fa669e833140844da9b6fa94a72, type: 3}
+          text: ...
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: Hm, interessante
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: "Bem falado, mas receio que isso n\xE3o seja ingl\xEAs..."
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: Que falta de classe...
+    - question: "Ok, aqui voc\xEA tamb\xE9m diz ser r\xE1pido em c\xE1lculos  matem\xE1ticos
+        \u2606 Vou te dar uma pequena equa\xE7\xE3o e quero que me responda: 246+34. "
+      options:
+      - 280.
+      - 290
+      - 300
+      - '302. '
+      correctAnswer: 3
+      correctFeedback: Ele parece feliz
+      wrongFeedback: "Voc\xEA irritou ele, n\xE3o era t\xE3o dif\xEDcil!"
+      optionDialogues:
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: "Bom para o n\xEDvel de uma crian\xE7a na creche..."
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: Bem longe...
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: Se fosse com um pouco mais de calma...
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: Correto, muito bom!
+        - characterSprite: {fileID: 0}
+          text: "Agrade\xE7o, senhor!"
+    - question: "Apenas uma d\xFAvida, com qual animal voc\xEA se identifica? "
+      options:
+      - "Com certeza um le\xE3o, senhor."
+      - Talvez uma galinha...?
+      - Me identifico bastante com um rato!
+      - "N\xE3o sei, sou \xFAnico demais para ser comparado."
+      correctAnswer: 0
+      correctFeedback: "Ele est\xE1 orgulhoso"
+      wrongFeedback: Ele parece enojado...?
+      optionDialogues:
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: "Esse \xE9 o esp\xEDrito!"
+        - characterSprite: {fileID: 0}
+          text: (Estufa o peito com orgulho de si)
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: Eh... okay...
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: Rapaz?
+      - dialogue:
+        - characterSprite: {fileID: 0}
+          text: "Ah, como ele \xE9 \xFAnico."
+        - characterSprite: {fileID: 0}
+          text: "Isso \xE9 um elogio?"
+        - characterSprite: {fileID: 0}
+          text: Interprete como quiser.
+        - characterSprite: {fileID: 0}
+          text: "Ent\xE3o \xE9 bom!"
+    maxLives: 3
+    minCorrect: 1
+    objectToActivate: 
+    objectToDeactivate: 
 --- !u!4 &749839219
 Transform:
   m_ObjectHideFlags: 0
@@ -10476,7 +10576,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1210490012}
   - component: {fileID: 1210490014}
-  - component: {fileID: 1210490013}
+  - component: {fileID: 1210490015}
   m_Layer: 0
   m_Name: TriggerThoughts (1)
   m_TagString: Untagged
@@ -10499,22 +10599,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1930592046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1210490013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1210490011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0fb3341ec53d7c46bb58927b83c3f50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ThoughtsD
-  dialogueSystem: {fileID: 1568412087}
-  npcData: {fileID: 1030613188}
-  triggerOnce: 1
-  delayToStart: 0.2
 --- !u!61 &1210490014
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10561,6 +10645,23 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 7.81993, y: 10.508041}
   m_EdgeRadius: 0
+--- !u!114 &1210490015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210490011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9300e8091afc6947919ac90dce00c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoInterviewTrigger
+  interviewManager: {fileID: 1649544997}
+  player: {fileID: 1865952460842338405}
+  hidePlayerDuringQuiz: 1
+  triggerOnlyOnce: 1
+  delayBeforeStart: 0.2
 --- !u!1 &1222156665
 GameObject:
   m_ObjectHideFlags: 0
@@ -23618,7 +23719,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776364287}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -27308,7 +27409,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 133.18, y: -76.35, z: 0}
+  m_LocalPosition: {x: 93.6, y: 78.7, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
