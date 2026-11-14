@@ -18,34 +18,20 @@ public class GameLoader : MonoBehaviour
 
     void LoadGame()
     {
-        if (SaveSystem.Instance == null)
-        {
-            Debug.LogError("[GameLoader] SaveSystem não está na cena");
-            return;
-        }
-
-        if (!SaveSystem.Instance.HasSavedAtLeastOnce())
-        {
-            Debug.Log("[GameLoader] Nenhum save para carregar");
-            return;
-        }
+        if (SaveSystem.Instance == null) return;
+        if (!SaveSystem.Instance.HasSavedAtLeastOnce()) return;
 
         SaveData data = SaveSystem.Instance.GetData();
         string currentScene = SceneManager.GetActiveScene().name;
 
-        // Se o save é de outra cena, carrega ela
-        if (!string.IsNullOrEmpty(data.scene) && currentScene != data.scene)
+        // ✅ Compara com Trim() pra evitar espaço
+        if (!string.IsNullOrEmpty(data.scene) && data.scene.Trim() != currentScene.Trim())
         {
-            if (!sceneLoadRequested)
-            {
-                sceneLoadRequested = true;
-                Debug.Log($"[GameLoader] Carregando cena do save: {data.scene}");
-                SceneManager.LoadScene(data.scene);
-            }
+            Debug.Log($"[GameLoader] Recarregando: '{data.scene}' != '{currentScene}'");
+            SceneManager.LoadScene(data.scene.Trim());
             return;
         }
 
-        // Mesma cena → teleporta direto
         TeleportPlayer();
     }
 

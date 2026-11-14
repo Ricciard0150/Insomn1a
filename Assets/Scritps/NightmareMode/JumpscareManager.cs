@@ -149,8 +149,13 @@ public class JumpscareManager : MonoBehaviour
         panelAberto = false;
         punchActivated = false;
 
-        // ✅ Define a posição de spawn na próxima cena
-        RespawnInGame.SetSpawnPosition(spawnPositionInNextScene);
+        // ✅ Força o save com o nome EXATO da cena
+        if (SaveSystem.Instance != null)
+        {
+            string cenaDestino = sceneToLoad.Trim();   // ← remove espaços
+            SaveSystem.Instance.SaveGame(spawnPositionInNextScene, cenaDestino);
+            Debug.Log($"[Jumpscare] Save forçado → cena='{cenaDestino}'");
+        }
 
         SceneManager.LoadScene(sceneToLoad);
     }
