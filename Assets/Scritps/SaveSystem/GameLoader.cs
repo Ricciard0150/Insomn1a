@@ -12,8 +12,11 @@ public class GameLoader : MonoBehaviour
 
     void Start()
     {
-        if (loadOnStart)
-            LoadGame();
+        void Start()
+        {
+            Debug.Log($"[GameLoader] Start rodou na cena: {SceneManager.GetActiveScene().name}");
+            if (loadOnStart) LoadGame();
+        }
     }
 
     void LoadGame()
