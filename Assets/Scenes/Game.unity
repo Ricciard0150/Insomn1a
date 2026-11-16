@@ -1243,8 +1243,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -1820, y: -980}
+  m_AnchoredPosition: {x: 0.0033569336, y: -0.0021362305}
+  m_SizeDelta: {x: -1778.2, y: -939.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &228051381
 MonoBehaviour:
@@ -7743,7 +7743,6 @@ MonoBehaviour:
   itemSprite: {fileID: 1787925113359301215, guid: 2d14d8d10ef92754681f1c4d1c350954, type: 3}
   itemName: "Peda\xE7o de carta"
   pieceNumber: 1
-  totalPieces: 3
   pickupPanel: {fileID: 228051383}
   interactButton: Interact
 --- !u!212 &905236859
