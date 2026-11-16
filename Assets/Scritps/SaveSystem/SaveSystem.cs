@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.IO;
+using System.Collections.Generic;
 
 public class SaveSystem : MonoBehaviour
 {
@@ -15,8 +16,7 @@ public class SaveSystem : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             savePath = Path.Combine(Application.persistentDataPath, "save.json");
-            currentSave = new SaveData();
-            LoadGame();
+            LoadGame(); // Carrega logo ao iniciar
         }
         else
         {
@@ -29,6 +29,11 @@ public class SaveSystem : MonoBehaviour
         currentSave.position = new float[] { pos.x, pos.y, pos.z };
         currentSave.scene = scene;
         currentSave.hasSavedAtLeastOnce = true;
+        SaveCurrentState();
+    }
+
+    public void SaveCurrentState()
+    {
         File.WriteAllText(savePath, JsonUtility.ToJson(currentSave));
     }
 
@@ -38,30 +43,28 @@ public class SaveSystem : MonoBehaviour
         {
             currentSave = JsonUtility.FromJson<SaveData>(File.ReadAllText(savePath));
             if (currentSave == null) currentSave = new SaveData();
+
+            // Garante que as listas/arrays não sejam nulos ao carregar saves antigos
+            if (currentSave.letterPieces == null || currentSave.letterPieces.Length != 3)
+                currentSave.letterPieces = new bool[3];
+
+            if (currentSave.collectedItems == null)
+                currentSave.collectedItems = new List<string>();
         }
         else
         {
             currentSave = new SaveData();
         }
     }
+
     public void Teleport(GameObject player)
     {
-        if (player == null)
-        {
-            return;
-        }
+        if (player == null) return;
+        if (currentSave.position == null || currentSave.position.Length < 3) return;
 
-        if (currentSave.position == null || currentSave.position.Length < 3)
-        {
-            return;
-        }
-        Vector3 pos = new Vector3(
-            currentSave.position[0],
-            currentSave.position[1],
-            currentSave.position[2]
-        );
-
+        Vector3 pos = new Vector3(currentSave.position[0], currentSave.position[1], currentSave.position[2]);
         player.transform.position = pos;
+
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -70,14 +73,10 @@ public class SaveSystem : MonoBehaviour
         }
 
         TopDownMovement movement = player.GetComponent<TopDownMovement>();
-        if (movement != null)
-        {
-            movement.SetCanMove(true);
-        }
+        if (movement != null) movement.SetCanMove(true);
     }
 
     public bool HasSave() => File.Exists(savePath);
-
     public bool HasSavedAtLeastOnce()
     {
         if (!HasSave()) return false;
@@ -89,11 +88,50 @@ public class SaveSystem : MonoBehaviour
 
     public void DeleteSave()
     {
-        if (HasSave())
-        {
-            File.Delete(savePath);
-        }
+        if (HasSave()) File.Delete(savePath);
         currentSave = new SaveData();
+    }
+
+    // ---------- PEDAÇOS DE CARTA ----------
+    public bool HasLetterPiece(int pieceNumber)
+    {
+        int index = pieceNumber - 1;
+        if (index < 0 || index >= currentSave.letterPieces.Length) return false;
+        return currentSave.letterPieces[index];
+    }
+
+    public void CollectLetterPiece(int pieceNumber)
+    {
+        int index = pieceNumber - 1;
+        if (index < 0 || index >= currentSave.letterPieces.Length) return;
+        currentSave.letterPieces[index] = true;
+        SaveCurrentState();
+    }
+
+    public int GetCollectedLetterPieceCount()
+    {
+        int count = 0;
+        foreach (bool b in currentSave.letterPieces) if (b) count++;
+        return count;
+    }
+
+    public int GetTotalLetterPieces() => currentSave.letterPieces.Length;
+
+    // ---------- ITENS COLETÁVEIS ----------
+    public bool HasItem(string itemId)
+    {
+        if (currentSave.collectedItems == null) return false;
+        return currentSave.collectedItems.Contains(itemId);
+    }
+
+    public void CollectItem(string itemId)
+    {
+        if (currentSave.collectedItems == null) currentSave.collectedItems = new List<string>();
+        if (!currentSave.collectedItems.Contains(itemId))
+        {
+            currentSave.collectedItems.Add(itemId);
+            SaveCurrentState();
+        }
     }
 }
 
@@ -103,4 +141,7 @@ public class SaveData
     public float[] position = new float[3];
     public string scene = "";
     public bool hasSavedAtLeastOnce = false;
+
+    public bool[] letterPieces = new bool[3];
+    public List<string> collectedItems = new List<string>(); // NOVO: Itens salvos
 }

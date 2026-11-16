@@ -8,14 +8,10 @@ public class GameLoader : MonoBehaviour
     [SerializeField] private bool loadOnStart = true;
 
     private bool alreadyTeleported = false;
-    private bool sceneLoadRequested = false;
 
     void Start()
     {
-  
-            Debug.Log($"[GameLoader] Start rodou na cena: {SceneManager.GetActiveScene().name}");
-            if (loadOnStart) LoadGame();
-        
+        if (loadOnStart) LoadGame();
     }
 
     void LoadGame()
@@ -26,10 +22,8 @@ public class GameLoader : MonoBehaviour
         SaveData data = SaveSystem.Instance.GetData();
         string currentScene = SceneManager.GetActiveScene().name;
 
-        // ✅ Compara com Trim() pra evitar espaço
         if (!string.IsNullOrEmpty(data.scene) && data.scene.Trim() != currentScene.Trim())
         {
-            Debug.Log($"[GameLoader] Recarregando: '{data.scene}' != '{currentScene}'");
             SceneManager.LoadScene(data.scene.Trim());
             return;
         }
@@ -39,10 +33,7 @@ public class GameLoader : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        sceneLoadRequested = false;
-
         if (SaveSystem.Instance == null) return;
-
         SaveData data = SaveSystem.Instance.GetData();
         if (string.IsNullOrEmpty(data.scene) || data.scene != scene.name) return;
         if (alreadyTeleported) return;
@@ -52,7 +43,7 @@ public class GameLoader : MonoBehaviour
 
     IEnumerator TeleportNextFrame()
     {
-        yield return null; // espera 1 frame pra garantir que o player existe
+        yield return null;
         TeleportPlayer();
     }
 
@@ -61,17 +52,13 @@ public class GameLoader : MonoBehaviour
         if (alreadyTeleported) return;
         alreadyTeleported = true;
 
-        if (player == null)
-            player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null) player = GameObject.FindGameObjectWithTag("Player");
 
-        if (player == null)
+        if (player != null)
         {
-            Debug.LogWarning("[GameLoader] Player não encontrado");
-            return;
+            SaveSystem.Instance.Teleport(player);
+            Debug.Log($"[GameLoader] Player teleportado para: {player.transform.position}");
         }
-
-        SaveSystem.Instance.Teleport(player);
-        Debug.Log($"[GameLoader] Player teleportado para: {player.transform.position}");
     }
 
     void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;

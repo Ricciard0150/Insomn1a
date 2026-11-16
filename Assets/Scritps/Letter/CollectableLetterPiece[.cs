@@ -6,12 +6,9 @@ public class CollectibleLetterPiece : MonoBehaviour
     [SerializeField] private Sprite itemSprite;
     [SerializeField] private string itemName = "Pedaço de carta";
     [SerializeField] private int pieceNumber = 1;
-    [SerializeField] private int totalPieces = 3;
 
     [Header("References")]
     [SerializeField] private LetterPickupPanel pickupPanel;
-
-    [Header("Input")]
     [SerializeField] private string interactButton = "Interact";
 
     private bool playerNear = false;
@@ -19,9 +16,10 @@ public class CollectibleLetterPiece : MonoBehaviour
 
     void Start()
     {
-        // Se já foi coletado antes, some
-        //if (PlayerPrefs.GetInt("letter_piece_" + pieceNumber, 0) == 1)
-        //    gameObject.SetActive(false);
+        if (SaveSystem.Instance != null && SaveSystem.Instance.HasLetterPiece(pieceNumber))
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     void Update()
@@ -30,19 +28,14 @@ public class CollectibleLetterPiece : MonoBehaviour
         {
             collected = true;
 
-            PlayerPrefs.SetInt("letter_piece_" + pieceNumber, 1);
+            if (SaveSystem.Instance != null)
+                SaveSystem.Instance.CollectLetterPiece(pieceNumber);
 
-            int collectedCount = 0;
-            for (int i = 1; i <= totalPieces; i++)
-                if (PlayerPrefs.GetInt("letter_piece_" + i, 0) == 1)
-                    collectedCount++;
-
-            PlayerPrefs.Save();
+            int collectedCount = SaveSystem.Instance != null ? SaveSystem.Instance.GetCollectedLetterPieceCount() : 1;
+            int total = SaveSystem.Instance != null ? SaveSystem.Instance.GetTotalLetterPieces() : 3;
 
             if (pickupPanel != null)
-                pickupPanel.Show(itemSprite, itemName, collectedCount, totalPieces);
-            else
-                Debug.LogError("PICKUP PANEL NULL");
+                pickupPanel.Show(itemSprite, itemName, collectedCount, total);
 
             gameObject.SetActive(false);
         }
@@ -50,13 +43,11 @@ public class CollectibleLetterPiece : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-            playerNear = true;
+        if (other.CompareTag("Player")) playerNear = true;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-            playerNear = false;
+        if (other.CompareTag("Player")) playerNear = false;
     }
 }
