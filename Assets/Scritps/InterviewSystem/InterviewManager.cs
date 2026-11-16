@@ -37,41 +37,19 @@ public class InterviewManager : MonoBehaviour
     private bool isFinishing;
     private bool isCompleted = false;
 
-    // ✅ MUDADO DE Awake PARA Start
-    void Start()
+    void Awake()
     {
-        InitializeQuest();
-    }
-
-    private void InitializeQuest()
-    {
-        // Auto-busca o banco caso não tenha sido arrastado no Inspector
-        if (questDatabase == null)
+        if (questDatabase != null)
         {
-            questDatabase = FindAnyObjectByType<QuestDatabase>();
+            currentQuest = questDatabase.GetQuest(questId);
         }
-
-        if (questDatabase == null)
-        {
-            Debug.LogError($"[InterviewManager] QuestDatabase NÃO ENCONTRADO na cena para a quest '{questId}'!");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(questId))
-        {
-            Debug.LogError($"[InterviewManager] O campo 'Quest Id' está vazio no Inspector do objeto {gameObject.name}!");
-            return;
-        }
-
-        currentQuest = questDatabase.GetQuest(questId);
 
         if (currentQuest == null)
         {
-            Debug.LogError($"[InterviewManager] Quest '{questId}' não encontrada! Verifique se o ID está escrito igual no QuestDatabase.");
+            Debug.LogError($"Quest '{questId}' not found!");
             return;
         }
 
-        // Só cria o sistema se a quest existir
         system = new InterviewSystem(
             currentQuest.questions,
             currentQuest.maxLives,
@@ -101,13 +79,8 @@ public class InterviewManager : MonoBehaviour
             return;
         }
 
-        if (system == null)
-        {
-            Debug.LogError("[InterviewManager] Não é possível iniciar: Sistema não foi inicializado (Quest não encontrada).");
+        if (system == null || system.IsActive)
             return;
-        }
-
-        if (system.IsActive) return;
 
         isFinishing = false;
 
@@ -128,6 +101,7 @@ public class InterviewManager : MonoBehaviour
     private IEnumerator WaitForDialogueThenIntroPanel()
     {
         yield return new WaitWhile(() => dialogueSystem.IsRunning);
+
         StartCoroutine(ShowIntroPanelThenQuiz());
     }
 
@@ -136,6 +110,7 @@ public class InterviewManager : MonoBehaviour
         if (introPanel != null)
         {
             introPanel.ShowPanel();
+
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -197,13 +172,14 @@ public class InterviewManager : MonoBehaviour
 
     private void ShowFeedback(string message)
     {
-        if (uiManager != null)
-            uiManager.ShowFeedback(message);
+        uiManager.ShowFeedback(message);
     }
 
     private void OnSystemFinished(bool victory, int points, int lives)
     {
-        if (isFinishing) return;
+        if (isFinishing)
+            return;
+
         isFinishing = true;
 
         if (GameManager.Instance != null)
@@ -221,6 +197,7 @@ public class InterviewManager : MonoBehaviour
         }
 
         isCompleted = true;
+
         ActivateVictoryObjects();
 
         if (dialogueSystem != null)
@@ -237,7 +214,8 @@ public class InterviewManager : MonoBehaviour
         {
             foreach (GameObject obj in objectsToActivate)
             {
-                if (obj != null) obj.SetActive(true);
+                if (obj != null)
+                    obj.SetActive(true);
             }
         }
 
@@ -245,7 +223,8 @@ public class InterviewManager : MonoBehaviour
         {
             foreach (GameObject obj in objectsToDeactivate)
             {
-                if (obj != null) obj.SetActive(false);
+                if (obj != null)
+                    obj.SetActive(false);
             }
         }
     }
@@ -265,7 +244,6 @@ public class InterviewManager : MonoBehaviour
             GameOverUI panelScript = gameOverPanel.GetComponent<GameOverUI>();
             if (panelScript != null)
             {
-                panelScript.SetInterviewManager(this); // ✅ Garantindo que o painel saiba quem chamar no Restart
                 panelScript.ShowDefeat(points, currentQuest.questions.Length);
             }
         }
@@ -276,33 +254,26 @@ public class InterviewManager : MonoBehaviour
 
     public void RestartQuiz()
     {
-        if (isCompleted) return;
+        if (isCompleted)
+        {
+            Debug.Log("Quest já completada! Não pode reiniciar.");
+            return;
+        }
 
         Time.timeScale = 1f;
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
-        // Desinscreve do sistema antigo antes de criar um novo
-        if (system != null)
-        {
-            system.OnRoundChanged -= ShowRound;
-            system.OnFinished -= OnSystemFinished;
-            system.OnFeedback -= ShowFeedback;
-        }
+        system = new InterviewSystem(
+            currentQuest.questions,
+            currentQuest.maxLives,
+            currentQuest.minCorrect
+        );
 
-        if (currentQuest != null)
-        {
-            system = new InterviewSystem(
-                currentQuest.questions,
-                currentQuest.maxLives,
-                currentQuest.minCorrect
-            );
-
-            system.OnRoundChanged += ShowRound;
-            system.OnFinished += OnSystemFinished;
-            system.OnFeedback += ShowFeedback;
-        }
+        system.OnRoundChanged += ShowRound;
+        system.OnFinished += OnSystemFinished;
+        system.OnFeedback += ShowFeedback;
 
         isFinishing = false;
         StartSystem();
@@ -314,7 +285,10 @@ public class InterviewManager : MonoBehaviour
         SceneManager.LoadScene(menuSceneName);
     }
 
-    public bool IsQuestCompleted() => isCompleted;
+    public bool IsQuestCompleted()
+    {
+        return isCompleted;
+    }
 
     public void ResetQuestState()
     {
