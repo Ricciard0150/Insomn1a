@@ -16,7 +16,7 @@ public class SaveSystem : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             savePath = Path.Combine(Application.persistentDataPath, "save.json");
-            LoadGame(); // Carrega logo ao iniciar
+            LoadGame();
         }
         else
         {
@@ -44,12 +44,15 @@ public class SaveSystem : MonoBehaviour
             currentSave = JsonUtility.FromJson<SaveData>(File.ReadAllText(savePath));
             if (currentSave == null) currentSave = new SaveData();
 
-            // Garante que as listas/arrays n„o sejam nulos ao carregar saves antigos
+            // Garante que as listas/arrays n√£o sejam nulos ao carregar saves antigos
             if (currentSave.letterPieces == null || currentSave.letterPieces.Length != 3)
                 currentSave.letterPieces = new bool[3];
 
             if (currentSave.collectedItems == null)
                 currentSave.collectedItems = new List<string>();
+
+            if (currentSave.completedQuests == null)
+                currentSave.completedQuests = new List<string>();
         }
         else
         {
@@ -77,6 +80,7 @@ public class SaveSystem : MonoBehaviour
     }
 
     public bool HasSave() => File.Exists(savePath);
+
     public bool HasSavedAtLeastOnce()
     {
         if (!HasSave()) return false;
@@ -92,7 +96,7 @@ public class SaveSystem : MonoBehaviour
         currentSave = new SaveData();
     }
 
-    // ---------- PEDA«OS DE CARTA ----------
+    // ---------- PEDA√áOS DE CARTA ----------
     public bool HasLetterPiece(int pieceNumber)
     {
         int index = pieceNumber - 1;
@@ -117,7 +121,7 @@ public class SaveSystem : MonoBehaviour
 
     public int GetTotalLetterPieces() => currentSave.letterPieces.Length;
 
-    // ---------- ITENS COLET¡VEIS ----------
+    // ---------- ITENS COLET√ÅVEIS ----------
     public bool HasItem(string itemId)
     {
         if (currentSave.collectedItems == null) return false;
@@ -133,6 +137,25 @@ public class SaveSystem : MonoBehaviour
             SaveCurrentState();
         }
     }
+
+    // ---------- QUESTS CONCLU√çDAS ----------
+    public bool IsQuestCompleted(string questId)
+    {
+        if (currentSave.completedQuests == null) return false;
+        return currentSave.completedQuests.Contains(questId);
+    }
+
+    public void CompleteQuest(string questId)
+    {
+        if (currentSave.completedQuests == null)
+            currentSave.completedQuests = new List<string>();
+
+        if (!currentSave.completedQuests.Contains(questId))
+        {
+            currentSave.completedQuests.Add(questId);
+            SaveCurrentState();
+        }
+    }
 }
 
 [System.Serializable]
@@ -143,5 +166,6 @@ public class SaveData
     public bool hasSavedAtLeastOnce = false;
 
     public bool[] letterPieces = new bool[3];
-    public List<string> collectedItems = new List<string>(); // NOVO: Itens salvos
+    public List<string> collectedItems = new List<string>();
+    public List<string> completedQuests = new List<string>();
 }

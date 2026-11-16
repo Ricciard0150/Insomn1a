@@ -46,14 +46,12 @@ public class GameManager : MonoBehaviour
 
     public void ToggleBlur(bool active)
     {
-        if (blurController == null)
-            return;
+        if (blurController == null) return;
 
-        if (active)
-            blurController.TurnOnBlur();
-        else
-            blurController.TurnOffBlur();
-    } 
+        if (active) blurController.TurnOnBlur();
+        else blurController.TurnOffBlur();
+    }
+
     public void SaveQuestResult(string questId, bool victory, int points)
     {
         if (!questResults.ContainsKey(questId))
@@ -73,7 +71,18 @@ public class GameManager : MonoBehaviour
 
     public bool IsQuestCompleted(string questId)
     {
-        return completedQuests.Contains(questId);
+        // 1. Checa na memória
+        if (completedQuests.Contains(questId)) return true;
+
+        // 2. Se não achou, checa no arquivo salvo
+        if (SaveSystem.Instance != null && SaveSystem.Instance.IsQuestCompleted(questId))
+        {
+            // Adiciona à memória para agilizar futuras checagens
+            completedQuests.Add(questId);
+            return true;
+        }
+
+        return false;
     }
 
     public bool GetQuestResult(string questId)

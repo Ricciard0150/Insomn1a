@@ -37,17 +37,38 @@ public class InterviewManager : MonoBehaviour
     private bool isFinishing;
     private bool isCompleted = false;
 
-    void Awake()
+    void Start()
     {
-        if (questDatabase != null)
+        InitializeQuest();
+    }
+
+    private void InitializeQuest()
+    {
+        if (questDatabase == null)
+            questDatabase = FindAnyObjectByType<QuestDatabase>();
+
+        if (questDatabase == null || string.IsNullOrEmpty(questId))
         {
-            currentQuest = questDatabase.GetQuest(questId);
+            Debug.LogError($"[InterviewManager] Erro ao inicializar quest '{questId}'. Banco ou ID nulo.");
+            return;
         }
+
+        currentQuest = questDatabase.GetQuest(questId);
 
         if (currentQuest == null)
         {
-            Debug.LogError($"Quest '{questId}' not found!");
+            Debug.LogError($"[InterviewManager] Quest '{questId}' não encontrada!");
             return;
+        }
+
+        // Verifica se a quest já foi concluída no save
+        if (SaveSystem.Instance != null && SaveSystem.Instance.IsQuestCompleted(questId))
+        {
+            isCompleted = true;
+            Debug.Log($"[InterviewManager] Quest '{questId}' já concluída anteriormente.");
+
+            // Aplica as consequências visuais imediatamente
+            ActivateVictoryObjects();
         }
 
         system = new InterviewSystem(
@@ -63,8 +84,7 @@ public class InterviewManager : MonoBehaviour
 
     void OnDestroy()
     {
-        if (system == null)
-            return;
+        if (system == null) return;
 
         system.OnRoundChanged -= ShowRound;
         system.OnFinished -= OnSystemFinished;
@@ -79,8 +99,13 @@ public class InterviewManager : MonoBehaviour
             return;
         }
 
-        if (system == null || system.IsActive)
+        if (system == null)
+        {
+            Debug.LogError("[InterviewManager] Sistema não inicializado (Quest não encontrada).");
             return;
+        }
+
+        if (system.IsActive) return;
 
         isFinishing = false;
 
@@ -101,7 +126,6 @@ public class InterviewManager : MonoBehaviour
     private IEnumerator WaitForDialogueThenIntroPanel()
     {
         yield return new WaitWhile(() => dialogueSystem.IsRunning);
-
         StartCoroutine(ShowIntroPanelThenQuiz());
     }
 
@@ -110,7 +134,6 @@ public class InterviewManager : MonoBehaviour
         if (introPanel != null)
         {
             introPanel.ShowPanel();
-
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -172,14 +195,13 @@ public class InterviewManager : MonoBehaviour
 
     private void ShowFeedback(string message)
     {
-        uiManager.ShowFeedback(message);
+        if (uiManager != null)
+            uiManager.ShowFeedback(message);
     }
 
     private void OnSystemFinished(bool victory, int points, int lives)
     {
-        if (isFinishing)
-            return;
-
+        if (isFinishing) return;
         isFinishing = true;
 
         if (GameManager.Instance != null)
@@ -198,6 +220,12 @@ public class InterviewManager : MonoBehaviour
 
         isCompleted = true;
 
+        // Salva no arquivo JSON
+        if (SaveSystem.Instance != null)
+        {
+            SaveSystem.Instance.CompleteQuest(questId);
+        }
+
         ActivateVictoryObjects();
 
         if (dialogueSystem != null)
@@ -214,8 +242,7 @@ public class InterviewManager : MonoBehaviour
         {
             foreach (GameObject obj in objectsToActivate)
             {
-                if (obj != null)
-                    obj.SetActive(true);
+                if (obj != null) obj.SetActive(true);
             }
         }
 
@@ -223,8 +250,7 @@ public class InterviewManager : MonoBehaviour
         {
             foreach (GameObject obj in objectsToDeactivate)
             {
-                if (obj != null)
-                    obj.SetActive(false);
+                if (obj != null) obj.SetActive(false);
             }
         }
     }
@@ -244,6 +270,7 @@ public class InterviewManager : MonoBehaviour
             GameOverUI panelScript = gameOverPanel.GetComponent<GameOverUI>();
             if (panelScript != null)
             {
+                panelScript.SetInterviewManager(this);
                 panelScript.ShowDefeat(points, currentQuest.questions.Length);
             }
         }
@@ -254,26 +281,32 @@ public class InterviewManager : MonoBehaviour
 
     public void RestartQuiz()
     {
-        if (isCompleted)
-        {
-            Debug.Log("Quest já completada! Não pode reiniciar.");
-            return;
-        }
+        if (isCompleted) return;
 
         Time.timeScale = 1f;
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
-        system = new InterviewSystem(
-            currentQuest.questions,
-            currentQuest.maxLives,
-            currentQuest.minCorrect
-        );
+        if (system != null)
+        {
+            system.OnRoundChanged -= ShowRound;
+            system.OnFinished -= OnSystemFinished;
+            system.OnFeedback -= ShowFeedback;
+        }
 
-        system.OnRoundChanged += ShowRound;
-        system.OnFinished += OnSystemFinished;
-        system.OnFeedback += ShowFeedback;
+        if (currentQuest != null)
+        {
+            system = new InterviewSystem(
+                currentQuest.questions,
+                currentQuest.maxLives,
+                currentQuest.minCorrect
+            );
+
+            system.OnRoundChanged += ShowRound;
+            system.OnFinished += OnSystemFinished;
+            system.OnFeedback += ShowFeedback;
+        }
 
         isFinishing = false;
         StartSystem();
@@ -285,10 +318,7 @@ public class InterviewManager : MonoBehaviour
         SceneManager.LoadScene(menuSceneName);
     }
 
-    public bool IsQuestCompleted()
-    {
-        return isCompleted;
-    }
+    public bool IsQuestCompleted() => isCompleted;
 
     public void ResetQuestState()
     {
