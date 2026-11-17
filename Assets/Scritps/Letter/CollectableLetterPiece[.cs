@@ -28,11 +28,22 @@ public class CollectibleLetterPiece : MonoBehaviour
         {
             collected = true;
 
-            if (SaveSystem.Instance != null)
-                SaveSystem.Instance.CollectLetterPiece(pieceNumber);
+            if (SaveSystem.Instance == null)
+            {
+                Debug.LogError("[Carta] SaveSystem é NULL!");
+                return;
+            }
 
-            int collectedCount = SaveSystem.Instance != null ? SaveSystem.Instance.GetCollectedLetterPieceCount() : 1;
-            int total = SaveSystem.Instance != null ? SaveSystem.Instance.GetTotalLetterPieces() : 3;
+            // ✅ LOG PARA VER O QUE ESTÁ ACONTECENDO ANTES DE SALVAR
+            Debug.Log($"[Carta] Tentando coletar o pedaço NÚMERO {pieceNumber}. O save atual diz: {SaveSystem.Instance.GetCollectedLetterPieceCount()}/3");
+
+            SaveSystem.Instance.CollectLetterPiece(pieceNumber);
+
+            int collectedCount = SaveSystem.Instance.GetCollectedLetterPieceCount();
+            int total = SaveSystem.Instance.GetTotalLetterPieces();
+
+            // ✅ LOG APÓS SALVAR
+            Debug.Log($"[Carta] Coleta finalizada. Novo total no save: {collectedCount}/{total}");
 
             if (pickupPanel != null)
                 pickupPanel.Show(itemSprite, itemName, collectedCount, total);
