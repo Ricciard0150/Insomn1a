@@ -87,20 +87,17 @@ public class PaperMinigameManager : MonoBehaviour
 
             AtualizarUI();
 
-            // 1. Começa a rodada limpando os brilhos antigos
             foreach (var spot in allSpots)
             {
                 if (spot != null) spot.SetHighlight(false);
             }
 
-            // 2. Toca o diálogo LINHA POR LINHA
             if (dialogueSystem != null && dialoguesBetweenRounds.Length >= currentRound)
             {
                 DialogueLineData[] currentRoundLines = dialoguesBetweenRounds[currentRound - 1].lines;
 
                 foreach (DialogueLineData line in currentRoundLines)
                 {
-                    // Se a linha pedir animação, roda a mão E sorteia o Spot
                     if (line.playHandAnimation)
                     {
                         yield return StartCoroutine(PlayHandTutorial());
@@ -111,16 +108,13 @@ public class PaperMinigameManager : MonoBehaviour
                 }
             }
 
-            // 3. Se a rodada não teve nenhuma animação, sorteia um spot agora para o player começar
             if (currentHighlightedSpot == null)
             {
                 RandomizeSpot();
             }
 
-            // 4. Cria o papel REAL que o player vai arrastar
             SpawnNextPaper(true);
 
-            // 5. Timer começa
             currentTime = timePerRound;
 
             while (currentTime > 0 && papersOrganizedThisRound < papersToOrganizePerRound && !isGameOver)
@@ -151,20 +145,26 @@ public class PaperMinigameManager : MonoBehaviour
     {
         if (handPrefab == null) yield break;
 
-        // ✅ Sorteia um novo Spot sempre que a mão for animar
         RandomizeSpot();
 
-        // Cria um papel FALSO só para a animação (não interativo)
-        GameObject fakePaper = Instantiate(paperPrefab, spawnPoint.position, Quaternion.identity);
+        // ✅ Cria o papel falso na raiz da cena (null)
+        Vector3 fakePaperPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
+        GameObject fakePaper = Instantiate(paperPrefab, fakePaperPos, Quaternion.identity, null);
+
         Collider2D fakeCol = fakePaper.GetComponent<Collider2D>();
         if (fakeCol != null) fakeCol.enabled = false;
 
         Vector3 startPos = handStartPosition != null ? handStartPosition.position : spawnPoint.position;
+        startPos.z = 0f;
+
         Vector3 targetPos = handTargetPoint != null
             ? handTargetPoint.position
             : (currentHighlightedSpot != null ? currentHighlightedSpot.transform.position : spawnPoint.position);
+        targetPos.z = 0f;
 
-        GameObject handObj = Instantiate(handPrefab, startPos, Quaternion.identity);
+        // ✅ Cria a mão na raiz da cena (null)
+        GameObject handObj = Instantiate(handPrefab, startPos, Quaternion.identity, null);
+
         PaperHandAnimation handScript = handObj.GetComponent<PaperHandAnimation>();
         PaperVisualDemo paperScript = fakePaper.GetComponent<PaperVisualDemo>();
 
@@ -195,7 +195,6 @@ public class PaperMinigameManager : MonoBehaviour
         }
         else
         {
-            // ✅ Agora o próximo papel vai para um spot DIFERENTE
             RandomizeSpot();
             SpawnNextPaper(true);
         }
@@ -217,7 +216,6 @@ public class PaperMinigameManager : MonoBehaviour
         }
         else
         {
-            // ✅ Se errar, também muda o spot para ele tentar outro
             RandomizeSpot();
             SpawnNextPaper(true);
         }
@@ -244,7 +242,9 @@ public class PaperMinigameManager : MonoBehaviour
 
         if (paperPrefab != null && spawnPoint != null)
         {
-            activePaper = Instantiate(paperPrefab, spawnPoint.position, Quaternion.identity);
+            // ✅ Força o papel real a nascer na raiz da cena também
+            Vector3 spawnPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
+            activePaper = Instantiate(paperPrefab, spawnPos, Quaternion.identity, null);
 
             Collider2D paperCollider = activePaper.GetComponent<Collider2D>();
             if (paperCollider != null)

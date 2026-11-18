@@ -7847,7 +7847,7 @@ Transform:
   m_GameObject: {fileID: 902253559}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 145.1, y: 26, z: 0}
+  m_LocalPosition: {x: 407.4, y: 119.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28495,17 +28495,25 @@ PrefabInstance:
       propertyPath: minigameManager
       value: 
       objectReference: {fileID: 1593462379}
+    - target: {fileID: 4083938224664325074, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083938224664325074, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 779558477
+      objectReference: {fileID: 0}
     - target: {fileID: 7642419129362054639, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_Name
       value: NPCteste
       objectReference: {fileID: 0}
     - target: {fileID: 8562406886701229167, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 354.29166
+      value: 364
       objectReference: {fileID: 0}
     - target: {fileID: 8562406886701229167, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 172.24702
+      value: 172.52
       objectReference: {fileID: 0}
     - target: {fileID: 8562406886701229167, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_LocalPosition.z
