@@ -19,9 +19,19 @@ public class PaperMinigameManager : MonoBehaviour
     [SerializeField] private string nextSceneName;
 
     [System.Serializable]
+    public class DialogueLineData
+    {
+        [TextArea(2, 5)]
+        public string text;
+
+        [Tooltip("Se marcado, a mão vai animar E sortear um novo Spot enquanto essa fala está na tela.")]
+        public bool playHandAnimation;
+    }
+
+    [System.Serializable]
     public class RoundDialogue
     {
-        public string[] lines;
+        public DialogueLineData[] lines;
     }
 
     [Header("Diálogos Entre Rodadas")]
@@ -34,11 +44,8 @@ public class PaperMinigameManager : MonoBehaviour
 
     [Header("Animação da Mão (Tutorial)")]
     [SerializeField] private GameObject handPrefab;
-    [Tooltip("Onde a mão começa. Se vazio, usa o SpawnPoint.")]
-    [SerializeField] private Transform handStartPosition; // ✅ MUDANÇA AQUI
-    [Tooltip("Até onde a mão vai. Se vazio, usa o Spot sorteado.")]
+    [SerializeField] private Transform handStartPosition;
     [SerializeField] private Transform handTargetPoint;
-    [SerializeField] private bool showHandTutorial = true;
     [SerializeField] private float animationDuration = 1.5f;
 
     [Header("Regras")]
@@ -80,50 +87,40 @@ public class PaperMinigameManager : MonoBehaviour
 
             AtualizarUI();
 
-            // 1. Spawn do papel e escolha do spot
-            SpawnNextPaper(false);
-
-            // 2. Animação da mão tutorial
-            if (showHandTutorial && handPrefab != null && activePaper != null)
+            // 1. Começa a rodada limpando os brilhos antigos
+            foreach (var spot in allSpots)
             {
-                // Define as posições
-                Vector3 startPos = handStartPosition != null ? handStartPosition.position : spawnPoint.position;
-                Vector3 targetPos = handTargetPoint != null
-                    ? handTargetPoint.position
-                    : (currentHighlightedSpot != null ? currentHighlightedSpot.transform.position : spawnPoint.position);
-
-                GameObject handObj = Instantiate(handPrefab, startPos, Quaternion.identity); // ✅ Nasce no startPos
-                PaperHandAnimation handScript = handObj.GetComponent<PaperHandAnimation>();
-                PaperVisualDemo paperScript = activePaper.GetComponent<PaperVisualDemo>();
-
-                if (handScript != null && paperScript != null)
-                {
-                    // Move a mão e o papel juntos
-                    Coroutine handRoutine = StartCoroutine(handScript.AnimateHand(startPos, targetPos, animationDuration));
-                    Coroutine paperRoutine = StartCoroutine(paperScript.AnimatePaper(startPos, targetPos, animationDuration));
-
-                    yield return handRoutine;
-                    yield return paperRoutine;
-                }
-
-                if (handObj != null) Destroy(handObj);
-                DestroyCurrentPaper();
-
-                SpawnNextPaper(true);
+                if (spot != null) spot.SetHighlight(false);
             }
 
-            // 3. Diálogo antes da rodada começar de fato
+            // 2. Toca o diálogo LINHA POR LINHA
             if (dialogueSystem != null && dialoguesBetweenRounds.Length >= currentRound)
             {
-                string[] linesToPlay = dialoguesBetweenRounds[currentRound - 1].lines;
-                if (linesToPlay != null && linesToPlay.Length > 0)
+                DialogueLineData[] currentRoundLines = dialoguesBetweenRounds[currentRound - 1].lines;
+
+                foreach (DialogueLineData line in currentRoundLines)
                 {
-                    dialogueSystem.StartDialogue(linesToPlay);
+                    // Se a linha pedir animação, roda a mão E sorteia o Spot
+                    if (line.playHandAnimation)
+                    {
+                        yield return StartCoroutine(PlayHandTutorial());
+                    }
+
+                    dialogueSystem.StartDialogue(new string[] { line.text });
                     yield return new WaitWhile(() => dialogueSystem.IsRunning);
                 }
             }
 
-            // 4. Timer começa
+            // 3. Se a rodada não teve nenhuma animação, sorteia um spot agora para o player começar
+            if (currentHighlightedSpot == null)
+            {
+                RandomizeSpot();
+            }
+
+            // 4. Cria o papel REAL que o player vai arrastar
+            SpawnNextPaper(true);
+
+            // 5. Timer começa
             currentTime = timePerRound;
 
             while (currentTime > 0 && papersOrganizedThisRound < papersToOrganizePerRound && !isGameOver)
@@ -150,6 +147,40 @@ public class PaperMinigameManager : MonoBehaviour
         if (!isGameOver) yield return StartCoroutine(VictorySequence());
     }
 
+    private IEnumerator PlayHandTutorial()
+    {
+        if (handPrefab == null) yield break;
+
+        // ✅ Sorteia um novo Spot sempre que a mão for animar
+        RandomizeSpot();
+
+        // Cria um papel FALSO só para a animação (não interativo)
+        GameObject fakePaper = Instantiate(paperPrefab, spawnPoint.position, Quaternion.identity);
+        Collider2D fakeCol = fakePaper.GetComponent<Collider2D>();
+        if (fakeCol != null) fakeCol.enabled = false;
+
+        Vector3 startPos = handStartPosition != null ? handStartPosition.position : spawnPoint.position;
+        Vector3 targetPos = handTargetPoint != null
+            ? handTargetPoint.position
+            : (currentHighlightedSpot != null ? currentHighlightedSpot.transform.position : spawnPoint.position);
+
+        GameObject handObj = Instantiate(handPrefab, startPos, Quaternion.identity);
+        PaperHandAnimation handScript = handObj.GetComponent<PaperHandAnimation>();
+        PaperVisualDemo paperScript = fakePaper.GetComponent<PaperVisualDemo>();
+
+        if (handScript != null && paperScript != null)
+        {
+            Coroutine handRoutine = StartCoroutine(handScript.AnimateHand(startPos, targetPos, animationDuration));
+            Coroutine paperRoutine = StartCoroutine(paperScript.AnimatePaper(startPos, targetPos, animationDuration));
+
+            yield return handRoutine;
+            yield return paperRoutine;
+        }
+
+        if (handObj != null) Destroy(handObj);
+        if (fakePaper != null) Destroy(fakePaper);
+    }
+
     public void OnPaperOrganizedCorrectly()
     {
         if (!isRoundActive || isGameOver) return;
@@ -164,6 +195,8 @@ public class PaperMinigameManager : MonoBehaviour
         }
         else
         {
+            // ✅ Agora o próximo papel vai para um spot DIFERENTE
+            RandomizeSpot();
             SpawnNextPaper(true);
         }
     }
@@ -184,14 +217,14 @@ public class PaperMinigameManager : MonoBehaviour
         }
         else
         {
+            // ✅ Se errar, também muda o spot para ele tentar outro
+            RandomizeSpot();
             SpawnNextPaper(true);
         }
     }
 
-    private void SpawnNextPaper(bool isInteractive)
+    private void RandomizeSpot()
     {
-        DestroyCurrentPaper();
-
         foreach (var spot in allSpots)
         {
             if (spot != null) spot.SetHighlight(false);
@@ -203,13 +236,19 @@ public class PaperMinigameManager : MonoBehaviour
             currentHighlightedSpot = allSpots[randomIndex];
             currentHighlightedSpot.SetHighlight(true);
         }
+    }
+
+    private void SpawnNextPaper(bool isInteractive)
+    {
+        DestroyCurrentPaper();
 
         if (paperPrefab != null && spawnPoint != null)
         {
-            activePaper = Instantiate(paperPrefab, spawnPoint);
+            activePaper = Instantiate(paperPrefab, spawnPoint.position, Quaternion.identity);
 
             Collider2D paperCollider = activePaper.GetComponent<Collider2D>();
-            if (paperCollider != null) paperCollider.enabled = isInteractive;
+            if (paperCollider != null)
+                paperCollider.enabled = isInteractive;
         }
     }
 
