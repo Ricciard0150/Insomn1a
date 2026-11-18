@@ -2553,6 +2553,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378045230}
   m_CullTransparentMesh: 1
+--- !u!1 &383093518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 383093519}
+  - component: {fileID: 383093522}
+  - component: {fileID: 383093521}
+  - component: {fileID: 383093520}
+  m_Layer: 0
+  m_Name: Trigger (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &383093519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383093518}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1330988862}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &383093520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383093518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a0f25bcf0cfa154bb342a84063271d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCData
+  npcName: Thoughts post intereview
+  falas:
+  - "Melhor eu ir trabalhar, j\xE1 to \xE9 atrasado..."
+  sprites:
+  - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
+--- !u!114 &383093521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383093518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4acd308b87e380940a43bd7431baf058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueTyping
+--- !u!114 &383093522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383093518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36533e65c00dfba4996e7f31d6032cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
+  dialoguePanel: {fileID: 765943188}
+  dialogueText: {fileID: 1770067081}
+  characterImage: {fileID: 2052173182}
+  pressingEIndicator: {fileID: 150873144}
+  velocidadeTexto: 0.05
+  playerMovement: {fileID: 5055718417195591049}
 --- !u!1 &383698923
 GameObject:
   m_ObjectHideFlags: 0
@@ -9350,7 +9431,7 @@ Transform:
   m_GameObject: {fileID: 1035721323}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -46.54, y: -92.3, z: 0}
+  m_LocalPosition: {x: 375.8, y: -26.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9368,8 +9449,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fb3341ec53d7c46bb58927b83c3f50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThoughtsD
-  dialogueSystem: {fileID: 369525944}
-  npcData: {fileID: 369525945}
+  dialogueSystem: {fileID: 383093522}
+  npcData: {fileID: 383093520}
   triggerOnce: 1
   delayToStart: 0.2
 --- !u!61 &1035721326
@@ -21385,6 +21466,7 @@ Transform:
   - {fileID: 1592144252}
   - {fileID: 924545846}
   - {fileID: 236904182}
+  - {fileID: 383093519}
   - {fileID: 1831278105}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -28509,11 +28591,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8562406886701229167, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 364
+      value: 278.7
       objectReference: {fileID: 0}
     - target: {fileID: 8562406886701229167, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 172.52
+      value: 101.7
       objectReference: {fileID: 0}
     - target: {fileID: 8562406886701229167, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_LocalPosition.z
