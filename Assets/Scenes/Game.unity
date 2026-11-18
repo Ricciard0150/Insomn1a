@@ -9000,6 +9000,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 3064677178699535752, guid: d4f3a4d1fc81bbb498f88ff8d2947b53, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4121805661754666431, guid: d4f3a4d1fc81bbb498f88ff8d2947b53, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5763791292834662137, guid: d4f3a4d1fc81bbb498f88ff8d2947b53, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -9084,6 +9092,14 @@ PrefabInstance:
       propertyPath: dialogueSystem
       value: 
       objectReference: {fileID: 1704881960}
+    - target: {fileID: 8859558607998164974, guid: d4f3a4d1fc81bbb498f88ff8d2947b53, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8896322652530711468, guid: d4f3a4d1fc81bbb498f88ff8d2947b53, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23451,6 +23467,17 @@ MonoBehaviour:
   pressingEIndicator: {fileID: 150873144}
   velocidadeTexto: 0.05
   playerMovement: {fileID: 5055718417195591049}
+--- !u!114 &1593462379 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7403226418444964466, guid: d4f3a4d1fc81bbb498f88ff8d2947b53, type: 3}
+  m_PrefabInstance: {fileID: 1020802556}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ba15407711621448adcaf38e79b6b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PaperMinigameManager
 --- !u!1 &1604638508
 GameObject:
   m_ObjectHideFlags: 0
@@ -28460,6 +28487,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1649517936606180839, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: dialogueSystem
+      value: 
+      objectReference: {fileID: 1704881960}
+    - target: {fileID: 1649517936606180839, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: minigameManager
+      value: 
+      objectReference: {fileID: 1593462379}
     - target: {fileID: 7642419129362054639, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_Name
       value: NPCteste

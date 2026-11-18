@@ -15,13 +15,9 @@ public class PaperHandAnimation : MonoBehaviour
     {
         if (spriteRenderer != null) spriteRenderer.enabled = true;
 
-        // ✅ Garante que ela começa no startPos de verdade
         transform.position = startPos;
-
-        // Aguarda um frame para a Unity renderizar a posição inicial
         yield return null;
 
-        // 1. Move do startPos até o targetPos
         float elapsed = 0f;
         while (elapsed < duration)
         {
@@ -32,10 +28,8 @@ public class PaperHandAnimation : MonoBehaviour
         }
         transform.position = targetPos;
 
-        // 2. Segura no targetPos
         yield return new WaitForSeconds(0.5f);
 
-        // 3. Volta para o startPos
         elapsed = 0f;
         while (elapsed < duration)
         {
@@ -46,7 +40,6 @@ public class PaperHandAnimation : MonoBehaviour
         }
 
         transform.position = startPos;
-
         if (spriteRenderer != null) spriteRenderer.enabled = false;
     }
 }
