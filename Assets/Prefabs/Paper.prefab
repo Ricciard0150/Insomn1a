@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 635738317890678820}
   - component: {fileID: 1101992164228406629}
   - component: {fileID: -3547933521699939206}
+  - component: {fileID: 2405935532989604028}
   m_Layer: 0
   m_Name: Paper
   m_TagString: Untagged
@@ -150,3 +151,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2405935532989604028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9210045579418939001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91976efa9a6dd1047b1d62165ec077c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PaperVisualDemo
+  moveDuration: 1.5

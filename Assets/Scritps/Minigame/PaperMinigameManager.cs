@@ -21,17 +21,25 @@ public class PaperMinigameManager : MonoBehaviour
     [System.Serializable]
     public class RoundDialogue
     {
-        public string[] lines; // Falas do patrão para essa rodada
+        public string[] lines;
     }
 
     [Header("Diálogos Entre Rodadas")]
-    [Tooltip("Configure as falas ANTES de cada rodada. O índice 0 é antes da Rodada 1, o índice 1 antes da Rodada 2, etc.")]
     [SerializeField] private RoundDialogue[] dialoguesBetweenRounds;
 
     [Header("Spots e Papéis")]
     [SerializeField] private PaperSpot[] allSpots;
     [SerializeField] private GameObject paperPrefab;
     [SerializeField] private Transform spawnPoint;
+
+    [Header("Animação da Mão (Tutorial)")]
+    [SerializeField] private GameObject handPrefab;
+    [Tooltip("Onde a mão começa. Se vazio, usa o SpawnPoint.")]
+    [SerializeField] private Transform handStartPosition; // ✅ MUDANÇA AQUI
+    [Tooltip("Até onde a mão vai. Se vazio, usa o Spot sorteado.")]
+    [SerializeField] private Transform handTargetPoint;
+    [SerializeField] private bool showHandTutorial = true;
+    [SerializeField] private float animationDuration = 1.5f;
 
     [Header("Regras")]
     [SerializeField] private int totalRounds = 5;
@@ -72,11 +80,42 @@ public class PaperMinigameManager : MonoBehaviour
 
             AtualizarUI();
 
-            // ✅ TOCA O DIÁLOGO ESPECÍFICO DA RODADA
+            // 1. Spawn do papel e escolha do spot
+            SpawnNextPaper(false);
+
+            // 2. Animação da mão tutorial
+            if (showHandTutorial && handPrefab != null && activePaper != null)
+            {
+                // Define as posições
+                Vector3 startPos = handStartPosition != null ? handStartPosition.position : spawnPoint.position;
+                Vector3 targetPos = handTargetPoint != null
+                    ? handTargetPoint.position
+                    : (currentHighlightedSpot != null ? currentHighlightedSpot.transform.position : spawnPoint.position);
+
+                GameObject handObj = Instantiate(handPrefab, startPos, Quaternion.identity); // ✅ Nasce no startPos
+                PaperHandAnimation handScript = handObj.GetComponent<PaperHandAnimation>();
+                PaperVisualDemo paperScript = activePaper.GetComponent<PaperVisualDemo>();
+
+                if (handScript != null && paperScript != null)
+                {
+                    // Move a mão e o papel juntos
+                    Coroutine handRoutine = StartCoroutine(handScript.AnimateHand(startPos, targetPos, animationDuration));
+                    Coroutine paperRoutine = StartCoroutine(paperScript.AnimatePaper(startPos, targetPos, animationDuration));
+
+                    yield return handRoutine;
+                    yield return paperRoutine;
+                }
+
+                if (handObj != null) Destroy(handObj);
+                DestroyCurrentPaper();
+
+                SpawnNextPaper(true);
+            }
+
+            // 3. Diálogo antes da rodada começar de fato
             if (dialogueSystem != null && dialoguesBetweenRounds.Length >= currentRound)
             {
                 string[] linesToPlay = dialoguesBetweenRounds[currentRound - 1].lines;
-
                 if (linesToPlay != null && linesToPlay.Length > 0)
                 {
                     dialogueSystem.StartDialogue(linesToPlay);
@@ -84,9 +123,8 @@ public class PaperMinigameManager : MonoBehaviour
                 }
             }
 
-            // Timer e Spawn
+            // 4. Timer começa
             currentTime = timePerRound;
-            SpawnNextPaper();
 
             while (currentTime > 0 && papersOrganizedThisRound < papersToOrganizePerRound && !isGameOver)
             {
@@ -126,7 +164,7 @@ public class PaperMinigameManager : MonoBehaviour
         }
         else
         {
-            SpawnNextPaper();
+            SpawnNextPaper(true);
         }
     }
 
@@ -146,11 +184,11 @@ public class PaperMinigameManager : MonoBehaviour
         }
         else
         {
-            SpawnNextPaper();
+            SpawnNextPaper(true);
         }
     }
 
-    private void SpawnNextPaper()
+    private void SpawnNextPaper(bool isInteractive)
     {
         DestroyCurrentPaper();
 
@@ -169,6 +207,9 @@ public class PaperMinigameManager : MonoBehaviour
         if (paperPrefab != null && spawnPoint != null)
         {
             activePaper = Instantiate(paperPrefab, spawnPoint);
+
+            Collider2D paperCollider = activePaper.GetComponent<Collider2D>();
+            if (paperCollider != null) paperCollider.enabled = isInteractive;
         }
     }
 
