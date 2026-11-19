@@ -1167,7 +1167,7 @@ MonoBehaviour:
   - {fileID: 902253559}
   - {fileID: 837571612}
   objectsToDeactivate:
-  - {fileID: 551879089}
+  - {fileID: 2106373126}
   player: {fileID: 1865952460842338405}
   respawnPoint: {fileID: 0}
   gameOverPanel: {fileID: 1206262021}
@@ -21284,7 +21284,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.1386312}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -21294,7 +21294,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.7227376}
   m_EdgeRadius: 0
 --- !u!212 &1309401278
 SpriteRenderer:
@@ -28270,7 +28270,7 @@ GameObject:
   - component: {fileID: 2106373128}
   - component: {fileID: 2106373127}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Colliderpt2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28310,7 +28310,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 2.6538239, y: 2.9331741}
+  m_Offset: {x: 2.6538239, y: 6.4938335}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -28320,7 +28320,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.3076477, y: 12.229866}
+  m_Size: {x: 6.3076477, y: 19.351185}
   m_EdgeRadius: 0
 --- !u!4 &2106373128
 Transform:
