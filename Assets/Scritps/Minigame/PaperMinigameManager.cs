@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class PaperMinigameManager : MonoBehaviour
 {
@@ -16,7 +15,6 @@ public class PaperMinigameManager : MonoBehaviour
     [Header("Diálogos e Fades")]
     [SerializeField] private InterviewQuests dialogueSystem;
     [SerializeField] private FadeController fadeController;
-    [SerializeField] private string nextSceneName;
 
     [System.Serializable]
     public class DialogueLineData
@@ -37,6 +35,14 @@ public class PaperMinigameManager : MonoBehaviour
     [Header("Diálogos Entre Rodadas")]
     [SerializeField] private RoundDialogue[] dialoguesBetweenRounds;
 
+    [Header("1. Diálogo Final (Painel AINDA Aberto)")]
+    [TextArea(2, 5)]
+    [SerializeField] private string[] finalVictoryLines;
+
+    [Header("2. Diálogo Pós-Minigame (Painel Fechado)")]
+    [TextArea(2, 5)]
+    [SerializeField] private string[] postMinigameLines;
+
     [Header("Spots e Papéis")]
     [SerializeField] private PaperSpot[] allSpots;
     [SerializeField] private GameObject paperPrefab;
@@ -47,6 +53,10 @@ public class PaperMinigameManager : MonoBehaviour
     [SerializeField] private Transform handStartPosition;
     [SerializeField] private Transform handTargetPoint;
     [SerializeField] private float animationDuration = 1.5f;
+
+    [Header("Consequences - Victory")]
+    [SerializeField] private GameObject[] objectsToActivate;
+    [SerializeField] private GameObject[] objectsToDeactivate;
 
     [Header("Regras")]
     [SerializeField] private int totalRounds = 5;
@@ -147,7 +157,6 @@ public class PaperMinigameManager : MonoBehaviour
 
         RandomizeSpot();
 
-        // ✅ Cria o papel falso na raiz da cena (null)
         Vector3 fakePaperPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
         GameObject fakePaper = Instantiate(paperPrefab, fakePaperPos, Quaternion.identity, null);
 
@@ -162,7 +171,6 @@ public class PaperMinigameManager : MonoBehaviour
             : (currentHighlightedSpot != null ? currentHighlightedSpot.transform.position : spawnPoint.position);
         targetPos.z = 0f;
 
-        // ✅ Cria a mão na raiz da cena (null)
         GameObject handObj = Instantiate(handPrefab, startPos, Quaternion.identity, null);
 
         PaperHandAnimation handScript = handObj.GetComponent<PaperHandAnimation>();
@@ -242,7 +250,6 @@ public class PaperMinigameManager : MonoBehaviour
 
         if (paperPrefab != null && spawnPoint != null)
         {
-            // ✅ Força o papel real a nascer na raiz da cena também
             Vector3 spawnPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
             activePaper = Instantiate(paperPrefab, spawnPos, Quaternion.identity, null);
 
@@ -274,15 +281,52 @@ public class PaperMinigameManager : MonoBehaviour
         if (gameOverPanel != null) gameOverPanel.SetActive(true);
     }
 
+    // ✅ VITÓRIA COM DOIS DIÁLOGOS
     private IEnumerator VictorySequence()
     {
-        if (dialogueSystem != null)
+        // 1. Diálogo Final (Painel do minigame AINDA ABERTO)
+        if (dialogueSystem != null && finalVictoryLines != null && finalVictoryLines.Length > 0)
         {
-            dialogueSystem.StartDialogue(new string[] { "Inacreditável. Você sobreviveu.", "Agora volte ao trabalho." });
+            dialogueSystem.StartDialogue(finalVictoryLines);
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
-        if (fadeController != null) yield return StartCoroutine(fadeController.FadeToBlack(1f));
-        SceneManager.LoadScene(nextSceneName);
+        // 2. Ativa e desativa os objetos da cena
+        ActivateVictoryObjects();
+
+        // 3. Fecha o painel principal do minigame
+        if (minigamePanel != null)
+            minigamePanel.SetActive(false);
+
+        // 4. Pequeno delay para o jogador assimilar que voltou ao mundo
+        yield return new WaitForSeconds(1f);
+
+        // 5. Diálogo Pós-Minigame (Painel FECHADO, jogador no controle)
+        if (dialogueSystem != null && postMinigameLines != null && postMinigameLines.Length > 0)
+        {
+            dialogueSystem.StartDialogue(postMinigameLines);
+            // Não precisa do WaitWhile se você quiser que o jogador possa andar enquanto lê.
+            // Mas se quiser travar, é só descomentar a linha abaixo:
+            // yield return new WaitWhile(() => dialogueSystem.IsRunning);
+        }
+    }
+
+    private void ActivateVictoryObjects()
+    {
+        if (objectsToActivate != null)
+        {
+            foreach (GameObject obj in objectsToActivate)
+            {
+                if (obj != null) obj.SetActive(true);
+            }
+        }
+
+        if (objectsToDeactivate != null)
+        {
+            foreach (GameObject obj in objectsToDeactivate)
+            {
+                if (obj != null) obj.SetActive(false);
+            }
+        }
     }
 }
