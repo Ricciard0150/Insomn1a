@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CollectibleLetterPiece : MonoBehaviour
@@ -8,6 +9,18 @@ public class CollectibleLetterPiece : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private LetterPickupPanel pickupPanel;
+    [SerializeField] private InterviewQuests dialogueSystem;
+
+    [Header("Diálogo Final (Ao pegar o pedaço 3)")]
+    [TextArea(2, 5)]
+    [SerializeField] private string[] finalLetterDialogue;
+
+    // ✅ NOVOS CAMPOS AQUI
+    [Header("Consequences (Após o diálogo final)")]
+    [SerializeField] private GameObject[] objectsToActivate;
+    [SerializeField] private GameObject[] objectsToDeactivate;
+
+    [Header("Input")]
     [SerializeField] private string interactButton = "Interact";
 
     private bool playerNear = false;
@@ -15,7 +28,6 @@ public class CollectibleLetterPiece : MonoBehaviour
 
     void Start()
     {
-        // Se já foi coletado antes, some
         if (SaveSystem.Instance != null && SaveSystem.Instance.HasLetterPiece(pieceNumber))
         {
             gameObject.SetActive(false);
@@ -28,29 +40,76 @@ public class CollectibleLetterPiece : MonoBehaviour
         {
             collected = true;
 
-            // Salva no sistema
             if (SaveSystem.Instance != null)
                 SaveSystem.Instance.CollectLetterPiece(pieceNumber);
 
-            // Pega os dados do SaveSystem
             int collectedCount = SaveSystem.Instance != null ? SaveSystem.Instance.GetCollectedLetterPieceCount() : 1;
             int total = SaveSystem.Instance != null ? SaveSystem.Instance.GetTotalLetterPieces() : 3;
 
-            // ✅ É AQUI QUE VOCÊ COLOCA A LINHA
             if (pickupPanel != null)
+            {
                 pickupPanel.Show(itemName, pieceNumber, collectedCount, total);
+
+                // Se for o ÚLTIMO pedaço, inscreve no evento do painel para tocar o diálogo quando ele fechar
+                if (collectedCount >= total)
+                {
+                    pickupPanel.OnPanelClosed += ShowFinalDialogue;
+                }
+            }
 
             gameObject.SetActive(false);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    // ✅ CHAMA O DIÁLOGO E DEPOIS ATIVA/DESATIVA OS OBJETOS
+    private void ShowFinalDialogue()
     {
-        if (other.CompareTag("Player")) playerNear = true;
+        // Remove a inscrição para não tocar duas vezes
+        pickupPanel.OnPanelClosed -= ShowFinalDialogue;
+
+        if (dialogueSystem != null && finalLetterDialogue.Length > 0)
+        {
+            // Toca o diálogo
+            dialogueSystem.StartDialogue(finalLetterDialogue);
+
+            // Inicia uma coroutine para esperar o diálogo terminar antes de ativar os objetos
+            StartCoroutine(WaitDialogueAndApplyConsequences());
+        }
+        else
+        {
+            // Se não tiver diálogo, ativa os objetos direto
+            ApplyConsequences();
+        }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private IEnumerator WaitDialogueAndApplyConsequences()
     {
-        if (other.CompareTag("Player")) playerNear = false;
+        // Espera o jogador terminar de ler o diálogo
+        yield return new WaitWhile(() => dialogueSystem.IsRunning);
+
+        // Agora ativa e desativa os objetos
+        ApplyConsequences();
     }
+
+    private void ApplyConsequences()
+    {
+        if (objectsToActivate != null)
+        {
+            foreach (GameObject obj in objectsToActivate)
+            {
+                if (obj != null) obj.SetActive(true);
+            }
+        }
+
+        if (objectsToDeactivate != null)
+        {
+            foreach (GameObject obj in objectsToDeactivate)
+            {
+                if (obj != null) obj.SetActive(false);
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other) { if (other.CompareTag("Player")) playerNear = true; }
+    void OnTriggerExit2D(Collider2D other) { if (other.CompareTag("Player")) playerNear = false; }
 }

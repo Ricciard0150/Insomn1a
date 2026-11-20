@@ -5623,7 +5623,7 @@ GameObject:
   - component: {fileID: 685654404}
   - component: {fileID: 685654403}
   m_Layer: 0
-  m_Name: letter (2)
+  m_Name: letter 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5680,6 +5680,10 @@ MonoBehaviour:
   itemName: "Peda\xE7o de carta"
   pieceNumber: 2
   pickupPanel: {fileID: 228051383}
+  dialogueSystem: {fileID: 0}
+  finalLetterDialogue: []
+  objectsToActivate: []
+  objectsToDeactivate: []
   interactButton: Interact
 --- !u!212 &685654405
 SpriteRenderer:
@@ -8064,6 +8068,10 @@ MonoBehaviour:
   itemName: "Peda\xE7o de carta"
   pieceNumber: 1
   pickupPanel: {fileID: 228051383}
+  dialogueSystem: {fileID: 0}
+  finalLetterDialogue: []
+  objectsToActivate: []
+  objectsToDeactivate: []
   interactButton: Interact
 --- !u!212 &905236859
 SpriteRenderer:
@@ -20568,7 +20576,7 @@ GameObject:
   - component: {fileID: 1249601346}
   - component: {fileID: 1249601345}
   m_Layer: 0
-  m_Name: letter (1)
+  m_Name: 'letter 3 '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20625,6 +20633,13 @@ MonoBehaviour:
   itemName: "Peda\xE7o de carta"
   pieceNumber: 3
   pickupPanel: {fileID: 228051383}
+  dialogueSystem: {fileID: 1574989813}
+  finalLetterDialogue:
+  - i got this BITCH!
+  objectsToActivate:
+  - {fileID: 0}
+  - {fileID: 0}
+  objectsToDeactivate: []
   interactButton: Interact
 --- !u!212 &1249601347
 SpriteRenderer:
@@ -23559,6 +23574,71 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 12.626801, y: 8.522703}
   m_EdgeRadius: 0
+--- !u!1 &1574989812
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1574989814}
+  - component: {fileID: 1574989813}
+  m_Layer: 0
+  m_Name: InterviewCarta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1574989813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574989812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906b41649c6f65444a48eccb496fa0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InterviewQuests
+  dialogueText: {fileID: 1777450455}
+  dialoguePanel: {fileID: 1653279357}
+  characterImage: {fileID: 0}
+  textSpeed: 0.03
+  victoryLines:
+  - i got this
+  defeatLines: []
+  currentQuestData:
+    questId: 
+    questName: 
+    npcName: 
+    introLines: []
+    victoryLines:
+    - i got this
+    defeatLines:
+    - pessimo
+    questions: []
+    maxLives: 3
+    minCorrect: 2
+    objectToActivate: 
+    objectToDeactivate: 
+--- !u!4 &1574989814
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574989812}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -132.78387, y: -13.543461, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1870465419}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1576548082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26020,6 +26100,7 @@ Transform:
   - {fileID: 1497053606}
   - {fileID: 1162569549}
   - {fileID: 1312730300}
+  - {fileID: 1574989814}
   - {fileID: 963507211}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29055,7 +29136,7 @@ SceneRoots:
   - {fileID: 1776364289}
   - {fileID: 1615909949}
   - {fileID: 905236860}
-  - {fileID: 1249601348}
   - {fileID: 685654406}
+  - {fileID: 1249601348}
   - {fileID: 2131111381}
   - {fileID: 2106373128}
