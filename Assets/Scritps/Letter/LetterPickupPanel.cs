@@ -7,13 +7,17 @@ public class LetterPickupPanel : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Image blackFade;
-    [SerializeField] private Image itemIcon;
+
+    [Header("Slots da Carta (Element 0, 1 e 2)")]
+    [SerializeField] private Image[] letterSlots = new Image[3];
+
+    [Header("Textos e UI")]
     [SerializeField] private TMP_Text itemNameText;
     [SerializeField] private TMP_Text counterText;
 
     [Header("Timing")]
     [SerializeField] private float fadeIn = 0.5f;
-    [SerializeField] private float hold = 1.5f;
+    [SerializeField] private float hold = 2.5f;
     [SerializeField] private float fadeOut = 0.5f;
 
     private Coroutine currentRoutine;
@@ -21,61 +25,41 @@ public class LetterPickupPanel : MonoBehaviour
     void Awake()
     {
         SetAlpha(blackFade, 0f);
-        SetAlpha(itemIcon, 0f);
+
+        // Começa com todos os slots escondidos
+        foreach (var slot in letterSlots)
+        {
+            if (slot != null)
+            {
+                slot.enabled = false;
+                SetAlpha(slot, 0f);
+            }
+        }
+
         SetTextAlpha(itemNameText, 0f);
         SetTextAlpha(counterText, 0f);
-
-        if (itemIcon != null) itemIcon.enabled = false;
 
         gameObject.SetActive(false);
     }
 
-    public void Show(Sprite icon, string itemName, int collected, int total)
+    public void Show(string itemName, int pieceNumber, int collected, int total)
     {
-        if (icon == null)
-        {
-            Debug.LogError("[LetterPickupPanel] Sprite NULL");
-            return;
-        }
-
         gameObject.SetActive(true);
 
-        // Ícone
-        if (itemIcon != null)
+        if (itemNameText != null) itemNameText.text = itemName;
+        if (counterText != null) counterText.text = $"{collected}/{total}";
+
+        // ✅ CORREÇÃO AQUI: Ativa todos os slots ATÉ o número do pedaço atual
+        // Se pegou o 1, liga o [0]. Se pegou o 2, liga o [0] e [1]. E assim vai.
+        for (int i = 0; i < letterSlots.Length; i++)
         {
-            itemIcon.sprite = icon;
-            itemIcon.type = Image.Type.Simple;
-            itemIcon.preserveAspect = true;
-            itemIcon.enabled = true;
-            itemIcon.color = Color.white;
-
-            RectTransform rt = itemIcon.rectTransform;
-            rt.localScale = Vector3.one;
-            rt.anchoredPosition = Vector2.zero;
-
-            if (rt.sizeDelta.x <= 0f) rt.sizeDelta = new Vector2(300f, 300f);
-            if (rt.sizeDelta.y <= 0f) rt.sizeDelta = new Vector2(300f, 300f);
-
-            itemIcon.transform.SetAsLastSibling();
+            if (letterSlots[i] != null)
+            {
+                letterSlots[i].enabled = (i < pieceNumber);
+            }
         }
 
-        // Nome
-        if (itemNameText != null)
-        {
-            itemNameText.text = itemName;
-            itemNameText.transform.SetAsLastSibling();
-        }
-
-        // Contador
-        if (counterText != null)
-        {
-            counterText.text = $"{collected}/{total}";
-            counterText.transform.SetAsLastSibling();
-        }
-
-        if (currentRoutine != null)
-            StopCoroutine(currentRoutine);
-
+        if (currentRoutine != null) StopCoroutine(currentRoutine);
         currentRoutine = StartCoroutine(Animate());
     }
 
@@ -86,16 +70,18 @@ public class LetterPickupPanel : MonoBehaviour
         {
             t += Time.unscaledDeltaTime;
             float a = Mathf.Lerp(0f, 1f, t / fadeIn);
+
             SetAlpha(blackFade, a);
-            SetAlpha(itemIcon, a);
             SetTextAlpha(itemNameText, a);
             SetTextAlpha(counterText, a);
+
+            // Faz o fade apenas nos slots que estão ativos
+            foreach (var slot in letterSlots)
+            {
+                if (slot != null && slot.enabled) SetAlpha(slot, a);
+            }
             yield return null;
         }
-        SetAlpha(blackFade, 1f);
-        SetAlpha(itemIcon, 1f);
-        SetTextAlpha(itemNameText, 1f);
-        SetTextAlpha(counterText, 1f);
 
         yield return new WaitForSecondsRealtime(hold);
 
@@ -104,16 +90,17 @@ public class LetterPickupPanel : MonoBehaviour
         {
             t += Time.unscaledDeltaTime;
             float a = Mathf.Lerp(1f, 0f, t / fadeOut);
+
             SetAlpha(blackFade, a);
-            SetAlpha(itemIcon, a);
             SetTextAlpha(itemNameText, a);
             SetTextAlpha(counterText, a);
+
+            foreach (var slot in letterSlots)
+            {
+                if (slot != null && slot.enabled) SetAlpha(slot, a);
+            }
             yield return null;
         }
-        SetAlpha(blackFade, 0f);
-        SetAlpha(itemIcon, 0f);
-        SetTextAlpha(itemNameText, 0f);
-        SetTextAlpha(counterText, 0f);
 
         gameObject.SetActive(false);
         currentRoutine = null;
