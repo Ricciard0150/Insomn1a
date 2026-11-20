@@ -9,13 +9,22 @@ public class DialogueTyping : MonoBehaviour
     private float velocidadeTexto = 0.05f;
     private Coroutine typingCoroutine;
     private bool isTyping = false;
+    private bool usarTypewriter = true; // ✅ novo
 
     public bool IsTyping => isTyping;
 
+    // ✅ Mantém a assinatura antiga (2 args) para não quebrar nada
     public void Initialize(TMP_Text text, float speed)
     {
         dialogueText = text;
         velocidadeTexto = speed;
+    }
+
+    // ✅ Nova sobrecarga (3 args) usada pelo DialogueNightmare
+    public void Initialize(TMP_Text text, float speed, bool useTypewriter)
+    {
+        Initialize(text, speed);
+        usarTypewriter = useTypewriter;
     }
 
     public void UpdateDialogue(string[] newFalas)
@@ -29,6 +38,15 @@ public class DialogueTyping : MonoBehaviour
 
         if (falas == null || index >= falas.Length)
             return;
+
+        // ✅ Se typewriter desligado, mostra tudo de uma vez
+        if (!usarTypewriter)
+        {
+            if (dialogueText != null)
+                dialogueText.text = falas[index];
+            isTyping = false;
+            return;
+        }
 
         typingCoroutine = StartCoroutine(EscreverTexto(index));
     }

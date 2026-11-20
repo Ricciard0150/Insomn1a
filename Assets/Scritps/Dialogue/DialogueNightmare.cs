@@ -14,7 +14,17 @@ public class DialogueNightmare : MonoBehaviour
     [Header("Config")]
     [SerializeField] private float velocidadeTexto = 0.05f;
     [SerializeField] public TopDownMovement playerMovement;
-    [SerializeField] private string interactButton = "Interact"; // ✅ Adicionado
+    [SerializeField] private string interactButton = "Interact";
+
+    [Header("Comportamento")]
+    [Tooltip("Se true, o texto aparece letra por letra. Se false, aparece de uma vez.")]
+    [SerializeField] private bool usarTypewriter = false;
+
+    [Tooltip("Bloquear o movimento do player enquanto o diálogo estiver aberto?")]
+    [SerializeField] private bool bloquearMovimento = true;
+
+    [Tooltip("Overload do Door que antes liberava o player (jumpscare). Se true, mantém o player livre nesse overload.")]
+    [SerializeField] private bool liberarPlayerNoOverloadJumpscare = true;
 
     public static DialogueNightmare Instance { get; private set; }
 
@@ -34,14 +44,12 @@ public class DialogueNightmare : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
 
         dialoguePanel.SetActive(false);
+
+        if (dialogueText != null) dialogueText.text = ""; // limpa o "New Text"
 
         if (pressingEIndicator != null)
         {
@@ -59,24 +67,16 @@ public class DialogueNightmare : MonoBehaviour
         if (typingSystem == null)
             typingSystem = gameObject.AddComponent<DialogueTyping>();
 
-        typingSystem.Initialize(dialogueText, velocidadeTexto);
+        // ✅ passa usarTypewriter para o typing system
+        typingSystem.Initialize(dialogueText, velocidadeTexto, usarTypewriter);
     }
 
-    void OnDestroy()
-    {
-        if (Instance == this) Instance = null;
-    }
+    void OnDestroy() { if (Instance == this) Instance = null; }
 
-    // ✅ NOVO: Escuta o botão para pular/fechar o diálogo
     void Update()
     {
         if (!dialogoAtivo || waitingForAnimation) return;
-
-        // Se o jogador apertar E, avança o diálogo
-        if (Input.GetButtonDown(interactButton))
-        {
-            AdvanceDialogue();
-        }
+        if (Input.GetButtonDown(interactButton)) AdvanceDialogue();
     }
 
     public void SetNPCDialogue(string[] falas, Sprite[] sprites)
@@ -90,18 +90,19 @@ public class DialogueNightmare : MonoBehaviour
 
     public void StartDialogue()
     {
-        if (dialogoAtivo || currentFalas == null || currentFalas.Length == 0)
-            return;
+        if (dialogoAtivo || currentFalas == null || currentFalas.Length == 0) return;
 
-        if (playerMovement != null)
+        if (bloquearMovimento && playerMovement != null)
             playerMovement.canMove = false;
 
         dialogoAtivo = true;
         index = 0;
         ChangeSprite();
 
-        if (pressingEIndicator != null)
-            pressingEIndicator.SetActive(false);
+        if (pressingEIndicator != null) pressingEIndicator.SetActive(false);
+
+        // ✅ limpa o texto ANTES de animar — resolve o "New Text" aparecendo durante o slide
+        if (dialogueText != null) dialogueText.text = "";
 
         waitingForAnimation = true;
         panelAnimator.ShowPanel(() =>
@@ -114,8 +115,7 @@ public class DialogueNightmare : MonoBehaviour
 
     public void StartDialogue(string[] falas, Action onFinished = null)
     {
-        if (dialogoAtivo || falas == null || falas.Length == 0)
-            return;
+        if (dialogoAtivo || falas == null || falas.Length == 0) return;
 
         isJumpscareDialogue = true;
         onDialogueFinished = onFinished;
@@ -124,14 +124,15 @@ public class DialogueNightmare : MonoBehaviour
         currentSprites = null;
         typingSystem.UpdateDialogue(falas);
 
+        // ✅ controla o player conforme configuração
         if (playerMovement != null)
-            playerMovement.canMove = true;
+            playerMovement.canMove = liberarPlayerNoOverloadJumpscare;
 
         dialogoAtivo = true;
         index = 0;
 
-        if (pressingEIndicator != null)
-            pressingEIndicator.SetActive(false);
+        if (pressingEIndicator != null) pressingEIndicator.SetActive(false);
+        if (dialogueText != null) dialogueText.text = "";
 
         waitingForAnimation = true;
         panelAnimator.ShowPanel(() =>
@@ -152,14 +153,11 @@ public class DialogueNightmare : MonoBehaviour
         else
         {
             index++;
-
             if (index < currentFalas.Length)
             {
                 ChangeSprite();
                 typingSystem.StartTyping(index);
-
-                if (!isJumpscareDialogue)
-                    ShowPressingEIfNeeded();
+                if (!isJumpscareDialogue) ShowPressingEIfNeeded();
             }
             else
             {
@@ -173,8 +171,7 @@ public class DialogueNightmare : MonoBehaviour
         if (pressingEIndicator != null && index == currentFalas.Length - 1)
         {
             pressingEIndicator.SetActive(true);
-            if (pressingEPulse != null)
-                pressingEPulse.StartPulse();
+            if (pressingEPulse != null) pressingEPulse.StartPulse();
         }
         else if (pressingEIndicator != null)
         {
@@ -184,18 +181,16 @@ public class DialogueNightmare : MonoBehaviour
 
     private void ChangeSprite()
     {
-        if (currentSprites != null && index < currentSprites.Length)
+        if (currentSprites != null && index < currentSprites.Length && characterImage != null)
             characterImage.sprite = currentSprites[index];
     }
 
     public void CloseDialogue()
     {
         typingSystem.StopTyping();
-
         if (pressingEIndicator != null)
         {
-            if (pressingEPulse != null)
-                pressingEPulse.StopPulse();
+            if (pressingEPulse != null) pressingEPulse.StopPulse();
             pressingEIndicator.SetActive(false);
         }
 
@@ -206,7 +201,8 @@ public class DialogueNightmare : MonoBehaviour
         {
             dialogoAtivo = false;
 
-            if (!wasJumpscare && playerMovement != null)
+            // ✅ libera o player sempre ao fechar (exceto se era jumpscare — que já estava livre)
+            if (playerMovement != null && !wasJumpscare)
                 playerMovement.canMove = true;
 
             currentFalas = null;
@@ -214,28 +210,23 @@ public class DialogueNightmare : MonoBehaviour
             isJumpscareDialogue = false;
             onDialogueFinished = null;
 
+            if (dialogueText != null) dialogueText.text = ""; // ✅ limpa ao fechar
+
             finishedCallback?.Invoke();
         });
     }
 
-    public bool IsFinished()
-    {
-        return !dialogoAtivo;
-    }
+    public bool IsFinished() => !dialogoAtivo;
 
     public void ForceClose()
     {
         if (!dialogoAtivo) return;
-
         typingSystem.StopTyping();
-
         if (pressingEIndicator != null)
         {
-            if (pressingEPulse != null)
-                pressingEPulse.StopPulse();
+            if (pressingEPulse != null) pressingEPulse.StopPulse();
             pressingEIndicator.SetActive(false);
         }
-
         dialoguePanel.SetActive(false);
         dialogoAtivo = false;
         waitingForAnimation = false;
@@ -243,5 +234,7 @@ public class DialogueNightmare : MonoBehaviour
         currentSprites = null;
         isJumpscareDialogue = false;
         onDialogueFinished = null;
+        if (playerMovement != null) playerMovement.canMove = true; // ✅ libera
+        if (dialogueText != null) dialogueText.text = "";
     }
 }
