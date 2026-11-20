@@ -9,36 +9,41 @@ public class TimelineTrigger : MonoBehaviour
     [Tooltip("O PlayableDirector que contém a sua Timeline")]
     [SerializeField] private PlayableDirector timelineDirector;
 
-    [Header("Configurações")]
-    [Tooltip("Tempo que a tela leva para ficar preta")]
-    [SerializeField] private float fadeOutDuration = 1f;
+    [Header("Teleporte")]
+    [Tooltip("O Transform para onde o player vai ser teleportado")]
+    [SerializeField] private Transform pontoDeTeleporte;
 
-    [Tooltip("Tempo que a tela fica preta antes da Timeline começar")]
+    [Tooltip("Arraste o GameObject do Player aqui")]
+    [SerializeField] private GameObject player;
+
+    [Header("Configurações de Fade")]
+    [Tooltip("Tempo que a tela leva para ficar preta (Fade In)")]
+    [SerializeField] private float tempoEscurecer = 1f;
+
+    [Tooltip("Tempo que a tela fica preta antes de teleportar")]
     [SerializeField] private float tempoTelaPreta = 0.5f;
 
-    [Tooltip("Tempo que a tela leva para clarear depois da Timeline")]
-    [SerializeField] private float fadeInDuration = 1f;
+    [Tooltip("Tempo que a tela leva para clarear (Fade Out)")]
+    [SerializeField] private float tempoClarear = 1f;
 
+    [Header("Configurações Gerais")]
     [Tooltip("Se marcado, só acontece uma vez")]
     [SerializeField] private bool triggerOnlyOnce = true;
 
     [Tooltip("Bloquear o movimento do player durante a cutscene?")]
     [SerializeField] private bool freezePlayer = true;
 
-    [Header("Player (Opcional)")]
     [SerializeField] private TopDownMovement playerMovement;
 
     private bool playerNear = false;
     private bool hasTriggered = false;
     private bool isPlaying = false;
 
-    // Variáveis internas para o Fade
     private Image fadeImage;
     private Canvas fadeCanvas;
 
     void Awake()
     {
-        // Garante que a Timeline comece parada
         if (timelineDirector != null)
             timelineDirector.Stop();
 
@@ -47,7 +52,6 @@ public class TimelineTrigger : MonoBehaviour
 
     private void CriarCanvasDeFade()
     {
-        // 1. Cria o Canvas que vai ficar por cima de TUDO (Order 999)
         GameObject canvasGO = new GameObject("FadeCanvas_Cutscene");
         fadeCanvas = canvasGO.AddComponent<Canvas>();
         fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -56,15 +60,13 @@ public class TimelineTrigger : MonoBehaviour
         canvasGO.AddComponent<CanvasScaler>();
         canvasGO.AddComponent<GraphicRaycaster>();
 
-        // 2. Cria a Imagem preta
         GameObject imageGO = new GameObject("FadeImage");
         imageGO.transform.SetParent(canvasGO.transform, false);
 
         fadeImage = imageGO.AddComponent<Image>();
-        fadeImage.color = new Color(0, 0, 0, 0); // Começa transparente
+        fadeImage.color = new Color(0, 0, 0, 0);
         fadeImage.raycastTarget = false;
 
-        // 3. Faz a imagem cobrir a tela inteira
         RectTransform rect = fadeImage.rectTransform;
         rect.anchorMin = Vector2.zero;
         rect.anchorMax = Vector2.one;
@@ -76,7 +78,6 @@ public class TimelineTrigger : MonoBehaviour
     {
         if (playerNear && !hasTriggered && !isPlaying)
         {
-            // Se a Timeline já estiver tocando, não faz nada
             if (timelineDirector != null && timelineDirector.state == PlayState.Playing)
                 return;
 
@@ -95,18 +96,27 @@ public class TimelineTrigger : MonoBehaviour
         if (freezePlayer && playerMovement != null)
             playerMovement.SetCanMove(false);
 
-        // 1. Fade Out (Escurecer a tela)
-        yield return StartCoroutine(Fade(0f, 1f, fadeOutDuration));
+        // 1. Fade In (Escurecer a tela)
+        yield return StartCoroutine(Fade(0f, 1f, tempoEscurecer));
 
-        // 2. Espera um pouquinho no escuro
+        // 2. Espera um pouquinho com a tela preta
         yield return new WaitForSeconds(tempoTelaPreta);
 
-        // 3. Toca a Timeline
+        // 3. Teleporta o player (invisível para o jogador, pois a tela está preta)
+        if (player != null && pontoDeTeleporte != null)
+        {
+            player.transform.position = pontoDeTeleporte.position;
+        }
+
+        // 4. Fade Out (Clarear a tela mostrando o player no novo lugar)
+        yield return StartCoroutine(Fade(1f, 0f, tempoClarear));
+
+        // 5. Toca a Timeline
         if (timelineDirector != null)
         {
             timelineDirector.Play();
 
-            // 4. Espera a Timeline terminar sozinha
+            // Espera a Timeline terminar sozinha
             yield return new WaitWhile(() => timelineDirector.state == PlayState.Playing);
         }
         else
@@ -114,9 +124,6 @@ public class TimelineTrigger : MonoBehaviour
             Debug.LogWarning("[TimelineTrigger] Nenhuma Timeline atribuída!");
             yield return new WaitForSeconds(2f);
         }
-
-        // 5. Fade In (Clarear a tela)
-        yield return StartCoroutine(Fade(1f, 0f, fadeInDuration));
 
         // Libera o player
         if (freezePlayer && playerMovement != null)
@@ -134,7 +141,7 @@ public class TimelineTrigger : MonoBehaviour
 
         while (elapsed < duration)
         {
-            elapsed += Time.unscaledDeltaTime; // unscaled para funcionar mesmo se o jogo pausar
+            elapsed += Time.unscaledDeltaTime;
             float t = elapsed / duration;
 
             color.a = Mathf.Lerp(startAlpha, endAlpha, t);
@@ -163,7 +170,6 @@ public class TimelineTrigger : MonoBehaviour
         }
     }
 
-    // Limpa o Canvas criado por código quando o objeto for destruído
     private void OnDestroy()
     {
         if (fadeCanvas != null)
