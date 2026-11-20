@@ -1164,7 +1164,7 @@ MonoBehaviour:
   introPanel: {fileID: 383698926}
   questId: papai
   objectsToActivate:
-  - {fileID: 1249601344}
+  - {fileID: 685654402}
   objectsToDeactivate:
   - {fileID: 2106373126}
   - {fileID: 551879089}
@@ -5623,12 +5623,12 @@ GameObject:
   - component: {fileID: 685654404}
   - component: {fileID: 685654403}
   m_Layer: 0
-  m_Name: letter 3
+  m_Name: letter 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!58 &685654403
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -9263,6 +9263,14 @@ PrefabInstance:
       propertyPath: dialogueSystem
       value: 
       objectReference: {fileID: 1704881960}
+    - target: {fileID: 7403226418444964466, guid: d4f3a4d1fc81bbb498f88ff8d2947b53, type: 3}
+      propertyPath: objectsToActivate.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403226418444964466, guid: d4f3a4d1fc81bbb498f88ff8d2947b53, type: 3}
+      propertyPath: 'objectsToActivate.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1249601344}
     - target: {fileID: 8859558607998164974, guid: d4f3a4d1fc81bbb498f88ff8d2947b53, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -20581,7 +20589,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!58 &1249601345
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -20625,7 +20633,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249601344}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f35c44f5c165d744783c0616b6903cdc, type: 3}
   m_Name: 
