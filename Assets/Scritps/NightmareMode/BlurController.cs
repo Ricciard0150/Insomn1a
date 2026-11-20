@@ -5,16 +5,68 @@ using System.Collections;
 
 public class BlurController : MonoBehaviour
 {
+    [Header("Referências")]
     [SerializeField] private Volume volume;
-    [SerializeField] private float blinkDuration = 0.15f;
+
+    [Header("Depth of Field")]
     [SerializeField] private float maxFocalLength = 300f;
 
+    [Header("Vignette (Bordas)")]
+    [SerializeField] private float maxVignetteIntensity = 0.5f; // O quão escuro as bordas ficam
+    [SerializeField] private float maxVignetteSmoothness = 0.5f; // O quão suave é a transição
+
     private DepthOfField dof;
+    private Vignette vignette;
 
     private void Start()
     {
         if (volume != null && volume.profile.TryGet(out dof))
             dof.active = false;
+
+        if (volume != null && volume.profile.TryGet(out vignette))
+        {
+            vignette.active = false;
+            vignette.intensity.value = 0f;
+        }
+    }
+
+    /// <summary>
+    /// Define a intensidade do blur (DOF + Vignette) de 0 (limpo) a 1 (total).
+    /// </summary>
+    public void SetBlurIntensity(float t)
+    {
+        t = Mathf.Clamp01(t);
+
+        // --- Depth of Field ---
+        if (dof != null)
+        {
+            if (t <= 0.001f)
+            {
+                dof.active = false;
+                dof.focalLength.value = 0f;
+            }
+            else
+            {
+                dof.active = true;
+                dof.focalLength.value = Mathf.Lerp(0f, maxFocalLength, t);
+            }
+        }
+
+        // --- Vignette (Bordas Escuras) ---
+        if (vignette != null)
+        {
+            if (t <= 0.001f)
+            {
+                vignette.active = false;
+                vignette.intensity.value = 0f;
+            }
+            else
+            {
+                vignette.active = true;
+                vignette.intensity.value = Mathf.Lerp(0f, maxVignetteIntensity, t);
+                vignette.smoothness.value = maxVignetteSmoothness;
+            }
+        }
     }
 
     public void TurnOnBlur()
@@ -24,66 +76,46 @@ public class BlurController : MonoBehaviour
             dof.active = true;
             dof.focalLength.value = maxFocalLength;
         }
+
+        if (vignette != null)
+        {
+            vignette.active = true;
+            vignette.intensity.value = maxVignetteIntensity;
+            vignette.smoothness.value = maxVignetteSmoothness;
+        }
     }
 
     public void TurnOffBlur()
     {
-        if (dof != null)
-            dof.active = false;
+        if (dof != null) dof.active = false;
+        if (vignette != null) vignette.active = false;
     }
-
-    /// <summary>
-    /// Define a intensidade do blur de 0 (sem blur) a 1 (blur total).
-    /// </summary>
-    public void SetBlurIntensity(float t)
-    {
-        if (dof == null) return;
-
-        t = Mathf.Clamp01(t);
-
-        if (t <= 0.001f)
-        {
-            dof.active = false;
-            dof.focalLength.value = 0f;
-            return;
-        }
-
-        dof.active = true;
-        dof.focalLength.value = Mathf.Lerp(0f, maxFocalLength, t);
-    }
-
-    public float GetMaxFocalLength() => maxFocalLength;
 
     public IEnumerator Piscar()
     {
         TurnOnBlur();
-        yield return new WaitForSeconds(blinkDuration);
+        yield return new WaitForSeconds(0.15f);
         TurnOffBlur();
     }
 
     public IEnumerator PiscarComFade()
     {
-        yield return StartCoroutine(FadeBlur(0f, 1f, blinkDuration));
+        yield return StartCoroutine(FadeBlur(0f, 1f, 0.15f));
         yield return new WaitForSeconds(0.05f);
-        yield return StartCoroutine(FadeBlur(1f, 0f, blinkDuration));
+        yield return StartCoroutine(FadeBlur(1f, 0f, 0.15f));
     }
 
     private IEnumerator FadeBlur(float start, float end, float duration)
     {
-        if (dof == null) yield break;
-
         float elapsed = 0f;
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
             float current = Mathf.Lerp(start, end, t);
-            dof.focalLength.value = Mathf.Lerp(0f, maxFocalLength, current);
-            dof.active = true;
+            SetBlurIntensity(current);
             yield return null;
         }
-
-        if (end == 0)
-            dof.active = false;
+        SetBlurIntensity(end);
     }
 }

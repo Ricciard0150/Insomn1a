@@ -1159,6 +1159,112 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2119409919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &290527930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 290527931}
+  - component: {fileID: 290527933}
+  - component: {fileID: 290527934}
+  m_Layer: 0
+  m_Name: Blinkbttn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &290527931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290527930}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -69.02255, y: -303.9312, z: -5220.193}
+  m_LocalScale: {x: 773.2904, y: 58.002144, z: 58.002144}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1507609571}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &290527933
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290527930}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: -417421713
+  m_SortingLayer: 6
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &290527934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290527930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2dce786bf0a1ed49963e0336a7e547b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIPulse
+  velocidade: 6
+  escalaMinima: 0.8
+  escalaMaxima: 1.1
 --- !u!1 &323181164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,8 +1778,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlurController
   volume: {fileID: 1868637334}
-  blinkDuration: 0.15
   maxFocalLength: 300
+  maxVignetteIntensity: 0.5
+  maxVignetteSmoothness: 0.5
 --- !u!4 &549130262
 Transform:
   m_ObjectHideFlags: 0
@@ -3197,11 +3304,10 @@ MonoBehaviour:
   blur: {fileID: 549130261}
   wipeSprite: {fileID: 2099073772}
   wipeCanvasGroup: {fileID: 2099073774}
+  spaceKeyIndicator: {fileID: 0}
   wipeCount: 3
   wipeDuration: 0.45
-  minHoldTime: 0.15
-  wipeDirection: {x: 1, y: 0}
-  overshoot: 300
+  circleRadius: 250
   wipeCurve:
     serializedVersion: 2
     m_Curve:
@@ -3226,7 +3332,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  holdButton: Blink
+  advanceButton: Blink
 --- !u!4 &859293676
 Transform:
   m_ObjectHideFlags: 0
@@ -4286,7 +4392,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1100377572
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6884,6 +6990,7 @@ RectTransform:
   - {fileID: 1121438950}
   - {fileID: 1836724643}
   - {fileID: 2099073772}
+  - {fileID: 290527931}
   m_Father: {fileID: 564279368}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9527,6 +9634,7 @@ MonoBehaviour:
   fadeController: {fileID: 1195767711}
   asas: {fileID: 1100377572}
   blurWiper: {fileID: 859293675}
+  spaceKeyIndicator: {fileID: 290527930}
   interactButton: Interact
   blinkButton: Blink
   delayAfterBlink: 0.5
@@ -9961,7 +10069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2099073772
 RectTransform:
   m_ObjectHideFlags: 0

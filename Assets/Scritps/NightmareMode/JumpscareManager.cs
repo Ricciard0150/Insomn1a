@@ -16,7 +16,10 @@ public class JumpscareManager : MonoBehaviour
     [SerializeField] private PressEIndicator pressEIndicator;
     [SerializeField] private FadeController fadeController;
     [SerializeField] private AudioSource asas;
-    [SerializeField] private BlurWiper blurWiper; // ✅ NOVO
+    [SerializeField] private BlurWiper blurWiper;
+
+    // ✅ NOVO: Referência para o botão blink (tecla espaço)
+    [SerializeField] private GameObject spaceKeyIndicator;
 
     [Header("Input Settings")]
     [SerializeField] private string interactButton = "Interact";
@@ -49,10 +52,6 @@ public class JumpscareManager : MonoBehaviour
 
     void Update()
     {
-        // ✅ Não usamos mais Input.GetButtonDown(blinkButton) aqui,
-        //    porque o BlurWiper controla o "segurar ESPAÇO" internamente.
-        //    Só mantemos o waitingBlink para o fluxo da sequência.
-
         if (isRunning) return;
 
         if (Input.GetButtonDown(interactButton) && CanInteract() && !IsDialogueBlocking())
@@ -103,11 +102,19 @@ public class JumpscareManager : MonoBehaviour
 
         if (pressEIndicator != null) pressEIndicator.Hide();
 
-        if (dialogue != null)
-            dialogue.StartDialogue(new string[] { "Segure ESPAÇO para limpar a visão..." });
+        // ❌ REMOVIDO: dialogue.StartDialogue(...)
 
-        // ✅ Se o wiper existir, começa imediatamente o processo.
-        //    Se não, cai no fallback antigo.
+        // ✅ NOVO: Ativa o botão blink
+        if (spaceKeyIndicator != null)
+        {
+            spaceKeyIndicator.SetActive(true);
+            Debug.Log("[Jumpscare] Botão Blink ativado.");
+        }
+        else
+        {
+            Debug.LogWarning("[Jumpscare] spaceKeyIndicator está NULO no Inspector!");
+        }
+
         StartCoroutine(ProcessBlink());
     }
 
@@ -115,25 +122,24 @@ public class JumpscareManager : MonoBehaviour
     {
         waitingBlink = false;
 
-        // Garante blur total no começo
         if (blur != null) blur.SetBlurIntensity(1f);
 
         bool wipeFinished = false;
 
         if (blurWiper != null)
         {
-            // ✅ Wiper controla o "segurar ESPAÇO" e reduz o blur a cada passada
             blurWiper.Begin(() => wipeFinished = true);
-
-            // Espera o jogador limpar a tela (3 passadas)
             yield return new WaitUntil(() => wipeFinished);
         }
         else
         {
-            // Fallback: comportamento antigo com piscar
             if (blur != null) yield return StartCoroutine(blur.PiscarComFade());
             if (blur != null) blur.TurnOffBlur();
         }
+
+        // ✅ NOVO: Desativa o botão blink após limpar a tela
+        if (spaceKeyIndicator != null)
+            spaceKeyIndicator.SetActive(false);
 
         yield return new WaitForSeconds(delayAfterBlink);
 
@@ -170,7 +176,6 @@ public class JumpscareManager : MonoBehaviour
         panelAberto = false;
         punchActivated = false;
 
-        // Força o save com o nome EXATO da cena
         if (SaveSystem.Instance != null)
         {
             string cenaDestino = sceneToLoad.Trim();
@@ -193,9 +198,11 @@ public class JumpscareManager : MonoBehaviour
         if (sequence != null) sequence.ShowPanel(false);
         if (blur != null) blur.TurnOffBlur();
         if (pressEIndicator != null) pressEIndicator.Hide();
-
-        // ✅ Cancela o wiper se estiver ativo
         if (blurWiper != null) blurWiper.Cancel();
+
+        // ✅ NOVO: Garante que o botão comece desativado
+        if (spaceKeyIndicator != null)
+            spaceKeyIndicator.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
