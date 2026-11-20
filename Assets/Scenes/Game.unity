@@ -1164,10 +1164,10 @@ MonoBehaviour:
   introPanel: {fileID: 383698926}
   questId: papai
   objectsToActivate:
-  - {fileID: 902253559}
-  - {fileID: 837571612}
+  - {fileID: 1249601344}
   objectsToDeactivate:
   - {fileID: 2106373126}
+  - {fileID: 551879089}
   player: {fileID: 1865952460842338405}
   respawnPoint: {fileID: 0}
   gameOverPanel: {fileID: 1206262021}
@@ -28669,11 +28669,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8562406886701229167, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 278.7
+      value: 316.8
       objectReference: {fileID: 0}
     - target: {fileID: 8562406886701229167, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 101.7
+      value: 80.2
       objectReference: {fileID: 0}
     - target: {fileID: 8562406886701229167, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_LocalPosition.z
