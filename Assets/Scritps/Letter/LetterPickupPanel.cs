@@ -31,7 +31,7 @@ public class LetterPickupPanel : MonoBehaviour
         }
         SetTextAlpha(itemNameText, 0f);
         SetTextAlpha(counterText, 0f);
-        gameObject.SetActive(false);
+        // ❌ REMOVA ESTA LINHA: gameObject.SetActive(false);
     }
 
     public void Show(string itemName, int pieceNumber, int collected, int total)
