@@ -7,39 +7,30 @@ public class BlurWiper : MonoBehaviour
 {
     [Header("Referências")]
     [SerializeField] private BlurController blur;
-    [SerializeField] private RectTransform wipeSprite; // o pano (Image ou SpriteRenderer em Canvas)
-    [SerializeField] private CanvasGroup wipeCanvasGroup; // opcional, para fade do pano
+    [SerializeField] private RectTransform wipeSprite;
+    [SerializeField] private CanvasGroup wipeCanvasGroup;
 
     [Header("Configuração")]
-    [Tooltip("Quantas passadas do pano até limpar todo o blur.")]
+    [Tooltip("Quantas esfregadas (passadas) até limpar todo o blur.")]
     [SerializeField] private int wipeCount = 3;
 
-    [Tooltip("Duração de UMA passada do pano.")]
-    [SerializeField] private float wipeDuration = 0.45f;
+    [Tooltip("Duração de UMA esfregada completa (círculo inteiro).")]
+    [SerializeField] private float wipeDuration = 0.35f;
 
-    [Tooltip("Tempo mínimo que o jogador precisa segurar o espaço para uma passada valer.")]
-    [SerializeField] private float minHoldTime = 0.15f;
-
-    [Tooltip("Direção da passada. X = esquerda->direita, Y = baixo->cima.")]
-    [SerializeField] private Vector2 wipeDirection = new Vector2(1f, 0f);
-
-    [Tooltip("Quanto o pano vai além da tela (em pixels) para sair totalmente.")]
-    [SerializeField] private float overshoot = 300f;
+    [Tooltip("Raio do círculo que o pano vai fazer na tela.")]
+    [SerializeField] private float circleRadius = 250f;
 
     [Header("Easing")]
     [SerializeField] private AnimationCurve wipeCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    [Header("Estado")]
-    [SerializeField] private string holdButton = "Blink";
+    [Header("Input")]
+    [SerializeField] private string advanceButton = "Blink";
 
     private int wipesDone = 0;
     private bool wiping = false;
-    private bool holding = false;
-    private float holdStartTime = 0f;
-    private Vector2 spriteStart;
-    private Vector2 spriteEnd;
     private Action onFinished;
     private bool active = false;
+    private Vector2 initialCenter;
 
     public bool IsWiping => wiping;
     public int WipesDone => wipesDone;
@@ -48,8 +39,10 @@ public class BlurWiper : MonoBehaviour
     {
         if (wipeSprite != null)
         {
-            spriteStart = wipeSprite.anchoredPosition;
+            // Salva a posição central onde o pano deve fazer o círculo
+            initialCenter = wipeSprite.anchoredPosition;
         }
+
         if (wipeCanvasGroup != null)
             wipeCanvasGroup.alpha = 0f;
 
@@ -57,15 +50,11 @@ public class BlurWiper : MonoBehaviour
             wipeSprite.gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// Inicia o processo. Chame quando o jumpscare pedir para o jogador limpar a tela.
-    /// </summary>
     public void Begin(Action onComplete)
     {
         onFinished = onComplete;
         wipesDone = 0;
         wiping = false;
-        holding = false;
         active = true;
 
         if (blur != null)
@@ -77,15 +66,11 @@ public class BlurWiper : MonoBehaviour
             wipeCanvasGroup.alpha = 0f;
     }
 
-    /// <summary>
-    /// Força parar (ex: se o jumpscare for cancelado).
-    /// </summary>
     public void Cancel()
     {
         StopAllCoroutines();
         active = false;
         wiping = false;
-        holding = false;
         if (wipeSprite != null) wipeSprite.gameObject.SetActive(false);
         if (wipeCanvasGroup != null) wipeCanvasGroup.alpha = 0f;
     }
@@ -94,23 +79,9 @@ public class BlurWiper : MonoBehaviour
     {
         if (!active || wiping) return;
 
-        // Segurou o botão
-        if (Input.GetButtonDown(holdButton))
+        // Detecta o clique do ESPAÇO (não precisa segurar)
+        if (Input.GetButtonDown(advanceButton))
         {
-            holding = true;
-            holdStartTime = Time.time;
-        }
-
-        // Soltou
-        if (Input.GetButtonUp(holdButton))
-        {
-            holding = false;
-        }
-
-        // Se está segurando há tempo suficiente, dispara uma passada
-        if (holding && Time.time - holdStartTime >= minHoldTime && wipesDone < wipeCount)
-        {
-            holding = false;
             StartCoroutine(DoWipe());
         }
     }
@@ -119,51 +90,57 @@ public class BlurWiper : MonoBehaviour
     {
         wiping = true;
 
-        // Ativa o pano
         if (wipeSprite != null)
         {
             wipeSprite.gameObject.SetActive(true);
-            wipeSprite.anchoredPosition = GetOffscreenPosition(-1f); // começa fora da tela
+            // O pano começa no centro, mas um pouco afastado para o fade in
+            wipeSprite.anchoredPosition = initialCenter + new Vector2(circleRadius, 0);
         }
 
-        // Fade in rápido
+        // Fade in suave do pano
         if (wipeCanvasGroup != null)
         {
             float t = 0f;
-            while (t < 0.08f)
+            while (t < 0.1f)
             {
                 t += Time.deltaTime;
-                wipeCanvasGroup.alpha = Mathf.Clamp01(t / 0.08f);
+                wipeCanvasGroup.alpha = Mathf.Clamp01(t / 0.1f);
                 yield return null;
             }
             wipeCanvasGroup.alpha = 1f;
         }
 
-        // Move o pano
+        // Movimento Circular (Desenha o círculo)
         float elapsed = 0f;
-        Vector2 startPos = GetOffscreenPosition(-1f);
-        Vector2 endPos = GetOffscreenPosition(1f);
-
         while (elapsed < wipeDuration)
         {
             elapsed += Time.deltaTime;
-            float p = wipeCurve.Evaluate(Mathf.Clamp01(elapsed / wipeDuration));
+            float progress = Mathf.Clamp01(elapsed / wipeDuration);
+
+            // O ângulo vai de 0 a 360 (uma volta completa)
+            float angle = progress * Mathf.PI * 2f;
+
+            // Calcula a posição do círculo usando Seno e Cosseno
+            // Multiplicamos por 1.5f para dar uma "volta e meia" (mais natural que só 1 volta)
+            float currentAngle = angle * 1.5f;
+
+            float x = Mathf.Cos(currentAngle) * circleRadius;
+            float y = Mathf.Sin(currentAngle) * circleRadius;
+
             if (wipeSprite != null)
-                wipeSprite.anchoredPosition = Vector2.Lerp(startPos, endPos, p);
+                wipeSprite.anchoredPosition = initialCenter + new Vector2(x, y);
+
             yield return null;
         }
 
-        if (wipeSprite != null)
-            wipeSprite.anchoredPosition = endPos;
-
-        // Fade out rápido
+        // Fade out rápido do pano
         if (wipeCanvasGroup != null)
         {
             float t = 0f;
-            while (t < 0.08f)
+            while (t < 0.1f)
             {
                 t += Time.deltaTime;
-                wipeCanvasGroup.alpha = 1f - Mathf.Clamp01(t / 0.08f);
+                wipeCanvasGroup.alpha = 1f - Mathf.Clamp01(t / 0.1f);
                 yield return null;
             }
             wipeCanvasGroup.alpha = 0f;
@@ -172,10 +149,10 @@ public class BlurWiper : MonoBehaviour
         if (wipeSprite != null)
             wipeSprite.gameObject.SetActive(false);
 
-        // Aumenta o progresso
+        // Contabiliza o progresso
         wipesDone++;
 
-        // Reduz o blur proporcionalmente
+        // Reduz o blur gradativamente
         if (blur != null)
         {
             float remaining = 1f - (float)wipesDone / wipeCount;
@@ -184,39 +161,12 @@ public class BlurWiper : MonoBehaviour
 
         wiping = false;
 
-        // Terminou?
+        // Se limpou tudo, finaliza
         if (wipesDone >= wipeCount)
         {
             active = false;
             if (blur != null) blur.SetBlurIntensity(0f);
             onFinished?.Invoke();
         }
-    }
-
-    /// <summary>
-    /// Retorna a posição "fora da tela" para começar/terminar a passada.
-    /// factor = -1 (antes de entrar), +1 (depois de sair).
-    /// </summary>
-    private Vector2 GetOffscreenPosition(float factor)
-    {
-        if (wipeSprite == null) return Vector2.zero;
-
-        RectTransform parentRect = wipeSprite.parent as RectTransform;
-        float halfWidth = parentRect != null ? parentRect.rect.width * 0.5f : 960f;
-        float halfHeight = parentRect != null ? parentRect.rect.height * 0.5f : 540f;
-
-        // Direção normalizada
-        Vector2 dir = wipeDirection.normalized;
-        if (dir == Vector2.zero) dir = Vector2.right;
-
-        // Quantidade em cada eixo para sair da tela + overshoot
-        float offsetX = (halfWidth + overshoot) * Mathf.Sign(dir.x == 0 ? 1 : dir.x);
-        float offsetY = (halfHeight + overshoot) * Mathf.Sign(dir.y == 0 ? 1 : dir.y);
-
-        // Se a direção tem componente X dominante, usa X, senão Y
-        if (Mathf.Abs(dir.x) >= Mathf.Abs(dir.y))
-            return new Vector2(offsetX * factor, spriteStart.y);
-        else
-            return new Vector2(spriteStart.x, offsetY * factor);
     }
 }
