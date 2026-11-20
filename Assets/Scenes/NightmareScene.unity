@@ -3195,8 +3195,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlurWiper
   blur: {fileID: 549130261}
-  wipeSprite: {fileID: 0}
-  wipeCanvasGroup: {fileID: 0}
+  wipeSprite: {fileID: 2099073772}
+  wipeCanvasGroup: {fileID: 2099073774}
   wipeCount: 3
   wipeDuration: 0.45
   minHoldTime: 0.15
@@ -9526,7 +9526,7 @@ MonoBehaviour:
   pressEIndicator: {fileID: 826857118}
   fadeController: {fileID: 1195767711}
   asas: {fileID: 1100377572}
-  blurWiper: {fileID: 0}
+  blurWiper: {fileID: 859293675}
   interactButton: Interact
   blinkButton: Blink
   delayAfterBlink: 0.5
@@ -9954,6 +9954,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2099073772}
   - component: {fileID: 2099073773}
+  - component: {fileID: 2099073774}
   m_Layer: 0
   m_Name: WiperSprite
   m_TagString: Untagged
@@ -10038,6 +10039,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!225 &2099073774
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099073771}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &2119409918
 GameObject:
   m_ObjectHideFlags: 0
