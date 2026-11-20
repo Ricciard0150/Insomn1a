@@ -16,6 +16,7 @@ public class JumpscareManager : MonoBehaviour
     [SerializeField] private PressEIndicator pressEIndicator;
     [SerializeField] private FadeController fadeController;
     [SerializeField] private AudioSource asas;
+    [SerializeField] private BlurWiper blurWiper; // ✅ NOVO
 
     [Header("Input Settings")]
     [SerializeField] private string interactButton = "Interact";
@@ -28,7 +29,7 @@ public class JumpscareManager : MonoBehaviour
     [SerializeField] private string sceneToLoad;
 
     [Header("Teleport")]
-    [SerializeField] private Vector3 spawnPositionInNextScene; // ✅ NOVO
+    [SerializeField] private Vector3 spawnPositionInNextScene;
 
     private bool isRunning = false;
     private bool waitingBlink = false;
@@ -48,11 +49,9 @@ public class JumpscareManager : MonoBehaviour
 
     void Update()
     {
-        if (waitingBlink && Input.GetButtonDown(blinkButton))
-        {
-            StartCoroutine(ProcessBlink());
-            return;
-        }
+        // ✅ Não usamos mais Input.GetButtonDown(blinkButton) aqui,
+        //    porque o BlurWiper controla o "segurar ESPAÇO" internamente.
+        //    Só mantemos o waitingBlink para o fluxo da sequência.
 
         if (isRunning) return;
 
@@ -105,14 +104,36 @@ public class JumpscareManager : MonoBehaviour
         if (pressEIndicator != null) pressEIndicator.Hide();
 
         if (dialogue != null)
-            dialogue.StartDialogue(new string[] { "Aperte ESPAÇO para piscar..." });
+            dialogue.StartDialogue(new string[] { "Segure ESPAÇO para limpar a visão..." });
+
+        // ✅ Se o wiper existir, começa imediatamente o processo.
+        //    Se não, cai no fallback antigo.
+        StartCoroutine(ProcessBlink());
     }
 
     private IEnumerator ProcessBlink()
     {
         waitingBlink = false;
-        if (blur != null) yield return StartCoroutine(blur.PiscarComFade());
-        if (blur != null) blur.TurnOffBlur();
+
+        // Garante blur total no começo
+        if (blur != null) blur.SetBlurIntensity(1f);
+
+        bool wipeFinished = false;
+
+        if (blurWiper != null)
+        {
+            // ✅ Wiper controla o "segurar ESPAÇO" e reduz o blur a cada passada
+            blurWiper.Begin(() => wipeFinished = true);
+
+            // Espera o jogador limpar a tela (3 passadas)
+            yield return new WaitUntil(() => wipeFinished);
+        }
+        else
+        {
+            // Fallback: comportamento antigo com piscar
+            if (blur != null) yield return StartCoroutine(blur.PiscarComFade());
+            if (blur != null) blur.TurnOffBlur();
+        }
 
         yield return new WaitForSeconds(delayAfterBlink);
 
@@ -149,10 +170,10 @@ public class JumpscareManager : MonoBehaviour
         panelAberto = false;
         punchActivated = false;
 
-        // ✅ Força o save com o nome EXATO da cena
+        // Força o save com o nome EXATO da cena
         if (SaveSystem.Instance != null)
         {
-            string cenaDestino = sceneToLoad.Trim();   // ← remove espaços
+            string cenaDestino = sceneToLoad.Trim();
             SaveSystem.Instance.SaveGame(spawnPositionInNextScene, cenaDestino);
             Debug.Log($"[Jumpscare] Save forçado → cena='{cenaDestino}'");
         }
@@ -172,6 +193,9 @@ public class JumpscareManager : MonoBehaviour
         if (sequence != null) sequence.ShowPanel(false);
         if (blur != null) blur.TurnOffBlur();
         if (pressEIndicator != null) pressEIndicator.Hide();
+
+        // ✅ Cancela o wiper se estiver ativo
+        if (blurWiper != null) blurWiper.Cancel();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

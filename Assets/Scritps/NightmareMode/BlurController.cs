@@ -20,7 +20,10 @@ public class BlurController : MonoBehaviour
     public void TurnOnBlur()
     {
         if (dof != null)
+        {
             dof.active = true;
+            dof.focalLength.value = maxFocalLength;
+        }
     }
 
     public void TurnOffBlur()
@@ -28,6 +31,28 @@ public class BlurController : MonoBehaviour
         if (dof != null)
             dof.active = false;
     }
+
+    /// <summary>
+    /// Define a intensidade do blur de 0 (sem blur) a 1 (blur total).
+    /// </summary>
+    public void SetBlurIntensity(float t)
+    {
+        if (dof == null) return;
+
+        t = Mathf.Clamp01(t);
+
+        if (t <= 0.001f)
+        {
+            dof.active = false;
+            dof.focalLength.value = 0f;
+            return;
+        }
+
+        dof.active = true;
+        dof.focalLength.value = Mathf.Lerp(0f, maxFocalLength, t);
+    }
+
+    public float GetMaxFocalLength() => maxFocalLength;
 
     public IEnumerator Piscar()
     {
