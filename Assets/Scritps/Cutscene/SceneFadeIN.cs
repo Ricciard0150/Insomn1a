@@ -1,18 +1,20 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class SceneFadeIn : MonoBehaviour
 {
-    [Header("Configurações")]
-    [Tooltip("Tempo que a tela leva para clarear (Fade In)")]
-    [SerializeField] private float tempoFadeIn = 1.5f;
+    [Header("Configurações de Fade")]
+    [Tooltip("Tempo que a tela fica parada no preto antes de começar a clarear")]
+    [SerializeField] private float tempoHold = 0.5f;
 
-    [Tooltip("Tempo que a tela fica totalmente visível antes de sumir (opcional)")]
-    [SerializeField] private float tempoEspera = 0.5f;
+    [Tooltip("Tempo que a tela leva para clarear")]
+    [SerializeField] private float tempoFade = 1.5f;
 
-    [Tooltip("Se marcado, faz o Fade In (começa preto e clareia). Se desmarcado, faz o Fade Out (começa visível e escurece)")]
-    [SerializeField] private bool fazerFadeIn = true;
+    [Header("Timeline")]
+    [Tooltip("Arraste o PlayableDirector da Timeline que deve tocar após o clareamento")]
+    [SerializeField] private PlayableDirector timelineToPlay;
 
     private Image fadeImage;
     private Canvas fadeCanvas;
@@ -20,76 +22,76 @@ public class SceneFadeIn : MonoBehaviour
     void Awake()
     {
         CriarCanvasDeFade();
+
+        if (timelineToPlay != null)
+            timelineToPlay.Stop();
     }
 
     void Start()
     {
-        StartCoroutine(AnimarFade());
+        StartCoroutine(FazerFadeETocarTimeline());
     }
 
     private void CriarCanvasDeFade()
     {
-        // Cria o Canvas por cima de tudo
         GameObject canvasGO = new GameObject("FadeCanvas_CenaStart");
         fadeCanvas = canvasGO.AddComponent<Canvas>();
         fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        fadeCanvas.sortingOrder = 999; // Fica por cima de toda a UI
+        fadeCanvas.sortingOrder = 999;
 
         canvasGO.AddComponent<CanvasScaler>();
         canvasGO.AddComponent<GraphicRaycaster>();
 
-        // Cria a Imagem preta
         GameObject imageGO = new GameObject("FadeImage");
         imageGO.transform.SetParent(canvasGO.transform, false);
 
         fadeImage = imageGO.AddComponent<Image>();
         fadeImage.raycastTarget = false;
 
-        // Estica a imagem para cobrir a tela inteira
         RectTransform rect = fadeImage.rectTransform;
         rect.anchorMin = Vector2.zero;
         rect.anchorMax = Vector2.one;
         rect.offsetMin = Vector2.zero;
         rect.offsetMax = Vector2.zero;
 
-        // Define a cor inicial baseada na configuração
-        if (fazerFadeIn)
-            fadeImage.color = new Color(0, 0, 0, 1); // Começa PRETO
-        else
-            fadeImage.color = new Color(0, 0, 0, 0); // Começa TRANSPARENTE
+        // Começa PRETO
+        fadeImage.color = new Color(0, 0, 0, 1);
     }
 
-    private IEnumerator AnimarFade()
+    private IEnumerator FazerFadeETocarTimeline()
     {
         if (fadeImage == null) yield break;
 
-        // Se for Fade Out, espera um pouquinho antes de começar a escurecer
-        if (!fazerFadeIn)
-            yield return new WaitForSeconds(tempoEspera);
-
-        float startAlpha = fazerFadeIn ? 1f : 0f;
-        float endAlpha = fazerFadeIn ? 0f : 1f;
+        // ✅ NOVO: Espera o tempo de Hold com a tela totalmente preta
+        yield return new WaitForSeconds(tempoHold);
 
         float elapsed = 0f;
         Color color = fadeImage.color;
 
-        while (elapsed < tempoFadeIn)
+        while (elapsed < tempoFade)
         {
-            elapsed += Time.unscaledDeltaTime; // unscaled para funcionar mesmo se o jogo pausar
-            float t = elapsed / tempoFadeIn;
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / tempoFade);
 
-            color.a = Mathf.Lerp(startAlpha, endAlpha, t);
+            // Correção de Gamma para o fade ficar suave
+            float alphaCorrigido = 1f - (t * t);
+
+            color.a = alphaCorrigido;
             fadeImage.color = color;
 
             yield return null;
         }
 
-        color.a = endAlpha;
+        color.a = 0f;
         fadeImage.color = color;
 
-        // Se for Fade In, destrói o Canvas no final para liberar memória
-        if (fazerFadeIn && fadeCanvas != null)
+        if (fadeCanvas != null)
             Destroy(fadeCanvas.gameObject);
+
+        if (timelineToPlay != null)
+        {
+            timelineToPlay.Play();
+        }
     }
 
     private void OnDestroy()

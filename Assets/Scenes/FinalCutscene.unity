@@ -970,7 +970,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TouchFadeIn
   fadeImage: {fileID: 919890802}
-  tempoFade: 1.5
+  fadeText: {fileID: 1679189416}
+  fadeButton: {fileID: 2113298570}
+  fadeObject: {fileID: 0}
+  tempoFadeImagem: 1.5
+  tempoFadeTexto: 7.68
+  tempoFadeBotao: 13.58
+  tempoFadeObjeto: 1.5
   apenasUmaVez: 1
 --- !u!61 &884596533
 BoxCollider2D:
@@ -1047,9 +1053,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1679189415}
-  - {fileID: 2113298569}
+  m_Children: []
   m_Father: {fileID: 1849679115}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1554,12 +1558,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679189414}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 919890801}
+  m_Father: {fileID: 1849679115}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1812,8 +1816,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1131675919
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -2017,6 +2021,8 @@ RectTransform:
   m_Children:
   - {fileID: 333830967}
   - {fileID: 919890801}
+  - {fileID: 1679189415}
+  - {fileID: 2113298569}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2053,9 +2059,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd8e97d7804e994785363d12a886031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneFadeIn
-  tempoFadeIn: 3
-  tempoEspera: 0
-  fazerFadeIn: 1
+  tempoHold: 0.5
+  tempoFade: 7.5
+  timelineToPlay: {fileID: 326012064}
 --- !u!4 &1925709985
 Transform:
   m_ObjectHideFlags: 0
@@ -2097,13 +2103,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113298568}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 440047515}
-  m_Father: {fileID: 919890801}
+  m_Father: {fileID: 1849679115}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

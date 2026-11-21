@@ -9465,7 +9465,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1051169690
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -23768,7 +23768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1610394282
 Transform:
   m_ObjectHideFlags: 0
@@ -23798,7 +23798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionTrigger
   nomeDaCena: FinalCutscene
-  tempoFade: 1.5
+  tempoFade: 4.48
   atrasoAntesDeCarregar: 0.2
   interactButton: Interact
   pressEIndicator: {fileID: 150873144}
@@ -27563,7 +27563,7 @@ Transform:
   m_GameObject: {fileID: 2023370227}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.079, y: 1.313, z: 0}
+  m_LocalPosition: {x: -0.14, y: -0.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30925,7 +30925,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 428.5, y: 132.5, z: 0}
+  m_LocalPosition: {x: 502.6, y: 116.5, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
