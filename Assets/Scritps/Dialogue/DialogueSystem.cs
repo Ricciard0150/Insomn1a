@@ -10,7 +10,7 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private Image characterImage;
     [SerializeField] private GameObject pressingEIndicator;
 
-    // ✅ NOVO: Texto para o nome do personagem
+    // ✅ NOVO: Texto do nome
     [SerializeField] private TMP_Text characterNameText;
 
     [Header("Config")]
@@ -19,7 +19,8 @@ public class DialogueSystem : MonoBehaviour
 
     private string[] currentFalas;
     private Sprite[] currentSprites;
-    private string currentNPCName; // ✅ NOVO
+    private string[] currentNomesPorFala; // ✅ NOVO
+    private string currentNPCName;       // Fallback
     private bool dialogoAtivo = false;
     private int index = 0;
     private DialogueTyping typingSystem;
@@ -36,7 +37,6 @@ public class DialogueSystem : MonoBehaviour
         if (pressingEIndicator != null)
         {
             pressingEIndicator.SetActive(false);
-
             pressingEPulse = pressingEIndicator.GetComponent<PulseEffect>();
             if (pressingEPulse == null)
                 pressingEPulse = pressingEIndicator.AddComponent<PulseEffect>();
@@ -53,12 +53,23 @@ public class DialogueSystem : MonoBehaviour
         typingSystem.Initialize(dialogueText, velocidadeTexto);
     }
 
-    // ✅ Atualizado para receber o nome do NPC
+    // ✅ Versão original (mantida para não quebrar chamadas antigas)
     public void SetNPCDialogue(string[] falas, Sprite[] sprites, string npcName = "")
     {
         currentFalas = falas;
         currentSprites = sprites;
         currentNPCName = npcName;
+        currentNomesPorFala = null; // usa o fallback
+        typingSystem.UpdateDialogue(falas);
+    }
+
+    // ✅ NOVO: Versão com nomes por fala
+    public void SetNPCDialogue(string[] falas, Sprite[] sprites, string[] nomesPorFala, string npcNameFallback = "")
+    {
+        currentFalas = falas;
+        currentSprites = sprites;
+        currentNPCName = npcNameFallback;
+        currentNomesPorFala = nomesPorFala;
         typingSystem.UpdateDialogue(falas);
     }
 
@@ -73,8 +84,6 @@ public class DialogueSystem : MonoBehaviour
         dialogoAtivo = true;
         index = 0;
         ChangeSprite();
-
-        // ✅ Atualiza o nome assim que o diálogo começa
         UpdateName();
 
         if (pressingEIndicator != null)
@@ -103,7 +112,7 @@ public class DialogueSystem : MonoBehaviour
             if (index < currentFalas.Length)
             {
                 ChangeSprite();
-                UpdateName(); // ✅ Atualiza o nome a cada nova fala
+                UpdateName();
                 typingSystem.StartTyping(index);
                 ShowPressingEIfNeeded();
             }
@@ -116,9 +125,21 @@ public class DialogueSystem : MonoBehaviour
 
     private void UpdateName()
     {
-        if (characterNameText != null)
+        if (characterNameText == null) return;
+
+        // Prioridade 1: nome específico da fala
+        if (currentNomesPorFala != null && index < currentNomesPorFala.Length && !string.IsNullOrEmpty(currentNomesPorFala[index]))
+        {
+            characterNameText.text = currentNomesPorFala[index];
+        }
+        // Prioridade 2: nome geral do NPC
+        else if (!string.IsNullOrEmpty(currentNPCName))
         {
             characterNameText.text = currentNPCName;
+        }
+        else
+        {
+            characterNameText.text = "";
         }
     }
 
@@ -161,6 +182,7 @@ public class DialogueSystem : MonoBehaviour
 
             currentFalas = null;
             currentSprites = null;
+            currentNomesPorFala = null;
             currentNPCName = "";
         });
     }

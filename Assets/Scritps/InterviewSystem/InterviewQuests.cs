@@ -9,6 +9,9 @@ public class InterviewQuests : MonoBehaviour
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private GameObject dialoguePanel;
 
+    // ✅ NOVO: Texto para o nome do personagem
+    [SerializeField] private TMP_Text characterNameText;
+
     [Header("Character")]
     [SerializeField] private Image characterImage;
 
@@ -24,6 +27,9 @@ public class InterviewQuests : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private QuestData currentQuestData;
+
+    // ✅ NOVO: Nome manual (opcional) caso não use o QuestData
+    [SerializeField] private string manualNpcName = "";
 
     private bool isRunning;
     private Coroutine currentDialogue;
@@ -96,6 +102,9 @@ public class InterviewQuests : MonoBehaviour
         if (dialoguePanel != null)
             dialoguePanel.SetActive(true);
 
+        // ✅ Define o nome do NPC no início do diálogo
+        UpdateName();
+
         foreach (DialogueLine line in lines)
         {
             if (characterImage != null)
@@ -145,7 +154,27 @@ public class InterviewQuests : MonoBehaviour
         currentDialogueIndex = 0;
         isTextComplete = false;
         waitingForNext = false;
+    }
 
+    // ✅ Função que atualiza o nome
+    private void UpdateName()
+    {
+        if (characterNameText == null) return;
+
+        // Tenta pegar o nome do QuestData, se existir
+        if (currentQuestData != null && !string.IsNullOrEmpty(currentQuestData.npcName))
+        {
+            characterNameText.text = currentQuestData.npcName;
+        }
+        // Se não, tenta o nome manual
+        else if (!string.IsNullOrEmpty(manualNpcName))
+        {
+            characterNameText.text = manualNpcName;
+        }
+        else
+        {
+            characterNameText.text = ""; // Se não tiver nome, deixa vazio
+        }
     }
 
     public void SkipAllDialogue()
@@ -181,10 +210,7 @@ public class InterviewQuests : MonoBehaviour
         }
         else if (currentQuestData != null && currentQuestData.defeatLines != null && currentQuestData.defeatLines.Length > 0)
         {
-             StartDialogue(currentQuestData.defeatLines);
-        }
-        else
-        {
+            StartDialogue(currentQuestData.defeatLines);
         }
     }
 }

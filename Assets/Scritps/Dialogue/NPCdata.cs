@@ -15,4 +15,10 @@ public class NPCData : MonoBehaviour
     [Header("Falas DEPOIS da Nightmare (Usadas pelo InteractionDetector)")]
     [TextArea(3, 5)] public string[] falasAfterNightmare;
     public Sprite[] spritesAfterNightmare;
+
+    // ✅ NOVO: Nomes correspondentes a cada fala
+    [Header("Nomes por Fala (Opcional)")]
+    [Tooltip("Preencha com o nome de quem fala em cada linha. Se ficar vazio, usa o 'npcName'.")]
+    public string[] nomesBeforeNightmare;
+    public string[] nomesAfterNightmare;
 }

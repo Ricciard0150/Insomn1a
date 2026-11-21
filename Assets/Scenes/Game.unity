@@ -1864,6 +1864,10 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - Kafka
+  - Kafka
+  nomesAfterNightmare: []
 --- !u!114 &236904184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2637,6 +2641,12 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - "H\xE9lio"
+  - Kafka
+  - "H\xE9lio"
+  - Kafka
+  nomesAfterNightmare: []
 --- !u!114 &298744450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2883,6 +2893,9 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare: []
+  nomesAfterNightmare:
+  - "Instru\xE7\xF5es"
 --- !u!61 &369525946
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3117,6 +3130,9 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - Kafka
+  nomesAfterNightmare: []
 --- !u!114 &383093521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9821,6 +9837,10 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - Mulher cansada
+  - Kafka
+  nomesAfterNightmare: []
 --- !u!114 &923329091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9895,6 +9915,9 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - Kafka (em pensamento)
+  nomesAfterNightmare: []
 --- !u!114 &924545848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10109,6 +10132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InterviewQuests
   dialogueText: {fileID: 1777450455}
   dialoguePanel: {fileID: 1653279357}
+  characterNameText: {fileID: 0}
   characterImage: {fileID: 0}
   textSpeed: 0.03
   victoryLines:
@@ -10132,6 +10156,7 @@ MonoBehaviour:
     minCorrect: 2
     objectToActivate: 
     objectToDeactivate: 
+  manualNpcName: 
 --- !u!1 &969001824
 GameObject:
   m_ObjectHideFlags: 0
@@ -10814,6 +10839,10 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - Chefe
+  - Kafka
+  nomesAfterNightmare: []
 --- !u!114 &1030613189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11293,6 +11322,11 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare: []
+  nomesAfterNightmare:
+  - Karac
+  - Kafka
+  - Karac
 --- !u!114 &1068109098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22693,6 +22727,11 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - James
+  - Kafka
+  - James
+  nomesAfterNightmare: []
 --- !u!114 &1276927453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23028,6 +23067,9 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - "Secret\xE1ria"
+  nomesAfterNightmare: []
 --- !u!114 &1288718226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23243,6 +23285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InterviewQuests
   dialogueText: {fileID: 622770720}
   dialoguePanel: {fileID: 746844588}
+  characterNameText: {fileID: 0}
   characterImage: {fileID: 0}
   textSpeed: 0.03
   victoryLines:
@@ -23256,7 +23299,7 @@ MonoBehaviour:
   currentQuestData:
     questId: 
     questName: 
-    npcName: 
+    npcName: Entrevistador
     introLines: []
     victoryLines: []
     defeatLines:
@@ -23266,6 +23309,7 @@ MonoBehaviour:
     minCorrect: 2
     objectToActivate: 
     objectToDeactivate: 
+  manualNpcName: 
 --- !u!4 &1312730300
 Transform:
   m_ObjectHideFlags: 0
@@ -23325,7 +23369,6 @@ Transform:
   - {fileID: 924545846}
   - {fileID: 236904182}
   - {fileID: 383093519}
-  - {fileID: 1831278105}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1343069352
@@ -24876,6 +24919,8 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare: []
+  nomesAfterNightmare: []
 --- !u!1 &1497053602
 GameObject:
   m_ObjectHideFlags: 0
@@ -25218,20 +25263,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a0f25bcf0cfa154bb342a84063271d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCData
-  npcName: Aline
+  npcName: Aline (cantarolando)
   falas: []
   sprites:
   - {fileID: 1481551995095045547, guid: 5a0f734d5fe8f0644a35fac9e51ca663, type: 3}
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
   - {fileID: 1481551995095045547, guid: 5a0f734d5fe8f0644a35fac9e51ca663, type: 3}
   falasBeforeNightmare:
-  - o jeito q o ponteiro gira ta me dando agonia
+  - "O jeito que o ponteiro gira est\xE1 me dando agonia..."
   spritesBeforeNightmare: []
   falasAfterNightmare:
-  - 'num piscar de olhos eu nao sou mais quem eu conhecia
-
-'
+  - "Num piscar de olhos eu n\xE2o sou mais quem eu conhecia.\n"
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - Aline (cantarolando algo)
+  nomesAfterNightmare:
+  - Aline (cantarolando algo)
 --- !u!1 &1559718177
 GameObject:
   m_ObjectHideFlags: 0
@@ -25425,6 +25472,8 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare: []
+  nomesAfterNightmare: []
 --- !u!114 &1568412086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25582,6 +25631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InterviewQuests
   dialogueText: {fileID: 1777450455}
   dialoguePanel: {fileID: 1653279357}
+  characterNameText: {fileID: 0}
   characterImage: {fileID: 0}
   textSpeed: 0.03
   victoryLines:
@@ -25601,6 +25651,7 @@ MonoBehaviour:
     minCorrect: 2
     objectToActivate: 
     objectToDeactivate: 
+  manualNpcName: 
 --- !u!4 &1574989814
 Transform:
   m_ObjectHideFlags: 0
@@ -25736,6 +25787,9 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - Kafka (em pensamento)
+  nomesAfterNightmare: []
 --- !u!114 &1592144254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26198,6 +26252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InterviewQuests
   dialogueText: {fileID: 622770720}
   dialoguePanel: {fileID: 746844588}
+  characterNameText: {fileID: 0}
   characterImage: {fileID: 0}
   textSpeed: 0.03
   victoryLines:
@@ -26211,7 +26266,7 @@ MonoBehaviour:
   currentQuestData:
     questId: 
     questName: 
-    npcName: 
+    npcName: Pai
     introLines: []
     victoryLines: []
     defeatLines:
@@ -26221,6 +26276,7 @@ MonoBehaviour:
     minCorrect: 2
     objectToActivate: 
     objectToDeactivate: 
+  manualNpcName: 
 --- !u!1 &1643286953
 GameObject:
   m_ObjectHideFlags: 0
@@ -27135,6 +27191,10 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - 'Chefe '
+  - Kafka
+  nomesAfterNightmare: []
 --- !u!114 &1704621422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27990,97 +28050,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1831278104
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1831278105}
-  - component: {fileID: 1831278107}
-  - component: {fileID: 1831278106}
-  m_Layer: 0
-  m_Name: Start
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1831278105
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1831278104}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 133.3, y: -76.3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1330988862}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1831278106
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1831278104}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 2.2926407, y: 1.7784042}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 7.1279755, y: 4.5568085}
-  m_EdgeRadius: 0
---- !u!114 &1831278107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1831278104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c482dbbd1524d243a9e3d9e88014658, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AutoDialogueStarter
 --- !u!1 &1831403439
 GameObject:
   m_ObjectHideFlags: 0
@@ -30911,6 +30880,9 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
+  nomesBeforeNightmare:
+  - Atendente
+  nomesAfterNightmare: []
 --- !u!114 &2056157392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33727,7 +33699,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 538.4, y: 92.5, z: 0}
+  m_LocalPosition: {x: 383.1, y: 89.6, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
