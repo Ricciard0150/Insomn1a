@@ -2053,7 +2053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd8e97d7804e994785363d12a886031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneFadeIn
-  tempoFadeIn: 0.12
+  tempoFadeIn: 3
   tempoEspera: 0
   fazerFadeIn: 1
 --- !u!4 &1925709985
