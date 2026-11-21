@@ -8,7 +8,10 @@ public class DialogueSystem : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] public TMP_Text dialogueText;
     [SerializeField] private Image characterImage;
-    [SerializeField] private GameObject pressingEIndicator; 
+    [SerializeField] private GameObject pressingEIndicator;
+
+    // ✅ NOVO: Texto para o nome do personagem
+    [SerializeField] private TMP_Text characterNameText;
 
     [Header("Config")]
     [SerializeField] private float velocidadeTexto = 0.05f;
@@ -16,6 +19,7 @@ public class DialogueSystem : MonoBehaviour
 
     private string[] currentFalas;
     private Sprite[] currentSprites;
+    private string currentNPCName; // ✅ NOVO
     private bool dialogoAtivo = false;
     private int index = 0;
     private DialogueTyping typingSystem;
@@ -49,10 +53,12 @@ public class DialogueSystem : MonoBehaviour
         typingSystem.Initialize(dialogueText, velocidadeTexto);
     }
 
-    public void SetNPCDialogue(string[] falas, Sprite[] sprites)
+    // ✅ Atualizado para receber o nome do NPC
+    public void SetNPCDialogue(string[] falas, Sprite[] sprites, string npcName = "")
     {
         currentFalas = falas;
         currentSprites = sprites;
+        currentNPCName = npcName;
         typingSystem.UpdateDialogue(falas);
     }
 
@@ -67,6 +73,9 @@ public class DialogueSystem : MonoBehaviour
         dialogoAtivo = true;
         index = 0;
         ChangeSprite();
+
+        // ✅ Atualiza o nome assim que o diálogo começa
+        UpdateName();
 
         if (pressingEIndicator != null)
             pressingEIndicator.SetActive(false);
@@ -94,6 +103,7 @@ public class DialogueSystem : MonoBehaviour
             if (index < currentFalas.Length)
             {
                 ChangeSprite();
+                UpdateName(); // ✅ Atualiza o nome a cada nova fala
                 typingSystem.StartTyping(index);
                 ShowPressingEIfNeeded();
             }
@@ -101,6 +111,14 @@ public class DialogueSystem : MonoBehaviour
             {
                 CloseDialogue();
             }
+        }
+    }
+
+    private void UpdateName()
+    {
+        if (characterNameText != null)
+        {
+            characterNameText.text = currentNPCName;
         }
     }
 
@@ -143,6 +161,7 @@ public class DialogueSystem : MonoBehaviour
 
             currentFalas = null;
             currentSprites = null;
+            currentNPCName = "";
         });
     }
 }

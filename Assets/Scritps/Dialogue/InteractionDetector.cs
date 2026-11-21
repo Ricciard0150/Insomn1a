@@ -18,21 +18,10 @@ public class InteractionDetector : MonoBehaviour
         if (TextManager.Instance != null)
         {
             TextManager.Instance.RegisterNPC(this);
-            Debug.Log($"✅ {gameObject.name} registrado no TextManager");
-        }
-        else
-        {
-            Debug.LogWarning($"⚠ TextManager não encontrado para {gameObject.name}");
         }
 
         if (pressingE != null)
         {
-            if (pressingE.GetComponent<Image>() == null &&
-                pressingE.GetComponent<SpriteRenderer>() == null)
-            {
-                Debug.LogWarning("PressingE não tem Image ou SpriteRenderer!");
-            }
-
             pulseEffect = pressingE.GetComponent<PulseEffect>();
             if (pulseEffect == null)
                 pulseEffect = pressingE.AddComponent<PulseEffect>();
@@ -44,17 +33,13 @@ public class InteractionDetector : MonoBehaviour
     private void OnDestroy()
     {
         if (TextManager.Instance != null)
-        {
             TextManager.Instance.UnregisterNPC(this);
-            Debug.Log($"➖ {gameObject.name} removido do TextManager");
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<IStatusPlayer>() != null)
         {
-            Debug.Log("Player entrou na área do NPC");
             playerPerto = true;
 
             if (pressingE != null && !dialogueSystem.DialogoAtivo)
@@ -71,7 +56,6 @@ public class InteractionDetector : MonoBehaviour
         if (collision.GetComponent<IStatusPlayer>() == null)
             return;
 
-        Debug.Log("Player saiu da área do NPC");
         playerPerto = false;
 
         if (pressingE != null)
@@ -89,7 +73,6 @@ public class InteractionDetector : MonoBehaviour
 
         if (!dialogueSystem.DialogoAtivo)
         {
-            // ✅ Escolhe as falas baseado na flag de nightmare
             bool passouNightmare = SaveSystem.Instance != null && SaveSystem.Instance.HasPassedNightmare();
 
             string[] falasEscolhidas;
@@ -106,7 +89,8 @@ public class InteractionDetector : MonoBehaviour
                 spritesEscolhidos = npcData.spritesBeforeNightmare;
             }
 
-            dialogueSystem.SetNPCDialogue(falasEscolhidas, spritesEscolhidos);
+            // ✅ Agora passa o nome do NPC também
+            dialogueSystem.SetNPCDialogue(falasEscolhidas, spritesEscolhidos, npcData.npcName);
             dialogueSystem.StartDialogue();
 
             if (pressingE != null)
