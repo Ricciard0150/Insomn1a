@@ -11,6 +11,20 @@ public class InterviewManager : MonoBehaviour
     [SerializeField] private UInterviewManager uiManager;
     [SerializeField] private InterviewQuests dialogueSystem;
 
+    // ✅ NOVO: Imagem do personagem na tela do Quiz
+    [SerializeField] private UnityEngine.UI.Image characterImage;
+
+    // ✅ NOVO: Sprites de Reação
+    [Header("Sprites do Personagem (Quiz)")]
+    [Tooltip("Sprite normal enquanto a pergunta está na tela")]
+    [SerializeField] private Sprite spritePergunta;
+
+    [Tooltip("Sprite quando o jogador acerta a resposta")]
+    [SerializeField] private Sprite spriteAcerto;
+
+    [Tooltip("Sprite quando o jogador erra a resposta")]
+    [SerializeField] private Sprite spriteErro;
+
     [Header("Intro Panel")]
     [SerializeField] private IntroPanelController introPanel;
 
@@ -61,13 +75,10 @@ public class InterviewManager : MonoBehaviour
             return;
         }
 
-        // Verifica se a quest já foi concluída no save
         if (SaveSystem.Instance != null && SaveSystem.Instance.IsQuestCompleted(questId))
         {
             isCompleted = true;
             Debug.Log($"[InterviewManager] Quest '{questId}' já concluída anteriormente.");
-
-            // Aplica as consequências visuais imediatamente
             ActivateVictoryObjects();
         }
 
@@ -155,20 +166,34 @@ public class InterviewManager : MonoBehaviour
 
     private void ShowRound(QuestionRPG question, int totalOptions)
     {
+        // ✅ NOVO: Mostra o sprite de pergunta no início de cada rodada
+        if (characterImage != null && spritePergunta != null)
+            characterImage.sprite = spritePergunta;
+
         uiManager.ShowQuestion(
             question,
             totalOptions,
             (choice) =>
             {
-                StartCoroutine(ProcessChoiceWithDialogue(choice));
+                StartCoroutine(ProcessChoiceWithDialogue(choice, question));
             }
         );
     }
 
-    private IEnumerator ProcessChoiceWithDialogue(int choice)
+    private IEnumerator ProcessChoiceWithDialogue(int choice, QuestionRPG currentQuestionObj)
     {
         QuestionRPG question = currentQuest.questions[system.GetCurrentRound()];
         DialogueLine[] dialogueLines = null;
+        bool isCorrect = (choice == question.correctAnswer);
+
+        // ✅ NOVO: Troca o sprite ANTES do diálogo de resposta
+        if (characterImage != null)
+        {
+            if (isCorrect && spriteAcerto != null)
+                characterImage.sprite = spriteAcerto;
+            else if (!isCorrect && spriteErro != null)
+                characterImage.sprite = spriteErro;
+        }
 
         if (question.optionDialogues != null && choice < question.optionDialogues.Length)
         {
@@ -190,6 +215,7 @@ public class InterviewManager : MonoBehaviour
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
+        // Processa a escolha (reduz vida ou add ponto)
         system.ProcessChoice(choice);
     }
 
@@ -220,7 +246,6 @@ public class InterviewManager : MonoBehaviour
 
         isCompleted = true;
 
-        // Salva no arquivo JSON
         if (SaveSystem.Instance != null)
         {
             SaveSystem.Instance.CompleteQuest(questId);
@@ -257,72 +282,29 @@ public class InterviewManager : MonoBehaviour
 
     private IEnumerator ShowDefeatSequence(int points)
     {
-        if (dialogueSystem != null)
-        {
-            dialogueSystem.ShowDefeatDialogue();
-            yield return new WaitWhile(() => dialogueSystem.IsRunning);
-        }
+        yield return new WaitForSeconds(1f);
 
         if (gameOverPanel != null)
-        {
             gameOverPanel.SetActive(true);
 
-            GameOverUI panelScript = gameOverPanel.GetComponent<GameOverUI>();
-            if (panelScript != null)
-            {
-                panelScript.SetInterviewManager(this);
-                panelScript.ShowDefeat(points, currentQuest.questions.Length);
-            }
-        }
-
-        Time.timeScale = 0f;
-        OnQuizFinished?.Invoke();
-    }
-
-    public void RestartQuiz()
-    {
-        if (isCompleted) return;
-
-        Time.timeScale = 1f;
-
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(false);
-
-        if (system != null)
+        GameOverUI gameOverUI = gameOverPanel.GetComponent<GameOverUI>();
+        if (gameOverUI != null)
         {
-            system.OnRoundChanged -= ShowRound;
-            system.OnFinished -= OnSystemFinished;
-            system.OnFeedback -= ShowFeedback;
+            int maxPoints = currentQuest != null ? currentQuest.questions.Length : 0;
+            gameOverUI.ShowDefeat(points, maxPoints);
         }
-
-        if (currentQuest != null)
-        {
-            system = new InterviewSystem(
-                currentQuest.questions,
-                currentQuest.maxLives,
-                currentQuest.minCorrect
-            );
-
-            system.OnRoundChanged += ShowRound;
-            system.OnFinished += OnSystemFinished;
-            system.OnFeedback += ShowFeedback;
-        }
-
-        isFinishing = false;
-        StartSystem();
-    }
-
-    public void GoToMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(menuSceneName);
     }
 
     public bool IsQuestCompleted() => isCompleted;
 
-    public void ResetQuestState()
+    public void RestartQuiz()
     {
-        isCompleted = false;
-        isFinishing = false;
+        if (SceneManager.GetActiveScene().name != "")
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene(menuSceneName);
     }
 }
