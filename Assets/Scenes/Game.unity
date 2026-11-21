@@ -1375,6 +1375,10 @@ MonoBehaviour:
   sprites:
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &236904184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2143,6 +2147,10 @@ MonoBehaviour:
 '
   - "Ok\u2026"
   sprites: []
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &298744450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2383,6 +2391,10 @@ MonoBehaviour:
   - "Parece que voc\xEA encontrou um ponto de salvamento! Aproxime-se e clique E
     para salvar seu progresso."
   sprites: []
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!61 &369525946
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2613,6 +2625,10 @@ MonoBehaviour:
   - "Melhor eu ir trabalhar, j\xE1 to \xE9 atrasado..."
   sprites:
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &383093521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8343,6 +8359,10 @@ MonoBehaviour:
   sprites:
   - {fileID: -74547414324821332, guid: 39d656a5b74896b48b10a450e39719f5, type: 3}
   - {fileID: 0}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &923329091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8412,6 +8432,10 @@ MonoBehaviour:
   - "Perfeito! agora \xE9 ir para casa descansar... Amanh\xE3 ser\xE1 um novo dia"
   sprites:
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &924545848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9189,6 +9213,10 @@ MonoBehaviour:
   - Ok, obrigado pela oportunidade...
   sprites:
   - {fileID: 6309406150621213132, guid: 9747edcdceffa6842a42bef21ecfc51a, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &1030613189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9469,7 +9497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1051169690
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9663,6 +9691,10 @@ MonoBehaviour:
   - {fileID: 397952528868842920, guid: 9b20a153becdf004f98f9280479f2549, type: 3}
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
   - {fileID: 397952528868842920, guid: 9b20a153becdf004f98f9280479f2549, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &1068109098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20845,6 +20877,10 @@ MonoBehaviour:
   - {fileID: -5800636680357492039, guid: 98837110c52949442b144520f9b71aea, type: 3}
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
   - {fileID: -5800636680357492039, guid: 98837110c52949442b144520f9b71aea, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &1276927453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21175,6 +21211,10 @@ MonoBehaviour:
 '
   sprites:
   - {fileID: -74547414324821332, guid: 39d656a5b74896b48b10a450e39719f5, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &1288718226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22743,6 +22783,10 @@ MonoBehaviour:
   - Obrigado, senhor
   sprites:
   - {fileID: 6309406150621213132, guid: 9747edcdceffa6842a42bef21ecfc51a, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!1 &1497053602
 GameObject:
   m_ObjectHideFlags: 0
@@ -23085,14 +23129,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCData
   npcName: Aline
-  falas:
-  - "\u2026. Cof cof\r\n"
-  - " \u2026\r\n"
-  - "\u2026. Vaza"
+  falas: []
   sprites:
   - {fileID: 1481551995095045547, guid: 5a0f734d5fe8f0644a35fac9e51ca663, type: 3}
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
   - {fileID: 1481551995095045547, guid: 5a0f734d5fe8f0644a35fac9e51ca663, type: 3}
+  falasBeforeNightmare:
+  - o jeito q o ponteiro gira ta me dando agonia
+  spritesBeforeNightmare: []
+  falasAfterNightmare:
+  - 'num piscar de olhos eu nao sou mais quem eu conhecia
+
+'
+  spritesAfterNightmare: []
 --- !u!1 &1559718177
 GameObject:
   m_ObjectHideFlags: 0
@@ -23282,6 +23331,10 @@ MonoBehaviour:
   - "Perd\xE3o, pai! Acabei parando por aqui sem perceber!"
   - "Anda logo que voc\xEA tem entrevista de emprego amanh\xE3!"
   sprites: []
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &1568412086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23588,6 +23641,10 @@ MonoBehaviour:
   - Eu devo ir para a entrevista antes de ir para casa...
   sprites:
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &1592144254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23772,7 +23829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1610394282
 Transform:
   m_ObjectHideFlags: 0
@@ -24913,6 +24970,10 @@ MonoBehaviour:
   sprites:
   - {fileID: 6309406150621213132, guid: 9747edcdceffa6842a42bef21ecfc51a, type: 3}
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &1704621422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28118,6 +28179,10 @@ MonoBehaviour:
   - Sai daqui, moleque, tenho que ensaiar pra entrevista.
   sprites:
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
+  falasBeforeNightmare: []
+  spritesBeforeNightmare: []
+  falasAfterNightmare: []
+  spritesAfterNightmare: []
 --- !u!114 &2056157392
 MonoBehaviour:
   m_ObjectHideFlags: 0

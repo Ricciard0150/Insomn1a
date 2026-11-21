@@ -15,7 +15,6 @@ public class InteractionDetector : MonoBehaviour
 
     private void Awake()
     {
-        // ✅ REGISTRAR NO TEXTMANAGER (NOVO)
         if (TextManager.Instance != null)
         {
             TextManager.Instance.RegisterNPC(this);
@@ -23,10 +22,9 @@ public class InteractionDetector : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"⚠️ TextManager não encontrado para {gameObject.name}");
+            Debug.LogWarning($"⚠ TextManager não encontrado para {gameObject.name}");
         }
 
-        // Seu código existente...
         if (pressingE != null)
         {
             if (pressingE.GetComponent<Image>() == null &&
@@ -43,7 +41,6 @@ public class InteractionDetector : MonoBehaviour
         }
     }
 
-    // ✅ DESREGISTRAR QUANDO DESTRUÍDO (NOVO)
     private void OnDestroy()
     {
         if (TextManager.Instance != null)
@@ -92,7 +89,24 @@ public class InteractionDetector : MonoBehaviour
 
         if (!dialogueSystem.DialogoAtivo)
         {
-            dialogueSystem.SetNPCDialogue(npcData.falas, npcData.sprites);
+            // ✅ Escolhe as falas baseado na flag de nightmare
+            bool passouNightmare = SaveSystem.Instance != null && SaveSystem.Instance.HasPassedNightmare();
+
+            string[] falasEscolhidas;
+            Sprite[] spritesEscolhidos;
+
+            if (passouNightmare && npcData.falasAfterNightmare != null && npcData.falasAfterNightmare.Length > 0)
+            {
+                falasEscolhidas = npcData.falasAfterNightmare;
+                spritesEscolhidos = npcData.spritesAfterNightmare;
+            }
+            else
+            {
+                falasEscolhidas = npcData.falasBeforeNightmare;
+                spritesEscolhidos = npcData.spritesBeforeNightmare;
+            }
+
+            dialogueSystem.SetNPCDialogue(falasEscolhidas, spritesEscolhidos);
             dialogueSystem.StartDialogue();
 
             if (pressingE != null)

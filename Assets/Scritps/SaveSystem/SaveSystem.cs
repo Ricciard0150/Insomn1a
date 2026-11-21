@@ -44,7 +44,6 @@ public class SaveSystem : MonoBehaviour
             currentSave = JsonUtility.FromJson<SaveData>(File.ReadAllText(savePath));
             if (currentSave == null) currentSave = new SaveData();
 
-            // Garante que as listas/arrays não sejam nulos ao carregar saves antigos
             if (currentSave.letterPieces == null || currentSave.letterPieces.Length != 3)
                 currentSave.letterPieces = new bool[3];
 
@@ -156,6 +155,20 @@ public class SaveSystem : MonoBehaviour
             SaveCurrentState();
         }
     }
+
+    // ✅ NOVO: FLAG DE NIGHTMARE ----------
+    public bool HasPassedNightmare()
+    {
+        if (currentSave == null) return false;
+        return currentSave.passedNightmare;
+    }
+
+    public void SetPassedNightmare(bool value)
+    {
+        if (currentSave == null) return;
+        currentSave.passedNightmare = value;
+        SaveCurrentState();
+    }
 }
 
 [System.Serializable]
@@ -168,4 +181,7 @@ public class SaveData
     public bool[] letterPieces = new bool[3];
     public List<string> collectedItems = new List<string>();
     public List<string> completedQuests = new List<string>();
+
+    // ✅ NOVO
+    public bool passedNightmare = false;
 }
