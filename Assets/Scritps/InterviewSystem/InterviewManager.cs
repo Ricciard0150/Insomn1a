@@ -196,9 +196,14 @@ public class InterviewManager : MonoBehaviour
             {
                 lines[i] = new DialogueLine();
                 lines[i].characterSprite = dialogueLines[i].characterSprite;
+
+                // ✅ AQUI ESTÁ A ATUALIZAÇÃO:
+                // Se você preencheu o nome na DialogueLine no Inspector, ele usa.
+                // Se deixou vazio, ele usa o nome da Quest (currentQuest.npcName).
                 lines[i].characterName = !string.IsNullOrEmpty(dialogueLines[i].characterName)
                     ? dialogueLines[i].characterName
                     : currentQuest.npcName;
+
                 lines[i].text = dialogueLines[i].text.Replace("{answer}", question.options[choice]);
             }
 
@@ -228,10 +233,8 @@ public class InterviewManager : MonoBehaviour
         if (panel != null)
             panel.SetActive(false);
 
-        // ✅ SE PERDEU
         if (!victory)
         {
-            // Mostra o diálogo de derrota (se a opção de sem gameover estiver ativa)
             if (derrotaSemGameOverPanel)
             {
                 if (dialogueSystem != null)
@@ -242,13 +245,11 @@ public class InterviewManager : MonoBehaviour
             }
             else
             {
-                // Fluxo normal: mostra o panel de Game Over
                 StartCoroutine(ShowDefeatSequence(points));
             }
             return;
         }
 
-        // ✅ SE GANHOU
         isCompleted = true;
 
         if (SaveSystem.Instance != null)
@@ -268,11 +269,9 @@ public class InterviewManager : MonoBehaviour
 
     private IEnumerator AvisarFimSemGameOver()
     {
-        // Espera o diálogo de derrota terminar antes de liberar o evento OnQuizFinished
         if (dialogueSystem != null)
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
 
-        // Avisa que o quiz terminou para outros scripts (como o AutoInterviewTrigger que reativa o player)
         OnQuizFinished?.Invoke();
     }
 
@@ -318,7 +317,7 @@ public class InterviewManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("[InterviewManager] gameOverUIComponent não encontrado! Arraste no Inspector.");
+                Debug.LogWarning("[InterviewManager] GameOverUI não encontrado! Arraste no Inspector.");
             }
         }
         else

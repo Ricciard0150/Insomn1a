@@ -7021,22 +7021,22 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 4584681769223179126, guid: ad5875058d613a643acda07d7b95a6f9, type: 3}
-          characterName: 
+          characterName: Chefe
           text: "Tsc... tenha mais certeza do que voc\xEA p\xF5e no curr\xEDculo..."
         - characterSprite: {fileID: -5144542264298086051, guid: c7707fa669e833140844da9b6fa94a72, type: 3}
-          characterName: 
+          characterName: Kafka
           text: ...
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: Hm, interessante
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: "Bem falado, mas receio que isso n\xE3o seja ingl\xEAs..."
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: Que falta de classe...
     - question: "Ok, aqui voc\xEA tamb\xE9m diz ser r\xE1pido em c\xE1lculos  matem\xE1ticos
         \u2606 Vou te dar uma pequena equa\xE7\xE3o e quero que me responda: 246+34. "
@@ -7051,22 +7051,22 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: "Bom para o n\xEDvel de uma crian\xE7a na creche..."
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: Bem longe...
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: Se fosse com um pouco mais de calma...
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: Correto, muito bom!
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Kafka
           text: "Agrade\xE7o, senhor!"
     - question: "Apenas uma d\xFAvida, com qual animal voc\xEA se identifica? "
       options:
@@ -7080,31 +7080,31 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: "Esse \xE9 o esp\xEDrito!"
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Kafka
           text: (Estufa o peito com orgulho de si)
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: Eh... okay...
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: Rapaz?
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: "Ah, como ele \xE9 \xFAnico."
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Kafka
           text: "Isso \xE9 um elogio?"
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Chefe
           text: Interprete como quiser.
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Kafka
           text: "Ent\xE3o \xE9 bom!"
     maxLives: 3
     minCorrect: 1
@@ -7151,11 +7151,11 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 4584681769223179126, guid: ad5875058d613a643acda07d7b95a6f9, type: 3}
-          characterName: 
+          characterName: Pai
           text: "Hum, que bom que voc\xEA sabe..."
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Pai
           text: "Est\xFApido, como sempre."
     - question: "Muito bem... Mas o que exatamente voc\xEA vai fazer nessa empresa?"
       options:
@@ -7169,11 +7169,11 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Pai
           text: "Voc\xEA \xE9 burro por acaso?"
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Pai
           text: Ok...
     - question: "E quem ser\xE3o seus clientes? "
       options:
@@ -7185,12 +7185,12 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Pai
           text: "Daqui a pouco vou EU me guardar num caix\xE3o de tanto desgosto
             que voc\xEA me d\xE1!"
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Pai
           text: "Parab\xE9ns por ler o contrato, jumento!"
     - question: "Voc\xEA vai receber um sal\xE1rio ou pretende trabalhar de gra\xE7a? "
       options:
@@ -7202,17 +7202,17 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Pai
           text: "O sal\xE1rio deve ser uma pechincha..."
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Kafka
           text: Disse alguma coisa?
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Pai
           text: Huh
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Pai
           text: Eh... okay...
     - question: "\xDAltima pergunta, Frank! O que voc\xEA pretende fazer com seu
         primeiro sal\xE1rio? "
@@ -7225,11 +7225,11 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Pai
           text: "\xC9 bom mesmo."
       - dialogue:
         - characterSprite: {fileID: 0}
-          characterName: 
+          characterName: Pai
           text: "Vai escrever est\xF3rias sobre o seu fracasso profissional tamb\xE9m?"
     maxLives: 3
     minCorrect: 1
@@ -23368,11 +23368,20 @@ MonoBehaviour:
   victoryLines:
   - characterSprite: {fileID: 0}
     characterName: Chefe
-    text: "Parab\xE9ns kafka"
+    text: "Bom, senhor Kafka, o emprego \xE9 seu!"
+  - characterSprite: {fileID: 0}
+    characterName: Kafka
+    text: Obrigado, senhor!
   defeatLines:
   - characterSprite: {fileID: 0}
     characterName: Chefe
-    text: "P\xE9ssimo kafka"
+    text: "Teremos que rever a quest\xE3o da sua vaga..."
+  - characterSprite: {fileID: 0}
+    characterName: Kafka
+    text: "Foi t\xE3o ruim assim?"
+  - characterSprite: {fileID: 0}
+    characterName: Chefe
+    text: ...
   currentQuestData:
     questId: 
     questName: 
