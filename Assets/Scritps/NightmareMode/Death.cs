@@ -1,68 +1,40 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class Death : MonoBehaviour
 {
-    [Header("Configurações do Flash")]
-    [SerializeField] private float totalDuration = 1.5f; // Tempo que o susto fica piscando
-    [SerializeField] private float minBlinkTime = 0.04f; // Tempo mínimo aparecendo
-    [SerializeField] private float maxBlinkTime = 0.15f; // Tempo máximo aparecendo
-    [SerializeField] private bool distortScale = true; // Efeito de distorcer o tamanho (opcional)
+    [Header("ConfiguraÃ§Ãµes")]
+    [Tooltip("Tempo que a morte fica na tela antes de desaparecer")]
+    [SerializeField] private float tempoNaTela = 3f;
 
-    private Vector3 originalScale;
-    private Transform myTransform;
+    private bool triggerAtivado = false;
+
+    // âœ… Evento para avisar que a morte sumiu
+    public event Action OnDeathDesapareceu;
 
     void Awake()
     {
-        myTransform = transform;
-        originalScale = myTransform.localScale;
-
-        // Começa desativado
-        gameObject.SetActive(false);
-    }
-
-    // Chame esta função para o susto acontecer
-    public void TriggerFlash()
-    {
         gameObject.SetActive(true);
-        StartCoroutine(FlashRoutine());
     }
 
-    private IEnumerator FlashRoutine()
+    public void IniciarDesaparecimento()
     {
-        float timer = 0f;
+        if (triggerAtivado) return;
+        triggerAtivado = true;
 
-        // Loop do susto (piscando)
-        while (timer < totalDuration)
-        {
-            // 1. APARECE
-            gameObject.SetActive(true);
+        StartCoroutine(DesaparecerRoutine());
+    }
 
-            if (distortScale)
-            {
-                // Muda o tamanho levemente pra dar agonia
-                float randomScale = Random.Range(0.95f, 1.1f);
-                myTransform.localScale = originalScale * randomScale;
-            }
+    private IEnumerator DesaparecerRoutine()
+    {
+        // 1. Espera o tempo na tela
+        yield return new WaitForSecondsRealtime(tempoNaTela);
 
-            // Espera um tempo mínimo (piscada rápida)
-            float waitOn = Random.Range(minBlinkTime, maxBlinkTime);
-            yield return new WaitForSecondsRealtime(waitOn);
-            timer += waitOn;
-
-            // 2. SOME
-            gameObject.SetActive(false);
-
-            // Espera um tempo mínimo (sumiço rápido)
-            float waitOff = Random.Range(minBlinkTime, maxBlinkTime);
-            yield return new WaitForSecondsRealtime(waitOff);
-            timer += waitOff;
-        }
-
-        // 3. FINAL: Garante que sumiu e reseta
-        myTransform.localScale = originalScale;
-
-        // O objeto já está desativado pelo loop, mas garantimos aqui
+        // 2. Desativa a morte
         gameObject.SetActive(false);
+
+        // 3. Avisa que sumiu
+        OnDeathDesapareceu?.Invoke();
     }
 }
