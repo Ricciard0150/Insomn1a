@@ -15,7 +15,6 @@ public class CollectibleLetterPiece : MonoBehaviour
     [TextArea(2, 5)]
     [SerializeField] private string[] finalLetterDialogue;
 
-    // ✅ NOVOS CAMPOS AQUI
     [Header("Consequences (Após o diálogo final)")]
     [SerializeField] private GameObject[] objectsToActivate;
     [SerializeField] private GameObject[] objectsToDeactivate;
@@ -61,34 +60,20 @@ public class CollectibleLetterPiece : MonoBehaviour
         }
     }
 
-    // ✅ CHAMA O DIÁLOGO E DEPOIS ATIVA/DESATIVA OS OBJETOS
+    // ✅ CHAMA AS CONSEQUÊNCIAS E DEPOIS O DIÁLOGO
     private void ShowFinalDialogue()
     {
         // Remove a inscrição para não tocar duas vezes
         pickupPanel.OnPanelClosed -= ShowFinalDialogue;
 
+        // 1. Aplica as consequências PRIMEIRO (ativa/desativa objetos)
+        ApplyConsequences();
+
+        // 2. Depois inicia o diálogo
         if (dialogueSystem != null && finalLetterDialogue.Length > 0)
         {
-            // Toca o diálogo
             dialogueSystem.StartDialogue(finalLetterDialogue);
-
-            // Inicia uma coroutine para esperar o diálogo terminar antes de ativar os objetos
-            StartCoroutine(WaitDialogueAndApplyConsequences());
         }
-        else
-        {
-            // Se não tiver diálogo, ativa os objetos direto
-            ApplyConsequences();
-        }
-    }
-
-    private IEnumerator WaitDialogueAndApplyConsequences()
-    {
-        // Espera o jogador terminar de ler o diálogo
-        yield return new WaitWhile(() => dialogueSystem.IsRunning);
-
-        // Agora ativa e desativa os objetos
-        ApplyConsequences();
     }
 
     private void ApplyConsequences()
