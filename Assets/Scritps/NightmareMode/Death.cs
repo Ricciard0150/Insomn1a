@@ -10,7 +10,6 @@ public class Death : MonoBehaviour
 
     private bool triggerAtivado = false;
 
-    // ✅ Evento para avisar que a morte sumiu
     public event Action OnDeathDesapareceu;
 
     void Awake()
@@ -28,13 +27,10 @@ public class Death : MonoBehaviour
 
     private IEnumerator DesaparecerRoutine()
     {
-        // 1. Espera o tempo na tela
         yield return new WaitForSecondsRealtime(tempoNaTela);
 
-        // 2. Desativa a morte
         gameObject.SetActive(false);
 
-        // 3. Avisa que sumiu
         OnDeathDesapareceu?.Invoke();
     }
 }
