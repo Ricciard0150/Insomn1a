@@ -1643,6 +1643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6160d29b6d3052b48b8ed1d5fef5b89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InterviewManager
+  derrotaSemGameOverPanel: 1
   panel: {fileID: 84656325}
   uiManager: {fileID: 208220127}
   dialogueSystem: {fileID: 1643069265}
@@ -1662,6 +1663,7 @@ MonoBehaviour:
   player: {fileID: 1865952460842338405}
   respawnPoint: {fileID: 0}
   gameOverPanel: {fileID: 1206262021}
+  gameOverUIComponent: {fileID: 1206262026}
   menuSceneName: MainMenu
   questDatabase: {fileID: 749839218}
 --- !u!114 &208220127
@@ -11777,7 +11779,6 @@ RectTransform:
   - {fileID: 84656326}
   - {fileID: 1653279358}
   - {fileID: 2023631146}
-  - {fileID: 1206262022}
   - {fileID: 383698924}
   - {fileID: 873768054}
   - {fileID: 1144805588}
@@ -13260,13 +13261,14 @@ GameObject:
   - component: {fileID: 1206262025}
   - component: {fileID: 1206262024}
   - component: {fileID: 1206262026}
+  - component: {fileID: 1206262027}
   m_Layer: 5
   m_Name: GameOverPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1206262022
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13274,7 +13276,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206262021}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13282,7 +13284,7 @@ RectTransform:
   - {fileID: 1429579126}
   - {fileID: 497230556}
   - {fileID: 1249496321}
-  m_Father: {fileID: 1104689037}
+  m_Father: {fileID: 5763791293024989957}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -13342,12 +13344,24 @@ MonoBehaviour:
   titleText: {fileID: 497230557}
   messageText: {fileID: 1429579127}
   scoreText: {fileID: 0}
-  restartButton: {fileID: 0}
+  restartButton: {fileID: 1249496322}
   menuButton: {fileID: 0}
   defeatTitle: Derrota
   defeatMessage: "Parece que a entrevista n\xE3o saiu como o planejado"
   animationDuration: 1.85
   interviewManager: {fileID: 1649544997}
+--- !u!225 &1206262027
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206262021}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1222156665
 GameObject:
   m_ObjectHideFlags: 0
@@ -23365,7 +23379,8 @@ MonoBehaviour:
     npcName: Entrevistador
     introLines: []
     introNames: []
-    victoryLines: []
+    victoryLines:
+    - PArabens kafka
     victoryNames:
     - Chefe
     - Kafka
@@ -26423,6 +26438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6160d29b6d3052b48b8ed1d5fef5b89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InterviewManager
+  derrotaSemGameOverPanel: 0
   panel: {fileID: 84656325}
   uiManager: {fileID: 1649544998}
   dialogueSystem: {fileID: 1312730299}
@@ -26441,6 +26457,7 @@ MonoBehaviour:
   player: {fileID: 1865952460842338405}
   respawnPoint: {fileID: 651116833}
   gameOverPanel: {fileID: 1206262021}
+  gameOverUIComponent: {fileID: 1206262026}
   menuSceneName: MainMenu
   questDatabase: {fileID: 749839218}
 --- !u!114 &1649544998
@@ -33354,6 +33371,7 @@ RectTransform:
   - {fileID: 4298686526662663859}
   - {fileID: 4360821069794849048}
   - {fileID: 1836574826430751790}
+  - {fileID: 1206262022}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -33784,7 +33802,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 383.1, y: 89.6, z: 0}
+  m_LocalPosition: {x: 351, y: 172.5, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:

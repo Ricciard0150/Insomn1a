@@ -6,6 +6,10 @@ public class InterviewManager : MonoBehaviour
 {
     public event System.Action OnQuizFinished;
 
+    [Header("Configurações da Quest")]
+    [Tooltip("Se marcado, ao perder a entrevista, NÃO mostra o painel de Game Over (só toca o diálogo de derrota).")]
+    [SerializeField] private bool derrotaSemGameOverPanel = false;
+
     [Header("UI")]
     [SerializeField] private GameObject panel;
     [SerializeField] private UInterviewManager uiManager;
@@ -32,7 +36,12 @@ public class InterviewManager : MonoBehaviour
     [SerializeField] private Transform respawnPoint;
 
     [Header("Game Over Panel")]
+    [Tooltip("Arraste o Painel de Game Over aqui")]
     [SerializeField] private GameObject gameOverPanel;
+
+    [Tooltip("Arraste o componente GameOverUI que está dentro do Painel")]
+    [SerializeField] private GameOverUI gameOverUIComponent;
+
     [SerializeField] private string menuSceneName = "MainMenu";
 
     [Header("Quest Database")]
@@ -70,7 +79,6 @@ public class InterviewManager : MonoBehaviour
         if (SaveSystem.Instance != null && SaveSystem.Instance.IsQuestCompleted(questId))
         {
             isCompleted = true;
-            Debug.Log($"[InterviewManager] Quest '{questId}' já concluída anteriormente.");
             ActivateVictoryObjects();
         }
 
@@ -96,18 +104,8 @@ public class InterviewManager : MonoBehaviour
 
     public void StartSystem()
     {
-        if (isCompleted)
-        {
-            Debug.Log("Esta quest já foi completada!");
-            return;
-        }
-
-        if (system == null)
-        {
-            Debug.LogError("[InterviewManager] Sistema não inicializado (Quest não encontrada).");
-            return;
-        }
-
+        if (isCompleted) return;
+        if (system == null) return;
         if (system.IsActive) return;
 
         isFinishing = false;
@@ -115,7 +113,6 @@ public class InterviewManager : MonoBehaviour
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
-        // ✅ Passa as falas e os nomes da introdução
         if (dialogueSystem != null && currentQuest != null && currentQuest.introLines.Length > 0)
         {
             dialogueSystem.StartDialogue(currentQuest.introLines, currentQuest.introNames);
@@ -199,12 +196,9 @@ public class InterviewManager : MonoBehaviour
             {
                 lines[i] = new DialogueLine();
                 lines[i].characterSprite = dialogueLines[i].characterSprite;
-
-                // ✅ NOVO: Passa o nome. Se não tiver, usa o nome do NPC da quest
                 lines[i].characterName = !string.IsNullOrEmpty(dialogueLines[i].characterName)
                     ? dialogueLines[i].characterName
                     : currentQuest.npcName;
-
                 lines[i].text = dialogueLines[i].text.Replace("{answer}", question.options[choice]);
             }
 
@@ -234,12 +228,27 @@ public class InterviewManager : MonoBehaviour
         if (panel != null)
             panel.SetActive(false);
 
+        // ✅ SE PERDEU
         if (!victory)
         {
-            StartCoroutine(ShowDefeatSequence(points));
+            // Mostra o diálogo de derrota (se a opção de sem gameover estiver ativa)
+            if (derrotaSemGameOverPanel)
+            {
+                if (dialogueSystem != null)
+                {
+                    dialogueSystem.ShowDefeatDialogue();
+                }
+                StartCoroutine(AvisarFimSemGameOver());
+            }
+            else
+            {
+                // Fluxo normal: mostra o panel de Game Over
+                StartCoroutine(ShowDefeatSequence(points));
+            }
             return;
         }
 
+        // ✅ SE GANHOU
         isCompleted = true;
 
         if (SaveSystem.Instance != null)
@@ -254,6 +263,16 @@ public class InterviewManager : MonoBehaviour
             dialogueSystem.ShowVictoryDialogue();
         }
 
+        OnQuizFinished?.Invoke();
+    }
+
+    private IEnumerator AvisarFimSemGameOver()
+    {
+        // Espera o diálogo de derrota terminar antes de liberar o evento OnQuizFinished
+        if (dialogueSystem != null)
+            yield return new WaitWhile(() => dialogueSystem.IsRunning);
+
+        // Avisa que o quiz terminou para outros scripts (como o AutoInterviewTrigger que reativa o player)
         OnQuizFinished?.Invoke();
     }
 
@@ -281,13 +300,30 @@ public class InterviewManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         if (gameOverPanel != null)
-            gameOverPanel.SetActive(true);
-
-        GameOverUI gameOverUI = gameOverPanel.GetComponent<GameOverUI>();
-        if (gameOverUI != null)
         {
-            int maxPoints = currentQuest != null ? currentQuest.questions.Length : 0;
-            gameOverUI.ShowDefeat(points, maxPoints);
+            gameOverPanel.SetActive(true);
+            Debug.Log("[InterviewManager] Game Over Panel ativado!");
+
+            if (gameOverUIComponent == null)
+                gameOverUIComponent = gameOverPanel.GetComponent<GameOverUI>();
+
+            if (gameOverUIComponent == null)
+                gameOverUIComponent = gameOverPanel.GetComponentInChildren<GameOverUI>(true);
+
+            if (gameOverUIComponent != null)
+            {
+                int maxPoints = currentQuest != null ? currentQuest.questions.Length : 0;
+                gameOverUIComponent.ShowDefeat(points, maxPoints);
+                Debug.Log("[InterviewManager] ShowDefeat chamado no GameOverUI.");
+            }
+            else
+            {
+                Debug.LogWarning("[InterviewManager] gameOverUIComponent não encontrado! Arraste no Inspector.");
+            }
+        }
+        else
+        {
+            Debug.LogError("[InterviewManager] O campo 'Game Over Panel' está NULO no Inspector!");
         }
     }
 
