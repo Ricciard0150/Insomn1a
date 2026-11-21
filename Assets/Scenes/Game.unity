@@ -6988,12 +6988,22 @@ MonoBehaviour:
     - "Ol\xE1, sr. Franz. Bom, a princ\xEDpio o senhor est\xE1 aprovado mas antes
       preciso fazer algumas perguntas para checar se voc\xEA \xE9 realmente qualificado"
     - "Certo\u2026 "
+    introNames:
+    - Kafka
+    - Chefe
+    - Kafka
     victoryLines:
     - "Parab\xE9ns, senhor, o emprego \xE9 seu!"
     - Obrigado, senhor!
+    victoryNames:
+    - Chefe
+    - Kafka
     defeatLines:
     - "Bem, revisaremos seu curr\xEDculo baseado no desempenho de hoje..."
     - Hm, okay...
+    defeatNames:
+    - Chefe
+    - Kafka
     questions:
     - question: "Primeiramente, dando uma olhada aqui no seu curr\xEDculo percebi
         que voc\xEA disse que sabe ingl\xEAs, certo? \u2606 Gostaria que voc\xEA
@@ -7009,17 +7019,22 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 4584681769223179126, guid: ad5875058d613a643acda07d7b95a6f9, type: 3}
+          characterName: 
           text: "Tsc... tenha mais certeza do que voc\xEA p\xF5e no curr\xEDculo..."
         - characterSprite: {fileID: -5144542264298086051, guid: c7707fa669e833140844da9b6fa94a72, type: 3}
+          characterName: 
           text: ...
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Hm, interessante
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Bem falado, mas receio que isso n\xE3o seja ingl\xEAs..."
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Que falta de classe...
     - question: "Ok, aqui voc\xEA tamb\xE9m diz ser r\xE1pido em c\xE1lculos  matem\xE1ticos
         \u2606 Vou te dar uma pequena equa\xE7\xE3o e quero que me responda: 246+34. "
@@ -7034,17 +7049,22 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Bom para o n\xEDvel de uma crian\xE7a na creche..."
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Bem longe...
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Se fosse com um pouco mais de calma...
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Correto, muito bom!
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Agrade\xE7o, senhor!"
     - question: "Apenas uma d\xFAvida, com qual animal voc\xEA se identifica? "
       options:
@@ -7058,23 +7078,31 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Esse \xE9 o esp\xEDrito!"
         - characterSprite: {fileID: 0}
+          characterName: 
           text: (Estufa o peito com orgulho de si)
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Eh... okay...
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Rapaz?
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Ah, como ele \xE9 \xFAnico."
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Isso \xE9 um elogio?"
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Interprete como quiser.
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Ent\xE3o \xE9 bom!"
     maxLives: 3
     minCorrect: 1
@@ -7084,20 +7112,29 @@ MonoBehaviour:
     questName: dialogopapai
     npcName: papai
     introLines:
-    - "Pai: Frank? Oque voc\xEA est\xE1 fazendo em casa seu desempregado. Achei que
-      tivesse deixado claro para n\xE3o voltar para c\xE1 enquanto n\xE3o arranjasse
-      um emprego!"
-    - 'Frank: Sim, pai, mas-'
-    - "Pai: Da \xFAltima vez que voc\xEA disse isso n\xE3o apareceu com um tost\xE3o
-      em casa! "
-    - 'Frank: Mas dessa vez eu consigo provar! '
-    - "Pai: Ent\xE3o prove!"
+    - "Frank? Oque voc\xEA est\xE1 fazendo em casa seu desempregado. Achei que tivesse
+      deixado claro para n\xE3o voltar para c\xE1 enquanto n\xE3o arranjasse um emprego!"
+    - Sim, pai, mas-
+    - "Da \xFAltima vez que voc\xEA disse isso n\xE3o apareceu com um tost\xE3o em
+      casa! "
+    - 'Mas dessa vez eu consigo provar! '
+    - " Ent\xE3o prove!"
+    introNames:
+    - Pai
+    - Kafka
+    - Kafka
+    - Kafka
+    - Pai
     victoryLines:
     - parabens
     - nah
+    victoryNames:
+    - Pai
     defeatLines:
     - "Bem, revisaremos seu curr\xEDculo baseado no desempenho de hoje..."
     - Hm, okay...
+    defeatNames:
+    - Pai
     questions:
     - question: "Muito bem, seu imprest\xE1vel! Voc\xEA diz que conseguiu um emprego,
         mas onde diabos est\xE1 trabalhando? "
@@ -7112,9 +7149,11 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 4584681769223179126, guid: ad5875058d613a643acda07d7b95a6f9, type: 3}
+          characterName: 
           text: "Hum, que bom que voc\xEA sabe..."
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Est\xFApido, como sempre."
     - question: "Muito bem... Mas o que exatamente voc\xEA vai fazer nessa empresa?"
       options:
@@ -7128,9 +7167,11 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Voc\xEA \xE9 burro por acaso?"
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Ok...
     - question: "E quem ser\xE3o seus clientes? "
       options:
@@ -7142,10 +7183,12 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Daqui a pouco vou EU me guardar num caix\xE3o de tanto desgosto
             que voc\xEA me d\xE1!"
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Parab\xE9ns por ler o contrato, jumento!"
     - question: "Voc\xEA vai receber um sal\xE1rio ou pretende trabalhar de gra\xE7a? "
       options:
@@ -7157,13 +7200,17 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "O sal\xE1rio deve ser uma pechincha..."
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Disse alguma coisa?
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Huh
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: Eh... okay...
     - question: "\xDAltima pergunta, Frank! O que voc\xEA pretende fazer com seu
         primeiro sal\xE1rio? "
@@ -7176,9 +7223,11 @@ MonoBehaviour:
       optionDialogues:
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "\xC9 bom mesmo."
       - dialogue:
         - characterSprite: {fileID: 0}
+          characterName: 
           text: "Vai escrever est\xF3rias sobre o seu fracasso profissional tamb\xE9m?"
     maxLives: 3
     minCorrect: 1
@@ -10136,27 +10185,41 @@ MonoBehaviour:
   characterImage: {fileID: 0}
   textSpeed: 0.03
   victoryLines:
-  - "Bom, sr. Franz. O emprego \xE9 seu."
-  - Obrigado, senhor!
+  - characterSprite: {fileID: 0}
+    characterName: 
+    text: 
+  - characterSprite: {fileID: 0}
+    characterName: 
+    text: 
   defeatLines:
-  - "Olha, vamos ter que rever a quest\xE3o da sua vaga."
-  - "Senhor, foi t\xE3o ruim assim?"
-  - ...
-  - Ok
+  - characterSprite: {fileID: 0}
+    characterName: 
+    text: 
+  - characterSprite: {fileID: 0}
+    characterName: 
+    text: 
+  - characterSprite: {fileID: 0}
+    characterName: 
+    text: 
+  - characterSprite: {fileID: 0}
+    characterName: 
+    text: 
   currentQuestData:
     questId: 
     questName: 
     npcName: 
     introLines: []
+    introNames: []
     victoryLines: []
+    victoryNames: []
     defeatLines:
     - pessimo
+    defeatNames: []
     questions: []
     maxLives: 3
     minCorrect: 2
     objectToActivate: 
     objectToDeactivate: 
-  manualNpcName: 
 --- !u!1 &969001824
 GameObject:
   m_ObjectHideFlags: 0
@@ -23285,31 +23348,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InterviewQuests
   dialogueText: {fileID: 622770720}
   dialoguePanel: {fileID: 746844588}
-  characterNameText: {fileID: 0}
+  characterNameText: {fileID: 103929470}
   characterImage: {fileID: 0}
   textSpeed: 0.03
   victoryLines:
-  - "Bom, sr. Franz. O emprego \xE9 seu."
-  - Obrigado, senhor!
+  - characterSprite: {fileID: 0}
+    characterName: Chefe
+    text: "Parab\xE9ns kafka"
   defeatLines:
-  - "Olha, vamos ter que rever a quest\xE3o da sua vaga."
-  - "Senhor, foi t\xE3o ruim assim?"
-  - ...
-  - Ok
+  - characterSprite: {fileID: 0}
+    characterName: Chefe
+    text: "P\xE9ssimo kafka"
   currentQuestData:
     questId: 
     questName: 
     npcName: Entrevistador
     introLines: []
+    introNames: []
     victoryLines: []
+    victoryNames:
+    - Chefe
+    - Kafka
     defeatLines:
     - pessimo
-    questions: []
+    defeatNames:
+    - Chefe
+    - Kafka
+    - Chefe
+    - Kafka
+    questions:
+    - question: 
+      options: []
+      correctAnswer: 0
+      correctFeedback: 
+      wrongFeedback: 
+      optionDialogues: []
     maxLives: 3
     minCorrect: 2
     objectToActivate: 
     objectToDeactivate: 
-  manualNpcName: 
 --- !u!4 &1312730300
 Transform:
   m_ObjectHideFlags: 0
@@ -25635,23 +25712,27 @@ MonoBehaviour:
   characterImage: {fileID: 0}
   textSpeed: 0.03
   victoryLines:
-  - i got this
+  - characterSprite: {fileID: 0}
+    characterName: 
+    text: 
   defeatLines: []
   currentQuestData:
     questId: 
     questName: 
     npcName: 
     introLines: []
+    introNames: []
     victoryLines:
     - i got this
+    victoryNames: []
     defeatLines:
     - pessimo
+    defeatNames: []
     questions: []
     maxLives: 3
     minCorrect: 2
     objectToActivate: 
     objectToDeactivate: 
-  manualNpcName: 
 --- !u!4 &1574989814
 Transform:
   m_ObjectHideFlags: 0
@@ -26252,31 +26333,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InterviewQuests
   dialogueText: {fileID: 622770720}
   dialoguePanel: {fileID: 746844588}
-  characterNameText: {fileID: 0}
+  characterNameText: {fileID: 103929470}
   characterImage: {fileID: 0}
   textSpeed: 0.03
   victoryLines:
-  - 'Pai: *resmunga*
-
-'
+  - characterSprite: {fileID: 0}
+    characterName: 
+    text: 
   defeatLines:
-  - 'Pai: Saia dessa casa agora!!
-
-'
+  - characterSprite: {fileID: 0}
+    characterName: 
+    text: 
   currentQuestData:
     questId: 
     questName: 
     npcName: Pai
     introLines: []
+    introNames: []
     victoryLines: []
+    victoryNames:
+    - Pai
     defeatLines:
     - pessimo
+    defeatNames:
+    - Pai
     questions: []
     maxLives: 3
     minCorrect: 2
     objectToActivate: 
     objectToDeactivate: 
-  manualNpcName: 
 --- !u!1 &1643286953
 GameObject:
   m_ObjectHideFlags: 0

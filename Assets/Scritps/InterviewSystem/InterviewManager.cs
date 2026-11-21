@@ -11,18 +11,10 @@ public class InterviewManager : MonoBehaviour
     [SerializeField] private UInterviewManager uiManager;
     [SerializeField] private InterviewQuests dialogueSystem;
 
-    // ✅ NOVO: Imagem do personagem na tela do Quiz
-    [SerializeField] private UnityEngine.UI.Image characterImage;
-
-    // ✅ NOVO: Sprites de Reação
     [Header("Sprites do Personagem (Quiz)")]
-    [Tooltip("Sprite normal enquanto a pergunta está na tela")]
+    [SerializeField] private UnityEngine.UI.Image characterImage;
     [SerializeField] private Sprite spritePergunta;
-
-    [Tooltip("Sprite quando o jogador acerta a resposta")]
     [SerializeField] private Sprite spriteAcerto;
-
-    [Tooltip("Sprite quando o jogador erra a resposta")]
     [SerializeField] private Sprite spriteErro;
 
     [Header("Intro Panel")]
@@ -123,9 +115,10 @@ public class InterviewManager : MonoBehaviour
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
+        // ✅ Passa as falas e os nomes da introdução
         if (dialogueSystem != null && currentQuest != null && currentQuest.introLines.Length > 0)
         {
-            dialogueSystem.StartDialogue(currentQuest.introLines);
+            dialogueSystem.StartDialogue(currentQuest.introLines, currentQuest.introNames);
             StartCoroutine(WaitForDialogueThenIntroPanel());
         }
         else
@@ -166,7 +159,6 @@ public class InterviewManager : MonoBehaviour
 
     private void ShowRound(QuestionRPG question, int totalOptions)
     {
-        // ✅ NOVO: Mostra o sprite de pergunta no início de cada rodada
         if (characterImage != null && spritePergunta != null)
             characterImage.sprite = spritePergunta;
 
@@ -186,7 +178,6 @@ public class InterviewManager : MonoBehaviour
         DialogueLine[] dialogueLines = null;
         bool isCorrect = (choice == question.correctAnswer);
 
-        // ✅ NOVO: Troca o sprite ANTES do diálogo de resposta
         if (characterImage != null)
         {
             if (isCorrect && spriteAcerto != null)
@@ -208,6 +199,12 @@ public class InterviewManager : MonoBehaviour
             {
                 lines[i] = new DialogueLine();
                 lines[i].characterSprite = dialogueLines[i].characterSprite;
+
+                // ✅ NOVO: Passa o nome. Se não tiver, usa o nome do NPC da quest
+                lines[i].characterName = !string.IsNullOrEmpty(dialogueLines[i].characterName)
+                    ? dialogueLines[i].characterName
+                    : currentQuest.npcName;
+
                 lines[i].text = dialogueLines[i].text.Replace("{answer}", question.options[choice]);
             }
 
@@ -215,7 +212,6 @@ public class InterviewManager : MonoBehaviour
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
-        // Processa a escolha (reduz vida ou add ponto)
         system.ProcessChoice(choice);
     }
 

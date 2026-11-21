@@ -8,8 +8,6 @@ public class InterviewQuests : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private GameObject dialoguePanel;
-
-    // ✅ NOVO: Texto para o nome do personagem
     [SerializeField] private TMP_Text characterNameText;
 
     [Header("Character")]
@@ -19,17 +17,12 @@ public class InterviewQuests : MonoBehaviour
     [SerializeField] private float textSpeed = 0.03f;
 
     [Header("Final Dialogues")]
-    [TextArea(2, 5)]
-    [SerializeField] private string[] victoryLines;
-
-    [TextArea(2, 5)]
-    [SerializeField] private string[] defeatLines;
+    // ✅ AGORA É DialogueLine[] EM VEZ DE string[] PARA MOSTRAR O NOME E SPRITE NO INSPECTOR
+    [SerializeField] private DialogueLine[] victoryLines;
+    [SerializeField] private DialogueLine[] defeatLines;
 
     [Header("References")]
     [SerializeField] private QuestData currentQuestData;
-
-    // ✅ NOVO: Nome manual (opcional) caso não use o QuestData
-    [SerializeField] private string manualNpcName = "";
 
     private bool isRunning;
     private Coroutine currentDialogue;
@@ -56,13 +49,9 @@ public class InterviewQuests : MonoBehaviour
         }
     }
 
-    public void StartDialogue(string[] lines)
+    public void StartDialogue(string[] lines, string[] names = null)
     {
-        if (lines == null || lines.Length == 0)
-        {
-            Debug.LogWarning("dialogue is empty");
-            return;
-        }
+        if (lines == null || lines.Length == 0) return;
 
         DialogueLine[] converted = new DialogueLine[lines.Length];
         for (int i = 0; i < lines.Length; i++)
@@ -70,6 +59,11 @@ public class InterviewQuests : MonoBehaviour
             converted[i] = new DialogueLine();
             converted[i].text = lines[i];
             converted[i].characterSprite = null;
+
+            if (names != null && i < names.Length && !string.IsNullOrEmpty(names[i]))
+                converted[i].characterName = names[i];
+            else
+                converted[i].characterName = "";
         }
 
         StartDialogue(converted);
@@ -77,11 +71,7 @@ public class InterviewQuests : MonoBehaviour
 
     public void StartDialogue(DialogueLine[] lines)
     {
-        if (lines == null || lines.Length == 0)
-        {
-            Debug.LogWarning("Diálogo vazio!");
-            return;
-        }
+        if (lines == null || lines.Length == 0) return;
 
         if (currentDialogue != null)
         {
@@ -102,9 +92,6 @@ public class InterviewQuests : MonoBehaviour
         if (dialoguePanel != null)
             dialoguePanel.SetActive(true);
 
-        // ✅ Define o nome do NPC no início do diálogo
-        UpdateName();
-
         foreach (DialogueLine line in lines)
         {
             if (characterImage != null)
@@ -112,6 +99,10 @@ public class InterviewQuests : MonoBehaviour
                 characterImage.sprite = line.characterSprite;
                 characterImage.gameObject.SetActive(line.characterSprite != null);
             }
+
+            // ✅ Atualiza o nome na UI
+            if (characterNameText != null)
+                characterNameText.text = line.characterName;
 
             dialogueText.text = "";
             isTextComplete = false;
@@ -156,27 +147,6 @@ public class InterviewQuests : MonoBehaviour
         waitingForNext = false;
     }
 
-    // ✅ Função que atualiza o nome
-    private void UpdateName()
-    {
-        if (characterNameText == null) return;
-
-        // Tenta pegar o nome do QuestData, se existir
-        if (currentQuestData != null && !string.IsNullOrEmpty(currentQuestData.npcName))
-        {
-            characterNameText.text = currentQuestData.npcName;
-        }
-        // Se não, tenta o nome manual
-        else if (!string.IsNullOrEmpty(manualNpcName))
-        {
-            characterNameText.text = manualNpcName;
-        }
-        else
-        {
-            characterNameText.text = ""; // Se não tiver nome, deixa vazio
-        }
-    }
-
     public void SkipAllDialogue()
     {
         if (currentDialogue != null)
@@ -196,21 +166,47 @@ public class InterviewQuests : MonoBehaviour
 
     public void ShowVictoryDialogue()
     {
+        // ✅ Agora lê direto do DialogueLine[] local se a quest não tiver
         if (victoryLines != null && victoryLines.Length > 0)
+        {
             StartDialogue(victoryLines);
+        }
         else if (currentQuestData != null && currentQuestData.victoryLines != null && currentQuestData.victoryLines.Length > 0)
-            StartDialogue(currentQuestData.victoryLines);
+        {
+            DialogueLine[] converted = ConvertToDialogueLines(currentQuestData.victoryLines, currentQuestData.victoryNames);
+            StartDialogue(converted);
+        }
     }
 
     public void ShowDefeatDialogue()
     {
+        // ✅ Agora lê direto do DialogueLine[] local se a quest não tiver
         if (defeatLines != null && defeatLines.Length > 0)
         {
             StartDialogue(defeatLines);
         }
         else if (currentQuestData != null && currentQuestData.defeatLines != null && currentQuestData.defeatLines.Length > 0)
         {
-            StartDialogue(currentQuestData.defeatLines);
+            DialogueLine[] converted = ConvertToDialogueLines(currentQuestData.defeatLines, currentQuestData.defeatNames);
+            StartDialogue(converted);
         }
+    }
+
+    // Função auxiliar para converter string[] (da QuestData) em DialogueLine[]
+    private DialogueLine[] ConvertToDialogueLines(string[] strings, string[] names)
+    {
+        DialogueLine[] result = new DialogueLine[strings.Length];
+        for (int i = 0; i < strings.Length; i++)
+        {
+            result[i] = new DialogueLine();
+            result[i].text = strings[i];
+            result[i].characterSprite = null;
+
+            if (names != null && i < names.Length)
+                result[i].characterName = names[i];
+            else
+                result[i].characterName = "";
+        }
+        return result;
     }
 }
