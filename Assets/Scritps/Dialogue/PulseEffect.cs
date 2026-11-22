@@ -51,12 +51,7 @@ public class PulseEffect : MonoBehaviour
         if (useColorChange)
         {
             float t = (Mathf.Sin(Time.time * pulseSpeed) + 1f) / 2f;
-            Color currentColor = Color.Lerp(colorA, colorB, t);
-
-            if (image != null)
-                image.color = currentColor;
-            else if (spriteRenderer != null)
-                spriteRenderer.color = currentColor;
+           
         }
     }
 
