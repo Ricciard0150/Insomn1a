@@ -28193,156 +28193,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1845765971
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1845765973}
-  - component: {fileID: 1845765972}
-  - component: {fileID: 1845765975}
-  - component: {fileID: 1845765974}
-  m_Layer: 0
-  m_Name: cOMODA
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &1845765972
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1845765971}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.4339623, g: 0.22516909, b: 0.22516909, a: 0.2784314}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &1845765973
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1845765971}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 512.8782, y: 120.0543, z: 0}
-  m_LocalScale: {x: 7.4135914, y: 4.3581123, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2000680574}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1845765974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1845765971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 622728acb49d69043a77681497e1e1bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TextManager
---- !u!61 &1845765975
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1845765971}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &1847069953
 GameObject:
   m_ObjectHideFlags: 0
@@ -30335,7 +30185,6 @@ Transform:
   - {fileID: 1075212404}
   - {fileID: 1051169691}
   - {fileID: 1610394282}
-  - {fileID: 1845765973}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &2000680575
@@ -30891,7 +30740,7 @@ Transform:
   m_GameObject: {fileID: 2056157386}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 99.814, y: -56.3884, z: 0}
+  m_LocalPosition: {x: 516.1, y: 121.2, z: 0}
   m_LocalScale: {x: 2.4300044, y: 2.5924292, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30931,7 +30780,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.70862633, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -30941,7 +30790,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.4172525, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &2056157390
 SpriteRenderer:
@@ -30990,7 +30839,7 @@ SpriteRenderer:
   m_SortingLayerID: 1146789417
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7119257099291511172, guid: 2d60557f26950bc4db8bbc46d9f749fd, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 0.16097578, g: 0.11213954, b: 0.6792453, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -30998,7 +30847,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &2056157391
@@ -31014,17 +30863,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCData
   npcName: ???
-  falas:
-  - Sai daqui, moleque, tenho que ensaiar pra entrevista.
+  falas: []
   sprites:
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
-  falasBeforeNightmare: []
+  falasBeforeNightmare:
+  - "Meus rem\xE9dios..."
   spritesBeforeNightmare: []
-  falasAfterNightmare: []
+  falasAfterNightmare:
+  - "Meus rem\xE9dios..."
   spritesAfterNightmare: []
   nomesBeforeNightmare:
-  - Atendente
-  nomesAfterNightmare: []
+  - Kafka
+  nomesAfterNightmare:
+  - Kafka
 --- !u!114 &2056157392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33586,7 +33437,10 @@ MonoBehaviour:
   animationDuration: 1.5
   objectsToActivate:
   - {fileID: 1249601344}
-  objectsToDeactivate: []
+  - {fileID: 1610394281}
+  objectsToDeactivate:
+  - {fileID: 1051169689}
+  - {fileID: 1051169689}
   totalRounds: 5
   timePerRound: 10
   maxErrors: 3
@@ -33834,7 +33688,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 361.7, y: 155.2, z: 0}
+  m_LocalPosition: {x: 383.5, y: 19.9, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
