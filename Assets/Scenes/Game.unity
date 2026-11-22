@@ -10703,7 +10703,7 @@ GameObject:
   - component: {fileID: 1030613189}
   - component: {fileID: 1030613188}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: Start for real
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10808,7 +10808,7 @@ Transform:
   m_GameObject: {fileID: 1035721323}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 375.8, y: -26.6, z: 0}
+  m_LocalPosition: {x: 379.7, y: -20.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26257,12 +26257,12 @@ MonoBehaviour:
   textSpeed: 0.03
   victoryLines:
   - characterSprite: {fileID: 0}
-    characterName: 
-    text: 
+    characterName: Pai
+    text: Ugh *resmunga*
   defeatLines:
   - characterSprite: {fileID: 0}
-    characterName: 
-    text: 
+    characterName: Pai
+    text: Fora dessa casa AGORA!
   currentQuestData:
     questId: 
     questName: 
@@ -28692,7 +28692,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0796932, y: 0}
+  m_Offset: {x: 1.5287476, y: 2.9362812}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -28702,7 +28702,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.068486, y: 1}
+  m_Size: {x: 9.729309, y: 6.8725624}
   m_EdgeRadius: 0
 --- !u!4 &1871381207
 Transform:
@@ -28713,7 +28713,7 @@ Transform:
   m_GameObject: {fileID: 1871381204}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -179.3, y: -98.6, z: 0}
+  m_LocalPosition: {x: 246.9, y: -87.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33335,96 +33335,105 @@ MonoBehaviour:
   defeatDialogueLines:
   - characterSprite: {fileID: 0}
     characterName: "Patr\xE3o"
-    text: morte
+    text: "N\xC3O PRECISO DE UM FUNCION\xC1RIO QUE N\xC3O CONSIGA FAZER AS COISAS
+      NO MEU TEMPO!"
+  - characterSprite: {fileID: 0}
+    characterName: "Patr\xE3o"
+    text: "RUA! VOC\xCA EST\xC1 DEMITIDO!"
   dialoguesBetweenRounds:
   - lines:
     - playHandAnimation: 1
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "O trabalho \xE9 muito simples: \xE9 s\xF3 pegar esses panfletos e
+          colocar nas pilhas corretas!"
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "N\xE3o demore muito, hein! Tem mais pessoas querendo a sua vaga, se
+          \xE9 que me entende..."
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: Hm... okay?
   - lines:
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: "O trabalho \xE9 isso? pensei que tivesse mais coisas para faz-"
     - playHandAnimation: 1
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "Ol\xE1, Franz! Mais trabalho para voc\xEA hehe..."
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: Sem problemas... eu acho...
   - lines:
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: Tempo para um descanso, talvez...
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: Acho que vou pegar algo para come-
     - playHandAnimation: 1
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "Ol, meu funcion\xE1rio favorito!"
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: Ah...
   - lines:
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: "N\xE3o \xE9 poss\xEDvel que tenha algo para fazer..."
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: "Olha s\xF3, acho que tenho um tempo!"
     - playHandAnimation: 1
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "Fa\xE7a seu trabalho!"
   - lines:
     - playHandAnimation: 1
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "S\xF3 mais esse, eu juro!"
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: Okay...
   finalVictoryLines:
   - characterSprite: {fileID: 0}
     characterName: "Patr\xE3o"
-    text: Acertou
+    text: "Okay, Kafka, est\xE1 dispensado!"
+  - characterSprite: {fileID: 0}
+    characterName: Kafka
+    text: Ugh, obr-iga-do..
   postMinigameLines:
   - characterSprite: {fileID: 0}
-    characterName: "Patr\xE3o "
-    text: Acertou
+    characterName: "Voc\xEA est\xE1 bem, Kafka?"
+    text: SIm, eS-toU... prEcisO iR para CAsA
   allSpots:
   - {fileID: 2734268101585135920}
   - {fileID: 8711809240504566253}
@@ -33688,7 +33697,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 383.5, y: 19.9, z: 0}
+  m_LocalPosition: {x: 539.5, y: 95.7, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
