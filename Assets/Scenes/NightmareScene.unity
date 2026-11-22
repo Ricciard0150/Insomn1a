@@ -1004,7 +1004,7 @@ MonoBehaviour:
   pressEIndicator: {fileID: 1690778253}
   dialogueSystem: {fileID: 860523655}
   cameraShake: {fileID: 649985615}
-  objectahead: {fileID: 0}
+  objectahead: {fileID: 1999211443}
   jumpscareManager: {fileID: 2022346318}
   noKeyDialogue:
   - Preciso de uma chave...
@@ -9105,7 +9105,7 @@ GameObject:
   - component: {fileID: 1999211444}
   - component: {fileID: 1999211446}
   m_Layer: 0
-  m_Name: Window
+  m_Name: WindowAhead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
