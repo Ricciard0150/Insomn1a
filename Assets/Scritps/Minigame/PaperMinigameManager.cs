@@ -10,16 +10,20 @@ public class PaperMinigameManager : MonoBehaviour
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text roundText;
     [SerializeField] private TMP_Text errorText;
-    [SerializeField] private GameObject gameOverPanel;
 
     [Header("Diálogos e Fades")]
     [SerializeField] private InterviewQuests dialogueSystem;
     [SerializeField] private FadeController fadeController;
 
+    // ✅ NOVO: Game Over UI
+    [SerializeField] private GameOverUI gameOverUI;
+
+    [Header("Diálogo de Derrota")]
+    [SerializeField] private DialogueLine[] defeatDialogueLines;
+
     [System.Serializable]
     public class DialogueLineData
     {
-        [Tooltip("Se marcado, a mão vai animar E sortear um novo Spot enquanto essa fala está na tela.")]
         public bool playHandAnimation;
         public DialogueLine lineData;
     }
@@ -44,7 +48,7 @@ public class PaperMinigameManager : MonoBehaviour
     [SerializeField] private GameObject paperPrefab;
     [SerializeField] private Transform spawnPoint;
 
-    [Header("Animação da Mão (Tutorial)")]
+    [Header("Animação da Mão")]
     [SerializeField] private GameObject handPrefab;
     [SerializeField] private Transform handStartPosition;
     [SerializeField] private Transform handTargetPoint;
@@ -73,7 +77,6 @@ public class PaperMinigameManager : MonoBehaviour
     void Start()
     {
         if (minigamePanel != null) minigamePanel.SetActive(false);
-        if (gameOverPanel != null) gameOverPanel.SetActive(false);
     }
 
     public void StartMinigame()
@@ -120,7 +123,6 @@ public class PaperMinigameManager : MonoBehaviour
             }
 
             SpawnNextPaper(true);
-
             currentTime = timePerRound;
 
             while (currentTime > 0 && papersOrganizedThisRound < papersToOrganizePerRound && !isGameOver)
@@ -137,7 +139,7 @@ public class PaperMinigameManager : MonoBehaviour
 
             if (currentTime <= 0 && papersOrganizedThisRound < papersToOrganizePerRound && !isGameOver)
             {
-                yield return StartCoroutine(TriggerGameOver("Muito lento. O patrão te demitiu."));
+                yield return StartCoroutine(TriggerGameOver());
                 yield break;
             }
 
@@ -147,29 +149,25 @@ public class PaperMinigameManager : MonoBehaviour
         if (!isGameOver) yield return StartCoroutine(VictorySequence());
     }
 
+    // ... (PlayHandTutorial e OnPaperOrganizedCorrectly/Wrongly continuam iguais) ...
+
     private IEnumerator PlayHandTutorial()
     {
         if (handPrefab == null) yield break;
-
         RandomizeSpot();
-
-        // ✅ Força Z = 0 na posição do papel falso
         Vector3 fakePaperPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
         GameObject fakePaper = Instantiate(paperPrefab, fakePaperPos, Quaternion.identity, null);
-
         Collider2D fakeCol = fakePaper.GetComponent<Collider2D>();
         if (fakeCol != null) fakeCol.enabled = false;
 
         Vector3 startPos = handStartPosition != null ? handStartPosition.position : spawnPoint.position;
         startPos.z = 0f;
-
         Vector3 targetPos = handTargetPoint != null
             ? handTargetPoint.position
             : (currentHighlightedSpot != null ? currentHighlightedSpot.transform.position : spawnPoint.position);
         targetPos.z = 0f;
 
         GameObject handObj = Instantiate(handPrefab, startPos, Quaternion.identity, null);
-
         PaperHandAnimation handScript = handObj.GetComponent<PaperHandAnimation>();
         PaperVisualDemo paperScript = fakePaper.GetComponent<PaperVisualDemo>();
 
@@ -177,7 +175,6 @@ public class PaperMinigameManager : MonoBehaviour
         {
             Coroutine handRoutine = StartCoroutine(handScript.AnimateHand(startPos, targetPos, animationDuration));
             Coroutine paperRoutine = StartCoroutine(paperScript.AnimatePaper(startPos, targetPos, animationDuration));
-
             yield return handRoutine;
             yield return paperRoutine;
         }
@@ -189,40 +186,28 @@ public class PaperMinigameManager : MonoBehaviour
     public void OnPaperOrganizedCorrectly()
     {
         if (!isRoundActive || isGameOver) return;
-
         papersOrganizedThisRound++;
         AtualizarUI();
         DestroyCurrentPaper();
 
-        if (papersOrganizedThisRound >= papersToOrganizePerRound)
-        {
-            isRoundActive = false;
-        }
-        else
-        {
-            RandomizeSpot();
-            SpawnNextPaper(false);
-        }
+        if (papersOrganizedThisRound >= papersToOrganizePerRound) isRoundActive = false;
+        else { RandomizeSpot(); SpawnNextPaper(false); }
     }
 
     public void OnPaperOrganizedWrongly()
     {
         if (!isRoundActive || isGameOver) return;
-
         currentErrors++;
         AtualizarUI();
         DestroyCurrentPaper();
 
         if (currentErrors >= maxErrors)
         {
-            StartCoroutine(TriggerGameOver("Muitos erros. O patrão te demitiu."));
+            StartCoroutine(TriggerGameOver());
             return;
         }
 
-        if (papersOrganizedThisRound < papersToOrganizePerRound)
-        {
-            SpawnNextPaper(false);
-        }
+        if (papersOrganizedThisRound < papersToOrganizePerRound) SpawnNextPaper(false);
     }
 
     private void AtualizarUI()
@@ -234,51 +219,49 @@ public class PaperMinigameManager : MonoBehaviour
     private void RandomizeSpot()
     {
         if (allSpots.Length == 0) return;
-
-        foreach (var spot in allSpots)
-            if (spot != null) spot.SetHighlight(false);
-
+        foreach (var spot in allSpots) if (spot != null) spot.SetHighlight(false);
         int randomIndex = Random.Range(0, allSpots.Length);
         currentHighlightedSpot = allSpots[randomIndex];
         currentHighlightedSpot.SetHighlight(true);
     }
 
-    // ✅ AQUI ESTÁ A CORREÇÃO DO Z
     private void SpawnNextPaper(bool isFirstPaperOfRound)
     {
         if (paperPrefab != null && spawnPoint != null)
         {
-            // Força a posição de spawn a ter Z = 0
             Vector3 spawnPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
-
             activePaper = Instantiate(paperPrefab, spawnPos, Quaternion.identity);
         }
     }
 
     private void DestroyCurrentPaper()
     {
-        if (activePaper != null)
-        {
-            Destroy(activePaper);
-            activePaper = null;
-        }
+        if (activePaper != null) { Destroy(activePaper); activePaper = null; }
     }
 
-    private IEnumerator TriggerGameOver(string reason)
+    // ✅ AQUI ESTÁ A LÓGICA DO GAME OVER INTEGRADA
+    private IEnumerator TriggerGameOver()
     {
         isGameOver = true;
         isRoundActive = false;
 
         DestroyCurrentPaper();
 
+        // 1. Fecha o painel do minigame
         if (minigamePanel != null) minigamePanel.SetActive(false);
 
-        if (gameOverPanel != null)
+        // 2. Toca o diálogo de derrota
+        if (dialogueSystem != null && defeatDialogueLines != null && defeatDialogueLines.Length > 0)
         {
-            gameOverPanel.SetActive(true);
+            dialogueSystem.StartDialogue(defeatDialogueLines);
+            yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
-        yield return new WaitForSeconds(2f);
+        // 3. Aciona o Game Over UI
+        if (gameOverUI != null)
+        {
+            gameOverUI.ShowDefeat("Muito lento. O patrão te demitiu.");
+        }
     }
 
     private IEnumerator VictorySequence()
@@ -300,20 +283,16 @@ public class PaperMinigameManager : MonoBehaviour
         }
 
         if (objectsToActivate != null)
-        {
-            foreach (GameObject obj in objectsToActivate)
-                if (obj != null) obj.SetActive(true);
-        }
+            foreach (GameObject obj in objectsToActivate) if (obj != null) obj.SetActive(true);
 
         if (objectsToDeactivate != null)
-        {
-            foreach (GameObject obj in objectsToDeactivate)
-                if (obj != null) obj.SetActive(false);
-        }
+            foreach (GameObject obj in objectsToDeactivate) if (obj != null) obj.SetActive(false);
 
-        if (fadeController != null)
-        {
-            yield return StartCoroutine(fadeController.FadeToBlack(1f));
-        }
+        if (fadeController != null) yield return StartCoroutine(fadeController.FadeToBlack(1f));
+    }
+
+    public void RestartMinigame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }

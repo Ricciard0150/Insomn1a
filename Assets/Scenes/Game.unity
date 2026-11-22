@@ -1801,14 +1801,17 @@ MonoBehaviour:
   crackAudioSource: {fileID: 0}
   crackSound: {fileID: 0}
   fadeIn: 0.5
-  hold: 1.5
   fadeOut: 0.5
   tempoParaCrack: 1
   tempoSeparadas: 5
   velocidadeMovimento: 6.11
-  spotCarta1: {fileID: 842833545}
-  spotCarta2: {fileID: 427345686}
-  spotCarta3: {fileID: 1957500056}
+  posFinalCarta1: {x: -80, y: 100}
+  rotFinalCarta1: 15
+  posFinalCarta2: {x: 120, y: 0}
+  rotFinalCarta2: -5
+  posFinalCarta3: {x: -50, y: -120}
+  rotFinalCarta3: 20
+  interactButton: Interact
 --- !u!1 &236904181
 GameObject:
   m_ObjectHideFlags: 0
@@ -6414,7 +6417,7 @@ Transform:
   m_GameObject: {fileID: 685654402}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 369, y: 104, z: 0}
+  m_LocalPosition: {x: 359.1, y: 151.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6617,6 +6620,7 @@ MonoBehaviour:
   defeatMessage: 
   animationDuration: 0.5
   interviewManager: {fileID: 1649544997}
+  paperMinigameManager: {fileID: 0}
 --- !u!225 &732364236
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -22197,7 +22201,7 @@ Transform:
   m_GameObject: {fileID: 1249601344}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 394.4, y: 69.3, z: 0}
+  m_LocalPosition: {x: 358.8, y: 156.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25538,6 +25542,196 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f9b4d76c084f544b80998f0eb37317e, type: 3}
+--- !u!1 &1580676550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1580676555}
+  - component: {fileID: 1580676554}
+  - component: {fileID: 1580676553}
+  - component: {fileID: 1580676552}
+  - component: {fileID: 1580676551}
+  m_Layer: 0
+  m_Name: PointSave (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!58 &1580676551
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580676550}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 2.145
+--- !u!61 &1580676552
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580676550}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.21021867, y: -0.2990892}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4.29, y: 3.91}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 10.764833, y: 7.9851737}
+  m_EdgeRadius: 0
+--- !u!114 &1580676553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580676550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d6fd39fafe5854e9a3499f23e9cd21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SavePoint
+  pointName: Save
+  feedback: {fileID: 150873144}
+  saveNotification: {fileID: 514150796}
+--- !u!212 &1580676554
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580676550}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 1131675919
+  m_SortingLayer: 4
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -6619111317931664985, guid: 78cc35cafbe624d44bc4eda322360eff, type: 3}
+  m_Color: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1580676555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580676550}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 507.3, y: 43.9, z: 0}
+  m_LocalScale: {x: 0.54720575, y: 0.6062402, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1592144251
 GameObject:
   m_ObjectHideFlags: 0
@@ -33284,9 +33478,13 @@ MonoBehaviour:
   timerText: {fileID: 8108100940027012132}
   roundText: {fileID: 3955346179239500563}
   errorText: {fileID: 2447242022131347325}
-  gameOverPanel: {fileID: 0}
   dialogueSystem: {fileID: 1704881960}
   fadeController: {fileID: 0}
+  gameOverUI: {fileID: 732364235}
+  defeatDialogueLines:
+  - characterSprite: {fileID: 0}
+    characterName: "Patr\xE3o"
+    text: morte
   dialoguesBetweenRounds:
   - lines:
     - playHandAnimation: 1
@@ -33368,8 +33566,14 @@ MonoBehaviour:
         characterSprite: {fileID: 0}
         characterName: 
         text: 
-  finalVictoryLines: []
-  postMinigameLines: []
+  finalVictoryLines:
+  - characterSprite: {fileID: 0}
+    characterName: "Patr\xE3o"
+    text: Acertou
+  postMinigameLines:
+  - characterSprite: {fileID: 0}
+    characterName: "Patr\xE3o "
+    text: Acertou
   allSpots:
   - {fileID: 2734268101585135920}
   - {fileID: 8711809240504566253}
@@ -33630,7 +33834,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 291.8, y: 78.5, z: 0}
+  m_LocalPosition: {x: 361.7, y: 155.2, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -33697,6 +33901,7 @@ SceneRoots:
   - {fileID: 569812870}
   - {fileID: 619394802}
   - {fileID: 1175955780}
+  - {fileID: 1580676555}
   - {fileID: 1240861295}
   - {fileID: 1776364289}
   - {fileID: 1615909949}

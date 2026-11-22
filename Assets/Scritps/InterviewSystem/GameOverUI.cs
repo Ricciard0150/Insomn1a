@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameOverUI : MonoBehaviour
 {
@@ -18,15 +19,19 @@ public class GameOverUI : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private float animationDuration = 0.5f;
 
-    [Header("References")]
+    [Header("References (Opcionais)")]
+    [Tooltip("Arraste o InterviewManager se for usar o Game Over na entrevista.")]
     [SerializeField] private InterviewManager interviewManager;
+
+    [Tooltip("Arraste o PaperMinigameManager se for usar o Game Over no minigame.")]
+    [SerializeField] private PaperMinigameManager paperMinigameManager;
 
     private Vector3 escalaOriginal;
     private bool escalaSalva = false;
 
+    // ✅ Sobrecarga 1: Usada pela Entrevista (com pontuação)
     public void ShowDefeat(int points, int maxPoints)
     {
-        // ✅ Salva o tamanho verdadeiro do painel ANTES de mexer nele
         if (!escalaSalva)
         {
             escalaOriginal = transform.localScale;
@@ -42,7 +47,33 @@ public class GameOverUI : MonoBehaviour
             messageText.text = defeatMessage;
 
         if (scoreText != null)
+        {
+            scoreText.gameObject.SetActive(true);
             scoreText.text = $"Pontuação: {points}/{maxPoints}";
+        }
+
+        StartCoroutine(AnimatePanel());
+    }
+
+    // ✅ Sobrecarga 2: Usada pelo Minigame (com mensagem customizada)
+    public void ShowDefeat(string customMessage)
+    {
+        if (!escalaSalva)
+        {
+            escalaOriginal = transform.localScale;
+            escalaSalva = true;
+        }
+
+        gameObject.SetActive(true);
+
+        if (titleText != null)
+            titleText.text = defeatTitle;
+
+        if (messageText != null)
+            messageText.text = customMessage;
+
+        if (scoreText != null)
+            scoreText.gameObject.SetActive(false); // Esconde a pontuação no minigame
 
         StartCoroutine(AnimatePanel());
     }
@@ -54,8 +85,6 @@ public class GameOverUI : MonoBehaviour
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
         canvasGroup.alpha = 0f;
-
-        // ✅ Começa na escala zero para dar o efeito de "pop"
         transform.localScale = Vector3.zero;
 
         float elapsed = 0f;
@@ -65,28 +94,46 @@ public class GameOverUI : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float progress = elapsed / animationDuration;
 
-            // ✅ Cresce até a escala original real, não para o Vector3.one
             transform.localScale = Vector3.Lerp(Vector3.zero, escalaOriginal, progress);
             canvasGroup.alpha = progress;
 
             yield return null;
         }
 
-        // ✅ Garante que no final fique exatamente no tamanho que você deixou no Editor
         transform.localScale = escalaOriginal;
         canvasGroup.alpha = 1f;
     }
 
+    // ✅ Botão Reiniciar
     public void OnRestartClicked()
     {
         if (interviewManager != null)
+        {
             interviewManager.RestartQuiz();
+            return;
+        }
+
+        if (paperMinigameManager != null)
+        {
+            paperMinigameManager.RestartMinigame();
+            return;
+        }
+
+        // Fallback: Se não tiver nenhum dos dois, recarrega a cena atual
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    // ✅ Botão Menu
     public void OnMenuClicked()
     {
         if (interviewManager != null)
+        {
             interviewManager.GoToMenu();
+            return;
+        }
+
+        // Fallback: Se for do minigame (ou qualquer outro), carrega o Menu Principal
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void SetInterviewManager(InterviewManager manager)

@@ -18,23 +18,31 @@ public class LetterPickupPanel : MonoBehaviour
 
     [Header("Timing")]
     [SerializeField] private float fadeIn = 0.5f;
-    [SerializeField] private float hold = 2.5f;
     [SerializeField] private float fadeOut = 0.5f;
 
     [Header("Efeito Final (Crack)")]
-    [SerializeField] private float tempoParaCrack = 1f;
+    [SerializeField] private float tempoParaCrack = 1.5f;
     [SerializeField] private float tempoSeparadas = 5f;
     [SerializeField] private float velocidadeMovimento = 2f;
 
-    [Header("Spots Específicos (Posição e Rotação Alvo)")]
-    [Tooltip("Arraste os objetos vazios (Spots) aqui. O script vai copiar a posição E a rotação deles.")]
-    [SerializeField] private RectTransform spotCarta1;
-    [SerializeField] private RectTransform spotCarta2;
-    [SerializeField] private RectTransform spotCarta3;
+    [Header("Ajuste do Crack (Posições e Rotações)")]
+    [SerializeField] private Vector2 posFinalCarta1 = new Vector2(-80f, 100f);
+    [SerializeField] private float rotFinalCarta1 = 15f;
+
+    [SerializeField] private Vector2 posFinalCarta2 = new Vector2(120f, 0f);
+    [SerializeField] private float rotFinalCarta2 = -5f;
+
+    [SerializeField] private Vector2 posFinalCarta3 = new Vector2(-50f, -120f);
+    [SerializeField] private float rotFinalCarta3 = 20f;
+
+    [Header("Input")]
+    [SerializeField] private string interactButton = "Interact";
 
     private Coroutine currentRoutine;
     private Vector2[] posicoesOriginais;
     private Quaternion[] rotacoesOriginais;
+    private bool podeFechar = false;
+    private bool isFinalCard = false;
 
     public event Action OnPanelClosed;
 
@@ -61,6 +69,17 @@ public class LetterPickupPanel : MonoBehaviour
         SetTextAlpha(counterText, 0f);
     }
 
+    void Update()
+    {
+        // ✅ Se não for a última carta e o jogador apertar o botão, fecha na hora
+        if (podeFechar && !isFinalCard && Input.GetButtonDown(interactButton))
+        {
+            podeFechar = false;
+            if (currentRoutine != null) StopCoroutine(currentRoutine);
+            StartCoroutine(FecharAntesDoTempo());
+        }
+    }
+
     public void Show(string itemName, int pieceNumber, int collected, int total)
     {
         gameObject.SetActive(true);
@@ -68,12 +87,13 @@ public class LetterPickupPanel : MonoBehaviour
         if (itemNameText != null) itemNameText.text = itemName;
         if (counterText != null) counterText.text = $"{collected}/{total}";
 
+        isFinalCard = collected >= total;
+
         for (int i = 0; i < letterSlots.Length; i++)
         {
             if (letterSlots[i] != null)
             {
                 letterSlots[i].enabled = (i < pieceNumber);
-                // Reseta para a posição e rotação original
                 letterSlots[i].rectTransform.anchoredPosition = posicoesOriginais[i];
                 letterSlots[i].rectTransform.localRotation = rotacoesOriginais[i];
             }
@@ -81,7 +101,7 @@ public class LetterPickupPanel : MonoBehaviour
 
         if (currentRoutine != null) StopCoroutine(currentRoutine);
 
-        if (collected >= total)
+        if (isFinalCard)
             currentRoutine = StartCoroutine(AnimateFinal());
         else
             currentRoutine = StartCoroutine(AnimateNormal());
@@ -90,9 +110,17 @@ public class LetterPickupPanel : MonoBehaviour
     private IEnumerator AnimateNormal()
     {
         yield return StartCoroutine(DoFadeIn());
-        yield return new WaitForSecondsRealtime(hold);
-        yield return StartCoroutine(DoFadeOut());
 
+        // ✅ Nas cartas normais, o player pode fechar quando quiser, sem tempo limite
+        podeFechar = true;
+
+        // Ele fica nesse estado até o jogador apertar o botão
+        // Não tem mais o WaitForSeconds aqui.
+    }
+
+    private IEnumerator FecharAntesDoTempo()
+    {
+        yield return StartCoroutine(DoFadeOut());
         gameObject.SetActive(false);
         currentRoutine = null;
         OnPanelClosed?.Invoke();
@@ -102,21 +130,14 @@ public class LetterPickupPanel : MonoBehaviour
     {
         yield return StartCoroutine(DoFadeIn());
 
+        // 1. Mostra as cartas juntas por um tempo (não pode fechar no botão)
         yield return new WaitForSecondsRealtime(tempoParaCrack);
 
+        // 2. Toca o som do Crack
         if (crackAudioSource != null && crackSound != null)
             crackAudioSource.PlayOneShot(crackSound);
 
-        // Pega as posições e rotações EXATAS configuradas nos Spots
-        Vector2 targetPos1 = spotCarta1 != null ? spotCarta1.anchoredPosition : posicoesOriginais[0];
-        Quaternion targetRot1 = spotCarta1 != null ? spotCarta1.localRotation : rotacoesOriginais[0];
-
-        Vector2 targetPos2 = spotCarta2 != null ? spotCarta2.anchoredPosition : posicoesOriginais[1];
-        Quaternion targetRot2 = spotCarta2 != null ? spotCarta2.localRotation : rotacoesOriginais[1];
-
-        Vector2 targetPos3 = spotCarta3 != null ? spotCarta3.anchoredPosition : posicoesOriginais[2];
-        Quaternion targetRot3 = spotCarta3 != null ? spotCarta3.localRotation : rotacoesOriginais[2];
-
+        // 3. Efeito de Quebrar (Move e gira)
         float elapsed = 0f;
         while (elapsed < 1f)
         {
@@ -128,24 +149,25 @@ public class LetterPickupPanel : MonoBehaviour
                 if (letterSlots[i] != null && letterSlots[i].enabled)
                 {
                     Vector2 targetPos = Vector2.zero;
-                    Quaternion targetRot = Quaternion.identity;
+                    float targetRot = 0f;
 
-                    if (i == 0) { targetPos = targetPos1; targetRot = targetRot1; }
-                    else if (i == 1) { targetPos = targetPos2; targetRot = targetRot2; }
-                    else if (i == 2) { targetPos = targetPos3; targetRot = targetRot3; }
+                    if (i == 0) { targetPos = posFinalCarta1; targetRot = rotFinalCarta1; }
+                    else if (i == 1) { targetPos = posFinalCarta2; targetRot = rotFinalCarta2; }
+                    else if (i == 2) { targetPos = posFinalCarta3; targetRot = rotFinalCarta3; }
 
-                    // Move
                     letterSlots[i].rectTransform.anchoredPosition = Vector2.Lerp(posicoesOriginais[i], targetPos, p);
 
-                    // Rotaciona (usando Slerp para ir da rotação original até a rotação do Spot)
-                    letterSlots[i].rectTransform.localRotation = Quaternion.Slerp(rotacoesOriginais[i], targetRot, p);
+                    float currentRotZ = Mathf.Lerp(0f, targetRot, p);
+                    letterSlots[i].rectTransform.localRotation = Quaternion.Euler(0f, 0f, currentRotZ);
                 }
             }
             yield return null;
         }
 
+        // 4. Segura os pedaços quebrados por um tempo
         yield return new WaitForSecondsRealtime(tempoSeparadas);
 
+        // 5. Fade out final e fecha
         yield return StartCoroutine(DoFadeOut());
 
         gameObject.SetActive(false);

@@ -5,6 +5,7 @@ public class CollectibleLetterPiece : MonoBehaviour
 {
     [Header("Item")]
     [SerializeField] private string itemName = "Pedaço de carta";
+    [Tooltip("Qual é o número DESTA carta? (1, 2 ou 3)")]
     [SerializeField] private int pieceNumber = 1;
 
     [Header("References")]
@@ -27,6 +28,7 @@ public class CollectibleLetterPiece : MonoBehaviour
 
     void Start()
     {
+        // Se essa carta já foi coletada antes, desativa o objeto
         if (SaveSystem.Instance != null && SaveSystem.Instance.HasLetterPiece(pieceNumber))
         {
             gameObject.SetActive(false);
@@ -39,17 +41,20 @@ public class CollectibleLetterPiece : MonoBehaviour
         {
             collected = true;
 
+            // 1. Salva que essa carta foi coletada
             if (SaveSystem.Instance != null)
                 SaveSystem.Instance.CollectLetterPiece(pieceNumber);
 
+            // 2. Pega a contagem ATUALIZADA após salvar
             int collectedCount = SaveSystem.Instance != null ? SaveSystem.Instance.GetCollectedLetterPieceCount() : 1;
             int total = SaveSystem.Instance != null ? SaveSystem.Instance.GetTotalLetterPieces() : 3;
 
+            // 3. Mostra o painel
             if (pickupPanel != null)
             {
                 pickupPanel.Show(itemName, pieceNumber, collectedCount, total);
 
-                // Se for o ÚLTIMO pedaço, inscreve no evento do painel para tocar o diálogo quando ele fechar
+                // ✅ CORREÇÃO: Compara se a contagem chegou ao total
                 if (collectedCount >= total)
                 {
                     pickupPanel.OnPanelClosed += ShowFinalDialogue;
@@ -60,16 +65,11 @@ public class CollectibleLetterPiece : MonoBehaviour
         }
     }
 
-    // ✅ CHAMA AS CONSEQUÊNCIAS E DEPOIS O DIÁLOGO
     private void ShowFinalDialogue()
     {
-        // Remove a inscrição para não tocar duas vezes
         pickupPanel.OnPanelClosed -= ShowFinalDialogue;
-
-        // 1. Aplica as consequências PRIMEIRO (ativa/desativa objetos)
         ApplyConsequences();
 
-        // 2. Depois inicia o diálogo
         if (dialogueSystem != null && finalLetterDialogue.Length > 0)
         {
             dialogueSystem.StartDialogue(finalLetterDialogue);
