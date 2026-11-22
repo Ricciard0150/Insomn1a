@@ -2,16 +2,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+
 public class GameOverUI : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text messageText;
     [SerializeField] private TMP_Text scoreText;
-
-    [Header("Buttons")]
-    [SerializeField] private Button restartButton;
-    [SerializeField] private Button menuButton;
 
     [Header("Defeat Settings")]
     [SerializeField] private string defeatTitle;
@@ -24,25 +21,7 @@ public class GameOverUI : MonoBehaviour
     [Header("References")]
     [SerializeField] private InterviewManager interviewManager;
 
-    void Start()
-    {
-        gameObject.SetActive(false);
-
-        if (restartButton != null)
-            restartButton.onClick.AddListener(OnRestartClicked);
-
-        if (menuButton != null)
-            menuButton.onClick.AddListener(OnMenuClicked);
-    }
-
-    void OnDestroy()
-    {
-        if (restartButton != null)
-            restartButton.onClick.RemoveListener(OnRestartClicked);
-
-        if (menuButton != null)
-            menuButton.onClick.RemoveListener(OnMenuClicked);
-    }
+    // ❌ REMOVIDO: Toda a lógica do Awake() e OnDestroy() que adicionava os listeners.
 
     public void ShowDefeat(int points, int maxPoints)
     {
@@ -86,13 +65,15 @@ public class GameOverUI : MonoBehaviour
         canvasGroup.alpha = 1f;
     }
 
-    private void OnRestartClicked()
+    // ✅ AGORA É PÚBLICO: Vai aparecer na lista do OnClick() do botão
+    public void OnRestartClicked()
     {
         if (interviewManager != null)
             interviewManager.RestartQuiz();
     }
 
-    private void OnMenuClicked()
+    // ✅ AGORA É PÚBLICO: Vai aparecer na lista do OnClick() do botão
+    public void OnMenuClicked()
     {
         if (interviewManager != null)
             interviewManager.GoToMenu();
