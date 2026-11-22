@@ -9,8 +9,14 @@ public class Door : MonoBehaviour
     [SerializeField] private PressEIndicator pressEIndicator;
     [SerializeField] private DialogueNightmare dialogueSystem;
     [SerializeField] private CameraShake cameraShake;
-    [SerializeField] private GameObject objectahead; 
+    [SerializeField] private GameObject objectahead;
     [SerializeField] private JumpscareManager jumpscareManager;
+
+    // ✅ Áudio da Porta e Ambiente
+    [Header("Audio")]
+    [SerializeField] private AudioSource doorAudioSource;
+    [SerializeField] private AudioClip doorVibrateSound;
+    [SerializeField] private AmbientSound ambientSound;
 
     [Header("Dialogues")]
     [SerializeField] private string[] noKeyDialogue = { "Preciso de uma chave..." };
@@ -70,6 +76,14 @@ public class Door : MonoBehaviour
 
     private IEnumerator ProcessarComChave()
     {
+        // ✅ Para o som ambiente quando a porta começa a vibrar
+        if (ambientSound != null)
+            ambientSound.StopAmbient();
+
+        // ✅ Toca o som da porta vibrando
+        if (doorAudioSource != null && doorVibrateSound != null)
+            doorAudioSource.PlayOneShot(doorVibrateSound);
+
         if (cameraShake != null)
             yield return StartCoroutine(cameraShake.Shake(shakeDuration, shakeMagnitude));
 

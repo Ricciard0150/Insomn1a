@@ -11,6 +11,11 @@ public class GlassPunch : MonoBehaviour
     [SerializeField] private GameObject handObject;
     [SerializeField] private Sprite[] handSprites;
 
+    // ✅ NOVO: Áudio
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip punchSound;
+
     [Header("Settings")]
     [SerializeField] private float punchDuration = 0.2f;
 
@@ -35,7 +40,6 @@ public class GlassPunch : MonoBehaviour
 
     void Update()
     {
-       
         if (!isActive || !canPunch || isPunching) return;
 
         if (Input.GetButtonDown("Blink"))
@@ -47,6 +51,10 @@ public class GlassPunch : MonoBehaviour
     private IEnumerator DoPunch()
     {
         isPunching = true;
+
+        // ✅ Toca o som do soco
+        if (audioSource != null && punchSound != null)
+            audioSource.PlayOneShot(punchSound);
 
         handObject.SetActive(true);
         SpriteRenderer handRenderer = handObject.GetComponent<SpriteRenderer>();
@@ -75,10 +83,6 @@ public class GlassPunch : MonoBehaviour
             {
                 jumpscareManager.OnGlassBroken();
             }
-
-        }
-        else
-        {
         }
     }
 
@@ -102,7 +106,6 @@ public class GlassPunch : MonoBehaviour
 
         if (glassRenderer != null && glassStages.Length > 0)
             glassRenderer.sprite = glassStages[0];
-
     }
 
     public void ResetPunch()
