@@ -19,11 +19,9 @@ public class PaperMinigameManager : MonoBehaviour
     [System.Serializable]
     public class DialogueLineData
     {
-        [TextArea(2, 5)]
-        public string text;
-
         [Tooltip("Se marcado, a mão vai animar E sortear um novo Spot enquanto essa fala está na tela.")]
         public bool playHandAnimation;
+        public DialogueLine lineData;
     }
 
     [System.Serializable]
@@ -36,12 +34,10 @@ public class PaperMinigameManager : MonoBehaviour
     [SerializeField] private RoundDialogue[] dialoguesBetweenRounds;
 
     [Header("1. Diálogo Final (Painel AINDA Aberto)")]
-    [TextArea(2, 5)]
-    [SerializeField] private string[] finalVictoryLines;
+    [SerializeField] private DialogueLine[] finalVictoryLines;
 
     [Header("2. Diálogo Pós-Minigame (Painel Fechado)")]
-    [TextArea(2, 5)]
-    [SerializeField] private string[] postMinigameLines;
+    [SerializeField] private DialogueLine[] postMinigameLines;
 
     [Header("Spots e Papéis")]
     [SerializeField] private PaperSpot[] allSpots;
@@ -113,7 +109,7 @@ public class PaperMinigameManager : MonoBehaviour
                         yield return StartCoroutine(PlayHandTutorial());
                     }
 
-                    dialogueSystem.StartDialogue(new string[] { line.text });
+                    dialogueSystem.StartDialogue(new DialogueLine[] { line.lineData });
                     yield return new WaitWhile(() => dialogueSystem.IsRunning);
                 }
             }
@@ -157,6 +153,7 @@ public class PaperMinigameManager : MonoBehaviour
 
         RandomizeSpot();
 
+        // ✅ Força Z = 0 na posição do papel falso
         Vector3 fakePaperPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
         GameObject fakePaper = Instantiate(paperPrefab, fakePaperPos, Quaternion.identity, null);
 
@@ -204,7 +201,7 @@ public class PaperMinigameManager : MonoBehaviour
         else
         {
             RandomizeSpot();
-            SpawnNextPaper(true);
+            SpawnNextPaper(false);
         }
     }
 
@@ -218,44 +215,43 @@ public class PaperMinigameManager : MonoBehaviour
 
         if (currentErrors >= maxErrors)
         {
-            isRoundActive = false;
-            isGameOver = true;
-            StartCoroutine(TriggerGameOver("Você errou 3 vezes. O patrão não perdoa."));
+            StartCoroutine(TriggerGameOver("Muitos erros. O patrão te demitiu."));
+            return;
         }
-        else
+
+        if (papersOrganizedThisRound < papersToOrganizePerRound)
         {
-            RandomizeSpot();
-            SpawnNextPaper(true);
+            SpawnNextPaper(false);
         }
+    }
+
+    private void AtualizarUI()
+    {
+        if (roundText != null) roundText.text = $"RODADA: {currentRound}/{totalRounds}";
+        if (errorText != null) errorText.text = $"ERROS: {currentErrors}/{maxErrors}";
     }
 
     private void RandomizeSpot()
     {
-        foreach (var spot in allSpots)
-        {
-            if (spot != null) spot.SetHighlight(false);
-        }
+        if (allSpots.Length == 0) return;
 
-        if (allSpots.Length > 0)
-        {
-            int randomIndex = Random.Range(0, allSpots.Length);
-            currentHighlightedSpot = allSpots[randomIndex];
-            currentHighlightedSpot.SetHighlight(true);
-        }
+        foreach (var spot in allSpots)
+            if (spot != null) spot.SetHighlight(false);
+
+        int randomIndex = Random.Range(0, allSpots.Length);
+        currentHighlightedSpot = allSpots[randomIndex];
+        currentHighlightedSpot.SetHighlight(true);
     }
 
-    private void SpawnNextPaper(bool isInteractive)
+    // ✅ AQUI ESTÁ A CORREÇÃO DO Z
+    private void SpawnNextPaper(bool isFirstPaperOfRound)
     {
-        DestroyCurrentPaper();
-
         if (paperPrefab != null && spawnPoint != null)
         {
+            // Força a posição de spawn a ter Z = 0
             Vector3 spawnPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
-            activePaper = Instantiate(paperPrefab, spawnPos, Quaternion.identity, null);
 
-            Collider2D paperCollider = activePaper.GetComponent<Collider2D>();
-            if (paperCollider != null)
-                paperCollider.enabled = isInteractive;
+            activePaper = Instantiate(paperPrefab, spawnPos, Quaternion.identity);
         }
     }
 
@@ -268,65 +264,56 @@ public class PaperMinigameManager : MonoBehaviour
         }
     }
 
-    private void AtualizarUI()
-    {
-        if (roundText != null) roundText.text = $"RODADA: {currentRound} / {totalRounds}";
-        if (errorText != null) errorText.text = $"ERROS: {currentErrors} / {maxErrors}";
-    }
-
     private IEnumerator TriggerGameOver(string reason)
     {
+        isGameOver = true;
         isRoundActive = false;
-        if (fadeController != null) yield return StartCoroutine(fadeController.FadeToBlack(1f));
-        if (gameOverPanel != null) gameOverPanel.SetActive(true);
+
+        DestroyCurrentPaper();
+
+        if (minigamePanel != null) minigamePanel.SetActive(false);
+
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(2f);
     }
 
-    // ✅ VITÓRIA COM DOIS DIÁLOGOS
     private IEnumerator VictorySequence()
     {
-        // 1. Diálogo Final (Painel do minigame AINDA ABERTO)
-        if (dialogueSystem != null && finalVictoryLines != null && finalVictoryLines.Length > 0)
+        isRoundActive = false;
+
+        if (finalVictoryLines != null && finalVictoryLines.Length > 0 && dialogueSystem != null)
         {
             dialogueSystem.StartDialogue(finalVictoryLines);
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
-        // 2. Ativa e desativa os objetos da cena
-        ActivateVictoryObjects();
+        if (minigamePanel != null) minigamePanel.SetActive(false);
 
-        // 3. Fecha o painel principal do minigame
-        if (minigamePanel != null)
-            minigamePanel.SetActive(false);
-
-        // 4. Pequeno delay para o jogador assimilar que voltou ao mundo
-        yield return new WaitForSeconds(1f);
-
-        // 5. Diálogo Pós-Minigame (Painel FECHADO, jogador no controle)
-        if (dialogueSystem != null && postMinigameLines != null && postMinigameLines.Length > 0)
+        if (postMinigameLines != null && postMinigameLines.Length > 0 && dialogueSystem != null)
         {
             dialogueSystem.StartDialogue(postMinigameLines);
-            // Não precisa do WaitWhile se você quiser que o jogador possa andar enquanto lê.
-            // Mas se quiser travar, é só descomentar a linha abaixo:
-            // yield return new WaitWhile(() => dialogueSystem.IsRunning);
+            yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
-    }
 
-    private void ActivateVictoryObjects()
-    {
         if (objectsToActivate != null)
         {
             foreach (GameObject obj in objectsToActivate)
-            {
                 if (obj != null) obj.SetActive(true);
-            }
         }
 
         if (objectsToDeactivate != null)
         {
             foreach (GameObject obj in objectsToDeactivate)
-            {
                 if (obj != null) obj.SetActive(false);
-            }
+        }
+
+        if (fadeController != null)
+        {
+            yield return StartCoroutine(fadeController.FadeToBlack(1f));
         }
     }
 }

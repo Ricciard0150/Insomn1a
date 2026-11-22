@@ -21,10 +21,18 @@ public class GameOverUI : MonoBehaviour
     [Header("References")]
     [SerializeField] private InterviewManager interviewManager;
 
-    // ❌ REMOVIDO: Toda a lógica do Awake() e OnDestroy() que adicionava os listeners.
+    private Vector3 escalaOriginal;
+    private bool escalaSalva = false;
 
     public void ShowDefeat(int points, int maxPoints)
     {
+        // ✅ Salva o tamanho verdadeiro do painel ANTES de mexer nele
+        if (!escalaSalva)
+        {
+            escalaOriginal = transform.localScale;
+            escalaSalva = true;
+        }
+
         gameObject.SetActive(true);
 
         if (titleText != null)
@@ -46,6 +54,8 @@ public class GameOverUI : MonoBehaviour
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
         canvasGroup.alpha = 0f;
+
+        // ✅ Começa na escala zero para dar o efeito de "pop"
         transform.localScale = Vector3.zero;
 
         float elapsed = 0f;
@@ -55,24 +65,24 @@ public class GameOverUI : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float progress = elapsed / animationDuration;
 
-            transform.localScale = Vector3.one * progress;
+            // ✅ Cresce até a escala original real, não para o Vector3.one
+            transform.localScale = Vector3.Lerp(Vector3.zero, escalaOriginal, progress);
             canvasGroup.alpha = progress;
 
             yield return null;
         }
 
-        transform.localScale = Vector3.one;
+        // ✅ Garante que no final fique exatamente no tamanho que você deixou no Editor
+        transform.localScale = escalaOriginal;
         canvasGroup.alpha = 1f;
     }
 
-    // ✅ AGORA É PÚBLICO: Vai aparecer na lista do OnClick() do botão
     public void OnRestartClicked()
     {
         if (interviewManager != null)
             interviewManager.RestartQuiz();
     }
 
-    // ✅ AGORA É PÚBLICO: Vai aparecer na lista do OnClick() do botão
     public void OnMenuClicked()
     {
         if (interviewManager != null)

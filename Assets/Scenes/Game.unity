@@ -6576,7 +6576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &732364234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6595,7 +6595,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 51.74028, y: 36.69751}
+  m_AnchoredPosition: {x: 51.740295, y: 36.69751}
   m_SizeDelta: {x: 12358.38, y: 3979.6907}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &732364235
@@ -31750,6 +31750,34 @@ PrefabInstance:
       propertyPath: minigameManager
       value: 
       objectReference: {fileID: 7403226418524137358}
+    - target: {fileID: 1649517936606180839, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: introDialogueLines.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649517936606180839, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: introDialogueLines.Array.data[0].text
+      value: "Ol\xE1, sr Franz! Vamos come\xE7ar a trabalhar!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649517936606180839, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: introDialogueLines.Array.data[1].text
+      value: "AH! Ol\xE1, mas o caf\xE9 da ma-"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649517936606180839, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: introDialogueLines.Array.data[2].text
+      value: Vou te introduzir ao trabalho!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649517936606180839, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: introDialogueLines.Array.data[0].characterName
+      value: "Patr\xE3o"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649517936606180839, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: introDialogueLines.Array.data[1].characterName
+      value: Kafka
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649517936606180839, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
+      propertyPath: introDialogueLines.Array.data[2].characterName
+      value: "Patr\xE3o"
+      objectReference: {fileID: 0}
     - target: {fileID: 4083938224664325074, guid: c895bfa78f07cd04d8d4404aa3ebe753, type: 3}
       propertyPath: m_SortingLayer
       value: 5
@@ -32035,7 +32063,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 779558477
+  m_SortingLayerID: 1131675919
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1836574826430751790
@@ -32882,7 +32910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4298686526662663859
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33261,40 +33289,85 @@ MonoBehaviour:
   fadeController: {fileID: 0}
   dialoguesBetweenRounds:
   - lines:
-    - text: "V\xE1 organizando esses pap\xE9is aqui pra mim, okay?"
-      playHandAnimation: 1
-    - text: Okay, okay...
-      playHandAnimation: 0
-    - text: "S\xF3 colocar nas pilhas corretas!"
-      playHandAnimation: 0
+    - playHandAnimation: 1
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
+    - playHandAnimation: 0
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
+    - playHandAnimation: 0
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
   - lines:
-    - text: dasdsad
-      playHandAnimation: 0
-    - text: sadsadsa
-      playHandAnimation: 1
-    - text: dsadsadsa
-      playHandAnimation: 0
+    - playHandAnimation: 0
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
+    - playHandAnimation: 1
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
+    - playHandAnimation: 0
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
   - lines:
-    - text: sadsa
-      playHandAnimation: 0
-    - text: asdsa
-      playHandAnimation: 0
-    - text: adsa
-      playHandAnimation: 1
-    - text: asdasdsa
-      playHandAnimation: 0
+    - playHandAnimation: 0
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
+    - playHandAnimation: 0
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
+    - playHandAnimation: 1
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
+    - playHandAnimation: 0
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
   - lines:
-    - text: dsadsa
-      playHandAnimation: 0
-    - text: sadsa
-      playHandAnimation: 0
-    - text: asdsadsa
-      playHandAnimation: 1
+    - playHandAnimation: 0
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
+    - playHandAnimation: 0
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
+    - playHandAnimation: 1
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
   - lines:
-    - text: asdsa
-      playHandAnimation: 1
-    - text: dsa
-      playHandAnimation: 0
+    - playHandAnimation: 1
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
+    - playHandAnimation: 0
+      lineData:
+        characterSprite: {fileID: 0}
+        characterName: 
+        text: 
   finalVictoryLines: []
   postMinigameLines: []
   allSpots:
@@ -33557,7 +33630,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 351, y: 172.5, z: 0}
+  m_LocalPosition: {x: 291.8, y: 78.5, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:

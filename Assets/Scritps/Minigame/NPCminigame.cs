@@ -9,7 +9,8 @@ public class StartMinigameNPC : MonoBehaviour
     [SerializeField] private InterviewQuests dialogueSystem;
 
     [Header("Configurações")]
-    [SerializeField] private string[] introDialogueLines;
+    // ✅ AGORA É DialogueLine[] EM VEZ DE string[]
+    [SerializeField] private DialogueLine[] introDialogueLines;
     [SerializeField] private string interactButton = "Interact";
 
     private bool playerNear = false;
@@ -44,6 +45,7 @@ public class StartMinigameNPC : MonoBehaviour
 
         if (dialogueSystem != null && introDialogueLines.Length > 0)
         {
+            // ✅ Agora passa o DialogueLine[] direto
             dialogueSystem.StartDialogue(introDialogueLines);
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }

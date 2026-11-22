@@ -6,10 +6,12 @@ public class DraggablePaper : MonoBehaviour
     private bool isDragging = false;
     private Vector3 offset;
     private Vector3 originalPosition;
+    private float zOriginal; // ✅ Guarda o Z original
 
     void Start()
     {
         originalPosition = transform.position;
+        zOriginal = transform.position.z; // Salva o Z que o papel nasceu
         manager = FindAnyObjectByType<PaperMinigameManager>();
     }
 
@@ -17,7 +19,14 @@ public class DraggablePaper : MonoBehaviour
     {
         if (manager == null) return;
         isDragging = true;
-        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Pega a posição do mouse no mundo
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Força o Z do mouse para o Z do papel (para o cálculo do offset ficar certo)
+        mouseWorldPos.z = zOriginal;
+
+        offset = transform.position - mouseWorldPos;
     }
 
     void OnMouseUp()
@@ -25,16 +34,13 @@ public class DraggablePaper : MonoBehaviour
         if (!isDragging) return;
         isDragging = false;
 
-        // ✅ Pega TODOS os colisores no ponto onde o mouse soltou
         Collider2D[] hits = Physics2D.OverlapPointAll(transform.position);
         PaperSpot spotEncontrado = null;
 
         foreach (Collider2D hit in hits)
         {
-            // Ignora o colisor do próprio papel que estamos arrastando
             if (hit.gameObject == gameObject) continue;
 
-            // Verifica se é o Spot pela Tag
             if (hit.CompareTag("Spot"))
             {
                 spotEncontrado = hit.GetComponent<PaperSpot>();
@@ -66,7 +72,14 @@ public class DraggablePaper : MonoBehaviour
     void OnMouseDrag()
     {
         if (!isDragging) return;
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(mousePos.x + offset.x, mousePos.y + offset.y, transform.position.z);
+
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // ✅ Força o Z de destino a ser o mesmo do papel, ignorando o Z da câmera
+        transform.position = new Vector3(
+            mouseWorldPos.x + offset.x,
+            mouseWorldPos.y + offset.y,
+            zOriginal // Mantém o Z original intacto
+        );
     }
 }
