@@ -803,6 +803,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2000680574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &67162753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 67162754}
+  - component: {fileID: 67162756}
+  - component: {fileID: 67162755}
+  m_Layer: 0
+  m_Name: HDR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &67162754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67162753}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 492.89365, y: 22.665794, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &67162755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67162753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3ce722432fc214685ef91d6d491ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerHDREffect
+  globalVolume: {fileID: 525267996}
+  corHDR: {r: 0.5080455, g: 0.5910008, b: 0.7584905, a: 1}
+  intensidadeHDR: 2.5
+  playerMovement: {fileID: 0}
+  tempoDuracao: 3
+  apenasUmaVez: 1
+--- !u!61 &67162756
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67162753}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.24495697, y: -0.69987965}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 8.488693, y: 19.056871}
+  m_EdgeRadius: 0
 --- !u!1 &84656325
 GameObject:
   m_ObjectHideFlags: 0
@@ -2508,14 +2605,18 @@ MonoBehaviour:
 '
   - "Ok\u2026"
   spritesBeforeNightmare: []
-  falasAfterNightmare: []
+  falasAfterNightmare:
+  - I'm still greeeeeeeeeeeeeen!
+  - Okay?
   spritesAfterNightmare: []
   nomesBeforeNightmare:
   - "H\xE9lio"
   - Kafka
   - "H\xE9lio"
   - Kafka
-  nomesAfterNightmare: []
+  nomesAfterNightmare:
+  - "H\xE9lio"
+  - Kafka
 --- !u!114 &298744450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4518,10 +4619,10 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 4294967295
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -4605,8 +4706,7 @@ Transform:
   m_LocalPosition: {x: 224.49365, y: 90.86579, z: -10}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1793870083}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &519420033
@@ -4624,6 +4724,55 @@ MonoBehaviour:
   target: {fileID: 9105895952993720707}
   smoothTime: -2.3
   canFollow: 1
+--- !u!1 &525267995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 525267997}
+  - component: {fileID: 525267996}
+  m_Layer: 5
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &525267996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525267995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 35200d2ba7cd2ac4fb4ce55823904922, type: 2}
+--- !u!4 &525267997
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525267995}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 224.49365, y: 90.86579, z: 90}
+  m_LocalScale: {x: 0.02037037, y: 0.02037037, z: 0.02037037}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &525752382
 GameObject:
   m_ObjectHideFlags: 0
@@ -9728,7 +9877,11 @@ MonoBehaviour:
   - Sai daqui, eu to fazendo a unha.
   - ...
   spritesBeforeNightmare: []
-  falasAfterNightmare: []
+  falasAfterNightmare:
+  - "De novo voc\xEA? Saia daqui, j\xE1 roubou a minha vaga, ainda quer vir tripudiar!"
+  - "Senhora, n\xE3o tenha d\xFAvidas de que se voc\xEA n\xE3o conseguiu a culpa
+    n\xE3o \xE9 mi-"
+  - "RUA! ESTOU ATR\xC1S DE OUTRA VAGA AGORA POR SUA CAUSA!"
   spritesAfterNightmare: []
   nomesBeforeNightmare:
   - Mulher cansada
@@ -10703,7 +10856,7 @@ GameObject:
   - component: {fileID: 1030613189}
   - component: {fileID: 1030613188}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: Start for real
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10808,7 +10961,7 @@ Transform:
   m_GameObject: {fileID: 1035721323}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 375.8, y: -26.6, z: 0}
+  m_LocalPosition: {x: 379.7, y: -20.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11227,9 +11380,11 @@ MonoBehaviour:
   - "N\xE3o, Perd\xE3o\u2026"
   - "Ah, tudo bem\u2026"
   spritesBeforeNightmare: []
-  falasAfterNightmare: []
+  falasAfterNightmare:
+  - "Ainda n\xE3o achei o meu gato..."
   spritesAfterNightmare: []
-  nomesBeforeNightmare: []
+  nomesBeforeNightmare:
+  - Karac
   nomesAfterNightmare:
   - Karac
   - Kafka
@@ -11524,8 +11679,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1613707319
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.90188676, g: 0.25014594, b: 0.25014594, a: 1}
@@ -22507,13 +22662,22 @@ MonoBehaviour:
   - "\u2026"
   - "T\xE3o ruim assim?"
   spritesBeforeNightmare: []
-  falasAfterNightmare: []
+  falasAfterNightmare:
+  - "E a\xED, Franz! J\xE1 arrumou um emprego ou ainda est\xE1 brincando de escrever
+    hist\xF3rias!"
+  - Receio que eu esteja fazendo os dois agora.
+  - "Olha s\xF3! Meus parab\xE9ns!"
+  - Ugh
   spritesAfterNightmare: []
   nomesBeforeNightmare:
   - James
   - Kafka
   - James
-  nomesAfterNightmare: []
+  nomesAfterNightmare:
+  - James
+  - Kafka
+  - James
+  - Kafka
 --- !u!114 &1276927453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22847,7 +23011,8 @@ MonoBehaviour:
 
 '
   spritesBeforeNightmare: []
-  falasAfterNightmare: []
+  falasAfterNightmare:
+  - "O que voc\xEA est\xE1 fazendo aqui? Voc\xEA j\xE1 n\xE3o foi entrevistado?"
   spritesAfterNightmare: []
   nomesBeforeNightmare:
   - "Secret\xE1ria"
@@ -26257,12 +26422,12 @@ MonoBehaviour:
   textSpeed: 0.03
   victoryLines:
   - characterSprite: {fileID: 0}
-    characterName: 
-    text: 
+    characterName: Pai
+    text: Ugh *resmunga*
   defeatLines:
   - characterSprite: {fileID: 0}
-    characterName: 
-    text: 
+    characterName: Pai
+    text: Fora dessa casa AGORA!
   currentQuestData:
     questId: 
     questName: 
@@ -27306,6 +27471,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724668803}
   m_CullTransparentMesh: 1
+--- !u!1001 &1731141131
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1357808491560834901, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 306.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357808491560834901, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 72.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357808491560834901, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357808491560834901, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357808491560834901, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357808491560834901, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357808491560834901, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357808491560834901, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357808491560834901, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357808491560834901, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3245889839097656821, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: susto
+      value: 
+      objectReference: {fileID: 1855711496}
+    - target: {fileID: 3245889839097656821, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 5055718417195591049}
+    - target: {fileID: 3245889839097656821, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: dialogueNightmare
+      value: 
+      objectReference: {fileID: 1867427561}
+    - target: {fileID: 5673951911362558457, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
+      propertyPath: m_Name
+      value: Trigger
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 95591a27a3f20054b861e129d1458b6b, type: 3}
 --- !u!1 &1743174223
 GameObject:
   m_ObjectHideFlags: 0
@@ -27739,96 +27973,6 @@ RectTransform:
   m_AnchoredPosition: {x: -313.91, y: 213.08}
   m_SizeDelta: {x: 3057.81, y: 426.17}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1793870081
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1793870083}
-  - component: {fileID: 1793870082}
-  m_Layer: 0
-  m_Name: Square
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!212 &1793870082
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793870081}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -523822365
-  m_SortingLayer: 6
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &1793870083
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793870081}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 82.6, y: 22.6, z: 5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 519420032}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799671340
 GameObject:
   m_ObjectHideFlags: 0
@@ -28330,6 +28474,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1855711496 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2288381171674868239, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+  m_PrefabInstance: {fileID: 2061767143}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ead45c82af74924082c02e7561e79a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Death
 --- !u!1 &1858692188
 GameObject:
   m_ObjectHideFlags: 0
@@ -28603,6 +28758,60 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1867427560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1867427562}
+  - component: {fileID: 1867427561}
+  m_Layer: 5
+  m_Name: DialogueSystemDeath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1867427561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867427560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 085051f4194e7154292c74fa95f69ea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueNightmare
+  dialoguePanel: {fileID: 746844588}
+  dialogueText: {fileID: 622770720}
+  characterImage: {fileID: 0}
+  pressingEIndicator: {fileID: 0}
+  velocidadeTexto: 0.05
+  playerMovement: {fileID: 5055718417195591049}
+  interactButton: Interact
+  usarTypewriter: 0
+  bloquearMovimento: 1
+  liberarPlayerNoOverloadJumpscare: 1
+--- !u!4 &1867427562
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867427560}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 224.49365, y: 90.86579, z: 90}
+  m_LocalScale: {x: 0.02037037, y: 0.02037037, z: 0.02037037}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1870465418
 GameObject:
   m_ObjectHideFlags: 0
@@ -28692,7 +28901,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0796932, y: 0}
+  m_Offset: {x: 1.5287476, y: 2.9362812}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -28702,7 +28911,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.068486, y: 1}
+  m_Size: {x: 9.729309, y: 6.8725624}
   m_EdgeRadius: 0
 --- !u!4 &1871381207
 Transform:
@@ -28713,7 +28922,7 @@ Transform:
   m_GameObject: {fileID: 1871381204}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -179.3, y: -98.6, z: 0}
+  m_LocalPosition: {x: 246.9, y: -87.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30910,6 +31119,63 @@ MonoBehaviour:
   npcData: {fileID: 2056157391}
   dialogueSystem: {fileID: 2056157392}
   pressingE: {fileID: 150873144}
+--- !u!1001 &2061767143
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2426279012160069751, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_Name
+      value: Death
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359662573186387668, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 299.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359662573186387668, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 60.636444
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359662573186387668, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359662573186387668, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359662573186387668, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359662573186387668, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359662573186387668, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359662573186387668, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359662573186387668, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359662573186387668, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e5bcf04c23319794a9ca0eed5c33624a, type: 3}
 --- !u!1 &2073954632
 GameObject:
   m_ObjectHideFlags: 0
@@ -33335,96 +33601,105 @@ MonoBehaviour:
   defeatDialogueLines:
   - characterSprite: {fileID: 0}
     characterName: "Patr\xE3o"
-    text: morte
+    text: "N\xC3O PRECISO DE UM FUNCION\xC1RIO QUE N\xC3O CONSIGA FAZER AS COISAS
+      NO MEU TEMPO!"
+  - characterSprite: {fileID: 0}
+    characterName: "Patr\xE3o"
+    text: "RUA! VOC\xCA EST\xC1 DEMITIDO!"
   dialoguesBetweenRounds:
   - lines:
     - playHandAnimation: 1
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "O trabalho \xE9 muito simples: \xE9 s\xF3 pegar esses panfletos e
+          colocar nas pilhas corretas!"
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "N\xE3o demore muito, hein! Tem mais pessoas querendo a sua vaga, se
+          \xE9 que me entende..."
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: Hm... okay?
   - lines:
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: "O trabalho \xE9 isso? pensei que tivesse mais coisas para faz-"
     - playHandAnimation: 1
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "Ol\xE1, Franz! Mais trabalho para voc\xEA hehe..."
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: Sem problemas... eu acho...
   - lines:
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: Tempo para um descanso, talvez...
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: Acho que vou pegar algo para come-
     - playHandAnimation: 1
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "Ol, meu funcion\xE1rio favorito!"
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: Ah...
   - lines:
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: "N\xE3o \xE9 poss\xEDvel que tenha algo para fazer..."
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: "Olha s\xF3, acho que tenho um tempo!"
     - playHandAnimation: 1
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "Fa\xE7a seu trabalho!"
   - lines:
     - playHandAnimation: 1
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: "Patr\xE3o"
+        text: "S\xF3 mais esse, eu juro!"
     - playHandAnimation: 0
       lineData:
         characterSprite: {fileID: 0}
-        characterName: 
-        text: 
+        characterName: Kafka
+        text: Okay...
   finalVictoryLines:
   - characterSprite: {fileID: 0}
     characterName: "Patr\xE3o"
-    text: Acertou
+    text: "Okay, Kafka, est\xE1 dispensado!"
+  - characterSprite: {fileID: 0}
+    characterName: Kafka
+    text: Ugh, obr-iga-do..
   postMinigameLines:
   - characterSprite: {fileID: 0}
-    characterName: "Patr\xE3o "
-    text: Acertou
+    characterName: "Voc\xEA est\xE1 bem, Kafka?"
+    text: SIm, eS-toU... prEcisO iR para CAsA
   allSpots:
   - {fileID: 2734268101585135920}
   - {fileID: 8711809240504566253}
@@ -33688,7 +33963,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 383.5, y: 19.9, z: 0}
+  m_LocalPosition: {x: 393.7, y: 17.3, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -33733,6 +34008,9 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1867427562}
+  - {fileID: 525267997}
+  - {fileID: 67162754}
   - {fileID: 519420032}
   - {fileID: 5763791293024989957}
   - {fileID: 1576548082}
@@ -33764,3 +34042,5 @@ SceneRoots:
   - {fileID: 1249601348}
   - {fileID: 2131111381}
   - {fileID: 2106373128}
+  - {fileID: 1731141131}
+  - {fileID: 2061767143}
