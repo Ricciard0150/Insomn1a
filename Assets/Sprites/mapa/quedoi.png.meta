@@ -142,13 +142,13 @@ TextureImporter:
       name: quedoi_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 385
-        width: 4960
-        height: 3123
+        x: 479
+        y: 559
+        width: 4024
+        height: 2804
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 89}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
