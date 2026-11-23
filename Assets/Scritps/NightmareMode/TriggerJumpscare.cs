@@ -8,7 +8,7 @@ public class TriggerJumpscare : MonoBehaviour
     [SerializeField] private TopDownMovement playerMovement;
 
     [Header("Áudio de Desaparecimento")]
-    [SerializeField] private AudioSource audioSource; // Coloque o AudioSource no próprio Trigger!
+    [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip somDesaparecer;
 
     [Header("Configurações de Tempo")]
@@ -39,6 +39,10 @@ public class TriggerJumpscare : MonoBehaviour
         {
             jaAconteceu = true;
 
+            // ✅ 1. Pausa a música de fundo imediatamente
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PausarMusica();
+
             if (playerMovement != null)
             {
                 playerMovement.SetCanMove(false);
@@ -53,7 +57,6 @@ public class TriggerJumpscare : MonoBehaviour
 
     private void OnDeathDesapareceu()
     {
-        // ✅ Toca o som aqui! O Trigger não é desativado, então o som toca completo.
         if (audioSource != null && somDesaparecer != null)
             audioSource.PlayOneShot(somDesaparecer);
 
@@ -64,12 +67,17 @@ public class TriggerJumpscare : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(tempoAposDeath);
 
+        // ✅ 2. Destrava o player
         if (playerMovement != null)
         {
             playerMovement.SetCanMove(true);
             playerMovement.canMove = true;
             Debug.Log("[TriggerJumpscare] Player destravado.");
         }
+
+        // ✅ 3. Volta a música de fundo
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.RetomarMusica();
 
         if (dialogueNightmare != null && falasPosDeath != null && falasPosDeath.Length > 0)
         {
