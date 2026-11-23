@@ -5325,6 +5325,8 @@ MonoBehaviour:
   npcName: Thoughts post intereview
   falas:
   - "Melhor eu ir trabalhar, j\xE1 to \xE9 atrasado..."
+  - "Ainda preciso ir atr\xE1s das p\xE1ginas daquela carta..."
+  - Elas querem me dizer algo...
   sprites:
   - {fileID: 4871502181275585520, guid: 0686aacc06e5ce44899c2e9ab2f95eed, type: 3}
   falasBeforeNightmare: []
@@ -9801,13 +9803,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3125f7c4550aff4d96ceadd70d7b264, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TriggerToggleObjects
-  toggleOnExit: 1
+  toggleOnExit: 0
   objectsToActivate:
   - {fileID: 0}
   objectsToDeactivate:
   - {fileID: 1075212403}
   - {fileID: 236904181}
   - {fileID: 1051169689}
+  - {fileID: 902253559}
+  - {fileID: 2068132431}
   playerTag: Player
 --- !u!61 &733722256
 BoxCollider2D:
@@ -12122,7 +12126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &902253560
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12157,7 +12161,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.2113771, y: -14.872724}
+  m_Offset: {x: 17.075089, y: -10.924741}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -12167,7 +12171,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 8.722754, y: 11.689737}
+  m_Size: {x: 39.014557, y: 19.585703}
   m_EdgeRadius: 0
 --- !u!4 &902253561
 Transform:
@@ -26434,7 +26438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1851091875
 Transform:
   m_ObjectHideFlags: 0
@@ -33428,7 +33432,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 404.32, y: 2.28, z: 0}
+  m_LocalPosition: {x: 405.8, y: 1.7, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
