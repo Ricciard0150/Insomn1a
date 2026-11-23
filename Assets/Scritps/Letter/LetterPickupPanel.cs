@@ -87,17 +87,25 @@ public class LetterPickupPanel : MonoBehaviour
         if (itemNameText != null) itemNameText.text = itemName;
         if (counterText != null) counterText.text = $"{collected}/{total}";
 
-        isFinalCard = collected >= total;
-
+        // ✅ USA A CONTAGEM (collected) PARA DECIDIR QUANTOS SLOTS MOSTRAR
+        // Se você tiver 1 carta, ele liga o slot [0]. 
+        // Se tiver 2, liga o [0] e [1]. Se tiver 3, liga todos.
         for (int i = 0; i < letterSlots.Length; i++)
         {
             if (letterSlots[i] != null)
             {
-                letterSlots[i].enabled = (i < pieceNumber);
+                // O "i" é o index do slot (0, 1, 2).
+                // Se a contagem for 2, ele liga o 0 e 1 (que são menores que 2).
+                letterSlots[i].enabled = (i < collected);
+
+                // Reseta a posição e rotação para o caso de ter quebrado antes
                 letterSlots[i].rectTransform.anchoredPosition = posicoesOriginais[i];
                 letterSlots[i].rectTransform.localRotation = rotacoesOriginais[i];
             }
         }
+
+        // Mantém a lógica de fechar/animar no final
+        isFinalCard = collected >= total;
 
         if (currentRoutine != null) StopCoroutine(currentRoutine);
 

@@ -7529,6 +7529,7 @@ MonoBehaviour:
   objectsToDeactivate:
   - {fileID: 1075212403}
   - {fileID: 236904181}
+  - {fileID: 1051169689}
   playerTag: Player
 --- !u!61 &733722256
 BoxCollider2D:
@@ -23861,7 +23862,7 @@ MonoBehaviour:
   pickupPanel: {fileID: 228051383}
   dialogueSystem: {fileID: 1574989813}
   finalLetterDialogue:
-  - i got this BITCH!
+  - "Eu preciso ir para casa... meus rem\xE9-dios..."
   objectsToActivate:
   - {fileID: 1610394281}
   objectsToDeactivate:
