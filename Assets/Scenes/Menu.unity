@@ -4248,11 +4248,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e0d7e61e21358458dfbe8571c98e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonAnim
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  normalColor: {r: 1, g: 0.78951055, b: 0.19433957, a: 1}
   hoverColor: {r: 0, g: 0, b: 0, a: 1}
-  pressColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-  textNormalColor: {r: 1, g: 1, b: 1, a: 1}
-  textHoverColor: {r: 1, g: 1, b: 1, a: 1}
+  pressColor: {r: 1, g: 0.8397985, b: 0.1641509, a: 1}
+  textNormalColor: {r: 1, g: 0.82352483, b: 0.1641509, a: 1}
+  textHoverColor: {r: 1, g: 0.8253576, b: 0.17924517, a: 1}
   hoverScale: 1.15
   pressScale: 0.9
   animationDuration: 0.15
