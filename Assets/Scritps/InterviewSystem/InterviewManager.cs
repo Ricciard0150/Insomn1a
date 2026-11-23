@@ -36,16 +36,19 @@ public class InterviewManager : MonoBehaviour
     [SerializeField] private Transform respawnPoint;
 
     [Header("Game Over Panel")]
-    [Tooltip("Arraste o Painel de Game Over aqui")]
     [SerializeField] private GameObject gameOverPanel;
-
-    [Tooltip("Arraste o componente GameOverUI que está dentro do Painel")]
     [SerializeField] private GameOverUI gameOverUIComponent;
-
     [SerializeField] private string menuSceneName = "MainMenu";
 
     [Header("Quest Database")]
     [SerializeField] private QuestDatabase questDatabase;
+
+    // ✅ Áudio da Entrevista
+    [Header("Audio")]
+    [Tooltip("Arraste um AudioSource aqui para tocar a música da entrevista")]
+    [SerializeField] private AudioSource bgmAudioSource;
+    [Tooltip("A música que toca enquanto a entrevista está rolando")]
+    [SerializeField] private AudioClip musicaEntrevista;
 
     private QuestData currentQuest;
     private InterviewSystem system;
@@ -113,6 +116,8 @@ public class InterviewManager : MonoBehaviour
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
+        // ❌ REMOVIDO: PlayInterviewMusic() daqui.
+
         if (dialogueSystem != null && currentQuest != null && currentQuest.introLines.Length > 0)
         {
             dialogueSystem.StartDialogue(currentQuest.introLines, currentQuest.introNames);
@@ -121,6 +126,26 @@ public class InterviewManager : MonoBehaviour
         else
         {
             StartCoroutine(ShowIntroPanelThenQuiz());
+        }
+    }
+
+    private void PlayInterviewMusic()
+    {
+        if (bgmAudioSource != null && musicaEntrevista != null)
+        {
+            bgmAudioSource.clip = musicaEntrevista;
+            bgmAudioSource.loop = true;
+            bgmAudioSource.Play();
+            Debug.Log("[InterviewManager] Música da entrevista iniciada.");
+        }
+    }
+
+    private void StopInterviewMusic()
+    {
+        if (bgmAudioSource != null && bgmAudioSource.isPlaying)
+        {
+            bgmAudioSource.Stop();
+            Debug.Log("[InterviewManager] Música da entrevista parada.");
         }
     }
 
@@ -139,7 +164,12 @@ public class InterviewManager : MonoBehaviour
         }
 
         if (panel != null)
+        {
             panel.SetActive(true);
+
+            // ✅ Toca a música APENAS quando o painel da entrevista é ativado
+            PlayInterviewMusic();
+        }
 
         yield return null;
 
@@ -196,14 +226,9 @@ public class InterviewManager : MonoBehaviour
             {
                 lines[i] = new DialogueLine();
                 lines[i].characterSprite = dialogueLines[i].characterSprite;
-
-                // ✅ AQUI ESTÁ A ATUALIZAÇÃO:
-                // Se você preencheu o nome na DialogueLine no Inspector, ele usa.
-                // Se deixou vazio, ele usa o nome da Quest (currentQuest.npcName).
                 lines[i].characterName = !string.IsNullOrEmpty(dialogueLines[i].characterName)
                     ? dialogueLines[i].characterName
                     : currentQuest.npcName;
-
                 lines[i].text = dialogueLines[i].text.Replace("{answer}", question.options[choice]);
             }
 
@@ -224,6 +249,9 @@ public class InterviewManager : MonoBehaviour
     {
         if (isFinishing) return;
         isFinishing = true;
+
+        // ✅ Para a música quando a entrevista termina
+        StopInterviewMusic();
 
         if (GameManager.Instance != null)
         {
@@ -301,7 +329,6 @@ public class InterviewManager : MonoBehaviour
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
-            Debug.Log("[InterviewManager] Game Over Panel ativado!");
 
             if (gameOverUIComponent == null)
                 gameOverUIComponent = gameOverPanel.GetComponent<GameOverUI>();
@@ -313,16 +340,7 @@ public class InterviewManager : MonoBehaviour
             {
                 int maxPoints = currentQuest != null ? currentQuest.questions.Length : 0;
                 gameOverUIComponent.ShowDefeat(points, maxPoints);
-                Debug.Log("[InterviewManager] ShowDefeat chamado no GameOverUI.");
             }
-            else
-            {
-                Debug.LogWarning("[InterviewManager] GameOverUI não encontrado! Arraste no Inspector.");
-            }
-        }
-        else
-        {
-            Debug.LogError("[InterviewManager] O campo 'Game Over Panel' está NULO no Inspector!");
         }
     }
 
