@@ -43,7 +43,7 @@ public class InterviewManager : MonoBehaviour
     [Header("Quest Database")]
     [SerializeField] private QuestDatabase questDatabase;
 
-    // ✅ Áudio da Entrevista
+    // ✅ Áudio da Entrevista (RESTAURADO)
     [Header("Audio")]
     [Tooltip("Arraste um AudioSource aqui para tocar a música da entrevista")]
     [SerializeField] private AudioSource bgmAudioSource;
@@ -116,7 +116,9 @@ public class InterviewManager : MonoBehaviour
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
-        // ❌ REMOVIDO: PlayInterviewMusic() daqui.
+        // ✅ Pausa o AudioManager geral
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PausarMusica();
 
         if (dialogueSystem != null && currentQuest != null && currentQuest.introLines.Length > 0)
         {
@@ -129,6 +131,7 @@ public class InterviewManager : MonoBehaviour
         }
     }
 
+    // ✅ RESTAURADO
     private void PlayInterviewMusic()
     {
         if (bgmAudioSource != null && musicaEntrevista != null)
@@ -140,6 +143,7 @@ public class InterviewManager : MonoBehaviour
         }
     }
 
+    // ✅ RESTAURADO
     private void StopInterviewMusic()
     {
         if (bgmAudioSource != null && bgmAudioSource.isPlaying)
@@ -167,7 +171,7 @@ public class InterviewManager : MonoBehaviour
         {
             panel.SetActive(true);
 
-            // ✅ Toca a música APENAS quando o painel da entrevista é ativado
+            // ✅ Toca a música específica da entrevista
             PlayInterviewMusic();
         }
 
@@ -250,8 +254,12 @@ public class InterviewManager : MonoBehaviour
         if (isFinishing) return;
         isFinishing = true;
 
-        // ✅ Para a música quando a entrevista termina
+        // ✅ Para a música específica da entrevista
         StopInterviewMusic();
+
+        // ✅ Retoma a música de fundo geral
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.RetomarMusica();
 
         if (GameManager.Instance != null)
         {
