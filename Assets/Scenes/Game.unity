@@ -7466,7 +7466,9 @@ MonoBehaviour:
   pickupPanel: {fileID: 228051383}
   dialogueSystem: {fileID: 1574989813}
   finalLetterDialogue:
-  - "Eu preciso ir para casa... meus rem\xE9-dios..."
+  - characterSprite: {fileID: 0}
+    characterName: Kafka
+    text: "Meus reEm\xE9dios... preciso... deles"
   objectsToActivate:
   - {fileID: 1610394281}
   objectsToDeactivate:
@@ -14403,7 +14405,9 @@ MonoBehaviour:
   pickupPanel: {fileID: 228051383}
   dialogueSystem: {fileID: 1574989813}
   finalLetterDialogue:
-  - "Eu preciso ir para casa... meus rem\xE9-dios..."
+  - characterSprite: {fileID: 0}
+    characterName: Kafka
+    text: "Meus reEm\xE9dios... preciso... deles"
   objectsToActivate:
   - {fileID: 1610394281}
   objectsToDeactivate:
@@ -24169,7 +24173,9 @@ MonoBehaviour:
   pickupPanel: {fileID: 228051383}
   dialogueSystem: {fileID: 1574989813}
   finalLetterDialogue:
-  - "Eu preciso ir para casa... meus rem\xE9-dios..."
+  - characterSprite: {fileID: 0}
+    characterName: Kafka
+    text: "Meus reEm\xE9dios... preciso... deles"
   objectsToActivate:
   - {fileID: 1610394281}
   objectsToDeactivate:
