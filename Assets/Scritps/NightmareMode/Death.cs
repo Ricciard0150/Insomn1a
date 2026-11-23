@@ -31,6 +31,7 @@ public class Death : MonoBehaviour
 
         gameObject.SetActive(false);
 
+        // Avisa o TriggerJumpscare
         OnDeathDesapareceu?.Invoke();
     }
 }

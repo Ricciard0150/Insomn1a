@@ -5,19 +5,17 @@ public class TriggerJumpscare : MonoBehaviour
 {
     [Header("Referências")]
     [SerializeField] private Death susto;
-
-    [Tooltip("Arraste o TopDownMovement do Player aqui")]
     [SerializeField] private TopDownMovement playerMovement;
 
+    [Header("Áudio de Desaparecimento")]
+    [SerializeField] private AudioSource audioSource; // Coloque o AudioSource no próprio Trigger!
+    [SerializeField] private AudioClip somDesaparecer;
+
     [Header("Configurações de Tempo")]
-    [Tooltip("Tempo de espera APÓS a death sumir para destravar o player")]
     [SerializeField] private float tempoAposDeath = 2f;
 
     [Header("Diálogo Pós-Death")]
-    [Tooltip("Arraste o DialogueNightmare aqui")]
     [SerializeField] private DialogueNightmare dialogueNightmare;
-
-    [Tooltip("As falas que devem aparecer depois de tudo")]
     [TextArea(2, 5)]
     [SerializeField] private string[] falasPosDeath;
 
@@ -41,7 +39,6 @@ public class TriggerJumpscare : MonoBehaviour
         {
             jaAconteceu = true;
 
-            // 1. Trava o movimento do player IMEDIATAMENTE
             if (playerMovement != null)
             {
                 playerMovement.SetCanMove(false);
@@ -49,7 +46,6 @@ public class TriggerJumpscare : MonoBehaviour
                 Debug.Log("[TriggerJumpscare] Player travado.");
             }
 
-            // 2. Inicia o desaparecimento da death
             if (susto != null)
                 susto.IniciarDesaparecimento();
         }
@@ -57,15 +53,17 @@ public class TriggerJumpscare : MonoBehaviour
 
     private void OnDeathDesapareceu()
     {
+        // ✅ Toca o som aqui! O Trigger não é desativado, então o som toca completo.
+        if (audioSource != null && somDesaparecer != null)
+            audioSource.PlayOneShot(somDesaparecer);
+
         StartCoroutine(DestravarEDialogar());
     }
 
     private IEnumerator DestravarEDialogar()
     {
-        // 3. Espera o tempo extra (configurável)
         yield return new WaitForSecondsRealtime(tempoAposDeath);
 
-        // 4. Destrava o player
         if (playerMovement != null)
         {
             playerMovement.SetCanMove(true);
@@ -73,10 +71,8 @@ public class TriggerJumpscare : MonoBehaviour
             Debug.Log("[TriggerJumpscare] Player destravado.");
         }
 
-        // 5. Inicia o diálogo usando o DialogueNightmare
         if (dialogueNightmare != null && falasPosDeath != null && falasPosDeath.Length > 0)
         {
-            // O DialogueNightmare já tem a sobrecarga que recebe string[]
             dialogueNightmare.StartDialogue(falasPosDeath);
             Debug.Log("[TriggerJumpscare] Diálogo do Nightmare iniciado.");
         }
