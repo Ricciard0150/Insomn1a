@@ -26,21 +26,23 @@ public class AudioManager : MonoBehaviour
             bgmSource.Play();
     }
 
-    // ✅ Para a música (Usado na Entrevista e no Typing)
+    // ✅ Para a música completamente (não só pausa)
     public void PausarMusica()
     {
-        if (bgmSource != null && bgmSource.isPlaying)
+        if (bgmSource != null)
         {
-            bgmSource.Pause();
+            bgmSource.Stop(); // Stop é mais forte que Pause
+            Debug.Log("[AudioManager] Música de fundo PARADA.");
         }
     }
 
-    // ✅ Volta a música de onde parou
+    // ✅ Retoma a música do zero
     public void RetomarMusica()
     {
         if (bgmSource != null && !bgmSource.isPlaying)
         {
-            bgmSource.UnPause();
+            bgmSource.Play();
+            Debug.Log("[AudioManager] Música de fundo TOCANDO.");
         }
     }
 }
