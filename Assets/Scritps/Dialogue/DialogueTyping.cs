@@ -9,18 +9,24 @@ public class DialogueTyping : MonoBehaviour
     private float velocidadeTexto = 0.05f;
     private Coroutine typingCoroutine;
     private bool isTyping = false;
-    private bool usarTypewriter = true; // ✅ novo
+    private bool usarTypewriter = true;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource typingAudioSource;
+    [SerializeField] private AudioClip typingSound;
+
+    [Header("Configuração de Som")]
+    [Tooltip("Toca o som a cada X letras. Se for 1, toca sempre. Se for 3, pula 2 letras.")]
+    [SerializeField] private int tocarSomACadaLetras = 3;
 
     public bool IsTyping => isTyping;
 
-    // ✅ Mantém a assinatura antiga (2 args) para não quebrar nada
     public void Initialize(TMP_Text text, float speed)
     {
         dialogueText = text;
         velocidadeTexto = speed;
     }
 
-    // ✅ Nova sobrecarga (3 args) usada pelo DialogueNightmare
     public void Initialize(TMP_Text text, float speed, bool useTypewriter)
     {
         Initialize(text, speed);
@@ -39,7 +45,6 @@ public class DialogueTyping : MonoBehaviour
         if (falas == null || index >= falas.Length)
             return;
 
-        // ✅ Se typewriter desligado, mostra tudo de uma vez
         if (!usarTypewriter)
         {
             if (dialogueText != null)
@@ -59,6 +64,7 @@ public class DialogueTyping : MonoBehaviour
             typingCoroutine = null;
         }
         isTyping = false;
+        StopTypingSound();
     }
 
     public void CompleteTyping(int index)
@@ -72,6 +78,7 @@ public class DialogueTyping : MonoBehaviour
                 dialogueText.text = falas[index];
 
             isTyping = false;
+            StopTypingSound();
         }
     }
 
@@ -82,13 +89,42 @@ public class DialogueTyping : MonoBehaviour
 
         if (falas != null && index < falas.Length)
         {
+            int letrasDigitadas = 0;
+
             foreach (char letra in falas[index])
             {
                 dialogueText.text += letra;
+                letrasDigitadas++;
+
+                // ✅ Só toca o som se for a hora (ex: a cada 3 letras)
+                // E o `!typingAudioSource.isPlaying` impede que os sons se acumulem
+                if (typingAudioSource != null && typingSound != null)
+                {
+                    if (letrasDigitadas % tocarSomACadaLetras == 0 && !typingAudioSource.isPlaying)
+                    {
+                        typingAudioSource.PlayOneShot(typingSound);
+                    }
+                }
+
+                // Não toca som em espaços em branco para não ficar estranho
+                if (letra == ' ')
+                {
+                    letrasDigitadas--;
+                }
+
                 yield return new WaitForSeconds(velocidadeTexto);
             }
         }
 
         isTyping = false;
+        StopTypingSound();
+    }
+
+    private void StopTypingSound()
+    {
+        if (typingAudioSource != null && typingAudioSource.isPlaying)
+        {
+            typingAudioSource.Stop();
+        }
     }
 }
