@@ -14,26 +14,12 @@ public class StartMinigameNPC : MonoBehaviour
 
     private bool playerNear = false;
     private bool isStarting = false;
-    private bool waitingForMinigame = false;
 
     void Update()
     {
         if (playerNear && !isStarting && Input.GetButtonDown(interactButton))
         {
             StartCoroutine(StartMinigameSequence());
-        }
-
-        // ✅ Monitora quando o último diálogo do minigame terminar para voltar a música
-        if (waitingForMinigame && dialogueSystem != null)
-        {
-            // Se o minigame não está mais ativo E o diálogo terminou
-            if (!dialogueSystem.IsRunning)
-            {
-                waitingForMinigame = false;
-                // Volta a música de fundo
-                if (AudioManager.Instance != null)
-                    AudioManager.Instance.RetomarMusica();
-            }
         }
     }
 
@@ -51,28 +37,32 @@ public class StartMinigameNPC : MonoBehaviour
 
     private IEnumerator StartMinigameSequence()
     {
+        if (minigameManager == null) yield break;
+        if (minigameManager.IsMinigameRunning) yield break;
+
         isStarting = true;
 
-        // ✅ 1. Para a música de fundo IMEDIATAMENTE ao interagir
+        // ✅ 1. Para a música geral IMEDIATAMENTE ao interagir
         if (AudioManager.Instance != null)
+        {
             AudioManager.Instance.PausarMusica();
+            Debug.Log("[Áudio] Interação: música geral PAUSADA.");
+        }
 
+        // ✅ 2. Fade
         if (fadeController != null)
             yield return StartCoroutine(fadeController.FadeToBlack(1f));
 
-        if (dialogueSystem != null && introDialogueLines.Length > 0)
+        // ✅ 3. Diálogo de introdução (sem música de fundo)
+        if (dialogueSystem != null && introDialogueLines != null && introDialogueLines.Length > 0)
         {
             dialogueSystem.StartDialogue(introDialogueLines);
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
-        if (minigameManager != null)
-        {
-            // ✅ 2. Inicia o minigame. O PainelAudioController vai cuidar de tocar a música do minigame.
-            minigameManager.StartMinigame();
+        // ✅ 4. Abre o painel → PainelAudioController.OnEnable toca a música do minigame
+        minigameManager.StartMinigame();
 
-            // ✅ 3. Ativa a flag para começar a monitorar o fim do minigame
-            waitingForMinigame = true;
-        }
+        isStarting = false;
     }
 }

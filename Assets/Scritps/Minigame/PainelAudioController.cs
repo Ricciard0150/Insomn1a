@@ -8,29 +8,26 @@ public class PainelAudioController : MonoBehaviour
     [Header("Música do Minigame (O AudioSource DESTE painel)")]
     [SerializeField] private AudioSource musicaDoPainel;
 
+    private AudioManager _manager;
+
+    void Awake()
+    {
+        _manager = audioManagerGeral != null
+            ? audioManagerGeral
+            : FindAnyObjectByType<AudioManager>();
+
+        if (_manager == null)
+            Debug.LogWarning("[Áudio] PainelAudioController não encontrou nenhum AudioManager na cena.");
+    }
+
     void OnEnable()
     {
-        // 1. Para a música de fundo GERAL
-        if (audioManagerGeral != null)
-        {
-            audioManagerGeral.PausarMusica();
-            Debug.Log("[Áudio] Painel abriu: Música geral PARADA.");
-        }
-        else
-        {
-            // Fallback: tenta achar o AudioManager na cena se não foi arrastado
-            AudioManager manager = FindAnyObjectByType<AudioManager>();
-            if (manager != null)
-            {
-                manager.PausarMusica();
-            }
-        }
-
-        // 2. Toca a música do minigame
+        // A música geral JÁ foi pausada pelo StartMinigameNPC no momento da interação.
+        // Aqui só precisamos tocar a música do minigame.
         if (musicaDoPainel != null)
         {
             musicaDoPainel.Play();
-            Debug.Log("[Áudio] Música do minigame começou a tocar.");
+            Debug.Log("[Áudio] Painel abriu: música do minigame TOCANDO.");
         }
     }
 
@@ -40,21 +37,14 @@ public class PainelAudioController : MonoBehaviour
         if (musicaDoPainel != null)
         {
             musicaDoPainel.Stop();
+            Debug.Log("[Áudio] Painel fechou: música do minigame PARADA.");
         }
 
-        // 2. Volta a música de fundo
-        if (audioManagerGeral != null)
+        // 2. Retoma a música geral do jogo
+        if (_manager != null)
         {
-            audioManagerGeral.RetomarMusica();
-            Debug.Log("[Áudio] Música geral voltou a tocar.");
-        }
-        else
-        {
-            AudioManager manager = FindAnyObjectByType<AudioManager>();
-            if (manager != null)
-            {
-                manager.RetomarMusica();
-            }
+            _manager.RetomarMusica();
+            Debug.Log("[Áudio] Música geral do jogo RETOMADA.");
         }
     }
 }

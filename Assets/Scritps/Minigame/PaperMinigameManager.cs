@@ -15,7 +15,7 @@ public class PaperMinigameManager : MonoBehaviour
     [SerializeField] private InterviewQuests dialogueSystem;
     [SerializeField] private FadeController fadeController;
 
-    // ✅ NOVO: Game Over UI
+    [Header("Game Over UI")]
     [SerializeField] private GameOverUI gameOverUI;
 
     [Header("Diálogo de Derrota")]
@@ -70,9 +70,13 @@ public class PaperMinigameManager : MonoBehaviour
     private float currentTime;
     private bool isRoundActive = false;
     private bool isGameOver = false;
+    private bool isGameOverSequenceRunning = false; // evita TriggerGameOver duplicado
 
     private GameObject activePaper;
     private PaperSpot currentHighlightedSpot;
+
+    // Flag pública para o NPC evitar start duplicado
+    public bool IsMinigameRunning => isRoundActive || (currentRound > 0 && !isGameOver);
 
     void Start()
     {
@@ -81,7 +85,15 @@ public class PaperMinigameManager : MonoBehaviour
 
     public void StartMinigame()
     {
-        if (minigamePanel != null) minigamePanel.SetActive(true);
+        // Reset de estado caso o minigame seja reiniciado
+        currentRound = 0;
+        currentErrors = 0;
+        papersOrganizedThisRound = 0;
+        isGameOver = false;
+        isGameOverSequenceRunning = false;
+        isRoundActive = false;
+
+        if (minigamePanel != null) minigamePanel.SetActive(true); // dispara OnEnable do PainelAudioController
         if (timerText != null) timerText.text = "";
         StartCoroutine(GameLoop());
     }
@@ -148,8 +160,6 @@ public class PaperMinigameManager : MonoBehaviour
 
         if (!isGameOver) yield return StartCoroutine(VictorySequence());
     }
-
-    // ... (PlayHandTutorial e OnPaperOrganizedCorrectly/Wrongly continuam iguais) ...
 
     private IEnumerator PlayHandTutorial()
     {
@@ -239,25 +249,29 @@ public class PaperMinigameManager : MonoBehaviour
         if (activePaper != null) { Destroy(activePaper); activePaper = null; }
     }
 
-    // ✅ AQUI ESTÁ A LÓGICA DO GAME OVER INTEGRADA
     private IEnumerator TriggerGameOver()
     {
+        // Guarda contra dupla execução (timer + erros podem disparar ao mesmo tempo)
+        if (isGameOverSequenceRunning) yield break;
+        isGameOverSequenceRunning = true;
+
         isGameOver = true;
         isRoundActive = false;
 
         DestroyCurrentPaper();
 
-        // 1. Fecha o painel do minigame
+        // 1. Fecha o painel → PainelAudioController.OnDisable dispara:
+        //    para a música do minigame e retoma a música geral.
         if (minigamePanel != null) minigamePanel.SetActive(false);
 
-        // 2. Toca o diálogo de derrota
+        // 2. Diálogo de derrota
         if (dialogueSystem != null && defeatDialogueLines != null && defeatDialogueLines.Length > 0)
         {
             dialogueSystem.StartDialogue(defeatDialogueLines);
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
-        // 3. Aciona o Game Over UI
+        // 3. UI de Game Over
         if (gameOverUI != null)
         {
             gameOverUI.ShowDefeat("Muito lento. O patrão te demitiu.");
@@ -268,20 +282,25 @@ public class PaperMinigameManager : MonoBehaviour
     {
         isRoundActive = false;
 
+        // 1. Diálogo final com o painel AINDA aberto (música do minigame ainda tocando)
         if (finalVictoryLines != null && finalVictoryLines.Length > 0 && dialogueSystem != null)
         {
             dialogueSystem.StartDialogue(finalVictoryLines);
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
+        // 2. Fecha o painel → PainelAudioController.OnDisable:
+        //    para a música do minigame e retoma a música geral.
         if (minigamePanel != null) minigamePanel.SetActive(false);
 
+        // 3. Diálogo pós-minigame (painel fechado, música geral já tocando)
         if (postMinigameLines != null && postMinigameLines.Length > 0 && dialogueSystem != null)
         {
             dialogueSystem.StartDialogue(postMinigameLines);
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
+        // 4. Consequências da vitória
         if (objectsToActivate != null)
             foreach (GameObject obj in objectsToActivate) if (obj != null) obj.SetActive(true);
 
@@ -293,6 +312,7 @@ public class PaperMinigameManager : MonoBehaviour
 
     public void RestartMinigame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 }
