@@ -25881,9 +25881,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueSystem
   dialoguePanel: {fileID: 746844588}
   dialogueText: {fileID: 622770720}
-  characterImage: {fileID: 2107602943}
+  characterImage: {fileID: 2052173182}
   pressingEIndicator: {fileID: 150873144}
-  characterNameText: {fileID: 0}
+  characterNameText: {fileID: 103929470}
   velocidadeTexto: 0.05
   playerMovement: {fileID: 5055718417195591049}
 --- !u!114 &1457307601
@@ -25908,7 +25908,9 @@ MonoBehaviour:
   spritesBeforeNightmare: []
   falasAfterNightmare: []
   spritesAfterNightmare: []
-  nomesBeforeNightmare: []
+  nomesBeforeNightmare:
+  - Chefe
+  - Kafka
   nomesAfterNightmare: []
 --- !u!1 &1497053602
 GameObject:
