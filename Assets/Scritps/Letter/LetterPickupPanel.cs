@@ -44,6 +44,10 @@ public class LetterPickupPanel : MonoBehaviour
     private bool podeFechar = false;
     private bool isFinalCard = false;
 
+    // ✅ FIX B: callback direto passado no Show
+    private Action _onClosedCallback;
+
+    // Mantido por compatibilidade com quem ainda usa o evento
     public event Action OnPanelClosed;
 
     void Awake()
@@ -80,31 +84,31 @@ public class LetterPickupPanel : MonoBehaviour
         }
     }
 
-    public void Show(string itemName, int pieceNumber, int collected, int total)
+    /// <summary>
+    /// ✅ FIX B: agora recebe um callback opcional que roda quando o painel fecha
+    /// (seja por fechamento manual em cartas normais, seja no fim da animação final).
+    /// Isso funciona mesmo que quem chamou o Show seja desativado/destruído depois.
+    /// </summary>
+    public void Show(string itemName, int pieceNumber, int collected, int total, Action onClosed = null)
     {
         gameObject.SetActive(true);
+
+        _onClosedCallback = onClosed;
 
         if (itemNameText != null) itemNameText.text = itemName;
         if (counterText != null) counterText.text = $"{collected}/{total}";
 
-        // ✅ USA A CONTAGEM (collected) PARA DECIDIR QUANTOS SLOTS MOSTRAR
-        // Se você tiver 1 carta, ele liga o slot [0]. 
-        // Se tiver 2, liga o [0] e [1]. Se tiver 3, liga todos.
         for (int i = 0; i < letterSlots.Length; i++)
         {
             if (letterSlots[i] != null)
             {
-                // O "i" é o index do slot (0, 1, 2).
-                // Se a contagem for 2, ele liga o 0 e 1 (que são menores que 2).
                 letterSlots[i].enabled = (i < collected);
 
-                // Reseta a posição e rotação para o caso de ter quebrado antes
                 letterSlots[i].rectTransform.anchoredPosition = posicoesOriginais[i];
                 letterSlots[i].rectTransform.localRotation = rotacoesOriginais[i];
             }
         }
 
-        // Mantém a lógica de fechar/animar no final
         isFinalCard = collected >= total;
 
         if (currentRoutine != null) StopCoroutine(currentRoutine);
@@ -118,34 +122,28 @@ public class LetterPickupPanel : MonoBehaviour
     private IEnumerator AnimateNormal()
     {
         yield return StartCoroutine(DoFadeIn());
-
-        // ✅ Nas cartas normais, o player pode fechar quando quiser, sem tempo limite
         podeFechar = true;
-
-        // Ele fica nesse estado até o jogador apertar o botão
-        // Não tem mais o WaitForSeconds aqui.
+        currentRoutine = null; // ✅ limpa referência (AnimateNormal terminou)
     }
 
     private IEnumerator FecharAntesDoTempo()
     {
         yield return StartCoroutine(DoFadeOut());
-        gameObject.SetActive(false);
-        currentRoutine = null;
-        OnPanelClosed?.Invoke();
+        FinalizarPainel();
     }
 
     private IEnumerator AnimateFinal()
     {
         yield return StartCoroutine(DoFadeIn());
 
-        // 1. Mostra as cartas juntas por um tempo (não pode fechar no botão)
+        // 1. Mostra as cartas juntas por um tempo
         yield return new WaitForSecondsRealtime(tempoParaCrack);
 
-        // 2. Toca o som do Crack
+        // 2. Toca o som do crack
         if (crackAudioSource != null && crackSound != null)
             crackAudioSource.PlayOneShot(crackSound);
 
-        // 3. Efeito de Quebrar (Move e gira)
+        // 3. Efeito de quebrar (move e gira)
         float elapsed = 0f;
         while (elapsed < 1f)
         {
@@ -163,7 +161,8 @@ public class LetterPickupPanel : MonoBehaviour
                     else if (i == 1) { targetPos = posFinalCarta2; targetRot = rotFinalCarta2; }
                     else if (i == 2) { targetPos = posFinalCarta3; targetRot = rotFinalCarta3; }
 
-                    letterSlots[i].rectTransform.anchoredPosition = Vector2.Lerp(posicoesOriginais[i], targetPos, p);
+                    letterSlots[i].rectTransform.anchoredPosition =
+                        Vector2.Lerp(posicoesOriginais[i], targetPos, p);
 
                     float currentRotZ = Mathf.Lerp(0f, targetRot, p);
                     letterSlots[i].rectTransform.localRotation = Quaternion.Euler(0f, 0f, currentRotZ);
@@ -177,10 +176,26 @@ public class LetterPickupPanel : MonoBehaviour
 
         // 5. Fade out final e fecha
         yield return StartCoroutine(DoFadeOut());
+        FinalizarPainel();
+    }
+
+    /// <summary>
+    /// ✅ FIX B: ponto único de fechamento.
+    /// Invoca o evento (compatibilidade) e o callback direto, limpa tudo.
+    /// </summary>
+    private void FinalizarPainel()
+    {
+        Debug.Log($"[Panel] FinalizarPainel chamado. callback null? {_onClosedCallback == null}");
 
         gameObject.SetActive(false);
         currentRoutine = null;
+        podeFechar = false;
+
+        Action cb = _onClosedCallback;
+        _onClosedCallback = null;
+
         OnPanelClosed?.Invoke();
+        cb?.Invoke();
     }
 
     private IEnumerator DoFadeIn()
@@ -194,7 +209,9 @@ public class LetterPickupPanel : MonoBehaviour
             SetTextAlpha(itemNameText, a);
             SetTextAlpha(counterText, a);
             foreach (var slot in letterSlots)
-                if (slot != null && slot.enabled) SetAlpha(slot, a);
+            {
+                if (slot != null) SetAlpha(slot, a);
+            }
             yield return null;
         }
     }
@@ -210,11 +227,33 @@ public class LetterPickupPanel : MonoBehaviour
             SetTextAlpha(itemNameText, a);
             SetTextAlpha(counterText, a);
             foreach (var slot in letterSlots)
-                if (slot != null && slot.enabled) SetAlpha(slot, a);
+            {
+                if (slot != null) SetAlpha(slot, a);
+            }
             yield return null;
         }
     }
 
-    private void SetAlpha(Image img, float a) { if (img == null) return; Color c = img.color; c.a = a; img.color = c; }
-    private void SetTextAlpha(TMP_Text txt, float a) { if (txt == null) return; Color c = txt.color; c.a = a; txt.color = c; }
+    private void SetAlpha(Graphic graphic, float alpha)
+    {
+        if (graphic == null) return;
+        Color c = graphic.color;
+        c.a = alpha;
+        graphic.color = c;
+    }
+
+    private void SetTextAlpha(TMP_Text text, float alpha)
+    {
+        if (text == null) return;
+        Color c = text.color;
+        c.a = alpha;
+        text.color = c;
+    }
+
+    void OnDestroy()
+    {
+        if (currentRoutine != null) StopCoroutine(currentRoutine);
+        OnPanelClosed = null;
+        _onClosedCallback = null;
+    }
 }

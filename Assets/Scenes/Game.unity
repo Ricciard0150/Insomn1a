@@ -814,6 +814,7 @@ GameObject:
   - component: {fileID: 67162754}
   - component: {fileID: 67162756}
   - component: {fileID: 67162755}
+  - component: {fileID: 67162757}
   m_Layer: 0
   m_Name: HDR
   m_TagString: Untagged
@@ -854,6 +855,9 @@ MonoBehaviour:
   playerMovement: {fileID: 0}
   tempoDuracao: 3
   apenasUmaVez: 1
+  sfxAudioSource: {fileID: 67162757}
+  sfxClip: {fileID: 8300000, guid: 07718bfee73d56d4490adc2f5aa50b06, type: 3}
+  sfxVolume: 1
 --- !u!61 &67162756
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -900,6 +904,103 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 8.488693, y: 19.056871}
   m_EdgeRadius: 0
+--- !u!82 &67162757
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67162753}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &76388740
 GameObject:
   m_ObjectHideFlags: 0
@@ -2114,6 +2215,7 @@ GameObject:
   - component: {fileID: 228051382}
   - component: {fileID: 228051381}
   - component: {fileID: 228051383}
+  - component: {fileID: 228051384}
   m_Layer: 5
   m_Name: PanelLetter
   m_TagString: Untagged
@@ -2204,8 +2306,8 @@ MonoBehaviour:
   - {fileID: 1239338168}
   itemNameText: {fileID: 1386058340}
   counterText: {fileID: 1175330040}
-  crackAudioSource: {fileID: 0}
-  crackSound: {fileID: 0}
+  crackAudioSource: {fileID: 228051384}
+  crackSound: {fileID: 8300000, guid: c19e40679d279354eaf7ec59e6562918, type: 3}
   fadeIn: 0.5
   fadeOut: 0.5
   tempoParaCrack: 1
@@ -2218,6 +2320,103 @@ MonoBehaviour:
   posFinalCarta3: {x: 0.3, y: 32}
   rotFinalCarta3: -0.777
   interactButton: Interact
+--- !u!82 &228051384
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228051379}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &236904181
 GameObject:
   m_ObjectHideFlags: 0
@@ -7265,10 +7464,13 @@ MonoBehaviour:
   itemName: "Peda\xE7o de carta"
   pieceNumber: 2
   pickupPanel: {fileID: 228051383}
-  dialogueSystem: {fileID: 0}
-  finalLetterDialogue: []
-  objectsToActivate: []
-  objectsToDeactivate: []
+  dialogueSystem: {fileID: 1574989813}
+  finalLetterDialogue:
+  - "Eu preciso ir para casa... meus rem\xE9-dios..."
+  objectsToActivate:
+  - {fileID: 1610394281}
+  objectsToDeactivate:
+  - {fileID: 1051169689}
   interactButton: Interact
 --- !u!212 &685654405
 SpriteRenderer:
@@ -14199,10 +14401,13 @@ MonoBehaviour:
   itemName: "Peda\xE7o de carta"
   pieceNumber: 1
   pickupPanel: {fileID: 228051383}
-  dialogueSystem: {fileID: 0}
-  finalLetterDialogue: []
-  objectsToActivate: []
-  objectsToDeactivate: []
+  dialogueSystem: {fileID: 1574989813}
+  finalLetterDialogue:
+  - "Eu preciso ir para casa... meus rem\xE9-dios..."
+  objectsToActivate:
+  - {fileID: 1610394281}
+  objectsToDeactivate:
+  - {fileID: 1051169689}
   interactButton: Interact
 --- !u!61 &1142317292
 BoxCollider2D:
@@ -14317,7 +14522,7 @@ Transform:
   m_GameObject: {fileID: 1142317290}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 359.79, y: 163.09, z: 0}
+  m_LocalPosition: {x: 385.7, y: 104.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24037,7 +24242,7 @@ Transform:
   m_GameObject: {fileID: 1249601344}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 336.1, y: 59.9, z: 0}
+  m_LocalPosition: {x: 386.5, y: 98.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -27846,8 +28051,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 906b41649c6f65444a48eccb496fa0f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InterviewQuests
-  dialogueText: {fileID: 1777450455}
-  dialoguePanel: {fileID: 1653279357}
+  dialogueText: {fileID: 622770720}
+  dialoguePanel: {fileID: 746844588}
   characterNameText: {fileID: 0}
   characterImage: {fileID: 0}
   textSpeed: 0.03
@@ -37570,7 +37775,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 361.6, y: 169.9, z: 0}
+  m_LocalPosition: {x: 387.9, y: 94.2, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
