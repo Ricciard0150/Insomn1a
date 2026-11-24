@@ -1,38 +1,4 @@
 using System;
-using UnityEngine;
-
-[Serializable]
-public class DialogueLine
-{
-    public Sprite characterSprite;
-
-    // ✅ ADICIONE ESTA LINHA
-    public string characterName;
-
-    [TextArea(1, 3)]
-    public string text;
-}
-
-[Serializable]
-public class AnswerDialogue
-{
-    public DialogueLine[] dialogue;
-}
-
-[Serializable]
-public class QuestionRPG
-{
-    public string question;
-    public string[] options;
-    public int correctAnswer;
-
-    [Header("Feedback")]
-    public string correctFeedback;
-    public string wrongFeedback;
-
-    [Header("Dialogo por resposta")]
-    public AnswerDialogue[] optionDialogues;
-}
 
 public class InterviewSystem
 {
@@ -41,11 +7,14 @@ public class InterviewSystem
     public event Action<string> OnFeedback;
 
     private QuestionRPG[] questions;
+
     private int maxLives;
     private int minCorrect;
+
     private int currentLives;
     private int points;
     private int round;
+
     private bool isActive;
 
     public bool IsActive => isActive;
@@ -60,13 +29,15 @@ public class InterviewSystem
     public void Start()
     {
         isActive = true;
+
         round = 0;
         points = 0;
         currentLives = maxLives;
+
         NextRound();
     }
 
-    void NextRound()
+    private void NextRound()
     {
         if (round >= questions.Length)
         {
@@ -75,6 +46,7 @@ public class InterviewSystem
         }
 
         QuestionRPG question = questions[round];
+
         OnRoundChanged?.Invoke(question, question.options.Length);
     }
 
@@ -85,9 +57,11 @@ public class InterviewSystem
 
     public void ProcessChoice(int choice)
     {
-        if (!isActive) return;
+        if (!isActive)
+            return;
 
         QuestionRPG question = questions[round];
+
         bool correct = choice == question.correctAnswer;
 
         if (correct)
@@ -108,13 +82,16 @@ public class InterviewSystem
         }
 
         round++;
+
         NextRound();
     }
 
-    void Finish()
+    private void Finish()
     {
         isActive = false;
+
         bool victory = points >= minCorrect && currentLives > 0;
+
         OnFinished?.Invoke(victory, points, currentLives);
     }
 }

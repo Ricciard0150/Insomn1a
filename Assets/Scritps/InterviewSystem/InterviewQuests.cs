@@ -17,17 +17,11 @@ public class InterviewQuests : MonoBehaviour
     [SerializeField] private float textSpeed = 0.03f;
 
     [Header("Typing Sound")]
-    [Tooltip("AudioSource que toca o som de digitação (loop). Play On Awake DESMARCADO.")]
     [SerializeField] private AudioSource typingAudioSource;
-    [Tooltip("Som de digitação (um 'tick' curto que será repetido em loop)")]
     [SerializeField] private AudioClip typingClip;
-    [Tooltip("Volume do som de digitação")]
-    [Range(0f, 1f)]
-    [SerializeField] private float typingVolume = 0.5f;
-    [Tooltip("Toca o som a cada N letras (1 = toda letra, 2 = a cada 2 letras, etc.)")]
-    [SerializeField] private int letterIntervalForSound = 1;
+    [Range(0f, 1f)][SerializeField] private float typingVolume = 0.5f;
 
-    [Header("Final Dialogues")]
+    [Header("Final Dialogues (Fallback)")]
     [SerializeField] private DialogueLine[] victoryLines;
     [SerializeField] private DialogueLine[] defeatLines;
 
@@ -36,7 +30,6 @@ public class InterviewQuests : MonoBehaviour
 
     private bool isRunning;
     private Coroutine currentDialogue;
-    private int currentDialogueIndex;
     private bool isTextComplete = false;
     private bool waitingForNext = false;
 
@@ -44,7 +37,6 @@ public class InterviewQuests : MonoBehaviour
 
     void Awake()
     {
-        // ✅ Configura o AudioSource de digitação (loop, sem Play On Awake)
         if (typingAudioSource != null && typingClip != null)
         {
             typingAudioSource.clip = typingClip;
@@ -63,7 +55,7 @@ public class InterviewQuests : MonoBehaviour
             if (!isTextComplete && !waitingForNext)
             {
                 isTextComplete = true;
-                StopTypingSound(); // ✅ para o som imediatamente ao pular
+                StopTypingSound();
             }
             else if (isTextComplete && !waitingForNext)
             {
@@ -72,43 +64,15 @@ public class InterviewQuests : MonoBehaviour
         }
     }
 
-    // ✅ Liga o som de digitação
     private void StartTypingSound()
     {
         if (typingAudioSource == null || typingClip == null) return;
-        if (!typingAudioSource.isPlaying)
-        {
-            typingAudioSource.Play();
-        }
+        if (!typingAudioSource.isPlaying) typingAudioSource.Play();
     }
 
-    // ✅ Desliga o som de digitação
     private void StopTypingSound()
     {
-        if (typingAudioSource != null && typingAudioSource.isPlaying)
-        {
-            typingAudioSource.Stop();
-        }
-    }
-
-    public void StartDialogue(string[] lines, string[] names = null)
-    {
-        if (lines == null || lines.Length == 0) return;
-
-        DialogueLine[] converted = new DialogueLine[lines.Length];
-        for (int i = 0; i < lines.Length; i++)
-        {
-            converted[i] = new DialogueLine();
-            converted[i].text = lines[i];
-            converted[i].characterSprite = null;
-
-            if (names != null && i < names.Length && !string.IsNullOrEmpty(names[i]))
-                converted[i].characterName = names[i];
-            else
-                converted[i].characterName = "";
-        }
-
-        StartDialogue(converted);
+        if (typingAudioSource != null && typingAudioSource.isPlaying) typingAudioSource.Stop();
     }
 
     public void StartDialogue(DialogueLine[] lines)
@@ -127,15 +91,14 @@ public class InterviewQuests : MonoBehaviour
     private IEnumerator DisplayDialogue(DialogueLine[] lines)
     {
         isRunning = true;
-        currentDialogueIndex = 0;
         isTextComplete = false;
         waitingForNext = false;
 
-        if (dialoguePanel != null)
-            dialoguePanel.SetActive(true);
+        if (dialoguePanel != null) dialoguePanel.SetActive(true);
 
         foreach (DialogueLine line in lines)
         {
+            // ✅ TROCA O SPRITE E O NOME AQUI
             if (characterImage != null)
             {
                 characterImage.sprite = line.characterSprite;
@@ -149,7 +112,6 @@ public class InterviewQuests : MonoBehaviour
             isTextComplete = false;
             waitingForNext = false;
 
-            // ✅ Liga o som de digitação no início de cada linha
             StartTypingSound();
 
             for (int i = 0; i < line.text.Length; i++)
@@ -161,12 +123,9 @@ public class InterviewQuests : MonoBehaviour
                 }
 
                 dialogueText.text += line.text[i];
-
-                // (opcional) a cada N letras — mas como o som está em loop, isso não afeta.
                 yield return new WaitForSeconds(textSpeed);
             }
 
-            // ✅ Terminou de digitar → para o som
             StopTypingSound();
 
             if (!isTextComplete)
@@ -180,23 +139,16 @@ public class InterviewQuests : MonoBehaviour
                 yield return null;
             }
 
-            currentDialogueIndex++;
             waitingForNext = false;
             isTextComplete = false;
             yield return null;
         }
 
-        if (dialoguePanel != null)
-            dialoguePanel.SetActive(false);
-
-        // ✅ Garante que o som pare ao fechar o diálogo
+        if (dialoguePanel != null) dialoguePanel.SetActive(false);
         StopTypingSound();
 
         isRunning = false;
         currentDialogue = null;
-        currentDialogueIndex = 0;
-        isTextComplete = false;
-        waitingForNext = false;
     }
 
     public void SkipAllDialogue()
@@ -207,58 +159,24 @@ public class InterviewQuests : MonoBehaviour
             currentDialogue = null;
         }
 
-        // ✅ Garante que o som pare ao pular
         StopTypingSound();
-
-        if (dialoguePanel != null)
-            dialoguePanel.SetActive(false);
-
+        if (dialoguePanel != null) dialoguePanel.SetActive(false);
         isRunning = false;
-        currentDialogueIndex = 0;
-        isTextComplete = false;
-        waitingForNext = false;
     }
 
     public void ShowVictoryDialogue()
     {
         if (victoryLines != null && victoryLines.Length > 0)
-        {
             StartDialogue(victoryLines);
-        }
-        else if (currentQuestData != null && currentQuestData.victoryLines != null && currentQuestData.victoryLines.Length > 0)
-        {
-            DialogueLine[] converted = ConvertToDialogueLines(currentQuestData.victoryLines, currentQuestData.victoryNames);
-            StartDialogue(converted);
-        }
+        else if (currentQuestData != null && currentQuestData.victoryDialogue != null && currentQuestData.victoryDialogue.Length > 0)
+            StartDialogue(currentQuestData.victoryDialogue);
     }
 
     public void ShowDefeatDialogue()
     {
         if (defeatLines != null && defeatLines.Length > 0)
-        {
             StartDialogue(defeatLines);
-        }
-        else if (currentQuestData != null && currentQuestData.defeatLines != null && currentQuestData.defeatLines.Length > 0)
-        {
-            DialogueLine[] converted = ConvertToDialogueLines(currentQuestData.defeatLines, currentQuestData.defeatNames);
-            StartDialogue(converted);
-        }
-    }
-
-    private DialogueLine[] ConvertToDialogueLines(string[] strings, string[] names)
-    {
-        DialogueLine[] result = new DialogueLine[strings.Length];
-        for (int i = 0; i < strings.Length; i++)
-        {
-            result[i] = new DialogueLine();
-            result[i].text = strings[i];
-            result[i].characterSprite = null;
-
-            if (names != null && i < names.Length)
-                result[i].characterName = names[i];
-            else
-                result[i].characterName = "";
-        }
-        return result;
+        else if (currentQuestData != null && currentQuestData.defeatDialogue != null && currentQuestData.defeatDialogue.Length > 0)
+            StartDialogue(currentQuestData.defeatDialogue);
     }
 }

@@ -2,6 +2,36 @@ using System;
 using UnityEngine;
 
 [Serializable]
+public class DialogueLine
+{
+    public Sprite characterSprite;
+    public string characterName;
+    [TextArea(1, 3)]
+    public string text;
+}
+
+[Serializable]
+public class AnswerDialogue
+{
+    public DialogueLine[] dialogue;
+}
+
+[Serializable]
+public class QuestionRPG
+{
+    public string question;
+    public string[] options;
+    public int correctAnswer;
+
+    [Header("Feedback")]
+    public string correctFeedback;
+    public string wrongFeedback;
+
+    [Header("Dialogo por resposta")]
+    public AnswerDialogue[] optionDialogues;
+}
+
+[Serializable]
 public class QuestData
 {
     public string questId;
@@ -9,19 +39,16 @@ public class QuestData
     public string npcName;
 
     [Header("Intro")]
-    public string[] introLines;
-    // ✅ NOVO: Nomes para cada linha de introdução (opcional)
-    public string[] introNames;
+    // ✅ Agora a Intro usa DialogueLine (aceita Sprites e Nomes)
+    public DialogueLine[] introDialogue;
 
     [Header("Victory")]
-    public string[] victoryLines;
-    // ✅ NOVO: Nomes para cada linha de vitória (opcional)
-    public string[] victoryNames;
+    // ✅ Agora a Vitória usa DialogueLine
+    public DialogueLine[] victoryDialogue;
 
     [Header("Defeat")]
-    public string[] defeatLines;
-    // ✅ NOVO: Nomes para cada linha de derrota (opcional)
-    public string[] defeatNames;
+    // ✅ Agora a Derrota usa DialogueLine
+    public DialogueLine[] defeatDialogue;
 
     public QuestionRPG[] questions;
 

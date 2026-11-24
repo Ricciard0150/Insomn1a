@@ -10105,27 +10105,40 @@ MonoBehaviour:
   - questId: interview
     questName: Inicial interview
     npcName: Interviewer
-    introLines:
-    - "Ol\xE1, Senhor, eu tinha aplicado meu curr\xEDculo aqui semana passada\u2026"
-    - "Ol\xE1, sr. Franz. Bom, a princ\xEDpio o senhor est\xE1 aprovado mas antes
-      preciso fazer algumas perguntas para checar se voc\xEA \xE9 realmente qualificado"
-    - "Certo\u2026 "
-    introNames:
-    - Kafka
-    - Chefe
-    - Kafka
-    victoryLines:
-    - "Parab\xE9ns, senhor, o emprego \xE9 seu!"
-    - Obrigado, senhor!
-    victoryNames:
-    - Chefe
-    - Kafka
-    defeatLines:
-    - "Bem, revisaremos seu curr\xEDculo baseado no desempenho de hoje..."
-    - Hm, okay...
-    defeatNames:
-    - Chefe
-    - Kafka
+    introDialogue:
+    - characterSprite: {fileID: 0}
+      characterName: Kafka
+      text: "Ol\xE1, Senhor, eu tinha aplicado meu curr\xEDculo aqui semana passada\u2026"
+    - characterSprite: {fileID: 0}
+      characterName: Chefe
+      text: "Ol\xE1, sr. Franz. Bom, a princ\xEDpio o senhor est\xE1 aprovado mas
+        antes preciso fazer algumas perguntas para checar se voc\xEA \xE9 realmente
+        qualificado\r\n"
+    - characterSprite: {fileID: 0}
+      characterName: Kafka
+      text: "Certo\u2026"
+    victoryDialogue:
+    - characterSprite: {fileID: 0}
+      characterName: Chefe
+      text: "Muito bem, sr Fraz, est\xE1 contratado."
+    - characterSprite: {fileID: 0}
+      characterName: Kafka
+      text: Muito obrigado senhor!
+    - characterSprite: {fileID: 0}
+      characterName: Chefe
+      text: "Voc\xEA vai encontrar o gerente no \xFAltimo pr\xE9dio da firma na rua
+        \xE0 esquerda. Ele estar\xE1 te esperando amanh\xE3."
+    - characterSprite: {fileID: 0}
+      characterName: Kafka
+      text: Okay, obrigado senhor!
+    defeatDialogue:
+    - characterSprite: {fileID: 0}
+      characterName: Chefe
+      text: Bem... devido a seu desempenho, estaremos vendo outros candidatos para
+        a vaga...
+    - characterSprite: {fileID: 0}
+      characterName: Kafka
+      text: Okay. Obrigado, senhor...
     questions:
     - question: "Primeiramente, dando uma olhada aqui no seu curr\xEDculo percebi
         que voc\xEA disse que sabe ingl\xEAs, certo? \u2606 Gostaria que voc\xEA
@@ -10233,30 +10246,37 @@ MonoBehaviour:
   - questId: papai
     questName: dialogopapai
     npcName: papai
-    introLines:
-    - "Frank? Oque voc\xEA est\xE1 fazendo em casa seu desempregado. Achei que tivesse
-      deixado claro para n\xE3o voltar para c\xE1 enquanto n\xE3o arranjasse um emprego!"
-    - Sim, pai, mas-
-    - "Da \xFAltima vez que voc\xEA disse isso n\xE3o apareceu com um tost\xE3o em
-      casa! "
-    - 'Mas dessa vez eu consigo provar! '
-    - " Ent\xE3o prove!"
-    introNames:
-    - Pai
-    - Kafka
-    - Kafka
-    - Kafka
-    - Pai
-    victoryLines:
-    - parabens
-    - nah
-    victoryNames:
-    - Pai
-    defeatLines:
-    - "Bem, revisaremos seu curr\xEDculo baseado no desempenho de hoje..."
-    - Hm, okay...
-    defeatNames:
-    - Pai
+    introDialogue:
+    - characterSprite: {fileID: -4383708052436167638, guid: 8407b789cefdc7b4395d6cc289bf9ff2, type: 3}
+      characterName: Pai
+      text: Frank?
+    - characterSprite: {fileID: -4383708052436167638, guid: 8407b789cefdc7b4395d6cc289bf9ff2, type: 3}
+      characterName: Pai
+      text: "O que voc\xEA est\xE1 fazendo em casa seu desempregado. Achei que tivesse
+        deixado claro para n\xE3"
+    - characterSprite: {fileID: 0}
+      characterName: Kafka
+      text: Sim, pai, mas-
+    - characterSprite: {fileID: -4383708052436167638, guid: 8407b789cefdc7b4395d6cc289bf9ff2, type: 3}
+      characterName: Pai
+      text: "Da \xFAltima vez que voc\xEA disse isso n\xE3o apareceu com um tost\xE3o
+        em casa!\r\n"
+    - characterSprite: {fileID: 0}
+      characterName: Kafka
+      text: 'Mas dessa vez eu consigo provar!
+
+'
+    - characterSprite: {fileID: -4383708052436167638, guid: 8407b789cefdc7b4395d6cc289bf9ff2, type: 3}
+      characterName: Pai
+      text: "Ent\xE3o prove!"
+    victoryDialogue:
+    - characterSprite: {fileID: 0}
+      characterName: 'Pai '
+      text: Ugh *resmunga*
+    defeatDialogue:
+    - characterSprite: {fileID: 0}
+      characterName: Kafka
+      text: Fora dessa casa AGORA!
     questions:
     - question: "Muito bem, seu imprest\xE1vel! Voc\xEA diz que conseguiu um emprego,
         mas onde diabos est\xE1 trabalhando? "
@@ -13690,7 +13710,6 @@ MonoBehaviour:
   typingAudioSource: {fileID: 0}
   typingClip: {fileID: 0}
   typingVolume: 0.5
-  letterIntervalForSound: 1
   victoryLines:
   - characterSprite: {fileID: 0}
     characterName: 
@@ -13715,13 +13734,9 @@ MonoBehaviour:
     questId: 
     questName: 
     npcName: 
-    introLines: []
-    introNames: []
-    victoryLines: []
-    victoryNames: []
-    defeatLines:
-    - pessimo
-    defeatNames: []
+    introDialogue: []
+    victoryDialogue: []
+    defeatDialogue: []
     questions: []
     maxLives: 3
     minCorrect: 2
@@ -17284,7 +17299,6 @@ MonoBehaviour:
   pressEIndicator: {fileID: 150873144}
   interviewManager: {fileID: 208220126}
   dialogueSystem: {fileID: 963507212}
-  player: {fileID: 1865952460842338405}
   startWithIntro: 1
 --- !u!61 &1162569551
 BoxCollider2D:
@@ -19705,7 +19719,6 @@ MonoBehaviour:
   typingAudioSource: {fileID: 1312730301}
   typingClip: {fileID: 8300000, guid: eae21d9f06cf5404d957c5e53a1b1aff, type: 3}
   typingVolume: 0.5
-  letterIntervalForSound: 1
   victoryLines:
   - characterSprite: {fileID: 0}
     characterName: Chefe
@@ -19734,20 +19747,9 @@ MonoBehaviour:
     questId: 
     questName: 
     npcName: Entrevistador
-    introLines: []
-    introNames: []
-    victoryLines:
-    - PArabens kafka
-    victoryNames:
-    - Chefe
-    - Kafka
-    defeatLines:
-    - pessimo
-    defeatNames:
-    - Chefe
-    - Kafka
-    - Chefe
-    - Kafka
+    introDialogue: []
+    victoryDialogue: []
+    defeatDialogue: []
     questions:
     - question: 
       options: []
@@ -21331,7 +21333,6 @@ MonoBehaviour:
   pressEIndicator: {fileID: 150873144}
   interviewManager: {fileID: 1649544997}
   dialogueSystem: {fileID: 1312730299}
-  player: {fileID: 1865952460842338405}
   startWithIntro: 1
 --- !u!61 &1497053604
 BoxCollider2D:
@@ -22380,7 +22381,6 @@ MonoBehaviour:
   typingAudioSource: {fileID: 0}
   typingClip: {fileID: 0}
   typingVolume: 0.5
-  letterIntervalForSound: 1
   victoryLines:
   - characterSprite: {fileID: 0}
     characterName: 
@@ -22390,14 +22390,9 @@ MonoBehaviour:
     questId: 
     questName: 
     npcName: 
-    introLines: []
-    introNames: []
-    victoryLines:
-    - i got this
-    victoryNames: []
-    defeatLines:
-    - pessimo
-    defeatNames: []
+    introDialogue: []
+    victoryDialogue: []
+    defeatDialogue: []
     questions: []
     maxLives: 3
     minCorrect: 2
@@ -22434,6 +22429,10 @@ PrefabInstance:
       propertyPath: dialoguePanel
       value: 
       objectReference: {fileID: 6132000575552035593}
+    - target: {fileID: 2531377901759222479, guid: 6f9b4d76c084f544b80998f0eb37317e, type: 3}
+      propertyPath: victoryLines.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7363184697144140088, guid: 6f9b4d76c084f544b80998f0eb37317e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 343.43246
@@ -23409,7 +23408,6 @@ MonoBehaviour:
   typingAudioSource: {fileID: 1643069266}
   typingClip: {fileID: 8300000, guid: eae21d9f06cf5404d957c5e53a1b1aff, type: 3}
   typingVolume: 0.5
-  letterIntervalForSound: 1
   victoryLines:
   - characterSprite: {fileID: -4383708052436167638, guid: 8407b789cefdc7b4395d6cc289bf9ff2, type: 3}
     characterName: Pai
@@ -23422,15 +23420,9 @@ MonoBehaviour:
     questId: 
     questName: 
     npcName: Pai
-    introLines: []
-    introNames: []
-    victoryLines: []
-    victoryNames:
-    - Pai
-    defeatLines:
-    - pessimo
-    defeatNames:
-    - Pai
+    introDialogue: []
+    victoryDialogue: []
+    defeatDialogue: []
     questions: []
     maxLives: 3
     minCorrect: 2

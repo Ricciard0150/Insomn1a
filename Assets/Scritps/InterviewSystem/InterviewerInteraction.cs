@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class InterviewerInteraction : MonoBehaviour
 {
@@ -7,14 +7,12 @@ public class InterviewerInteraction : MonoBehaviour
     [SerializeField] private GameObject pressEIndicator;
     [SerializeField] private InterviewManager interviewManager;
     [SerializeField] private InterviewQuests dialogueSystem;
-    [SerializeField] private GameObject player;
 
     [Header("Settings")]
     [SerializeField] private bool startWithIntro = true;
 
     private bool playerIsNear = false;
     private bool isInteracting = false;
-    private int index = 0;
 
     void Start()
     {
@@ -35,118 +33,48 @@ public class InterviewerInteraction : MonoBehaviour
         {
             StartInteraction();
         }
-
-        if (Input.GetButtonDown("Interact"))
-        {
-            print("interact");
-        }
     }
 
     private void StartInteraction()
     {
-        if (interviewManager != null && interviewManager.IsQuestCompleted())
-        {
-            Debug.Log("Quest já completada! Não pode interagir.");
-            return;
-        }
+        if (interviewManager != null && interviewManager.IsQuestCompleted()) return;
 
         isInteracting = true;
 
-        if (pressEIndicator != null)
-            pressEIndicator.SetActive(false);
+        if (pressEIndicator != null) pressEIndicator.SetActive(false);
 
+        // O próprio InterviewManager já lida com a introDialogue.
         if (interviewManager != null)
         {
             interviewManager.StartSystem();
-            return;
-        }
-
-        if (startWithIntro && dialogueSystem != null)
-        {
-            var quest = GetQuestFromManager();
-            if (quest != null && quest.introLines.Length > 0)
-            {
-                dialogueSystem.StartDialogue(quest.introLines);
-                StartCoroutine(WaitForDialogueThenStartQuiz());
-                index = 0;
-                return;
-            }
-        }
-        StartQuiz();
-    }
-
-    private IEnumerator WaitForDialogueThenStartQuiz()
-    {
-        yield return new WaitWhile(() => dialogueSystem.IsRunning);
-
-        StartQuiz();
-        if (player != null)
-        {
-            player.SetActive(false);
-            Debug.Log("player off");
-        }
-    }
-
-    private void StartQuiz()
-    {
-        if (interviewManager != null)
-        {
             interviewManager.OnQuizFinished += OnQuizFinished;
-            interviewManager.StartSystem();
+            return;
         }
     }
 
     private void OnQuizFinished()
     {
-        if (player != null)
-        {
-            player.SetActive(true);
-            Debug.Log("player on");
-        }
-
         isInteracting = false;
-
         if (interviewManager != null)
             interviewManager.OnQuizFinished -= OnQuizFinished;
     }
 
-    private QuestData GetQuestFromManager()
-    {
-        if (interviewManager == null) return null;
-
-        var database = FindAnyObjectByType<QuestDatabase>();
-        if (database == null) return null;
-
-        return database.GetQuest(interviewManager.questId);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IStatusPlayer status))
+        if (collision.CompareTag("Player"))
         {
             playerIsNear = true;
-
-            if (!isInteracting && pressEIndicator != null)
-            {
-                if (interviewManager != null && !interviewManager.IsQuestCompleted())
-                {
-                    pressEIndicator.SetActive(true);
-                }
-                else
-                {
-                    pressEIndicator.SetActive(false);
-                }
-            }
+            if (!isInteracting && pressEIndicator != null && interviewManager != null && !interviewManager.IsQuestCompleted())
+                pressEIndicator.SetActive(true);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out IStatusPlayer status))
+        if (collision.CompareTag("Player"))
         {
             playerIsNear = false;
-            if (pressEIndicator != null)
-                pressEIndicator.SetActive(false);
+            if (pressEIndicator != null) pressEIndicator.SetActive(false);
         }
     }
 }

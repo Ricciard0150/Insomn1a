@@ -43,7 +43,6 @@ public class InterviewManager : MonoBehaviour
     [Header("Quest Database")]
     [SerializeField] private QuestDatabase questDatabase;
 
-    // ✅ Áudio da Entrevista (RESTAURADO)
     [Header("Audio")]
     [Tooltip("Arraste um AudioSource aqui para tocar a música da entrevista")]
     [SerializeField] private AudioSource bgmAudioSource;
@@ -116,13 +115,13 @@ public class InterviewManager : MonoBehaviour
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
-        // ✅ Pausa o AudioManager geral
         if (AudioManager.Instance != null)
             AudioManager.Instance.PausarMusica();
 
-        if (dialogueSystem != null && currentQuest != null && currentQuest.introLines.Length > 0)
+        // ✅ Passando DialogueLine[] para poder atualizar o sprite a cada fala
+        if (dialogueSystem != null && currentQuest != null && currentQuest.introDialogue.Length > 0)
         {
-            dialogueSystem.StartDialogue(currentQuest.introLines, currentQuest.introNames);
+            dialogueSystem.StartDialogue(currentQuest.introDialogue);
             StartCoroutine(WaitForDialogueThenIntroPanel());
         }
         else
@@ -131,7 +130,6 @@ public class InterviewManager : MonoBehaviour
         }
     }
 
-    // ✅ RESTAURADO
     private void PlayInterviewMusic()
     {
         if (bgmAudioSource != null && musicaEntrevista != null)
@@ -139,17 +137,14 @@ public class InterviewManager : MonoBehaviour
             bgmAudioSource.clip = musicaEntrevista;
             bgmAudioSource.loop = true;
             bgmAudioSource.Play();
-            Debug.Log("[InterviewManager] Música da entrevista iniciada.");
         }
     }
 
-    // ✅ RESTAURADO
     private void StopInterviewMusic()
     {
         if (bgmAudioSource != null && bgmAudioSource.isPlaying)
         {
             bgmAudioSource.Stop();
-            Debug.Log("[InterviewManager] Música da entrevista parada.");
         }
     }
 
@@ -170,8 +165,6 @@ public class InterviewManager : MonoBehaviour
         if (panel != null)
         {
             panel.SetActive(true);
-
-            // ✅ Toca a música específica da entrevista
             PlayInterviewMusic();
         }
 
@@ -254,10 +247,8 @@ public class InterviewManager : MonoBehaviour
         if (isFinishing) return;
         isFinishing = true;
 
-        // ✅ Para a música específica da entrevista
         StopInterviewMusic();
 
-        // ✅ Retoma a música de fundo geral
         if (AudioManager.Instance != null)
             AudioManager.Instance.RetomarMusica();
 
@@ -271,12 +262,14 @@ public class InterviewManager : MonoBehaviour
 
         if (!victory)
         {
+            // ✅ Diálogo de DERROTA usando os Sprites
+            if (dialogueSystem != null && currentQuest.defeatDialogue.Length > 0)
+            {
+                dialogueSystem.StartDialogue(currentQuest.defeatDialogue);
+            }
+
             if (derrotaSemGameOverPanel)
             {
-                if (dialogueSystem != null)
-                {
-                    dialogueSystem.ShowDefeatDialogue();
-                }
                 StartCoroutine(AvisarFimSemGameOver());
             }
             else
@@ -295,9 +288,10 @@ public class InterviewManager : MonoBehaviour
 
         ActivateVictoryObjects();
 
-        if (dialogueSystem != null)
+        // ✅ Diálogo de VITÓRIA usando os Sprites
+        if (dialogueSystem != null && currentQuest.victoryDialogue.Length > 0)
         {
-            dialogueSystem.ShowVictoryDialogue();
+            dialogueSystem.StartDialogue(currentQuest.victoryDialogue);
         }
 
         OnQuizFinished?.Invoke();
