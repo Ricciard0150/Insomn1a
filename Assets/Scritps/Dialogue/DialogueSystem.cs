@@ -1,189 +1,144 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
 public class DialogueSystem : MonoBehaviour
 {
-    [Header("UI")]
+    [Header("UI References")]
     [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] public TMP_Text dialogueText;
-    [SerializeField] private Image characterImage;
-    [SerializeField] private GameObject pressingEIndicator;
-
-    // ✅ NOVO: Texto do nome
+    [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private TMP_Text characterNameText;
+    [SerializeField] private Image characterImage;
 
-    [Header("Config")]
-    [SerializeField] private float velocidadeTexto = 0.05f;
-    [SerializeField] public TopDownMovement playerMovement;
+    [Header("Player")]
+    [SerializeField] private TopDownMovement playerMovement; // ✅ Referência para travar o player
 
-    private string[] currentFalas;
+    [Header("Typing")]
+    [SerializeField] private float textSpeed = 0.05f;
+
+    public bool DialogoAtivo { get; private set; } = false;
+
+    private string[] currentLines;
     private Sprite[] currentSprites;
-    private string[] currentNomesPorFala; // ✅ NOVO
-    private string currentNPCName;       // Fallback
-    private bool dialogoAtivo = false;
-    private int index = 0;
-    private DialogueTyping typingSystem;
-    private DialogueAnim panelAnimator;
-    private bool waitingForAnimation = false;
-    private PulseEffect pressingEPulse;
+    private string[] currentNames;
+    private bool[] currentShowSprite;
+    private string npcFallbackName;
 
-    public bool DialogoAtivo => dialogoAtivo;
+    private int currentIndex = 0;
+    private bool isTyping = false;
+    private Coroutine typingRoutine;
 
-    void Awake()
+    public void SetNPCDialogue(string[] lines, Sprite[] sprites, string[] names, string fallbackName, bool[] showSprite = null)
     {
-        dialoguePanel.SetActive(false);
-
-        if (pressingEIndicator != null)
-        {
-            pressingEIndicator.SetActive(false);
-            pressingEPulse = pressingEIndicator.GetComponent<PulseEffect>();
-            if (pressingEPulse == null)
-                pressingEPulse = pressingEIndicator.AddComponent<PulseEffect>();
-        }
-
-        panelAnimator = dialoguePanel.GetComponent<DialogueAnim>();
-        if (panelAnimator == null)
-            panelAnimator = dialoguePanel.AddComponent<DialogueAnim>();
-
-        typingSystem = GetComponent<DialogueTyping>();
-        if (typingSystem == null)
-            typingSystem = gameObject.AddComponent<DialogueTyping>();
-
-        typingSystem.Initialize(dialogueText, velocidadeTexto);
-    }
-
-    // ✅ Versão original (mantida para não quebrar chamadas antigas)
-    public void SetNPCDialogue(string[] falas, Sprite[] sprites, string npcName = "")
-    {
-        currentFalas = falas;
+        currentLines = lines;
         currentSprites = sprites;
-        currentNPCName = npcName;
-        currentNomesPorFala = null; // usa o fallback
-        typingSystem.UpdateDialogue(falas);
-    }
-
-    // ✅ NOVO: Versão com nomes por fala
-    public void SetNPCDialogue(string[] falas, Sprite[] sprites, string[] nomesPorFala, string npcNameFallback = "")
-    {
-        currentFalas = falas;
-        currentSprites = sprites;
-        currentNPCName = npcNameFallback;
-        currentNomesPorFala = nomesPorFala;
-        typingSystem.UpdateDialogue(falas);
+        currentNames = names;
+        npcFallbackName = fallbackName;
+        currentShowSprite = showSprite;
     }
 
     public void StartDialogue()
     {
-        if (dialogoAtivo || currentFalas == null || currentFalas.Length == 0)
-            return;
+        if (currentLines == null || currentLines.Length == 0) return;
 
+        DialogoAtivo = true;
+        currentIndex = 0;
+        dialoguePanel.SetActive(true);
+
+        // ✅ Trava o player ao abrir o diálogo
         if (playerMovement != null)
-            playerMovement.canMove = false;
+            playerMovement.SetCanMove(false);
 
-        dialogoAtivo = true;
-        index = 0;
-        ChangeSprite();
-        UpdateName();
-
-        if (pressingEIndicator != null)
-            pressingEIndicator.SetActive(false);
-
-        waitingForAnimation = true;
-        panelAnimator.ShowPanel(() => {
-            waitingForAnimation = false;
-            typingSystem.StartTyping(index);
-            ShowPressingEIfNeeded();
-        });
+        ShowLine(currentIndex);
     }
 
     public void AdvanceDialogue()
     {
-        if (!dialogoAtivo || waitingForAnimation) return;
+        if (!DialogoAtivo) return;
 
-        if (typingSystem.IsTyping)
+        if (isTyping)
         {
-            typingSystem.CompleteTyping(index);
+            StopAllCoroutines();
+            dialogueText.text = currentLines[currentIndex];
+            isTyping = false;
+            return;
+        }
+
+        currentIndex++;
+
+        if (currentIndex < currentLines.Length)
+        {
+            ShowLine(currentIndex);
         }
         else
         {
-            index++;
+            CloseDialogue();
+        }
+    }
 
-            if (index < currentFalas.Length)
+    private void ShowLine(int index)
+    {
+        // 1. Nome
+        if (characterNameText != null)
+        {
+            string nome = npcFallbackName;
+            if (currentNames != null && index < currentNames.Length && !string.IsNullOrEmpty(currentNames[index]))
+                nome = currentNames[index];
+
+            characterNameText.text = nome;
+        }
+
+        // 2. Sprite
+        if (characterImage != null)
+        {
+            bool deveMostrar = true;
+
+            if (currentShowSprite != null && index < currentShowSprite.Length)
             {
-                ChangeSprite();
-                UpdateName();
-                typingSystem.StartTyping(index);
-                ShowPressingEIfNeeded();
+                deveMostrar = currentShowSprite[index];
+            }
+
+            if (!deveMostrar || currentSprites == null || index >= currentSprites.Length || currentSprites[index] == null)
+            {
+                characterImage.gameObject.SetActive(false);
             }
             else
             {
-                CloseDialogue();
+                characterImage.sprite = currentSprites[index];
+                characterImage.gameObject.SetActive(true);
             }
         }
+
+        // 3. Texto
+        if (typingRoutine != null) StopCoroutine(typingRoutine);
+        typingRoutine = StartCoroutine(TypeText(currentLines[index]));
     }
 
-    private void UpdateName()
+    private IEnumerator TypeText(string line)
     {
-        if (characterNameText == null) return;
+        isTyping = true;
+        dialogueText.text = "";
 
-        // Prioridade 1: nome específico da fala
-        if (currentNomesPorFala != null && index < currentNomesPorFala.Length && !string.IsNullOrEmpty(currentNomesPorFala[index]))
+        foreach (char c in line)
         {
-            characterNameText.text = currentNomesPorFala[index];
+            dialogueText.text += c;
+            yield return new WaitForSeconds(textSpeed);
         }
-        // Prioridade 2: nome geral do NPC
-        else if (!string.IsNullOrEmpty(currentNPCName))
-        {
-            characterNameText.text = currentNPCName;
-        }
-        else
-        {
-            characterNameText.text = "";
-        }
+
+        isTyping = false;
     }
 
-    private void ShowPressingEIfNeeded()
+    private void CloseDialogue()
     {
-        if (pressingEIndicator != null && index == currentFalas.Length - 1)
-        {
-            pressingEIndicator.SetActive(true);
-            if (pressingEPulse != null)
-                pressingEPulse.StartPulse();
-        }
-        else if (pressingEIndicator != null)
-        {
-            pressingEIndicator.SetActive(false);
-        }
-    }
+        DialogoAtivo = false;
+        dialoguePanel.SetActive(false);
 
-    private void ChangeSprite()
-    {
-        if (currentSprites != null && index < currentSprites.Length)
-            characterImage.sprite = currentSprites[index];
-    }
+        if (characterImage != null)
+            characterImage.gameObject.SetActive(false);
 
-    public void CloseDialogue()
-    {
-        typingSystem.StopTyping();
-
-        if (pressingEIndicator != null)
-        {
-            if (pressingEPulse != null)
-                pressingEPulse.StopPulse();
-            pressingEIndicator.SetActive(false);
-        }
-
-        panelAnimator.HidePanel(() => {
-            dialogoAtivo = false;
-
-            if (playerMovement != null)
-                playerMovement.canMove = true;
-
-            currentFalas = null;
-            currentSprites = null;
-            currentNomesPorFala = null;
-            currentNPCName = "";
-        });
+        // ✅ Destrava o player ao fechar o diálogo
+        if (playerMovement != null)
+            playerMovement.SetCanMove(true);
     }
 }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ThoughtsD : MonoBehaviour
 {
@@ -27,14 +27,22 @@ public class ThoughtsD : MonoBehaviour
         {
             if (Input.GetButtonDown("Interact"))
             {
-                dialogueSystem.AdvanceDialogue(); 
+                dialogueSystem.AdvanceDialogue();
             }
         }
     }
 
     void StartDialogue()
     {
-        dialogueSystem.SetNPCDialogue(npcData.falas, npcData.sprites);
+        // ✅ PASSANDO OS 5 PARÂMETROS CORRETOS
+        dialogueSystem.SetNPCDialogue(
+            npcData.falas,
+            npcData.sprites,
+            null,
+            npcData.npcName,
+            null
+        );
+
         dialogueSystem.StartDialogue();
     }
 
