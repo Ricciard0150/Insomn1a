@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class DraggablePaper : MonoBehaviour
 {
+    public Vector3 TamanhoOriginal { get; private set; } // ✅ Guarda o tamanho do Prefab
+
     private PaperMinigameManager manager;
     private bool isDragging = false;
     private Vector3 offset;
@@ -9,36 +11,53 @@ public class DraggablePaper : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Collider2D colisor;
 
+    void Awake()
+    {
+        // ✅ Salva o tamanho que você configurou no Prefab antes de qualquer coisa
+        TamanhoOriginal = transform.localScale;
+    }
+
     void Start()
     {
-        originalPosition = transform.position;
         manager = FindAnyObjectByType<PaperMinigameManager>();
-
         spriteRenderer = GetComponent<SpriteRenderer>();
         colisor = GetComponent<Collider2D>();
 
-        // ✅ Começa invisível (esperando a mão soltar)
-        if (spriteRenderer != null) spriteRenderer.enabled = false;
-        if (colisor != null) colisor.enabled = false;
+        bool esperandoMao = FindAnyObjectByType<PaperHandAnimation>() != null;
 
-        // ✅ Se inscreve no evento da mão
-        PaperHandAnimation.OnPaperDropped += MostrarPapel;
+        if (esperandoMao)
+        {
+            if (spriteRenderer != null) spriteRenderer.enabled = false;
+            if (colisor != null) colisor.enabled = false;
+            PaperHandAnimation.OnPaperDropped += MostrarPapelNoSpot;
+        }
+        else
+        {
+            if (spriteRenderer != null) spriteRenderer.enabled = true;
+            if (colisor != null) colisor.enabled = true;
+        }
     }
 
     void OnDestroy()
     {
-        // Remove a inscrição para não dar erro
-        PaperHandAnimation.OnPaperDropped -= MostrarPapel;
+        PaperHandAnimation.OnPaperDropped -= MostrarPapelNoSpot;
     }
 
-    private void MostrarPapel()
+    private void MostrarPapelNoSpot(GameObject placeholder)
     {
-        // ✅ Quando a mão solta, o papel aparece!
+        if (placeholder != null)
+        {
+            transform.position = placeholder.transform.position;
+            originalPosition = placeholder.transform.position;
+
+            // ✅ Força o tamanho original do prefab, não o do placeholder
+            transform.localScale = TamanhoOriginal;
+        }
+
         if (spriteRenderer != null) spriteRenderer.enabled = true;
         if (colisor != null) colisor.enabled = true;
 
-        // Remove a inscrição para não ficar aparecendo várias vezes
-        PaperHandAnimation.OnPaperDropped -= MostrarPapel;
+        PaperHandAnimation.OnPaperDropped -= MostrarPapelNoSpot;
     }
 
     void OnMouseDown()

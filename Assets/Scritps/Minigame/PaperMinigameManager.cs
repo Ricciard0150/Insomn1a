@@ -10,6 +10,7 @@ public class PaperMinigameManager : MonoBehaviour
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text roundText;
     [SerializeField] private TMP_Text errorText;
+    [SerializeField] private GameObject gameOverPanel;
 
     [Header("Diálogos e Fades")]
     [SerializeField] private InterviewQuests dialogueSystem;
@@ -17,8 +18,6 @@ public class PaperMinigameManager : MonoBehaviour
 
     [Header("Game Over UI")]
     [SerializeField] private GameOverUI gameOverUI;
-
-    [Header("Diálogo de Derrota")]
     [SerializeField] private DialogueLine[] defeatDialogueLines;
 
     [System.Serializable]
@@ -48,6 +47,9 @@ public class PaperMinigameManager : MonoBehaviour
     [SerializeField] private GameObject paperPrefab;
     [SerializeField] private Transform spawnPoint;
 
+    [Tooltip("Arraste o Placeholder aqui. O papel vai nascer do tamanho dele.")]
+    [SerializeField] private GameObject placeholderReferencia;
+
     [Header("Animação da Mão")]
     [SerializeField] private GameObject handPrefab;
     [SerializeField] private Transform handStartPosition;
@@ -70,13 +72,12 @@ public class PaperMinigameManager : MonoBehaviour
     private float currentTime;
     private bool isRoundActive = false;
     private bool isGameOver = false;
-    private bool isGameOverSequenceRunning = false; // evita TriggerGameOver duplicado
 
     private GameObject activePaper;
     private PaperSpot currentHighlightedSpot;
 
-    // Flag pública para o NPC evitar start duplicado
-    public bool IsMinigameRunning => isRoundActive || (currentRound > 0 && !isGameOver);
+    // ✅ Variável para checar se o minigame tá rolando
+    public bool IsMinigameRunning { get; private set; } = false;
 
     void Start()
     {
@@ -85,16 +86,13 @@ public class PaperMinigameManager : MonoBehaviour
 
     public void StartMinigame()
     {
-        // Reset de estado caso o minigame seja reiniciado
-        currentRound = 0;
-        currentErrors = 0;
-        papersOrganizedThisRound = 0;
-        isGameOver = false;
-        isGameOverSequenceRunning = false;
-        isRoundActive = false;
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PausarMusica();
 
-        if (minigamePanel != null) minigamePanel.SetActive(true); // dispara OnEnable do PainelAudioController
+        if (minigamePanel != null) minigamePanel.SetActive(true);
         if (timerText != null) timerText.text = "";
+
+        IsMinigameRunning = true; // ✅ Ativa a flag
         StartCoroutine(GameLoop());
     }
 
@@ -201,7 +199,7 @@ public class PaperMinigameManager : MonoBehaviour
         DestroyCurrentPaper();
 
         if (papersOrganizedThisRound >= papersToOrganizePerRound) isRoundActive = false;
-        else { RandomizeSpot(); SpawnNextPaper(false); }
+        else { RandomizeSpot(); SpawnNextPaper(true); }
     }
 
     public void OnPaperOrganizedWrongly()
@@ -213,106 +211,140 @@ public class PaperMinigameManager : MonoBehaviour
 
         if (currentErrors >= maxErrors)
         {
+            isRoundActive = false;
+            isGameOver = true;
             StartCoroutine(TriggerGameOver());
-            return;
         }
-
-        if (papersOrganizedThisRound < papersToOrganizePerRound) SpawnNextPaper(false);
-    }
-
-    private void AtualizarUI()
-    {
-        if (roundText != null) roundText.text = $"RODADA: {currentRound}/{totalRounds}";
-        if (errorText != null) errorText.text = $"ERROS: {currentErrors}/{maxErrors}";
+        else
+        {
+            RandomizeSpot();
+            SpawnNextPaper(true);
+        }
     }
 
     private void RandomizeSpot()
     {
-        if (allSpots.Length == 0) return;
-        foreach (var spot in allSpots) if (spot != null) spot.SetHighlight(false);
-        int randomIndex = Random.Range(0, allSpots.Length);
-        currentHighlightedSpot = allSpots[randomIndex];
-        currentHighlightedSpot.SetHighlight(true);
+        foreach (var spot in allSpots)
+        {
+            if (spot != null) spot.SetHighlight(false);
+        }
+        if (allSpots.Length > 0)
+        {
+            int randomIndex = Random.Range(0, allSpots.Length);
+            currentHighlightedSpot = allSpots[randomIndex];
+            currentHighlightedSpot.SetHighlight(true);
+        }
     }
 
-    private void SpawnNextPaper(bool isFirstPaperOfRound)
+    private void SpawnNextPaper(bool isInteractive)
     {
+        DestroyCurrentPaper();
         if (paperPrefab != null && spawnPoint != null)
         {
             Vector3 spawnPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
-            activePaper = Instantiate(paperPrefab, spawnPos, Quaternion.identity);
+            activePaper = Instantiate(paperPrefab, spawnPos, Quaternion.identity, null);
+
+            if (placeholderReferencia != null)
+            {
+                activePaper.transform.localScale = placeholderReferencia.transform.lossyScale;
+            }
+
+            Collider2D paperCollider = activePaper.GetComponent<Collider2D>();
+            if (paperCollider != null) paperCollider.enabled = isInteractive;
         }
     }
 
     private void DestroyCurrentPaper()
     {
-        if (activePaper != null) { Destroy(activePaper); activePaper = null; }
+        if (activePaper != null)
+        {
+            Destroy(activePaper);
+            activePaper = null;
+        }
+    }
+
+    private void AtualizarUI()
+    {
+        if (roundText != null) roundText.text = $"RODADA: {currentRound} / {totalRounds}";
+        if (errorText != null) errorText.text = $"ERROS: {currentErrors} / {maxErrors}";
     }
 
     private IEnumerator TriggerGameOver()
     {
-        // Guarda contra dupla execução (timer + erros podem disparar ao mesmo tempo)
-        if (isGameOverSequenceRunning) yield break;
-        isGameOverSequenceRunning = true;
-
-        isGameOver = true;
         isRoundActive = false;
+        IsMinigameRunning = false; // ✅ Desativa a flag
 
-        DestroyCurrentPaper();
+        if (fadeController != null) yield return StartCoroutine(fadeController.FadeToBlack(1f));
+        if (gameOverPanel != null) gameOverPanel.SetActive(true);
 
-        // 1. Fecha o painel → PainelAudioController.OnDisable dispara:
-        //    para a música do minigame e retoma a música geral.
-        if (minigamePanel != null) minigamePanel.SetActive(false);
-
-        // 2. Diálogo de derrota
-        if (dialogueSystem != null && defeatDialogueLines != null && defeatDialogueLines.Length > 0)
-        {
-            dialogueSystem.StartDialogue(defeatDialogueLines);
-            yield return new WaitWhile(() => dialogueSystem.IsRunning);
-        }
-
-        // 3. UI de Game Over
-        if (gameOverUI != null)
-        {
-            gameOverUI.ShowDefeat("Muito lento. O patrão te demitiu.");
-        }
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.RetomarMusica();
     }
 
     private IEnumerator VictorySequence()
     {
-        isRoundActive = false;
-
-        // 1. Diálogo final com o painel AINDA aberto (música do minigame ainda tocando)
-        if (finalVictoryLines != null && finalVictoryLines.Length > 0 && dialogueSystem != null)
+        if (dialogueSystem != null && finalVictoryLines != null && finalVictoryLines.Length > 0)
         {
             dialogueSystem.StartDialogue(finalVictoryLines);
             yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
-        // 2. Fecha o painel → PainelAudioController.OnDisable:
-        //    para a música do minigame e retoma a música geral.
+        ActivateVictoryObjects();
+
         if (minigamePanel != null) minigamePanel.SetActive(false);
 
-        // 3. Diálogo pós-minigame (painel fechado, música geral já tocando)
-        if (postMinigameLines != null && postMinigameLines.Length > 0 && dialogueSystem != null)
+        yield return new WaitForSeconds(1f);
+
+        if (dialogueSystem != null && postMinigameLines != null && postMinigameLines.Length > 0)
         {
             dialogueSystem.StartDialogue(postMinigameLines);
-            yield return new WaitWhile(() => dialogueSystem.IsRunning);
         }
 
-        // 4. Consequências da vitória
-        if (objectsToActivate != null)
-            foreach (GameObject obj in objectsToActivate) if (obj != null) obj.SetActive(true);
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.RetomarMusica();
 
-        if (objectsToDeactivate != null)
-            foreach (GameObject obj in objectsToDeactivate) if (obj != null) obj.SetActive(false);
-
-        if (fadeController != null) yield return StartCoroutine(fadeController.FadeToBlack(1f));
+        IsMinigameRunning = false; // ✅ Desativa a flag
     }
+
+    private void ActivateVictoryObjects()
+    {
+        if (objectsToActivate != null)
+        {
+            foreach (GameObject obj in objectsToActivate)
+            {
+                if (obj != null) obj.SetActive(true);
+            }
+        }
+        if (objectsToDeactivate != null)
+        {
+            foreach (GameObject obj in objectsToDeactivate)
+            {
+                if (obj != null) obj.SetActive(false);
+            }
+        }
+    }
+
+    // ✅ FUNÇÕES ADICIONADAS PARA RESOLVER OS ERROS
+
+    public bool IsMinigameRunningCheck() => IsMinigameRunning;
 
     public void RestartMinigame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        // Fecha o painel de Game Over se estiver aberto
+        if (gameOverPanel != null) gameOverPanel.SetActive(false);
+
+        // Reseta as variáveis do minigame
+        currentRound = 0;
+        currentErrors = 0;
+        papersOrganizedThisRound = 0;
+        isGameOver = false;
+        isRoundActive = false;
+
+        // Para a música se estiver tocando (opcional)
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PausarMusica();
+
+        // Inicia o minigame de novo
+        StartMinigame();
     }
 }

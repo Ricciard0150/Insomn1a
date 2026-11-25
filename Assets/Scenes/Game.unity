@@ -3064,7 +3064,7 @@ Transform:
   m_GameObject: {fileID: 213421705}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 685.8, y: -305, z: -9720}
+  m_LocalPosition: {x: 468, y: -268, z: -9720}
   m_LocalScale: {x: 108, y: 108, z: 108}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3114,8 +3114,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -169986545
-  m_SortingLayer: 0
+  m_SortingLayerID: 779558477
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -9586,7 +9586,7 @@ Transform:
   m_GameObject: {fileID: 691267912}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 685.8, y: -684, z: -9720}
+  m_LocalPosition: {x: 467.2002, y: -514, z: -9720}
   m_LocalScale: {x: 108, y: 108, z: 108}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9636,8 +9636,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -169986545
-  m_SortingLayer: 0
+  m_SortingLayerID: 779558477
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -32297,13 +32297,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9034563132457537295}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 568, y: 2647, z: -9720}
+  m_LocalRotation: {x: -0, y: -0, z: -0.0075421697, w: 0.99997157}
+  m_LocalPosition: {x: 467.99963, y: -262.99997, z: -9720.001}
   m_LocalScale: {x: 108, y: 108, z: 108}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5763791293024989957}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.864}
 --- !u!1 &567032845939000143
 GameObject:
   m_ObjectHideFlags: 0
@@ -33802,6 +33802,7 @@ MonoBehaviour:
   timerText: {fileID: 8108100940027012132}
   roundText: {fileID: 3955346179239500563}
   errorText: {fileID: 2447242022131347325}
+  gameOverPanel: {fileID: 2023631145}
   dialogueSystem: {fileID: 1704881960}
   fadeController: {fileID: 0}
   gameOverUI: {fileID: 732364235}
@@ -33919,7 +33920,8 @@ MonoBehaviour:
   - {fileID: 8711809240504566253}
   - {fileID: 4685079766791589475}
   paperPrefab: {fileID: 9210045579418939001, guid: 2988cbc2ef7259e4db01fd115320d8f8, type: 3}
-  spawnPoint: {fileID: 213421706}
+  spawnPoint: {fileID: 339267359490058376}
+  placeholderReferencia: {fileID: 6633976099476764315, guid: fb05b2accb27cbf4192dcaabb0d5bb01, type: 3}
   handPrefab: {fileID: 1572261433163834047, guid: 606092e94eb5c2145a6533f98b97aedd, type: 3}
   handStartPosition: {fileID: 1836574826430751790}
   handTargetPoint: {fileID: 691267913}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PaperHandAnimation : MonoBehaviour
 {
-    public static event Action OnPaperDropped; // ✅ Evento para avisar quando soltar o papel
+    public static event Action<GameObject> OnPaperDropped;
 
     [Header("Configuração de Sprites")]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -12,18 +12,17 @@ public class PaperHandAnimation : MonoBehaviour
     [SerializeField] private Sprite spriteMaoVazia;
 
     [Header("Ajustes de Rotação e Flip")]
-    [Tooltip("Ângulo em Z para a mão ficar em pé.")]
     [SerializeField] private float anguloZ = -90f;
-
-    [Tooltip("Marque para espelhar a mão (inverter o lado).")]
     [SerializeField] private bool espelharHorizontal = true;
+
+    [Header("Referência do Placeholder")]
+    [SerializeField] private GameObject placeholderNaCena;
 
     void Awake()
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null) spriteRenderer.enabled = false;
 
-        // ✅ APLICA A ROTAÇÃO E O FLIP AQUI
         transform.rotation = Quaternion.Euler(0f, 0f, anguloZ);
 
         Vector3 scale = transform.localScale;
@@ -39,7 +38,6 @@ public class PaperHandAnimation : MonoBehaviour
             spriteRenderer.enabled = true;
         }
 
-        // 1. Sobe segurando o papel falso
         transform.position = startPos;
         yield return null;
 
@@ -55,14 +53,14 @@ public class PaperHandAnimation : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        // 2. Troca para mão vazia
         if (spriteRenderer != null)
             spriteRenderer.sprite = spriteMaoVazia;
 
-        // ✅ 3. AVISA QUE O PAPEL FOI SOLTO (para o papel real aparecer)
-        OnPaperDropped?.Invoke();
+        OnPaperDropped?.Invoke(placeholderNaCena);
 
-        // 4. Volta com a mão vazia
+        if (placeholderNaCena != null)
+            placeholderNaCena.SetActive(false);
+
         elapsed = 0f;
         while (elapsed < duration)
         {
