@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DraggablePaper : MonoBehaviour
 {
@@ -22,41 +23,16 @@ public class DraggablePaper : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         colisor = GetComponent<Collider2D>();
 
-        bool esperandoMao = FindAnyObjectByType<PaperHandAnimation>() != null;
-
-        if (esperandoMao)
-        {
-            if (spriteRenderer != null) spriteRenderer.enabled = false;
-            if (colisor != null) colisor.enabled = false;
-
-            // ✅ Escuta o evento estático da mão
-            PaperHandAnimation.OnPaperDropped += MostrarPapelNoSpot;
-        }
-        else
-        {
-            if (spriteRenderer != null) spriteRenderer.enabled = true;
-            if (colisor != null) colisor.enabled = true;
-        }
-    }
-
-    void OnDestroy()
-    {
-        PaperHandAnimation.OnPaperDropped -= MostrarPapelNoSpot;
-    }
-
-    private void MostrarPapelNoSpot(GameObject placeholder)
-    {
-        // Libera o papel para ser arrastado
         if (spriteRenderer != null) spriteRenderer.enabled = true;
         if (colisor != null) colisor.enabled = true;
 
-        // Evita que ele fique escutando múltiplas vezes
-        PaperHandAnimation.OnPaperDropped -= MostrarPapelNoSpot;
+        originalPosition = transform.position;
     }
 
     void OnMouseDown()
     {
-        if (manager == null) return;
+        if (manager == null || !manager.IsMinigameRunning) return;
+
         isDragging = true;
         offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
@@ -98,6 +74,10 @@ public class DraggablePaper : MonoBehaviour
     void OnMouseDrag()
     {
         if (!isDragging) return;
+
+        // ❌ REMOVIDO: EventSystem.current.IsPointerOverGameObject()
+        // Não precisamos mais disso, o OnMouseDrag já ignora a UI por padrão no Unity
+
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(mousePos.x + offset.x, mousePos.y + offset.y, transform.position.z);
     }

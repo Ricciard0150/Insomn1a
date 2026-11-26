@@ -60,9 +60,12 @@ public class PaperMinigameManager : MonoBehaviour
     [SerializeField] private GameObject[] objectsToActivate;
     [SerializeField] private GameObject[] objectsToDeactivate;
 
+    [Header("Controle do Jogador")]
+    [SerializeField] private TopDownMovement playerMovement;
+
     [Header("Regras")]
     [SerializeField] private int totalRounds = 5;
-    [SerializeField] private float timePerRound = 10f;
+    [SerializeField] private float timePerRound = 10f; // ✅ Tempo por rodada
     [SerializeField] private int maxErrors = 3;
     [SerializeField] private int papersToOrganizePerRound = 3;
 
@@ -72,9 +75,13 @@ public class PaperMinigameManager : MonoBehaviour
     private float currentTime;
     private bool isRoundActive = false;
     private bool isGameOver = false;
+    private bool minigameConcluido = false;
 
     private GameObject activePaper;
     private PaperSpot currentHighlightedSpot;
+
+    private Coroutine currentHandCoroutine;
+    private GameObject currentHandObject;
 
     public bool IsMinigameRunning { get; private set; } = false;
 
@@ -86,11 +93,15 @@ public class PaperMinigameManager : MonoBehaviour
 
     public void StartMinigame()
     {
+        if (minigameConcluido) return;
+
         if (AudioManager.Instance != null)
             AudioManager.Instance.PausarMusica();
 
+        if (playerMovement != null)
+            playerMovement.SetCanMove(false);
+
         if (minigamePanel != null) minigamePanel.SetActive(true);
-        if (timerText != null) timerText.text = "";
 
         IsMinigameRunning = true;
         StartCoroutine(GameLoop());
@@ -116,47 +127,44 @@ public class PaperMinigameManager : MonoBehaviour
             DestroyCurrentPaper();
             if (placeholderNaCena != null) placeholderNaCena.SetActive(false);
 
-            // ►►► INTRO DA RODADA: diálogo + mão em paralelo ◄◄◄
+            // --- DIÁLOGO DA RODADA E ANIMAÇÃO DA MÃO ---
             if (dialogueSystem != null && dialoguesBetweenRounds.Length >= currentRound)
             {
                 DialogueLineData[] currentRoundLines = dialoguesBetweenRounds[currentRound - 1].lines;
 
                 foreach (DialogueLineData line in currentRoundLines)
                 {
-                    bool handFinished = false;
-                    Coroutine handAnimRoutine = null;
-
                     if (line.playHandAnimation)
                     {
                         Vector3 targetPos = handTargetPoint != null
                             ? handTargetPoint.position
                             : spawnPoint.position;
 
-                        handAnimRoutine = StartCoroutine(PlayHandTutorial(targetPos, () =>
-                        {
-                            handFinished = true;
-                        }));
+                        currentHandCoroutine = StartCoroutine(PlayHandTutorial(targetPos, null));
                     }
 
                     dialogueSystem.StartDialogue(new DialogueLine[] { line.lineData });
-
-                    while (dialogueSystem.IsRunning || (handAnimRoutine != null && !handFinished))
-                    {
-                        yield return null;
-                    }
+                    yield return new WaitWhile(() => dialogueSystem.IsRunning);
                 }
             }
 
-            // ►►► INTRO TERMINOU: troca placeholder por papel interativo ◄◄◄
+            if (currentHandObject != null)
+            {
+                Destroy(currentHandObject);
+                currentHandObject = null;
+                currentHandCoroutine = null;
+            }
+
             if (placeholderNaCena != null) placeholderNaCena.SetActive(false);
 
             Vector3 spawnPos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
             SpawnNextPaper(true, spawnPos);
 
-            // ►►► COMEÇA O TIMER DA RODADA ◄◄◄
-            isRoundActive = true;
+            // ✅ Reseta o timer para essa rodada
             currentTime = timePerRound;
+            isRoundActive = true;
 
+            // --- LOOP DA RODADA ---
             while (isRoundActive && !isGameOver)
             {
                 currentTime -= Time.deltaTime;
@@ -166,6 +174,8 @@ public class PaperMinigameManager : MonoBehaviour
 
                 if (currentTime <= 0f)
                 {
+                    currentTime = 0f;
+                    // ✅ Tempo esgotado: conta como erro e interrompe o loop
                     OnPaperOrganizedWrongly();
                     break;
                 }
@@ -173,11 +183,20 @@ public class PaperMinigameManager : MonoBehaviour
                 yield return null;
             }
 
+            // ✅ TRAVA DE SEGURANÇA: Se o erro estourou o limite, o Game Over JÁ foi disparado
+            // no OnPaperOrganizedWrongly. Garantimos que o loop pare aqui.
+            if (isGameOver)
+            {
+                yield break;
+            }
+
             yield return new WaitForSeconds(0.3f);
         }
 
+        // ✅ Se passou por todas as rodadas sem perder, é vitória
         if (!isGameOver)
         {
+            minigameConcluido = true;
             yield return StartCoroutine(VictorySequence());
         }
     }
@@ -197,8 +216,8 @@ public class PaperMinigameManager : MonoBehaviour
         startPos.z = 0f;
         targetPos.z = 0f;
 
-        GameObject handObj = Instantiate(handPrefab, startPos, Quaternion.identity, null);
-        PaperHandAnimation handScript = handObj.GetComponent<PaperHandAnimation>();
+        currentHandObject = Instantiate(handPrefab, startPos, Quaternion.identity, null);
+        PaperHandAnimation handScript = currentHandObject.GetComponent<PaperHandAnimation>();
 
         if (handScript != null)
         {
@@ -208,6 +227,8 @@ public class PaperMinigameManager : MonoBehaviour
                 animationDuration,
                 onPaperReleased: () =>
                 {
+                    if (isRoundActive || activePaper != null) return;
+
                     if (placeholderNaCena != null)
                     {
                         Vector3 pos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
@@ -221,7 +242,9 @@ public class PaperMinigameManager : MonoBehaviour
             ));
         }
 
-        if (handObj != null) Destroy(handObj);
+        if (currentHandObject != null) Destroy(currentHandObject);
+        currentHandObject = null;
+        currentHandCoroutine = null;
 
         onFinished?.Invoke();
     }
@@ -254,17 +277,17 @@ public class PaperMinigameManager : MonoBehaviour
         AtualizarUI();
         DestroyCurrentPaper();
 
+        // ✅ Se errou 3 vezes, dispara Game Over (via DefeatSequence)
         if (currentErrors >= maxErrors)
         {
             isRoundActive = false;
             isGameOver = true;
-            StartCoroutine(TriggerGameOver());
+            StartCoroutine(DefeatSequence());
         }
         else
         {
-            RandomizeSpot();
-            Vector3 pos = new Vector3(spawnPoint.position.x, spawnPoint.position.y, 0f);
-            SpawnNextPaper(true, pos);
+            // Ainda tem vidas, apenas encerra a rodada atual
+            isRoundActive = false;
         }
     }
 
@@ -315,20 +338,46 @@ public class PaperMinigameManager : MonoBehaviour
         if (errorText != null) errorText.text = $"ERROS: {currentErrors} / {maxErrors}";
     }
 
-    private IEnumerator TriggerGameOver()
+    // ✅ SEQUÊNCIA DE DERROTA: Diálogo -> Fecha painel -> Ativa painel de derrota
+    private IEnumerator DefeatSequence()
     {
-        isRoundActive = false;
         IsMinigameRunning = false;
 
-        if (fadeController != null) yield return StartCoroutine(fadeController.FadeToBlack(1f));
-        if (gameOverPanel != null) gameOverPanel.SetActive(true);
+        // 1. Para o timer imediatamente
+        if (timerText != null) timerText.text = "";
 
+        // 2. Diálogo de derrota (Painel do minigame AINDA aberto)
+        if (dialogueSystem != null && defeatDialogueLines != null && defeatDialogueLines.Length > 0)
+        {
+            dialogueSystem.StartDialogue(defeatDialogueLines);
+            yield return new WaitWhile(() => dialogueSystem.IsRunning);
+        }
+
+        // 3. Fecha o painel do minigame e limpa o cenário
+        DestroyCurrentPaper();
+        if (placeholderNaCena != null) placeholderNaCena.SetActive(false);
+        if (minigamePanel != null) minigamePanel.SetActive(false);
+
+        // 4. Fade para preto (opcional)
+        if (fadeController != null) yield return StartCoroutine(fadeController.FadeToBlack(1f));
+
+        // 5. Ativa o painel de derrota (GameOverUI)
+        if (gameOverPanel != null) gameOverPanel.SetActive(true);
+        if (gameOverUI != null) gameOverUI.gameObject.SetActive(true);
+
+        // 6. Retoma a música
         if (AudioManager.Instance != null)
             AudioManager.Instance.RetomarMusica();
+
+        // 7. Destrava o jogador (se você quiser que ele já possa andar ao sair do game over)
+        if (playerMovement != null)
+            playerMovement.SetCanMove(true);
     }
 
     private IEnumerator VictorySequence()
     {
+        IsMinigameRunning = false;
+
         if (dialogueSystem != null && finalVictoryLines != null && finalVictoryLines.Length > 0)
         {
             dialogueSystem.StartDialogue(finalVictoryLines);
@@ -349,7 +398,8 @@ public class PaperMinigameManager : MonoBehaviour
         if (AudioManager.Instance != null)
             AudioManager.Instance.RetomarMusica();
 
-        IsMinigameRunning = false;
+        if (playerMovement != null)
+            playerMovement.SetCanMove(true);
     }
 
     private void ActivateVictoryObjects()
@@ -376,12 +426,14 @@ public class PaperMinigameManager : MonoBehaviour
     public void RestartMinigame()
     {
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        if (gameOverUI != null) gameOverUI.gameObject.SetActive(false);
 
         currentRound = 0;
         currentErrors = 0;
         papersOrganizedThisRound = 0;
         isGameOver = false;
         isRoundActive = false;
+        minigameConcluido = false;
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PausarMusica();

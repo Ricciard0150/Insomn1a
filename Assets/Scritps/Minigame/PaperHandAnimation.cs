@@ -13,9 +13,6 @@ public class PaperHandAnimation : MonoBehaviour
     [SerializeField] private float anguloZ = -90f;
     [SerializeField] private bool espelharHorizontal = true;
 
-    // ✅ Evento estático para o DraggablePaper escutar
-    public static event Action<GameObject> OnPaperDropped;
-
     void Awake()
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
@@ -46,33 +43,37 @@ public class PaperHandAnimation : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < duration)
         {
+            if (this == null) yield break; // ✅ Se a mão foi destruída, para aqui
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
             transform.position = Vector3.Lerp(startPos, targetPos, Mathf.SmoothStep(0f, 1f, t));
             yield return null;
         }
+
+        if (this == null) yield break;
         transform.position = targetPos;
 
         // 2. Pausa no topo
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
+        if (this == null) yield break; // ✅ Verifica de novo após a pausa
 
         if (spriteRenderer != null)
             spriteRenderer.sprite = spriteMaoVazia;
 
-        // ►►► DISPARA OS EVENTOS NO INÍCIO DA VOLTA ◄◄◄
-        onPaperReleased?.Invoke();     // Avisa o MinigameManager (Action)
-        OnPaperDropped?.Invoke(null);  // Avisa o DraggablePaper (Evento Estático)
+        onPaperReleased?.Invoke();
 
         // 3. Desce vazia
         elapsed = 0f;
         while (elapsed < duration)
         {
+            if (this == null) yield break; // ✅ Se destruída no meio da descida, para
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
             transform.position = Vector3.Lerp(targetPos, startPos, Mathf.SmoothStep(0f, 1f, t));
             yield return null;
         }
 
+        if (this == null) yield break;
         transform.position = startPos;
         if (spriteRenderer != null) spriteRenderer.enabled = false;
     }

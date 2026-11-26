@@ -16385,8 +16385,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 1131675919
-  m_SortingOrder: 0
+  m_SortingLayerID: 779558477
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!1 &1114386824
 GameObject:
@@ -32761,7 +32761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -33999,8 +33999,9 @@ MonoBehaviour:
   objectsToDeactivate:
   - {fileID: 1051169689}
   - {fileID: 1005257430}
+  playerMovement: {fileID: 5055718417195591049}
   totalRounds: 5
-  timePerRound: 10
+  totalGameTime: 10
   maxErrors: 3
   papersToOrganizePerRound: 3
 --- !u!4 &7661622862161611923
