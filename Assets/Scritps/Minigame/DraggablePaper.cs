@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DraggablePaper : MonoBehaviour
 {
-    public Vector3 TamanhoOriginal { get; private set; } // ✅ Guarda o tamanho do Prefab
+    public Vector3 TamanhoOriginal { get; private set; }
 
     private PaperMinigameManager manager;
     private bool isDragging = false;
@@ -13,7 +13,6 @@ public class DraggablePaper : MonoBehaviour
 
     void Awake()
     {
-        // ✅ Salva o tamanho que você configurou no Prefab antes de qualquer coisa
         TamanhoOriginal = transform.localScale;
     }
 
@@ -29,6 +28,8 @@ public class DraggablePaper : MonoBehaviour
         {
             if (spriteRenderer != null) spriteRenderer.enabled = false;
             if (colisor != null) colisor.enabled = false;
+
+            // ✅ Escuta o evento estático da mão
             PaperHandAnimation.OnPaperDropped += MostrarPapelNoSpot;
         }
         else
@@ -45,18 +46,11 @@ public class DraggablePaper : MonoBehaviour
 
     private void MostrarPapelNoSpot(GameObject placeholder)
     {
-        if (placeholder != null)
-        {
-            transform.position = placeholder.transform.position;
-            originalPosition = placeholder.transform.position;
-
-            // ✅ Força o tamanho original do prefab, não o do placeholder
-            transform.localScale = TamanhoOriginal;
-        }
-
+        // Libera o papel para ser arrastado
         if (spriteRenderer != null) spriteRenderer.enabled = true;
         if (colisor != null) colisor.enabled = true;
 
+        // Evita que ele fique escutando múltiplas vezes
         PaperHandAnimation.OnPaperDropped -= MostrarPapelNoSpot;
     }
 
