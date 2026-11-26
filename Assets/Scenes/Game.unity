@@ -9943,7 +9943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &732364234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9984,7 +9984,7 @@ MonoBehaviour:
   defeatMessage: 
   animationDuration: 0.5
   interviewManager: {fileID: 1649544997}
-  paperMinigameManager: {fileID: 0}
+  paperMinigameManager: {fileID: 7403226418524137358}
 --- !u!225 &732364236
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -33868,7 +33868,7 @@ MonoBehaviour:
   timerText: {fileID: 8108100940027012132}
   roundText: {fileID: 3955346179239500563}
   errorText: {fileID: 2447242022131347325}
-  gameOverPanel: {fileID: 2023631145}
+  gameOverPanel: {fileID: 732364233}
   dialogueSystem: {fileID: 1704881960}
   fadeController: {fileID: 0}
   gameOverUI: {fileID: 732364235}
@@ -34001,7 +34001,7 @@ MonoBehaviour:
   - {fileID: 1005257430}
   playerMovement: {fileID: 5055718417195591049}
   totalRounds: 5
-  totalGameTime: 10
+  timePerRound: 10
   maxErrors: 3
   papersToOrganizePerRound: 3
 --- !u!4 &7661622862161611923
