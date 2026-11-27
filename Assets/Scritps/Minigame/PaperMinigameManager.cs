@@ -65,7 +65,7 @@ public class PaperMinigameManager : MonoBehaviour
 
     [Header("Regras")]
     [SerializeField] private int totalRounds = 5;
-    [SerializeField] private float timePerRound = 10f; // ✅ Tempo por rodada
+    [SerializeField] private float timePerRound = 10f;
     [SerializeField] private int maxErrors = 3;
     [SerializeField] private int papersToOrganizePerRound = 3;
 
@@ -84,6 +84,9 @@ public class PaperMinigameManager : MonoBehaviour
     private GameObject currentHandObject;
 
     public bool IsMinigameRunning { get; private set; } = false;
+
+    // ✅ NOVO: expõe se o minigame já foi concluído com sucesso
+    public bool MinigameConcluido => minigameConcluido;
 
     void Start()
     {
@@ -106,6 +109,7 @@ public class PaperMinigameManager : MonoBehaviour
         IsMinigameRunning = true;
         StartCoroutine(GameLoop());
     }
+
 
     private IEnumerator GameLoop()
     {
