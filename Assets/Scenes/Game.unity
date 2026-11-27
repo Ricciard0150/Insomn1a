@@ -4725,7 +4725,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &321074695
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -32564,6 +32564,7 @@ GameObject:
   - component: {fileID: 2662064930293892131}
   - component: {fileID: 5055718417195591049}
   - component: {fileID: 9105895952993720708}
+  - component: {fileID: 9105895952993720709}
   m_Layer: 0
   m_Name: KitPlayer
   m_TagString: Player
@@ -34247,7 +34248,7 @@ Transform:
   m_GameObject: {fileID: 1865952460842338405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 331.4, y: 94.1, z: 0}
+  m_LocalPosition: {x: 380.5, y: 24.2, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34288,6 +34289,42 @@ MonoBehaviour:
   - {fileID: -4170612486314133786, guid: 242d1f81f8b049443b98d1dfaf1e3ed3, type: 3}
   frameRate: 0.15
   idleSprite: {fileID: 3137999783737459942, guid: 74e5b88fb9fff8341a791312f89d6caf, type: 3}
+--- !u!58 &9105895952993720709
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865952460842338405}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.7256775, y: 0}
+  m_Radius: 0.80586547
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

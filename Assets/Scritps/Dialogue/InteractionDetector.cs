@@ -33,12 +33,23 @@ public class InteractionDetector : MonoBehaviour
             TextManager.Instance.UnregisterNPC(this);
     }
 
+    private void Update()
+    {
+        // ✅ CORREÇÃO: Se o diálogo está aberto, finge que o player está perto.
+        // Isso engana o TextManager e permite que o botão de interagir avance a fala,
+        // mesmo que o player tenha saído do collider.
+        if (dialogueSystem != null && dialogueSystem.DialogoAtivo)
+        {
+            playerPerto = true;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<IStatusPlayer>() != null)
         {
             playerPerto = true;
-            if (pressingE != null && !dialogueSystem.DialogoAtivo)
+            if (pressingE != null && dialogueSystem != null && !dialogueSystem.DialogoAtivo)
             {
                 pressingE.SetActive(true);
                 if (pulseEffect != null) pulseEffect.StartPulse();
@@ -50,6 +61,9 @@ public class InteractionDetector : MonoBehaviour
     {
         if (collision.GetComponent<IStatusPlayer>() == null) return;
 
+        // Se o diálogo estiver ativo, ignora a saída do player (não queremos que ele perca a interação)
+        if (dialogueSystem != null && dialogueSystem.DialogoAtivo) return;
+
         playerPerto = false;
         if (pressingE != null)
         {
@@ -60,45 +74,48 @@ public class InteractionDetector : MonoBehaviour
 
     public void Interact()
     {
-        if (!playerPerto || dialogueSystem == null || npcData == null) return;
+        if (dialogueSystem == null || npcData == null) return;
 
-        if (!dialogueSystem.DialogoAtivo)
+        // ✅ CORREÇÃO: Se o diálogo já está ativo, avança IMEDIATAMENTE.
+        // Não checa playerPerto aqui dentro, porque o Update já garantiu que é true.
+        if (dialogueSystem.DialogoAtivo)
         {
-            bool passouNightmare = SaveSystem.Instance != null && SaveSystem.Instance.HasPassedNightmare();
+            dialogueSystem.AdvanceDialogue();
+            return;
+        }
 
-            string[] falasEscolhidas;
-            Sprite[] spritesEscolhidos;
-            string[] nomesEscolhidos;
-            bool[] mostrarSpriteEscolhido; // ✅ NOVO
+        // Só abre o diálogo se o player estiver realmente perto
+        if (!playerPerto) return;
 
-            if (passouNightmare && npcData.falasAfterNightmare != null && npcData.falasAfterNightmare.Length > 0)
-            {
-                falasEscolhidas = npcData.falasAfterNightmare;
-                spritesEscolhidos = npcData.spritesAfterNightmare;
-                nomesEscolhidos = npcData.nomesAfterNightmare;
-                mostrarSpriteEscolhido = npcData.mostrarSpriteAfter; // ✅ Passa o booleano
-            }
-            else
-            {
-                falasEscolhidas = npcData.falasBeforeNightmare;
-                spritesEscolhidos = npcData.spritesBeforeNightmare;
-                nomesEscolhidos = npcData.nomesBeforeNightmare;
-                mostrarSpriteEscolhido = npcData.mostrarSpriteBefore; // ✅ Passa o booleano
-            }
+        bool passouNightmare = SaveSystem.Instance != null && SaveSystem.Instance.HasPassedNightmare();
 
-            // ✅ Passa os sprites e os booleanos
-            dialogueSystem.SetNPCDialogue(falasEscolhidas, spritesEscolhidos, nomesEscolhidos, npcData.npcName, mostrarSpriteEscolhido);
-            dialogueSystem.StartDialogue();
+        string[] falasEscolhidas;
+        Sprite[] spritesEscolhidos;
+        string[] nomesEscolhidos;
+        bool[] mostrarSpriteEscolhido;
 
-            if (pressingE != null)
-            {
-                if (pulseEffect != null) pulseEffect.StopPulse();
-                pressingE.SetActive(false);
-            }
+        if (passouNightmare && npcData.falasAfterNightmare != null && npcData.falasAfterNightmare.Length > 0)
+        {
+            falasEscolhidas = npcData.falasAfterNightmare;
+            spritesEscolhidos = npcData.spritesAfterNightmare;
+            nomesEscolhidos = npcData.nomesAfterNightmare;
+            mostrarSpriteEscolhido = npcData.mostrarSpriteAfter;
         }
         else
         {
-            dialogueSystem.AdvanceDialogue();
+            falasEscolhidas = npcData.falasBeforeNightmare;
+            spritesEscolhidos = npcData.spritesBeforeNightmare;
+            nomesEscolhidos = npcData.nomesBeforeNightmare;
+            mostrarSpriteEscolhido = npcData.mostrarSpriteBefore;
+        }
+
+        dialogueSystem.SetNPCDialogue(falasEscolhidas, spritesEscolhidos, nomesEscolhidos, npcData.npcName, mostrarSpriteEscolhido);
+        dialogueSystem.StartDialogue();
+
+        if (pressingE != null)
+        {
+            if (pulseEffect != null) pulseEffect.StopPulse();
+            pressingE.SetActive(false);
         }
     }
 }

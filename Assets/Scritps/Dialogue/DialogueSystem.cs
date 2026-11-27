@@ -40,6 +40,8 @@ public class DialogueSystem : MonoBehaviour
 
     public void StartDialogue()
     {
+        Debug.Log($"[DS] Start. ID={GetInstanceID()} linhas={currentLines?.Length}");
+
         if (currentLines == null || currentLines.Length == 0) return;
 
         DialogoAtivo = true;
@@ -59,7 +61,7 @@ public class DialogueSystem : MonoBehaviour
 
         if (isTyping)
         {
-            StopAllCoroutines();
+            StopAllCoroutines();   // ⚠️ para TUDO, não só a digitação
             dialogueText.text = currentLines[currentIndex];
             isTyping = false;
             return;
